@@ -1,0 +1,6 @@
+<pre>
+siparis_no,urun_tipi,sku,siparis_adedi,faturalanan_adet
+{% for row in rows %}
+{{ row.increment_id }},{{ row.product_type }},{{ row.sku }},{{ row.qty_ordered |number_format(0) }},{{ row.qty_invoiced|number_format(0) }}
+{% endfor %}
+</pre>

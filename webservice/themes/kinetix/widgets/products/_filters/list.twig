@@ -1,0 +1,56 @@
+<div class="card {% if collapseHide != true %} active {% endif %}">
+    <a data-target="#agg-level-1-0" class="btn btn-link" data-toggle="collapse">
+        {{ filter.name | translate }} <i class="fa fa-angle-right"></i>
+    </a>
+    <div class="collapse flo-filter-with-is {% if collapseHide != true %}show{% endif %}" id="agg-level-1-0">
+        <div class="card-body">
+        <ul class="commerce-sub-links">
+        {% for agg in aggregations %}
+            <li class="head" data-href="/{{ agg.url }}{{ agg.query_string }}" >
+                <span class="{{ agg.class }} {% if agg.sub_class != 'hidden' %}child-opened{% endif %}">
+                    <a href="/{{ agg.url }}{{ agg.query_string }}" title="{{ agg.name | translate }}" class="fw-400 {% if agg.sub_categories | length %}has-child{% endif %}">{{ agg.name | translate }} 
+	                    <ins class="slide-brand-ins-list"> ({{ agg.count }})</ins>
+					</a>
+				</span>
+
+                {% if agg.sub_categories %}
+                    <ul class="{{ agg.sub_class }}">
+                        {% for sub_agg in agg.sub_categories %}
+                            <li data-selected-list="{{ sub_agg.selected }}" >
+                                <a href="/{{ sub_agg.url }}{{ sub_agg.query_string }}" data-is-selected="{{ sub_agg.selected }}" title="{{ sub_agg.name  | raw }}"
+									class="{% if sub_agg.sub_categories | length %}has-child{% endif %}"
+								>{{ sub_agg.name  | raw }}
+									<ins class="slide-brand-ins-list">({{ sub_agg.count }})</ins>
+								</a>
+                                
+                                {% if sub_agg.sub_categories %}
+                                    <ul class="
+                                    {% set break = 0 %}
+										{% for sub_agg_agg in agg.sub_categories if break == 0 %}
+										{% if sub_agg_agg.selected ==1 %}  {% set break = 1 %} {% endif %}
+
+                                         {% endfor %}
+                                         {% if break == 0 %}
+                                         hidden {% endif %} {{ agg.sub_class }}
+">
+                                        {% for sub_agg_agg in sub_agg.sub_categories %}
+                                            <li>
+                                                 <a href="/{{ sub_agg_agg.url }}{{ sub_agg_agg.query_string }}" data-is-selected="{{ sub_agg_agg.selected }}" 
+													class="{% if aggsub_agg_agg.sub_categories | length %}has-child{% endif %}  {% if sub_agg_agg.selected ==1 %}selected-filter{% endif %}"
+												   	title="{{ sub_agg_agg.name | raw }}">{{ sub_agg_agg.name | raw }} 
+													 <ins class="slide-brand-ins-list">({{ sub_agg_agg.count }})</ins>
+												 </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    </div>
+</div>

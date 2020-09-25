@@ -1,0 +1,81 @@
+{% if config('env.gtm') %}
+<script>
+    var dataLayer = window.dataLayer || [];
+    var pageItems = [];
+
+    window.productList = [];
+    window.showedProductSku = [];
+    window.showedProductIds = [];
+
+    {% set mainCategoryName = '' %}
+    {% set subCategoryName = '' %}
+
+    {% for product in layerData.productList %}
+    {% set mainCategoryName = (product.categories|first).name %}
+    {% set subCategoryName = (product.categories|last).name %}
+
+    var item = {
+        id: "{{ product.sku }}",
+        name: "{{ product.name }}",
+        position: "{{ loop.index }}",
+        entity_id: "{{ product.id }}",
+        brand: "{{ product.manufacturer }}",
+        price: "{{ product.third_price | default(product.special_price) | default(product.price) | number_format(2) }}",
+        category: "{{ product.ecommerce_categories | default(product.categories|first.name ~ '/' ~ product.categories|last.name) }}",
+        variant: "{{ product.renk }}",
+        list: "FAVORITES",
+        dimension2: "",
+        dimension9: "{{ product.model }}",
+        dimension17: "{{ product.gender }}",
+        dimension18: "{{ product.sezon_yil }} - {{ product.season }}",
+        dimension29: "{{ product.category_ids|last }}",
+        dimension30: "{{ product.categories|first.name }}",
+        dimension31: "{{ product.categories|last.name }}",
+        dimension32: "{{ product.saya_malzeme }}",
+        dimension33: "{{ product.qty }}",
+        dimension34: "{{ product.price }}",
+        dimension35: "{{ product.is_in_stock ? 1 : 0 }}",
+        dimension36: "TRY",
+        dimension37: "{{ product.sku }}",		
+		
+		{% set rule = product.rule_info | first %}
+		dimension40: {{ product.rule_info ? 1 : 0 }},
+		dimension41: "{{ rule.label }}",
+    };
+
+    pageItems.push(item);
+    window.productList.push(item);
+    window.showedProductSku.push('{{ product.sku }}');
+    window.showedProductIds.push({{ product.id }});
+
+    GtmDataLayer.set('favourite{{ product.id }}', item);
+    {% endfor %}
+
+    var google_tag_params = {
+        site_type: "d",
+        page_type: "favorites",
+        url: window.location.href,
+        breadcrumb: {
+            path: "ANASAYFA > Favorilerim",
+            last_crumb: "Favorilerim"
+        }
+    };
+
+    var ecommerce = {
+        currencyCode: "TRY",
+        impressions: pageItems
+    };
+
+    dataLayer.push({
+        'event': 'favorites_impressions',
+        'ecommerce': ecommerce,
+        'google_tag_params': google_tag_params
+    });
+
+    domReadyCallbacks.push(function () {
+        $('.favourite[data-product-id]').off('click').on('click', function () {
+            RG.DataLayer.trigger('favourite_click', {id: $(this).data('product-id')});
+        });
+    });
+</script>
+{% endif %}

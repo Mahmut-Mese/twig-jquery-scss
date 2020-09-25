@@ -1,0 +1,82 @@
+@font-face {
+  font-display: fallback;
+  font-family: "Open-Sans";
+  src: url("/pub/assets/instreet/fonts1/OpenSans.eot");
+  src: url("/pub/assets/instreet/fonts1/OpenSans.eot?#iefix") format("embedded-opentype"), url("/pub/assets/instreet/fonts1/OpenSans.woff2") format("woff2"), url("/pub/assets/instreet/fonts1/OpenSans.woff") format("woff"), url("/pub/assets/instreet/fonts1/OpenSans.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-display: fallback;
+  font-family: "HelveticaBoldTr";
+  src: url("/pub/assets/instreet/fonts1/HelveticaTr-Bold.eot");
+  src: url("/pub/assets/instreet/fonts1/HelveticaTr-Bold.eot?#iefix") format("embedded-opentype"), url("/pub/assets/instreet/fonts1/HelveticaTr-Bold.woff2") format("woff2"), url("/pub/assets/instreet/fonts1/HelveticaTr-Bold.woff") format("woff"), url("/pub/assets/instreet/fonts1/HelveticaTr-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-display: fallback;
+  font-family: "HelveticaNeueLTPro-Roman";
+  src: url("/pub/assets/instreet/fonts1/HelveticaNeueLTPro-Roman.otf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-display: fallback;
+  font-family: "Helvetica Neue LT Pro";
+  src: url("/pub/assets/instreet/fonts1/HelveticaNeueLTPro-Md.eot");
+  src: url("/pub/assets/instreet/fonts1/HelveticaNeueLTPro-Md.eot?#iefix") format("embedded-opentype"), url("/pub/assets/instreet/fonts1/HelveticaNeueLTPro-Md.woff2") format("woff2"), url("/pub/assets/instreet/fonts1/HelveticaNeueLTPro-Md.woff") format("woff"), url("/pub/assets/instreet/fonts1/HelveticaNeueLTPro-Md.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-display: fallback;
+  font-family: "helvetica_black_trblack";
+  src: url("/pub/assets/instreet/fonts1/helvetica-blacktr_0.woff2") format("woff2"), url("/pub/assets/instreet/fonts1/helvetica-blacktr_0.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-display: fallback;
+  font-family: "helvetica_light_normaLtnormal";
+  src: url("/pub/assets/instreet/fonts1/helvetica-lightnormaltr_0.woff2") format("woff2"), url("/pub/assets/instreet/fonts1/helvetica-lightnormaltr_0.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-display: fallback;
+  font-family: "sansbold";
+  src: url("/pub/assets/instreet/fonts1/helvetica_it_bold.woff2") format("woff2"), url("/pub/assets/instreet/fonts1/helvetica_it_bold.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-display: fallback;
+  font-family: "helveticaregular";
+  src: url("/pub/assets/instreet/fonts1/4864.woff2") format("woff2"), url("/pub/assets/instreet/fonts1/4864.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-display: fallback;
+  font-family: "HelveticaNeue-Light";
+  src: url("/pub/assets/instreet/fonts1/HelveticaNeue-Light.eot?#iefix") format("embedded-opentype"), url("/pub/assets/instreet/fonts1/HelveticaNeue-Light.woff") format("woff"), url("/pub/assets/instreet/fonts1/HelveticaNeue-Light.ttf") format("truetype"), url("/pub/assets/instreet/fonts1/HelveticaNeue-Light.svg#HelveticaNeue-Light") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-display: fallback;
+  font-family: "Helvetica-Oblique";
+  src: url("/pub/assets/instreet/fonts1/Helvetica-Oblique.eot?#iefix") format("embedded-opentype"), url("/pub/assets/instreet/fonts1/Helvetica-Oblique.woff") format("woff"), url("/pub/assets/instreet/fonts1/Helvetica-Oblique.ttf") format("truetype"), url("/pub/assets/instreet/fonts1/Helvetica-Oblique.svg#Helvetica-Oblique") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-display: fallback;
+  font-family: "HelveticaNeueLTPro-Ex";
+  src: url("/pub/assets/instreet/fonts1/HelveticaNeueLTPro-Ex.eot?#iefix") format("embedded-opentype"), url("/pub/assets/instreet/fonts1/HelveticaNeueLTPro-Ex.otf") format("opentype"), url("/pub/assets/instreet/fonts1/HelveticaNeueLTPro-Ex.woff") format("woff"), url("/pub/assets/instreet/fonts1/HelveticaNeueLTPro-Ex.ttf") format("truetype"), url("/pub/assets/instreet/fonts1/HelveticaNeueLTPro-Ex.svg#HelveticaNeueLTPro-Ex") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*# sourceMappingURL=function.css.map */

@@ -1,0 +1,59 @@
+{% if basket.items | length == 0 %}
+	<div class="header-minibasket-empty">{{ 'Alışveriş Sepetiniz Boş' }}</div>
+{% else %}
+	<div class="header-minibasket-count">{{ basket.items | length }} {{ 'Adet ürün sepetinizde ekli' }}</div>
+	<div class="header-minibasket-subtotal">
+		{{ 'Ara Toplam' | translate }} : <span>{{ basket.subtotal_incl_tax | price }}</span>
+	</div>
+
+	<a href="{{ basket_base_url() }}/basket" class="btn btn-lg btn-primary header-minibasket-button btn-block">{{ 'SEPETE GİT' | translate }}</a>
+	<div data-max-height="300" class="header-minibasket-products-wrapper slimscroll-autoinit">
+		<ul class="header-minibasket-products">
+			{% for item in basket.items %}
+				<li class="header-minibasket-product lazy">
+					<div class="header-minibasket-product-image image-wrapper">
+						<img src="/pub/media/lazyloading/blank.png" data-src="{{ item.data.image|resize('70x100') }}" alt="{{ item.name }}"/>
+					</div>
+					<div class="header-minibasket-product-content">
+						<a href="{{ item.url | default(item.data.url) }}" class="header-minibasket-product-title">{{ item.name }}</a>
+						
+						<a href="#header-mini-basket-product-{{ loop.index }}" data-toggle="collapse" aria-expanded="false" class="header-minibasket-product-detail-toggle">
+							{{ 'Detay' }} <i class="fas fa-angle-down"></i>
+						</a>
+						<div id="header-mini-basket-product-{{ loop.index }}" class="collapse">
+							<div class="header-minibasket-product-detail">
+								{% if item.data.renk %}
+								{{ 'renk' | translate }}
+								<span>{{ item.data.renk }}</span>
+								{% endif %}
+
+								{% if item.data.options %}
+									{{ 'beden' | translate }}
+									{% for option in item.data.options %}
+										{% if option.is_selected %}
+											<span>
+												{{ option.option_value }}
+											</span>
+										{% endif %}
+									{% endfor %}
+								{% endif %}
+							</div>
+						</div>
+						<div class="header-minibasket-product-price">{{ (item.base_price_incl_tax) | price }}</div>
+						<div class="header-minibasket-product-quantity"><span>{{ 'Adet' | translate }}: </span> {{ item.qty }}
+							{# <div type="text" name="#" value="{{ item.qty }}" class="form-control"/> #}
+						</div>
+					</div>
+
+					<ul class="list-inline header-minibasket-product-actions">
+						<li class="hide"><a href="#"> <i class="fas fa-cog"></i></a></li>
+						<li><a href="#" class="remove-product-from-mini-cart" data-id="{{ item.item_id }}" data-sku="{{ item.sku }}"> <i class="far fa-trash-alt"></i></a></li>
+					</ul>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+	{# <a href="/basket" class="btn btn-link btn-block header-minibasket-action">VIEW AND EDIT CART</a> #}
+{% endif %}
+
+{{ widget('datalayer', 'all_pages', {layerData: {cart: basket}, pushEvent: false}) }}

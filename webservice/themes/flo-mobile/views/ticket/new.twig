@@ -1,0 +1,56 @@
+<script src='https://www.google.com/recaptcha/api.js?hl=tr'></script>
+<main role="main">
+    <div class="account-page-wrapper">
+        <div class="page-title-bar">
+            <a href="/ticket/list" class="go-back-link">
+                <i class="svg-slide-arrow-left svg-slide-arrow-left-dims"></i>
+            </a>
+            <h1>İLETİŞİM</h1>
+        </div>
+        <div class="bg-white p-4 mb-3">
+            <div class="text-center pl-4 pr-4">
+                <i class="svg-contact svg-contact-dims mb-3"></i>
+                <p class="fs-15 font-weight-normal text-light-gray">Müşteri hizmetleri telefonlarımız, çağrılarınıza haftanın 7 günü 09:00 - 19:00 saatleri arasında hizmet vermektedir.</p>
+                <p class="fs-15 font-weight-normal text-light-gray">Müşteri hizmetleri mesaj servisimize 7 gün 24 saat mesaj gönderebilirsiniz. Göndereceğiniz mesajlarınız müşteri hizmetleri yetkililerimizce hızlı bir şekilde yanıtlanacaktır.</p>
+            </div>
+        </div>
+        <div class="bg-white p-4 mb-3">
+            <form action="" action="" id="yeni-ticket-form" method="POST" class="yeni-ticket-form">
+                <div class="form-group animated">
+                    <label>Konu</label>
+                    <input type="text" name="name" class="form-control input_ucfirst" value="">
+                </div>
+                <div class="form-group selectbox animated">
+                    <select name="department_id" id="department" class="form-control custom-select">
+                        <option value="">Departman Seçiniz</option>
+                        {% for row in yeni_ticket.departman_list %}
+                            <option value="{{ row.id }}">{{ row.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group selectbox animated">
+                    <select name="department_parent_id" id="subject" class="form-control custom-select">
+                        <option value="">Departman Konusu Seçiniz</option>
+                    </select>
+                </div>
+                <div class="form-group selectbox animated">
+                    <select name="order_id" id="order_id" class="form-control custom-select">
+                        <option value="">Sipariş</option>
+                        {% for row in yeni_ticket.siparis_list %}
+                            <option value="{{ row.increment_id }}">{{ row.increment_id }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea name="message" cols="30" rows="8" class="form-control" placeholder="İletişime geçmek istediğiniz konuyu buraya yazabilirsiniz."></textarea>
+                </div>
+                {% if re_captcha.active == true and tf_post_time >= re_captcha.fail_num %}
+                    <div class="text-right mb-3">
+                        <div class="g-recaptcha" data-sitekey="{{ re_captcha.site_key }}"></div>
+                    </div>
+                {% endif %}
+                <input type="submit" id="btn-ticket" class="btn btn-success btn-block btn-lg" value="GÖNDER"/>
+            </form>
+        </div>
+    </div>
+</main>

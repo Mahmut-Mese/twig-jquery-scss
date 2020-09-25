@@ -1,0 +1,50 @@
+<div class="campaign-form">
+    <div class="card">
+        <a href="javascript:;" class="btn btn-link show-campaign-code">
+            Kampanya Kodunuz Var mı? <i class="fa fa-angle-down"></i>
+        </a>
+        <div class="collapse">
+            <div class="card-body">
+             <!--   <form action="/">
+                    <div class="form-group">
+                        <input type="text" name="code" class="form-control" placeholder="Kampanya Kodunu Giriniz">
+                        <button type="button" class="btn btn-warning">UYGULA</button>
+                    </div>
+                </form> -->
+
+                <form action="" id="cart-coupon">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="code"
+                               value="{{ basket.coupon_code ? basket.coupon_code : '' }}"
+                               placeholder="{{ 'Kampanya Kodunu Giriniz' | translate }}">
+                        <button type="submit" class="btn btn-warning">  {% if basket.coupon_code is defined %}
+                                <span class="cart-coupon-button"
+                                      id="cart-coupon-remove">{{ 'İPTAL' | translate }}</span>
+                            {% else %}
+                                <span class="cart-coupon-button"
+                                      id="cart-coupon-input">{{ 'UYGULA' | translate }}</span>
+                            {% endif %}</button>
+                    </div>
+                </form>
+                <a href="#" class="saved-coupons" id="a-kayitli-kuponlarim">Kayıtlı Kuponlarımı Göster</a>
+                <div class="btns basket-kayitli-kuponlarim hidden">
+                    {% for coupon in coupons.activeCoupons %}
+                        <div class="basket-coupon-frame">
+                            <div class="basket-coupon-name">{{ coupon.label_value }}</div>
+                            <div class="basket-coupon-price">{
+								{% if  coupon.is_percent  == 'by_percent' %}
+									% {{ coupon.discount_amount |number_format(0) }}
+								{% else %}
+									{{ coupon.discount_amount | price}}
+								{% endif %}
+							</div>
+                            <div class="basket-coupon-code">{{ coupon.code }}</div>
+                            <button class="basket-coupon-btn-frame"
+                                    id="btn-kupon-kullan_{{ coupon.code }}">{{ 'KULLAN' | translate }}</button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

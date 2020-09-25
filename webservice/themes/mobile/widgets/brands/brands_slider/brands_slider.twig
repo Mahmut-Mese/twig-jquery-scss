@@ -1,0 +1,23 @@
+<div class="home-brand-list">
+    <div class="container-fluid">
+        <div class="all">
+            <div class="title">
+                {{ 'POPÜLER MARKALAR' | translate}}
+            </div>
+            <div class="list lazy">
+                <div class="alls">
+                    {% for brand in brands %}
+                        <div class="mc-md-3 mc-xs-3 pa">
+                            <a href="/{{ brand.url }}">
+                                <div class="images">
+                                    {{ img('lazyloading/blank.png', '', { title: brand.page_title, class:'resimatt', cdn: 'general' }, brand.image) }}
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+{% if config('env.gtm') %}
+{% if layerData.spotlights|length %}
+    {% set time = random() %}
+    <script type="text/javascript">
+        var dataLayer = window.dataLayer || [];
+        var google_tag_params_{{ time }} = {
+            site_type: "d",
+            page_type: "home",
+            url: "{{ config('env.webservice.url.web') }}",
+            breadcrumb: {
+                path: "Anasayfa",
+                last_crumb: "Anasayfa"
+            }
+        };
+
+        var ecommerce_{{ time }} = {
+            promoView: {
+                promotions: []
+            }
+        };
+
+        {% for spotlight in layerData.spotlights %}
+        var spotlight_{{ time }}_{{ loop.index }} = {
+            id: "{{ spotlight.spotlight_id }}",
+            name: "{{ spotlight.image|default(spotlight.image_desktop) }}",
+            creative: "{{ spotlight.title }}",
+            position: "{{ spotlight.sorder }}"
+        };
+
+        ecommerce_{{ time }}.promoView.promotions.push(spotlight_{{ time }}_{{ loop.index }});
+
+        GtmDataLayer.set('homeSpotlight{{ spotlight.spotlight_id }}', spotlight_{{ time }}_{{ loop.index }}, true);
+        {% endfor %}
+
+        {% if layerData.element %}
+            domReadyCallbacks.push(function () {
+                $(function () {
+                    $(window).on('scroll', function (e) {
+                        if (!$('{{ layerData.element }}').hasClass('pushed') && $('{{ layerData.element }}').visible(true)) {
+                            $('{{ layerData.element }}').addClass('pushed');
+                            dataLayer.push({
+                                'event': 'promotion_impressions',
+                                'ecommerce': ecommerce_{{ time }},
+                                'google_tag_params': google_tag_params_{{ time }}
+                            });
+                        }
+                    });
+                });
+            });
+        {% else %}
+        dataLayer.push({
+            'event': 'promotion_impressions',
+            'ecommerce': ecommerce_{{ time }},
+            'google_tag_params': google_tag_params_{{ time }}
+        });
+        {% endif %}
+
+        domReadyCallbacks.push(function () {
+            $('.spotlightItem[data-spotlight-id]').off('click').on('click', function (e) {
+                RG.DataLayer.trigger('spotlight_click', {spotlightId: $(this).data('spotlight-id')})
+            });
+        });
+    </script>
+{% endif %}
+{% endif %}

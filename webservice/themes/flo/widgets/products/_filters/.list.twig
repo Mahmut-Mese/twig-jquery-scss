@@ -1,0 +1,245 @@
+<div class="card category {% if collapseHide != true %} active {% endif %}">
+    <a data-target="#agg-level-1-0" class="btn btn-link" data-toggle="collapse">
+        {{ filter.name | translate }} <i class="fa fa-angle-right"></i>
+    </a>
+    <div class="collapse {% if collapseHide != true %}show{% endif %}" id="agg-level-1-0">
+        <div class="card-body">
+            {% for agg in aggregations %}
+
+                {% if not agg.sub_categories %}
+                    <div class="card sub">
+                        <a href="/{{ agg.url }}" class="btn btn-link sub-top" title="{{ agg.name | translate }}">
+                            {{ agg.name | translate }}
+                        </a>
+                        <ins class="slide-brand-ins-list"> ({{ agg.count }})</ins>
+
+                    </div>
+                {% else %}
+                    <div class="card sub hassub">
+
+                        <a data-target="#agg-level-2-{{ loop.index }}" class="btn btn-link sub-top "
+                           data-toggle="collapse" title="{{ agg.name | translate }}">
+                            {{ agg.name | translate }}
+                        </a>
+                        <ins class="slide-brand-ins-list">({{ agg.count }})</ins>
+
+
+                        <div class="collapse" id="agg-level-2-{{ loop.index }}">
+                            <div class="card-body">
+                                <div class="sub-category-list">
+                                    {% for sub_agg in agg.sub_categories %}
+                                        {% if not sub_agg.sub_categories %}
+                                            <div data-name="Günlük Ayakkabı" data-category="Kategori"
+                                                 href="/{{ sub_agg.url }}{{ sub_agg.query_string }}"
+                                                 class="label-link card sub">
+                                                <a href="/{{ sub_agg.url }}{{ sub_agg.query_string }}"
+                                                   class="filter-link"
+                                                   title="{{ agg.name | translate | raw }}">{{ agg.name | translate | raw }}</a>
+                                                <input type="radio" name="category">
+                                                <span class="sub-agg-name "> {{ sub_agg.name  | raw }} </span>
+                                                <ins> ({{ sub_agg.count }})</ins>
+
+                                            </div>
+                                        {% else %}
+                                            <div class="card sub hassub">
+                                                <a data-target="#agg-level-3-{{ loop.index }}" class="btn btn-link"
+                                                   data-toggle="collapse" title="{{ sub_agg.name | translate }}">
+                                                    {{ sub_agg.name | translate }}
+                                                </a>
+                                                <ins class="slide-brand-ins-list">({{ sub_agg.count }})</ins>
+                                                <div class="collapse" id="agg-level-3-{{ loop.index }}">
+                                                    <div class="card-body">
+                                                        <div class="sub-category-list">
+                                                            {% for sub_subagg in sub_agg.sub_categories %}
+                                                                <label data-name="Günlük Ayakkabı"
+                                                                       data-category="Kategori"
+                                                                       href="/{{ sub_subagg.url }}{{ sub_subagg.query_string }}"
+                                                                       class="label-link">
+                                                                    <a href="/{{ sub_subagg.url }}{{ sub_agg.query_string }}"
+                                                                       class="filter-link"
+                                                                       title="{{ sub_subagg.name  | raw }}">{{ agg.name | translate | raw }}</a>
+                                                                    <input type="radio" name="category">
+                                                                    <span>{{ sub_subagg.name  | raw }}</span>
+                                                                    <ins> ({{ sub_subagg.count }})</ins>
+
+                                                                </label>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{# -------------------------------------------------------------------- #}
+{# -------------------------------------------------------------------- #}
+{# -------------------------------------------------------------------- #}
+{# -------------------------------------------------------------------- #}
+{# -------------------------------------------------------------------- #}
+{# -------------------------------------------------------------------- #}
+
+<div class="card category {% if collapseHide != true %} active {% endif %} flo-category-filters">
+    <a data-target="#agg-level-1-0" class="btn btn-link" data-toggle="collapse">
+        {{ filter.name | translate }} <i class="fa fa-angle-right"></i>
+    </a>
+    <div class="collapse {% if collapseHide != true %}show{% endif %}" id="agg-level-1-0">
+        <div class="card-body">
+            {% for agg in aggregations %}
+				{% set qs = [] %}
+				{% set woqs = [] %}
+				{% for _filter in (agg.query_string | slice(1) | split('&')) %}
+					{% if (_filter | split('='))[0] != 'kategori' %} 
+						{% set qs = qs | merge([_filter]) %}
+						{% set woqs = woqs | merge([_filter]) %}
+					{% endif %}
+				{% endfor %}
+
+                {% if not agg.sub_categories %}
+                    <div class="card sub">
+						<label class="btn btn-link input sub-top flo-category-link {% if ( agg.value in filters or agg.value_star in filters) %}selected active{% endif %}" 
+							data-value="{{ agg.value }}" 
+							data-real-value="{{ agg.name }}" 
+							data-name="filters[]" 
+							href="/{{ agg.url }}{% if qs | length and qs[0] != empty %}?{{ qs | join('&') }}{% endif %}" 
+							data-without-query="?{{ woqs | join('&') }}"
+							{# {% if ( agg.value in filters or agg.value_star in filters) %}data-is-selected="1"{% endif %} #}
+						>
+							<a href="{{ original_request_url ~ agg.query_string }}" class="filter-link">{{ agg.name | translate | raw }}</a>
+							<input type="checkbox" {% if ( agg.value in filters or agg.value_star in filters) %}checked{% endif %}>
+
+							{{ agg.name | translate | raw }}
+
+							<ins class="slide-brand-ins-list"> ({{ agg.count }})</ins>
+						</label>
+                    </div>
+                {% else %}
+                    <div class="card sub hassub {% if ( agg.value in filters or agg.value_star in filters) %}open{% endif %}">
+						<label class="btn btn-link input sub-top flo-category-link {% if ( agg.value in filters or agg.value_star in filters) %}selected active{% endif %}" 
+							data-value="{{ agg.value }}" 
+							data-real-value="{{ agg.name }}" 
+							data-name="filters[]"
+							href="/{{ agg.url }}{% if qs | length and qs[0] != empty %}?{{ qs | join('&') }}{% endif %}" 
+							data-without-query="?{{ woqs | join('&') }}" 
+							{# {% if ( agg.value in filters or agg.value_star in filters) %}data-is-selected="1"{% endif %} #}
+						>
+							<a href="{{ original_request_url ~ agg.query_string }}" class="filter-link">{{ agg.name | translate | raw }}</a>
+							<input type="checkbox" {% if ( agg.value in filters or agg.value_star in filters) %}checked{% endif %}>
+
+							{{ agg.name | translate | raw }}
+
+							<ins class="slide-brand-ins-list"> ({{ agg.count }})</ins>
+						</label>
+
+                        {# <a data-target="#agg-level-2-{{ loop.index }}" class="btn btn-link sub-top flo-category-link "
+                           data-toggle="collapse" title="{{ agg.name | translate }}">
+                            {{ agg.name | translate }}
+                        </a> #}
+                        {# <ins class="slide-brand-ins-list">({{ agg.count }})</ins> #}
+
+
+                        <div class="collapse {% if ( agg.value in filters or agg.value_star in filters) %}show{% endif %}" id="agg-level-2-{{ loop.index }}">
+                            <div class="card-body">
+                                <div class="sub-category-list">
+                                    {% for sub_agg in agg.sub_categories %}
+										{% set qs = [] %}
+										{% set woqs = [] %}
+										{% for _filter in (sub_agg.query_string | slice(1) | split('&')) %}
+											{% if (_filter | split('='))[0] != 'kategori' %} 
+												{% set qs = qs | merge([_filter]) %}
+												{% set woqs = woqs | merge([_filter]) %}
+											{% endif %}
+										{% endfor %}
+
+                                        {% if not sub_agg.sub_categories %}
+											<label class="btn btn-link input sub-top flo-category-link {% if ( sub_agg.value in filters or sub_agg.value_star in filters) %}selected active{% endif %}" 
+												data-value="{{ sub_agg.value }}" 
+												data-real-value="{{ sub_agg.name }}" 
+												data-name="filters[]" 
+												href="/{{ sub_agg.url }}{% if qs | length and qs[0] != empty %}?{{ qs | join('&') }}{% endif %}" 
+												data-without-query="?{{ woqs | join('&') }}" 
+												{# {% if ( sub_agg.value in filters or sub_agg.value_star in filters) %}data-is-selected="1"{% endif %} #}
+											>
+												<a href="{{ original_request_url ~ sub_agg.query_string }}" class="filter-link">{{ sub_agg.name | translate | raw }}</a>
+												<input type="checkbox" {% if ( sub_agg.value in filters or sub_agg.value_star in filters) %}checked{% endif %}>
+
+												{{ sub_agg.name | translate | raw }}
+
+                                                <ins> ({{ sub_agg.count }})</ins>
+											</label>
+                                        {% else %}
+                                            <div class="card sub hassub {% if ( sub_agg.value in filters or sub_agg.value_star in filters) %}open{% endif %}">
+												<label class="btn btn-link input sub-top flo-category-link {% if ( sub_agg.value in filters or sub_agg.value_star in filters) %}selected active{% endif %}" 
+													data-value="{{ sub_agg.value }}" 
+													data-real-value="{{ sub_agg.name }}" 
+													data-name="filters[]" 
+													href="/{{ sub_agg.url }}{% if qs | length and qs[0] != empty %}?{{ qs | join('&') }}{% endif %}" 
+													data-without-query="?{{ woqs | join('&') }}"  
+													{# {% if ( sub_agg.value in filters or sub_agg.value_star in filters) %}data-is-selected="1"{% endif %} #}
+												>
+													<a href="{{ original_request_url ~ agg.query_string }}" class="filter-link">{{ sub_agg.name | translate | raw }}</a>
+													<input type="checkbox" {% if ( sub_agg.value in filters or sub_agg.value_star in filters) %}checked{% endif %}>
+
+													{{ sub_agg.name | translate | raw }}
+
+													<ins> ({{ sub_agg.count }})</ins>
+												</label>
+                                                {# <ins class="slide-brand-ins-list">({{ sub_agg.count }})</ins> #}
+
+                                                <div class="collapse {% if ( sub_agg.value in filters or sub_agg.value_star in filters) %}show{% endif %}" id="agg-level-3-{{ loop.index }}">
+                                                    <div class="card-body">
+                                                        <div class="sub-category-list">
+                                                            {% for sub_subagg in sub_agg.sub_categories %}
+																{% set qs = [] %}
+																{% set woqs = [] %}
+																{% for _filter in (sub_subagg.query_string | slice(1) | split('&')) %}
+																	{% if (_filter | split('='))[0] != 'kategori' %} 
+																		{% set qs = qs | merge([_filter]) %}
+																		{% set woqs = woqs | merge([_filter]) %}
+																	{% endif %}
+																{% endfor %}
+
+                                                                <label class="btn btn-link input sub-top flo-category-link {% if ( sub_subagg.value in filters or sub_subagg.value_star in filters) %}selected active{% endif %}" 
+																	data-value="{{ sub_subagg.value }}" 
+																	data-real-value="{{ sub_subagg.name }}" 
+																	data-name="filters[]" 
+																	href="/{{ sub_subagg.url }}{% if qs | length and qs[0] != empty %}?{{ qs | join('&') }}{% endif %}" 
+																	data-without-query="?{{ woqs | join('&') }}"   
+																	{# {% if ( sub_subagg.value in filters or sub_subagg.value_star in filters) %}data-is-selected="1"{% endif %} #}
+																>
+																	<a href="{{ original_request_url ~ sub_subagg.query_string }}" class="filter-link">{{ sub_subagg.name | translate | raw }}</a>
+																	<input type="checkbox" {% if ( sub_subagg.value in filters or sub_subagg.value_star in filters) %}checked{% endif %}>
+
+																	{{ sub_subagg.name | translate | raw }}
+
+																	<ins> ({{ sub_subagg.count }})</ins>
+																</label>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+
+            {% endfor %}
+        </div>
+    </div>
+</div>

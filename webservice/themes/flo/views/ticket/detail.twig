@@ -1,0 +1,61 @@
+<div class="account-page-wrapper mt-3 ticket-detail">
+    <div class="container">
+        <div class="row medium-gutter">
+            <div class="col-sm-3">
+                {{ widget('customer', 'account_left_menu') }}
+            </div>
+            <div class="col-sm-9">
+                <div class="breadcrumbs-bar title-only">
+                    <div class="left-nav">
+                        <a href="/ticket/list" class="go-back-link"><i class="fas fa-angle-left"></i>Geri Dön</a>
+                    </div>
+                    <div class="page-title">
+                        <h1>YARDIM</h1>
+                    </div>
+                </div>
+                <div class="bg-white p-3 mb-3">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th>Başlık</th>
+                            <td>: {{ ticket.list.subject }}</td>
+                        </tr>
+                        <tr>
+                            <th>Departman</th>
+                            <td>: {{ ticket.list.department_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Sipariş No</th>
+                            <td>: {{ ticket.list.order_id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Durum</th>
+                            <td>: {{ ticket.list.status_label }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    {% for key,row in ticket.parent_list  %}
+                            <div class="order-box">
+                                <div class="infos-holder">
+                                    <table>
+                                        <tr>
+                                            <td>{% if row.Direction == 1 %}  {{ ticket.list.firstname ~ ' ' ~ ticket.list.lastname  }} {% else %}  Müşteri Hizmetleri {% endif %}</td>
+                                            <td class="text-right">{% if row.CreatedOn is not empty %} {{row.CreatedOn | date('d.m.Y H:i') }} {% endif %}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="status-holder">
+                                    <div class="order-status">
+                                        {{ row.Description}}
+                                    </div>
+                                </div>
+                            </div>
+                    {% endfor %}
+                    <a href="/ticket/answer?ticket_id={{ ticket.list.row_id }}" class="btn orange">Mesaj Yaz <i class="fas fa-comment"></i></a>
+                    &nbsp;
+                    <a href="javascript:void(0);" id="btn-close-request" data-ticket_id="{{ ticket.list.row_id }}" class="btn red">Talebi Kapat &nbsp;<i class="fas fa-comment-slash"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="categories-bar lazy">
+    {% for spotlight in spotlights %}
+        <a href="{{ spotlight.link }}" class="category-box" data-spotlight-id="{{ spotlight.spotlight_id }}">
+            <figure>
+{#                <img src="/pub/media/lazyloading/blank.png" data-src="/pub/media/{{ spotlight.image_desktop }}">#}
+                {{ img('lazyloading/blank.png', '', {cdn: 'general' }, spotlight.image_desktop) }}
+            </figure>
+            <h4>{{ spotlight.title }}</h4>
+        </a>
+    {% endfor %}
+</div>
+
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: spotlights}}) }}

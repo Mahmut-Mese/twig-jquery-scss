@@ -1,0 +1,53 @@
+<main role="main">
+    <div class="account-page-wrapper ticket-detail">
+        <div class="page-title-bar">
+            <a href="/ticket/list" class="go-back-link">
+                <i class="svg-slide-arrow-left svg-slide-arrow-left-dims"></i>
+            </a>
+            <h1>YARDIM</h1>
+        </div>
+
+        <div class="bg-white p-3 mb-3">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Başlık</th>
+                    <td>: {{ ticket.list.subject }}</td>
+                </tr>
+                <tr>
+                    <th>Departman</th>
+                    <td>: {{ ticket.list.department_name }}</td>
+                </tr>
+                <tr>
+                    <th>Sipariş No</th>
+                    <td>: {{ ticket.list.order_id }}</td>
+                </tr>
+                <tr>
+                    <th>Durum</th>
+                    <td>: {{ ticket.list.status_label }}</td>
+                </tr>
+                </tbody>
+            </table>
+            {% for key,row in ticket.parent_list  %}
+                    <div class="order-box">
+                        <div class="infos-holder">
+                            <table class="table ">
+                                <tr>
+                                    <td>{% if row.Direction == 1 %}  {{ ticket.list.firstname ~ ' ' ~ ticket.list.lastname  }} {% else %}  Müşteri Hizmetleri {% endif %}</td>
+                                    <td class="text-right">{% if row.CreatedOn is not empty %} {{row.CreatedOn | date('d.m.Y H:i') }} {% endif %}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="status-holder">
+                            <div class="order-status">
+                                {{ row.Description}}
+                            </div>
+                        </div>
+                    </div>
+            {% endfor %}
+            <a href="/ticket/answer?ticket_id={{ ticket.list.row_id }}" class="btn orange">Mesaj Yaz<i class="fas fa-comment"></i></a>
+            &nbsp;
+            <a href="javascript:void(0);" id="btn-close-request" data-ticket_id="{{ ticket.list.row_id }}" class="btn red">Talebi Kapat <i class="fas fa-comment-slash"></i></a>
+        </div>
+    </div>
+</main>

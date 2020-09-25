@@ -1,0 +1,13 @@
+<div class="main-slider">
+    {% for spotlight in spotlights %}
+        <div class="slide">
+            <div class="image-holder">
+                <a href="{{ spotlight.link }}" data-spotlight-id="{{ spotlight.spotlight_id }}" class="spotlightItem">
+                    {{ img('', '', { src: '/pub/assets/flo/img/blank_3x2.gif', style: 'opacity: 0;',  width: '360px', height:'201px', cdn: 'general' }, spotlight.image_mobil, 'data-lazy') }}
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: spotlights}}) }}

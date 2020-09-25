@@ -1,0 +1,44 @@
+
+
+<main>
+    <div class="home-page-wrapper">
+        {{ widget('general', 'spotlight') }}
+
+        <div class="slogans-bar">
+            <div class="container">
+                <div class="icons-holder">
+                    <div class="icon-box">
+                        <i class="svg-cash svg-cash-dims"></i>
+                        <h4>{{ 'Kapıda Nakit Ödeme' | translate }}</h4>
+                    </div>
+                    <div class="icon-box">
+                        <i class="svg-free-shipping svg-free-shipping-dims"></i>
+                        <h4>{{ '150 TL Üzeri Kargo Bedava' | translate }}</h4>
+                    </div>
+                    <div class="icon-box">
+                        <i class="svg-change svg-change-dims"></i>
+                        <h4>{{ 'Mağazada Değişim İade' | translate }}</h4>
+                    </div>
+                    <div class="icon-box">
+                        <i class="svg-call-center svg-call-center-dims"></i>
+                        <h4>0850 290 3 356</h4>
+                    </div>
+                    <div class="icon-box">
+                        <i class="svg-installment svg-installment-dims"></i>
+                        <h4>{{ '6 Taksit Seçeneği' | translate }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+
+            {{ widget('general', 'banner2') }}
+
+            {{ widget('general', 'category_slider') }}
+
+            {{ widget('general', 'banner3') }}
+        </div>
+
+        {{ widget('products', 'product_slider', {title: 'Sizin İçin Seçtiklerimiz' | translate, data_source: 'sizin-icin-sectiklerimiz' }) }}
+     </div>
+</main>

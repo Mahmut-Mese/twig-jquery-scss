@@ -1,0 +1,18 @@
+ {% set spotlights = [
+     ['link','id','/pub/assets/kinetix/images/1920x651_Sonbahar_kis.jpg'],
+     ['link2','id2','/pub/assets/kinetix/images/1920x651_adimin_ses_gertirsin.jpg'],
+  ] %}
+
+<div class="main-slider">
+    {% for spotlight in spotlights %}
+        <div class="slide">
+            <div class="image-holder">
+				<a href="{{ spotlight[0] }}" data-spotlight-id="{{ spotlight[1] }}" class="spotlightItem">
+                    {{ img('lazyloading/blank.png', '', { style: 'min-height:420px; opacity: 0;', height:'420'}, spotlight[2], 'data-lazy') }}
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: spotlights}}) }}

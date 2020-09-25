@@ -1,0 +1,37 @@
+<div class="page-title-bar">
+    <a class="go-back-link" href="/">
+        <i class="svg-slide-arrow-left svg-slide-arrow-left-dims"></i>
+    </a>
+    <h1>{{ 'MAĞAZA KREDİSİ' | translate}}</h1>
+</div>
+<div class="container">
+    <div class="bg-white p-2 mb-3">
+        <h5 class="text-dark mb-2">{{ 'Kullanılabilir Bakiyeniz' | translate }}</h5>
+        <h5 class="d-flex align-items-center text-dark font-weight-normal mb-0">
+            <i class="svg-credit-small svg-credit-small-dims mr-2"></i>
+            {{ total }} {{ 'TL' | translate }}</h5>
+    </div>
+    <div class="bg-white p-2 mb-5">
+        <h5 class="text-dark mb-2">{{ 'Bakiye Geçmişi' | translate  }}</h5>
+        <table class="table table-bordered">
+            <thead class="thead-dark fs-14">
+                <tr>
+                    <th class="w-25 text-center" scope="col">{{ 'İŞLEM' | translate }}</th>
+                    <th class="w-25 text-center" scope="col">{{ 'DÖNÜŞÜM' | translate }}</th>
+                    <th class="w-25 text-center" scope="col">{{ 'BAKİYE' | translate }}</th>
+                    <th class="w-25 text-center" scope="col">{{ 'TARİH - SAAT' | translate }}</th>
+                </tr>
+            </thead>
+            <tbody>
+				{% for item in data %}
+                <tr class="text-dark">
+                    <td class="text-center font-weight-normal">{{ item.status | translate }}</td>
+                    <td class="text-center">{{ item.transformation }} {{ 'TL' | translate }}</td>
+                    <td class="text-center">{{ item.credit }} {{ 'TL' | translate }}</td>
+                    <td class="text-center">{{ item.date }}</td>
+                </tr>
+				{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

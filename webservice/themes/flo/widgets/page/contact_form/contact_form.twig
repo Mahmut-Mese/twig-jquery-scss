@@ -1,0 +1,76 @@
+<script src='https://www.google.com/recaptcha/api.js?hl=tr'></script>
+<main>
+    <div class="login-page-wrapper">
+        <div class="container">
+            <div class="breadcrumbs-bar title-only mt-3">
+                <div class="page-title">
+                    <h1>İLETİŞİM</h1>
+                </div>
+            </div>
+            <div class="row medium-gutter mb-4">
+                <div class="col-sm-6">
+                    <div class="bg-white p-5 h-100">
+                        <form action="" id="contact_form" method="POST" class="flo-theme contact-form">
+                            <div class="form-group animated">
+                                <label>Adınız</label>
+                                <input type="text" name="first_name" class="form-control">
+                            </div>
+                            <div class="form-group animated">
+                                <label>Soyadınız</label>
+                                <input type="text" name="last_name" class="form-control">
+                            </div>
+                            <div class="form-group animated">
+                                <label>Email</label>
+                                <input type="text" name="email" class="form-control  input_lowercase" value="">
+                            </div>
+                            <div class="form-group phone-input">
+                                <label>Cep Telefonu Numaranız</label>
+                                <input type="tel" name="phone_number" class="form-control phones inputmask"
+                                       placeholder="0 (5 _ _ ) _ _ _  _ _  _ _"
+                                       data-inputmask="'mask': '0(599)-9999999'">
+                            </div>
+                            <div class="form-group selectbox animated">
+                                <select name="department" id="department" class="form-control custom-select">
+                                    <option value="">Departman Seçiniz</option>
+                                    {% for row in contact.department_list %}
+                                        <option value="{{ row.id }}">{{ row.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group selectbox animated">
+                                <select name="subject" id="subject" class="form-control custom-select">
+                                    <option value="">Departman Konusu Seçiniz</option>
+                                </select>
+                            </div>
+                            <div class="form-group animated">
+        							<textarea name="message" cols="30" rows="8" class="form-control"
+                                              placeholder="İletişime geçmek istediğiniz konuyu buraya yazabilirsiniz."></textarea>
+                            </div>
+                            {% if re_captcha.active == true and cf_post_time >= re_captcha.fail_num %}
+                                <div class="text-right mb-3">
+                                    <div class="g-recaptcha" data-sitekey="{{ re_captcha.site_key }}"></div>
+                                </div>
+                            {% endif %}
+                            <input type="submit"  class="btn btn-success btn-block btn-lg" value="GÖNDER">
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="bg-white p-5 h-100">
+                        <div class="text-center">
+                            <i class="svg-contact svg-contact-dims mb-4"></i>
+                            <p class="text-gray">Müşteri hizmetleri telefonlarımız, çağrılarınıza haftanın 7 günü 09:00
+                                - 19:00 saatleri
+                                arasında hizmet vermektedir. </p>
+                            <p class="text-gray">Müşteri hizmetleri mesaj servisimize 7 gün 24 saat mesaj
+                                gönderebilirsiniz. Göndereceğiniz
+                                mesajlarınız müşteri hizmetleri yetkililerimizce hızlı bir şekilde yanıtlanacaktır.</p>
+                            <p class="text-gray">Kişisel verilerinizin işlenmesine ilişkin detaylı bilgilere <a href="/sikayet-talep-aydinlatma-metni">Flo Mağazacılık ve Pazarlama A.Ş.
+                                    Şikayet Talep Sürecine İlişkin Kişisel Verilerin İşlenmesi Aydınlatma Metni</a>'nden ulaşabilirsiniz.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

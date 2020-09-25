@@ -1,0 +1,25 @@
+<div class="btns">
+    {% if coupons.activeCoupons is empty and coupons.passiveCoupons is empty %}
+        <br>
+        <p style="text-align: center">{{ 'Henüz bir kuponunuz bulunmamaktadır' | translate }}</p>
+    {% else %}
+        <a href="#" id="a-kayitli-kuponlarim">{{ 'Kayıtlı Kuponlarımı Göster' | translate }}</a>
+    {% endif %}
+</div>
+<div class="btns basket-kayitli-kuponlarim hidden">
+    {% for coupon in coupons.activeCoupons %}
+        <div class="basket-coupon-frame">
+			<div class="basket-coupon-name">{{ coupon.name }}</div>
+			<div class="basket-coupon-price">
+				{% if  coupon.is_percent  == 'by_percent' %}
+					% {{ coupon.discount_amount |number_format(0) }}
+				{% else %}
+					{{ coupon.discount_amount | price}}
+				{% endif %}
+
+			</div>
+			<div class="basket-coupon-code">{{ coupon.code }}</div>
+			<button class="basket-coupon-btn-frame btn btn-link" id="btn-kupon-kullan_{{ coupon.code }}">{{ 'KULLAN' | translate }}</button>
+        </div>
+    {% endfor %}
+</div>

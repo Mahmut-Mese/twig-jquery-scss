@@ -1,0 +1,18 @@
+{% for spotlight in bannerItems %}
+<div class="mc-md-4 pa mc-sm-4">
+    <div class="item lazy">
+        <a href="{{ spotlight.link }}" class="spotlightItem" data-spotlight-id="{{ spotlight.spotlight_id }}">
+            <div class="/images">
+                <img data-src="{{ spotlight.image_desktop }}" src="/pub/media/{{ spotlight.link }}"  class="resimatt" alt="{{ spotlight.title }}">
+            </div>
+
+            <div class="text">
+               {# <span>{{ spotlight.title }}</span>#}
+                {# <i></i> #}
+            </div>
+        </a>
+    </div>
+</div>
+{% endfor %}
+
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: bannerItems, element: element}}) }}

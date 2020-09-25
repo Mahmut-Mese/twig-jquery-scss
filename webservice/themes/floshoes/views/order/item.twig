@@ -1,0 +1,70 @@
+<div class="page searchnone">
+    <div class="container-fluid">
+        <div class="page-content sab">
+            <div class="whitepage">
+                <div class="title orange">{{ 'HESABIM / SİPARİŞ DETAY' | translate }}</div>
+                <div class="content">
+                    <div class="account">
+                        <div class="siparis-box">
+                            <div class="adress">
+                                <div class="titles">{{ 'Sipariş Bilgisi' | translate }}</div>
+                                <div class="contents">
+                                    <ul>
+                                        <li><b>{{ 'Sipariş Tarihi' | translate }}</b>{{ order.info.created_at | date('d.m.Y H:i')}}</li>
+                                        <li><b>{{ 'Sipariş No' | translate }}</b>{{ order.info.increment_id }}</li>
+                                        <li><b>{{ 'Sipariş Durumu' | translate }}</b> {{ status_list[order.info.status] }}</li>
+                                        <li><b>{{ 'Kargo Firması' | translate }}</b> B2C Direct  &nbsp;</li>
+                                        <li class="hei"><b>{{ 'Teslimat Adresi' | translate }}</b> <i>{{ order.shipping.firstname }} {{ order.shipping.lastname }}</i> {{ order.shipping.street }} {{ order.shipping.city }} T: {{ order.shipping.telephone }}</li>
+                                        <li class="hei"><b>{{ 'Fatura Adresi' | translate }}</b><i>{{ order.billing.firstname }} {{ order.billing.lastname }}</i> {{ order.billing.street }} {{ order.billing.city }} T: {{ order.billing.telephone }}</li>
+                                    </ul>
+                                    <p><a href="javascript:void(0);">{{ 'Faturayı Yazdır' | translate }}</a></p>
+                                </div>
+                            </div>
+                            <div class="last-detail">
+                                <div class="listes">
+                                    <table>
+                                        <tbody>
+                                            {% for product in order.products %}
+                                                <tr>
+                                                    <td>
+                                                        <div class="images">
+                                                            <a href="{{ product.url_key }}">
+                                                                <img src="{{ product.image }}" alt="">
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="text">
+                                                            <span></span>
+                                                            <p> <a href="{{ product.url_key }}">{{ product.name }}</a></p>
+                                                            <ul>
+                                                                <li>{{ product.option_name | translate}}: <b>{{ product.option_value }}</b></li>
+                                                                <li>{{ 'Adet' | translate }}: <b>{{ product.qty }}</b></li>
+                                                                <li>{{ 'Renk' | translate }}: <b>{{ product.color }}</b></li>
+                                                                <li>{{ 'Fiyat' | translate }}: <b>{{ product.special_price | price }}</b></li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    <div class="dts">
+                                        <ul>
+                                            <li><b>{{ 'Sipariş Tarihi' | translate }}</b> {{ order.info.created_at | date('d.m.Y H:i') }}</li>
+                                            <li><b>{{ 'Ödeme Şekli' | translate }} </b> {{ order.payment.method.method_title | translate }}</li>
+                                            <li><b>{{ 'Sipariş Tutarı' | translate }} </b> {{ order.info.base_grand_total | price}}</li>
+                                            <li><b>{{ 'Tahmini Teslim Tarihi' | translate }} </b> 29.02.2018</li>
+                                            <li><b>{{ 'İrtibat Tel' | translate }} </b>{{ order.shipping.telephone }}</li>
+                                            <li><b>{{ 'Teslimat Adresi' | translate }} </b>{{ order.shipping.firstname }} {{ order.shipping.lastname }}</i> {{ order.shipping.street }} {{ order.shipping.city }} T: {{ order.shipping.telephone }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

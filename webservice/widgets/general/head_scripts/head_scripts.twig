@@ -1,0 +1,54 @@
+<script>
+	var BASKET_BASE_URL = '{{ basket_base_url() }}';
+	
+    var domReadyCallbacks = [];
+    var applyCallbacks = function (callbacks) {
+        for (var i = 0; i < callbacks.length; i++) {
+            callbacks[i]();
+        }
+    };
+    var getScript = function (url, callback) {
+        var s = document.createElement('script');
+            s.src = url;
+            s.async = true;
+            s.onload = callback;
+
+        document.body.appendChild(s);
+    };
+    var GtmDataLayer = {
+        getKey: function (key) { return 'layerData.' + key },
+        set: function (key, value, session) {
+            window[session ? 'sessionStorage' : 'localStorage'].setItem('layerData.' + key, JSON.stringify(value));
+        },
+        get: function (key, session) {
+            return JSON.parse(window[session ? 'sessionStorage' : 'localStorage'].getItem('layerData.' + key));
+        },
+        remove: function (key) {
+            return window.localStorage.removeItem(this.getKey(key));
+        }
+    }
+    function wordInString(s, word) {
+        return new RegExp('\\b' + word + '\\b', 'i').test(s);
+    }
+</script>
+
+<script>
+	if ('serviceWorker' in navigator) {
+	    navigator.serviceWorker.register('/sw.js');
+	}
+</script>
+
+{% if config('env.gtm') and not disable_external_scripts %}
+<!-- Google Tag Manager -->
+    <script>
+    domReadyCallbacks.push(function () {
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push(
+            {'gtm.start': new Date().getTime(),event:'gtm.js'}
+        );var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','{{ config('env.gtm.accountId') }}');
+    });
+</script>
+<!-- End Google Tag Manager -->
+{% endif %}

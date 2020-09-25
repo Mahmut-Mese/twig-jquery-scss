@@ -1,0 +1,218 @@
+
+    <div class="cart-page-wrapper">
+        <div class="user-shopping-types">
+            <label class="flo-radio">
+                <input type="radio" name="user_type" data-target=".login-form-holder" checked>
+                <i></i>
+                <span>Giriş Yap</span>
+            </label>
+            <label class="flo-radio">
+                <input type="radio" name="user_type" data-target=".register-form-holder">
+                <i></i>
+                <span>Üye Ol</span>
+            </label>
+            <label class="flo-radio mb-4">
+                <input type="radio" name="user_type" data-target=".nonregister-form-holder">
+                <i></i>
+                <span>Üye Olmadan Devam Et</span>
+            </label>
+            <div class="password-reset-form-holder">
+                <form action="/" class="password-reset-form">
+                    <p>Lütfen e-mail adresinizi giriniz, yeni şifreniz e-mail adresinize gönderilecektir.</p>
+                    <div class="form-group animated">
+                        <label>Eposta Adresiniz</label>
+                        <input type="text" name="email" class="form-control  input_lowercase">
+                    </div>
+                    <button type="submit" class="btn btn-warning btn-lg btn-block">Gönder <i
+                                class="fa fa-angle-right font-weight-bold ml-2"></i></button>
+                </form>
+            </div>
+            <div class="login-form-holder cart-login-form active">
+                <form id="customer-login-form" action="#" data-redirect-url="/checkout/address"
+                      class="login-form"  method="POST">
+                    <div class="form-group animated">
+                        <label>Eposta Adresiniz</label>
+                        <input name="username" type="text" class="validate[required] form-control">
+
+                    </div>
+                    <div class="form-group password-input animated">
+                        <label>Şifreniz</label>
+                        <input name="password" type="password" class="validate[required] form-control">
+                        <a href="javascript:;">Göster</a>
+                    </div>
+                    <div class="text-right mb-5">
+                        <a href="/customer/password-forget" class="forgot-password text-dark"><u>Şifremi
+                                Unuttum</u></a>
+                    </div>
+                    <button type="submit" class="btn btn-warning btn-lg btn-block text-uppercase">Üye Girişi
+                        <i class="fa fa-angle-right font-weight-bold ml-2"></i></button>
+                    <a class="facebook-login" href="#">
+                        <button type="button"
+                                class="btn btn-primary btn-lg btn-block facebook-login-button facebook-login text-uppercase">
+                            <i class="fab fa-facebook-f"></i> Facebook ile bağlan
+                            <i class="fa fa-angle-right font-weight-bold ml-2"></i>
+                        </button>
+                    </a>
+                </form>
+            </div>
+            <div class="register-form-holder cart-login-form">
+                <form id="customer-register-form" action="#" data-redirect-url="/checkout/address"  method="POST"
+                      class="register-form">
+                    <div class="form-group animated">
+                        <label>Adınız</label>
+                        <input type="text" name="first_name" class="form-control input_ucfirst">
+                    </div>
+                    <div class="form-group animated">
+                        <label>Soyadınız</label>
+                        <input type="text" name="last_name" class="form-control input_ucfirst">
+                    </div>
+                    <div class="form-group animated">
+                        <label>Eposta Adresiniz</label>
+                        <input type="text" name="email" class="form-control  input_lowercase">
+                    </div>
+                    <div class="form-group phone-input">
+                        <label>Telefon Numaranız</label>
+                        <input type="tel" name="phone" class="form-control inputmask"
+                               placeholder="0 (5 _ _ ) _ _ _  _ _  _ _"
+                               data-inputmask="'mask': '0(599)-9999999'">
+                    </div>
+                    <div class="form-group password-input animated">
+                        <label>Şifreniz</label>
+                        <input type="password" name="password" class="form-control">
+                        <a href="javascript:;">Göster</a>
+                    </div>
+                    <div class="gender-choice mb-3">
+                        <div class="title">Cinsiyetinizi seçiniz</div>
+                        <label class="flo-radio">
+                            <input type="radio" class="new-radio validate[required]" value="1" name="gender"
+                                   checked>
+                            <i></i>
+                            <span>Kadın</span>
+                        </label>
+                        <label class="flo-radio">
+                            <input type="radio" class="new-radio validate[required]" value="1" name="gender"
+                                   checked>
+                            <i></i>
+                            <span>Erkek</span>
+                        </label>
+                    </div>
+                    <div class="checkboxes">
+
+                        {% for aggrement in aggrements %}
+                            <label class="flo-checkbox">
+                                <input type="checkbox" autocomplete="off" name="{{ aggrement.alias }}"
+                                       value="{{ aggrement.aggrement_id }}"
+                                       class="{{ aggrement.alias }} {% if  aggrement.alias == 'uyelik_sozlesmesi' or aggrement.alias == 'subscribed_kvkk' %} validate[required] {% endif %}">
+                                <span><i class="fa fa-check"></i></span>
+                                <div class="text-holder">
+                                    {{ aggrement.front_text|raw }}
+                                </div>
+
+                            </label>
+                        {% endfor %}
+
+                    </div>
+                    <button type="submit" class="btn btn-warning btn-lg btn-block text-uppercase">Üye Ol <i
+                                class="fa fa-angle-right font-weight-bold ml-2"></i></button>
+                    <
+                    <button type="button"
+                            class="btn btn-primary btn-lg btn-block facebook-login-button  facebook-login text-uppercase">
+                        <i
+                                class="fab fa-facebook-f"></i> Facebook ile Üye Ol <i
+                                class="fa fa-angle-right font-weight-bold ml-2"></i></button>
+                </form>
+            </div>
+            <div class="nonregister-form-holder cart-login-form">
+                <form id="guest-form" action="#" data-redirect-url="/checkout/address"
+                      class="nonregister-form">
+                    <div class="form-group animated">
+                        <label>Adınız</label>
+                        <input type="text" name="firstname"
+                               class="text-capital validate[required,custom[onlyLetterSp],minSize[2],funcCall[maskCaracter],funcCall[characterSpace]] form-control">
+                    </div>
+                    <div class="form-group animated">
+                        <label>Soyadınız</label>
+                        <input type="text" name="lastname"
+                               class="text-capital validate[required,custom[onlyLetterSp],minSize[2],funcCall[maskCaracter],funcCall[characterSpace]] form-control">
+                    </div>
+                    <div class="form-group animated">
+                        <label>Eposta Adresiniz</label>
+                        <input type="text" name="email"
+                               class="validate[required,custom[email],funcCall[characterTurkish]] form-control  input_lowercase">
+                    </div>
+                    <p>Kişisel verilerinizin işlenmesine ilişkin detaylı bilgilere <a href="/kisisel-verilerin-korunmasi" target="_blank"><strong>Kişisel Verilerin Korunması ve İşlenmesi Politikası</strong></a>’ndan ulaşabilirsiniz.</p>
+
+                    <button type="submit"
+                            class="btn btn-warning btn-lg btn-block text-uppercase nonregister-next-step-button">
+                        Sonraki Adım <i class="fa fa-angle-right font-weight-bold ml-2"></i></button>
+                </form>
+            </div>
+            {{ widget('social', 'facebook') }}
+
+            <!-- New Address Modal -->
+            <div class="modal flomodal fade" id="newShippingAddressModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Adres Bilgileri</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" id="addresses-form" class="new-address-form widget_checkout_address">
+                                <input type="hidden" name="success_url"
+                                       value="/checkout/address">
+                                {#                    {{ widget('address','fields',{address: address,regions:regions,towns:towns,countries:countries}) }}#}
+                                {{ widget('address','fields',{address_key:'shipping_address',towns:towns,regions:regions,countries:countries}) }}
+
+
+                                <div class="text-right mt-3 linkto">
+                                    <a href="javascript:void(0);">
+                                        <button type="button" id="formAddresSave"
+                                                class="btn btn-warning btn-lg text-white pl-5 pr-5">KAYDET
+                                        </button>
+                                    </a>
+
+                                </div>
+                                <input class="hidden" type="radio" name="shipping_method" value="FloShippingMng"
+                                       checked>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    var initialize = function () {
+        $(document).on('form.ajax.success', function (e, data) {
+            var id = $(data.el).attr('id');
+            var option = '';
+
+            if (id === 'customer-login-form') {
+                option = 'Giriş Yap';
+            } else if (id === 'customer-register-form') {
+                option = 'Üye Ol';
+            } else if (id === 'guest-form') {
+                option = 'Üye Olmadan Devam Et';
+            }
+
+            dataLayer.push({
+                'event': 'checkoutOption',
+                'ecommerce': {
+                    'checkout_option': {
+                        'actionField': {'step': 1, 'option': option}
+                    }
+                }
+            });
+
+        });
+    }
+
+    if (window.$) {
+        $(initialize);
+    } else {
+        domReadyCallbacks.push(initialize);
+    }
+</script>

@@ -1,0 +1,47 @@
+<div class="page saved-card">
+    <div class="container-fluid">
+        <div class="page-content">
+            <div class="whitepage">
+                <div class="title orange">{{ 'HESABIM / KAYITLI KARTLARIM' | translate }}</div>
+                <p>&nbsp;</p>
+                <div>
+                    <strong>Kayıtlı kartlarınız PayU’nun altyapısında saklanmaktadır. Kartınızla ilgili bilgiler tarafımızda
+                        tutulmamaktadır.</strong><br>
+                    Tek Tıkla Ödeme’de kredi kartı bilgileri PayU'nun Level 1 PCI DSS sertifikasına sahip güvenli
+                    ödeme altyapısında saklanıyor ve saklanan kredi kartı bilgileri “akıllı anahtar” (token) haline
+                    getirilerek müşterilerin bir sonraki alışverişinde yeniden kart bilgisi girmesine ihtiyaç
+                    duyulmadan sorunsuz bir şekilde bankaya iletilmesini sağlamaktadır.
+                    <br>
+                    Hiç Kayıtlı kartınız yok, siparişinizi oluştururken kredi kartı formunda yer alan "kartımı
+                    kaydet" seçeneğini işaretleyerek sonraki siparişlerinizde "tek tıkla ödeme" seçeneğini aktif
+                    edebilirsiniz.
+
+                </div>
+                <div class="content">
+                    <div class="my-account-list">
+                        <div class="siparis-box">
+                            <div class="location-page">
+                                {% if cards is empty %}
+                                    <p style="text-align: center">{{ 'Kayıtlı kartınız bulunmamaktadır' | translate }}</p>
+                                {% endif %}
+
+                                {% for card in cards %}
+                                    <div class="items">
+                                        <span>{{ card.program_name }}</span>
+                                        <div class="loc mini">
+                                            <em> {{ card.bin_number }}</em>
+                                        </div>
+                                        <div class="islem">
+                                            <button class="remove-saved-card" data-id="{{ card.saved_card_id }}">{{ 'KARTI SİL' | translate }}</button>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,197 @@
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tbody>
+    {# <tr>
+        <td>
+            <p><strong>{{ 'ÖN BİLGİLENDİRME FORMU' | translate }}</strong></p>
+        </td>
+    </tr> #}
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ '<p>1- Satıcının Ünvanı: FLO Mağazacılık ve Pazarlama A.Ş. (kısaca "instreet" olarak anılacaktır)<br><br>
+                Merkez Adresi : Taşocağı Caddesi No: 24 Bağcılar 34217 İstanbul / Türkiye<br>
+                Telefon : 0850 290 0 747<br><br>
+                2- Satışı yapılacak Ürünün özellikleri, fiyatı ve diğer bilgiler şu şekildedir; </p>' | translate | raw }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p></p>
+            <table align="left" cellpadding="0" border="0" width="100%">
+                <tbody>
+                <tr>
+                    <td>
+                        <p><strong>{{ 'Urun Adi' | translate }} </strong></p>
+                    </td>
+                    <td width="40">
+                        <p><strong>{{ 'Adet' | translate }}</strong></p>
+                    </td>
+                    <td width="100">
+                        {{ '<p><strong>Satis Bedeli <br></strong>(KDV dahil toplam)</p>' | translate | raw}}
+
+                    </td>
+                </tr>
+                {% for item in basket.items %}
+                    <tr class="say">
+                        <td>
+                            <p>{{ item.name }}</p>
+                        </td>
+                        <td>{{ item.qty }}</td>
+                        <td>
+                            <p>{{ item.row_total_incl_tax  | number_format(2) }} {{ basket.base_currency_code }}</p>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <p></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table align="left" cellpadding="0" border="0" width="100%">
+                <tbody>
+                <tr>
+                    <td>
+                        <p>&nbsp;</p>
+                    </td>
+                    <td width="255">
+                        <div class="basket-side">
+                            {{ widget('basket','mini_cart_detail',{ basket : basket, cash_on_delivery_fee: cash_on_delivery_fee}) }}
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>
+                <strong>{{ 'Teslimat Şekli' | translate }}:</strong> {{ config('env.mapping.shipping.' ~ basket.extension_attributes.shipping_assignments.0.shipping.method) }}<br>
+                <strong>{{ 'Teslimat Adresi' | translate }}:</strong> {{ shipping_address.firstname }} {{ shipping_address.lastname }}<br>{{ 'Adresi' | translate }} : {{ shipping_address.street.0 }} - {{ shipping_address.region }} / {{ shipping_address.city }}<br>Telefonu
+                : {{ shipping_address.telephone }}<br>
+                <strong>{{ 'Fatura Adresi' | translate }}:</strong> {{ basket.billing_address.firstname }} {{ basket.billing_address.lastname }}<br>{{ 'Adresi' | translate }} : {{ basket.billing_address.street.0 }} - {{ basket.billing_address.region }} / {{ basket.billing_address.city }}<br>{{ 'Telefonu' | translate }}
+                : {{ basket.billing_address.telephone }}<br>
+                <strong>{{ 'ALICI Tarafından Karşılanacak Diğer Masraflar' | translate }}:</strong> <br>
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>{{ 'ÖDEME ARAÇLARI' | translate }}: </strong><br>
+                {{ 'Ödemeler kredi kartı, taksitli kredi kartı ve kapıda nakit ödeme ile yapılabilmektedir.' | translate }}
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ '<p><strong>GÖNDERİM KISITLAMALARI: </strong><br>
+                Gönderim kısıtlamaları hakkında bilgi almak için lütfen
+                https://www.instreet.com.tr/musteri-hizmetleri/sss linkinde yer alan "TESLİMAT" başlığındaki
+                bilgileri kontrol ediniz.
+            </p>' | translate | raw }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ '<p>Teslimat , In Street tarafından kargo aracılığı ile yukarıda belirtilen teslimat adresine sipariş
+                onaylandıktan sonra 10 iş günü içinde yapılacaktır. Resmi tatiller ve dini/milli bayram günleri bu
+                süreden sayılmaz. Teslimat sırasında Müşteri ürünü muayene ettikten sonra teslim tutanağını
+                imzalayacaktır. Müşteri veya Müşteri adına hareket eden kişi bu teslim tutanağını imzalamakla, ürünü
+                tam, eksiksiz ve hasarsız olarak teslim aldığını beyan etmiş olacaktır. Kargo/nakliye ücreti
+                alınmamaktadır. Fiyat dahil işbu vaatlerin geçerliliği sipariş tarihinden itibaren 30 gündür. </p>' | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p>3- Cayma Hakkı: ALICI, aşağıdaki istisnalar hariç olmak üzere sözleşme konusu ürünün kendisine veya
+                gösterdiği adresteki kişi(ler)/kuruluşa tesliminden itibaren 14 (ondört) gün içinde cayma hakkını
+                kullanabilir. Cayma hakkının kullanılması için bu süre içinde SATICI'ya teyidi alınmak suretiyle
+            faks, e-mail veya telefon ile bildirimde bulunulması (mesafeli sözleşme ekindeki cayma formu
+            kullanılarak veya sair şekillerde) şarttır. Bu hakkın kullanılması halinde, 3. kişiye veya ALICI'ya
+            teslim edilen ürünün SATICI'ya iade gönderildiğine ilişkin kargo teslim tutanağı örneği ile fatura
+            aslının iadesi zorunludur. Bu belgelerin tam ve eksiksiz olarak SATICI’ya ulaşmasını takip eden 14
+            (ondört) gün içinde ürün bedeli ALICI'ya iade edilir. Cayma hakkı nedeni ile iade edilen ürünün
+            kargo bedeli SATICI tarafından karşılanır. Yurtdışı gönderilerinin iade edilmesi durumunda oluşan
+            gümrük borçlandırmaları alıcı tarafından ödenecektir. ALICI, cayma hakkını kullandığı yönünde
+            bildirim gerçekleştirdiği tarihi takip eden 10 (on) gün içinde ürünü SATICI’ya iade
+            etmelidir.<br><br>
+            ALICI isteğine veya kişisel ihtiyaçlarına istinaden özel hazırlanmış veya ürünün standart
+            niteliklerinde değişiklik yapılmış ürünler, hızlı bozulan veya son kullanım tarihi geçebilecek
+            ürünler ve tesliminden sonra ambalaj, bant, mühür, paket gibi koruyucu unsurları açılmış olan ve
+            iadesi sağlık ve hijyen açısından uygun olmayan ürünler için cayma hakkı kullanılamaz. Ürünlerde
+            cayma hakkının kullanılması, ürünün ambalajının bozulmamış, ürünün kullanılmamış ve yeniden
+            satılabilirlik özelliğini yitirmemiş olması şartına bağlıdır.
+            <br><br>
+            ALICI, Mesafeli Sözleşmeler Yönetmeliği gereği cayma hakkına ilişkin bilgilendirmenin gereği gibi
+            yapıldığını kabul eder.
+            </p>" | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p>4- Yukarıda verilen bilgiler tanıtma veya reklam amaçlı değildir. Ticari amaçla, ürün satışına
+                yönelik verilmişlerdir. Kredi kartı bilgilerinizi girmeniz ve satış işlemine onay vermeniz halinde
+                siparişiniz işleme konacaktır. </p>" | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ '<p> 5- "Müşteri", http://www.instreet.com.tr/ internet sitesinde satışı yapılan ürüne ait 3. maddede
+            belirtilen temel özellikleri, tüm vergiler dahil satış fiyatı, ödeme şekli ve teslimata ilişkin ön
+            bilgileri okuyup bilgi sahibi olduğunu ve elektronik ortamda bu hususlara ilişkin gerekli teyidi
+            verdiğini beyan ve kabul eder.</p>' | translate | raw }}
+
+        </td>
+    </tr>
+    </tbody>
+</table>

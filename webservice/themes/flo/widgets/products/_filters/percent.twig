@@ -1,0 +1,33 @@
+<div class="card {% if collapseHide != true %} active {% endif %}">
+    <a data-target="#collapse-{{ filter.alias }}" class="btn btn-link" data-toggle="collapse">
+        {{ filter.name | translate }} <i class="fas fa-angle-right"></i>
+    </a>
+    <div class="collapse {% if collapseHide != true %}show{% endif %}" id="collapse-{{ filter.alias }}">
+        <div class="card-body">
+            <div class="price-ranges">
+                <input type="text" class="form-control" placeholder="En Az" name="percent_min" value="{{ aggregations.percent_min }}" oninput="this.value=this.value.replace(/(?![0-9])./gmi,'')">
+                <span>-</span>
+                <input type="text" class="form-control" placeholder="En Çok" name="percent_max" value="{{ aggregations.percent_max }}" oninput="this.value=this.value.replace(/(?![0-9])./gmi,'')">
+
+                <button type="button" class="btn btn-percent-filter-submit"><i class="fa fa-angle-right"></i></button>
+            </div>
+            {% set prices = [
+                [0, 20, ((aggregations.percent_min or aggregations.percent_max) and (aggregations.percent_min == 0 or aggregations.percent_max == 20))],
+                [20, 40, (aggregations.percent_min <= 20 and aggregations.percent_max >= 40)],
+                [40, 60, (aggregations.percent_min <= 40 and aggregations.percent_max >= 60)],
+                [60, 80, (aggregations.percent_min <= 60 and aggregations.percent_max >= 80)]
+            ] %}
+            <div class="price-choices min-max clearfix">
+                {% for price in prices %}
+                    <div style="cursor:pointer;" class="flo-checkbox percent-check-div checkbox input w-100 {% if price[2] %}active selected{% endif %}" {% if price[2] %}data-is-selected="1"{% endif %}>
+                        <input type="checkbox" name="price_percent" class="price_percent percent-check" data-min="{{ price[0] }}" data-max="{{ price[1] }}" {% if price[2] %}checked{% endif %} />
+                         {{ '%' | translate }} {{ price[0] }} - {{ '%' | translate }} {{ price[1] }}
+                        <span>
+                            <i class="fa fa-check"></i>
+                        </span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

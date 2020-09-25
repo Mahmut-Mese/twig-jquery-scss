@@ -1,0 +1,222 @@
+{{ widget('datalayer', 'product_detail', {layerData: {product: product, breadcrumbs: breadcrumb}} ) }}
+
+<div id="product-detail-page" data-product-id="{{ product.id }}" class="product-detail">
+    <div class="breadcrumb" style="padding: 0 0 10px 15px">
+        <ul>
+            <li>
+                <a href="/" >{{ 'ANASAYFA' | translate }}</a>
+            </li>
+            {% for cat in breadcrumb %}
+                <li>
+                    <a href="/{{ cat.url }}">{{ cat.name | translate | upper }}</a>
+                </li>
+            {% endfor %}
+            <li>
+                <a href="javascript:void(0);" >{{ product.name | raw }}</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="pro-detail">
+        <div class="top">
+            <div class="mc-md-7 mc-sm-12 pa">
+                <div class="detail-images">
+                    <div class="slider-nav">
+                        {% for image in product.media_gallery %}
+                            <div class="item">
+                                <div class="imgs">
+                                    <img src="{{ image.url|resize('160x160') }}" class="resimatt" alt="">
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="slider-for">
+                        {% for image in product.media_gallery %}
+                            <div class="item">
+                                <a href="{{ image.url }}" data-fancybox="images">
+                                    <img src="{{ image.url|resize('480x480') }}" class="resimatt" alt="">
+                                    <div class="zoomimages">
+                                        <img src="{{ image.url|resize('1000x1000') }}" class="resimatt" alt="">
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="mc-md-5 mc-sm-12 pa">
+                <div class="detail-text">
+                    <div class="text">
+                        <span>{{ product.manufacturer | raw }}</span>
+                        <p>{{ product.name | raw }}</p>
+                        <div class="money">
+                            {% if product.special_price %}
+                                <i class="prev">{{ product.price|price }}</i>
+                            {% endif %}
+                            <i class="next">{{ product|price }}</i>
+                        </div>
+                    </div>
+                    <div class="beden-box">
+                        <div class="title">{{ 'BEDEN SEÇ' | translate }}</div>
+                        <div class="list">
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    {% for option in product.options %}
+                                        <label {% if option.is_in_stock is empty %} class="nostok" {% endif %}>
+                                            <div class="input-radio {% if product.options|length == 1 %} selected{% endif %}"{% if option.is_in_stock is empty %} data-disabled="1" {% endif %} {% if product.options|length == 1 %} data-selected="1" {% endif %}data-name="option_sku_{{ product.id }}" data-value="{{ option.sku }}" data-option="{{ option.option_value }}" style="position: relative;">
+                                                {{ option.option_value }}
+                                            </div>
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{ widget('products', 'modal_size_chart') }}
+
+                    {% if product.color_options %}
+                        <div class="other-color">
+                            <div class="title">{{ 'DİĞER RENKLER' | translate }}</div>
+                            <div class="list">
+                                <div class="renk-grup">
+                                    <ul>
+                                        {% for color_option in product.color_options %}
+                                            <li{% if color_option.sku == product.sku %} class="active"{% endif %}>
+                                                <a href="{{ color_option.url }}">
+                                                    <img src="{{ color_option.image|resize('66x66') }}"
+                                                         class="resimatt" alt="">
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div id="sepeteekle" style="display: none;">
+                        <div class="title">{{ 'SEPET' | translate }}</div>
+                        <div class="detail-bas">
+                            <div class="ico">
+                                <img src="/pub/assets/instreet/images/big-basket.png" alt="">
+                                <i class="cart-count"></i>
+                            </div>
+                            <p>{{ 'Ürün Sepetinize eklenmiştir.' | translate }}</p>
+                            <span>{{ 'Sepetinizde' | translate }} <i class="cart-count red"></i> {{ 'ürün bulunmaktadır.' | translate }}</span>
+                            <div class="bottom">
+                                <a href="javascript:void(0)" onclick="$.fancybox.close()">{{ 'Alışverişe Devam Et' | translate }}</a>
+                                <a href="{{ basket_base_url() }}/basket">{{ 'Sepete Git' | translate }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="basket-button">
+                        <div class="linkto">
+                            <a id="clickSepeteekle" class="hidden various d-visible" href="#sepeteekle">{{ 'SEPETE EKLE' | translate }}</a>
+                            <a id="add2cart" data-has-option="{% if product.options %}1{% else %}0{% endif %}"
+                               data-product-id="{{ product.id }}" data-sku="{{ product.sku }}" class="add-to-cart"
+                               href="">{% if product.qty %}{{ 'SEPETE EKLE' | translate }}{% else %}{{ 'HABER VER' | translate }}{% endif %}</a>
+                        </div>
+                    </div>
+                    <div class="pro-other-link">
+                        <ul>
+                            <li>
+                                <a class="various d-visible" href="#bedentablosu">{{ 'Beden Tablosu' | translate }}</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="add-wishlist various d-visible"
+                                   data-product-id="{{ product.id }}">{{ 'Favorilerime Ekle' | translate }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="other-last-buttons">
+                        <div class="social">
+                            <ul>
+                                <li><a href="http://www.facebook.com/sharer.php?u={{ url_info['current'] }}"
+                                       target="_blank">
+                                        <i class="fa fa-facebook"></i></a></li>
+                                <li>
+                                    <a target="_blank" href="https://twitter.com/share?url={{ url_info['current'] }}&amp;text=Share%20Buttons&amp;hashtags=floayakkabi"><i
+                                                class="fa fa-twitter"></i></a></li>
+                                <li><a target="_blank" href="https://www.youtube.com/user/floayakkabi"><i
+                                                class="fa fa-youtube"></i></a></li>
+                                <li><a target="_blank" href="https://www.instagram.com/floayakkabi/?hl=tr"><i class="fa fa-instagram"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        {# TODO #}
+                        {#<div class="damping">#}
+                            {#<a class="various d-visible" href="#damping">İndirime Girince Haber Ver</a>#}
+                        {#</div>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ widget('general', 'modal_installment_table',{price:product.price}) }}
+        <div class="tab-list">
+            <div class="mc-md-12 mc-sm-12 pa">
+                <div class="pro-tab">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#urunbilgileri">{{ 'Ürün Hakkında' | translate }}</a></li>
+                        <li><a data-toggle="tab" href="#teslimat">{{ 'Teslimat ve İade' | translate }}</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="urunbilgileri" class="tab-pane fade in active">
+                            <div class="content">
+                                <table>
+                                    {% for description_field in description_fields %}
+                                        {% if product[description_field] is not empty %}
+                                            <tr>
+                                                <td>{{ attribute_labels[description_field] | translate }} :</td>
+                                                <td>{{ product[description_field] | translate }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                </table>
+                            </div>
+                        </div>
+                        <div id="teslimat" class="tab-pane fade">
+                            {{ widget('products', 'tab_teslimat') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="product-your">
+    <div class="container-fluid">
+        {{ widget('products', 'product_slider', {title: 'Sizin İçin Seçtiklerimiz' | translate, data_source: 'sizin-icin-sectiklerimiz' }) }}
+    </div>
+</div>
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": "{{ product.name }}",
+        "image": [
+        {% for media in product.media_gallery %}
+            "{{ media.url }}"{% if not loop.last %},{% endif %}
+        {% endfor %}
+        ],
+        "description": "{{ product.image_label|default(product.name) }}",
+        "brand": {
+            "@type": "Thing",
+            "name": "{{ product.manufacturer }}"
+        },
+        "offers": {
+            "@type": "Offer",
+            "priceCurrency": "TL",
+            "price": "{{ product.third_price | default(product.special_price) |default(product.price) }}",
+            "priceValidUntil": "{{ product.special_to_date }}",
+            "itemCondition": "https://schema.org/NewCondition",
+            "availability": "https://schema.org/InStock",
+            "url": "{{ config('env.webservice.url.web') ~ product.url|trim('/', 'left') }}",
+            "seller": {
+                "@type": "Organization",
+                "name": "Instreet"
+            }
+        },
+        "sku": "{{ product.sku }}"
+    }
+</script>

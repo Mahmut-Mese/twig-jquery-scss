@@ -1,0 +1,95 @@
+{% if config('env.development') == true %}
+<script src="/pub/assets/polyfill/intersection-observer-polyfill.js"></script>
+<script src="/pub/assets/flo-mobile/js/app.js" onload="applyCallbacks(domReadyCallbacks)"></script>
+<script src="/pub/assets/lib/swiper/swiper.min.js"></script>
+<script src="/pub/assets/flo/js/flo.js?v={{ git_version() }}"></script>
+<script src="/pub/assets/lib/jquery.cookie/jquery.cookie.js"></script>
+<script src="/pub/assets/lib/jquery.visible/jquery.visible.js"></script>
+<script src="/pub/assets/lib/niceselect/jquery.nice-select.min.js"></script>
+<script src="/pub/assets/lib/lazy/lazy.min.js?v={{ git_version() }}"></script>
+<script src="/pub/assets/lib/accounting/accounting.js?v={{ git_version() }}"></script>
+<script src="/pub/assets/js/datalayer/datalayer.gtm.js?v={{ git_version() }}"></script>
+<script src="/pub/assets/js/rg.commerce.js?v={{ git_version() }}"></script>
+
+<script type="text/javascript" src="/pub/assets/js/main.js?v={{ git_version() }}"></script>
+<script type="text/javascript" src="/pub/assets/js/instreet.custom.js?v={{ git_version() }}"></script>
+<script type="text/javascript" src="/pub/assets/flo/js/search-history.js?v={{ git_version() }}"></script>
+<script src="/pub/assets/flo-mobile/js/flo.js?v={{ git_version() }}"></script>
+<script type="text/javascript" src="/page/translations"></script>
+{% else %}
+    {% set themeName = config('env.webservice.theme.mobile')|join(':') %}
+	
+	<script>
+        var jqueryLoadCallback = function () {
+			applyCallbacks(domReadyCallbacks);
+			// getScript('/page/translations');
+        };
+    </script>
+    <script src="/pub/assets/dist/{{ themeName }}/{{ themeName }}-prod.js?v={{ git_version() }}" onload="jqueryLoadCallback()" async></script>
+{% endif %}
+
+
+
+
+
+<div class="cookie-policy hide"> <div class="cookie-close" onclick="cookieClose()"> X </div>
+    <div class="cookie-text">
+        {{ 'İnternet sitemizde çerez kullanılmaktadır. Çerezler hakkında detaylı bilgi için
+        <strong class="" style="cursor: pointer;text-decoration: underline;"><a href="page?url=gizlilik-ve-cerez">Çerez Politikası</a>
+        </strong>’nı inceleyiniz. Devam etmeniz halinde çerez kullanımına izin verdiğinizi kabul edeceğiz.' | translate | raw }}
+
+    </div>
+</div>
+
+<div id="block-box" class="lazy">
+    <img src="/pub/media/lazyloading/blank.png" data-src="/pub/assets/flo/img/loading/flo_loading_white.gif" /><br />
+    <div class="text"></div>
+</div>
+
+<div class="widget widget_basket_mini_cart hide" data-widget="basket/mini_cart"></div>
+
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "İstanbul",
+            "addressRegion": "TR",
+            "postalCode": "34218",
+            "streetAddress": "Mahmutbey Mahallesi, Taşocağı caddesi Ziylan İş Merkezi, 34218 Bağcılar/İstanbul"
+        },
+        "contactPoint": [
+            {
+                "@type": "ContactPoint",
+                "contactType": "customer service",
+                "email": "musteriiliskileri@sportinstreet.com.tr",
+                "telephone": "+90-0850-290-07-47"
+            }
+        ],
+        "image": "https://www.instreet.com.tr/skin/frontend/instreet/desktop/images/logo.png",
+        "logo": "https://www.instreet.com.tr/skin/frontend/instreet/desktop/images/logo.png",
+        "name": "Instreet",
+        "sameAs": [
+            "https://www.facebook.com/sportinstreet",
+            "https://www.youtube.com/user/sportinstreet",
+            "https://www.instagram.com/instreet"
+        ],
+        "telephone": "+90-0850-290-07-47",
+        "url": "https://www.instreet.com.tr"
+    }
+</script>
+
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "WebSite",
+        "url": "{{ config('env.webservice.url.web') }}",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "{{ config('env.webservice.url.web') }}search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+</script>

@@ -1,0 +1,204 @@
+<input type="hidden" class="widget_params" name="widget_params"
+       value="manufacturer_id={{ manufacturer_id }}&category_id={{ category_id }}&gender_general={{ gender_general }}&special_price={{ special_price }}&q={{ q }}&sort={{ active_sorting }}&request_url={{ request_url }}"/>
+
+{% if load_more %}
+    <div class="row product-grid product-lists commerce-load-more products-wrapper">
+		<a href="#" data-page-no="{{ current_page }}" style="display:block;float:left;"></a>
+
+		{% set products_count = products|length %}
+		{% for product in products %}
+			{{ include('themes/ninewest/widgets/products/_element/list', {product: product,gorunum: gorunum,free_shipping_limit: free_shipping_limit,season_options: season_options,categoryId: category_id,manufacturerId: manufacturer_id,gender: gender_general,query: q}) }}
+
+			{% if loop.index == (products_count * 4 / 5)|round(0, 'ceil') %}
+				<div class="commerce-load-more-button" data-page-no="{{ current_page + 1 }}"
+					data-params="page={{ current_page + 1 }}"></div>
+			{% endif %}
+		{% endfor %}
+
+		{{ widget('datalayer', q is empty ? 'category_scroll' : 'search_scroll', {layerData: {productList: products, categoryList: breadcrumb, categoryId: category_id, totalCount: total_count, query: q }} ) }}
+    </div>
+{% else %}
+
+<div class="container" id="commerce-product-list">
+
+	{% if products | length != 0 %}
+		<div class="row">
+			<div class="col-xs-6">
+				<ol class="breadcrumb">
+					<li><a href="/">{{ 'ANASAYFA' | translate }}</a></li>
+					{% for item in breadcrumb %}
+						<li><a href="/{{ item.url }}{{ item.query_string }}">{{ item.name | upper_tr }}</a></li>
+					{% endfor %}
+				</ol>
+			</div>
+			<div class="col-xs-6">
+				<div class="h1_silider_container">
+					<div class="h1_silider">
+						<h1 class="h1_label">{{ registry('head_one')|default('Nine West') }}</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="category_filters">
+			<div class="product-list-filter">
+				<div class="row">
+					<div class="col-xs-12 col-sm-6 pos-static">
+					
+						{% if aggregations["category"] %}
+							{{ include("themes/ninewest/widgets/products/_filters/list", { aggregations: aggregations['category'], filter: aggregation, filters: filters, original_request_url: original_request_url}) }}
+						{% endif %}
+
+						<div class="product-list-filter-container"><a href="#" class="btn btn-default product-list-filter-toggle">{{ 'FİLTRELE' | translate }}</a>
+							<div class="product-list-filter-inner">
+
+								{% for aggregation in aggregation_orders %}
+									{% if aggregations[aggregation.alias] and aggregation.alias != 'category' and aggregation.alias != 'gender' %}
+										{{ include("themes/ninewest/widgets/products/_filters/" ~ aggregation.type, { aggregations: aggregations[aggregation.alias], filter: aggregation, filters: filters, original_request_url: original_request_url}) }}
+									{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 clearfix">
+						<div class="product-list-filter-right">
+							<div class="product-list-filter-sorting">
+								<label>{{ 'SIRALAMA' | translate }}</label>
+								<select class="form-control" id="product-list-sorting-dropdown">
+									{% for sorting in sorting_options %}
+											<option value="{{ sorting.key }}" {% if sorting.key == active_sorting %}selected{% endif %}>{{ sorting.value | translate }}</option>
+									{% endfor %}
+								</select>
+								{# <a href="#" class="product-list-filter-sort"><i class="fas fa-sort-down"></i></a> #}
+							</div>
+							<div class="product-list-filter-display">
+								<a href="#" class="two-column gorunum {% if gorunum == '2' %}active{% endif %}" data-value="2"><span></span><span></span></a>
+								<a href="#" class="three-column gorunum {% if gorunum == '3' %}active{% endif %}" data-value="3"><span></span><span></span><span></span></a>
+								<a href="#" class="four-column gorunum {% if gorunum == '1' %}active{% endif %}" data-value="1"><span></span><span></span><span></span><span></span></a>
+							</div>
+							<div class="product-list-filter-count">{{ total_count }} {{ 'ÜRÜN' | translate }}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% if active_filters %}
+				<div class="row">
+					<div class="col-xs-12">
+						<ul class="product-list-filter-selected">
+							{% for filter in active_filters %}
+								<li><span>{{ filter.name }}</span><a href="javascript:;" class="selected-filter remove-filter" data-filter-value="{{ filter.value|replace({'&' : '%26'}) }}"> <i class="fa fa-times"></i></a></li>
+							{% endfor %}
+							<li><a href="javascript:;" class="form-reset-button clearfilt"> <i class="fa fa-times"></i>Tümünü Temizle</a></li>
+						</ul>
+					</div>
+				</div>
+			{% endif %}
+
+		</div>
+	{% endif %}
+
+	<div class="product-list product-grid product-lists commerce-load-more">
+		{% if products|length != 0 %}
+			<div class="row">
+				<div class="products-wrapper">
+				{# {% if current_page == 1 %}
+					<a href="#" data-page-no="{{ current_page }}"
+						style="display:block;float:left;"></a>
+				{% endif %} #}
+
+				{% set products_count = products|length %}
+				{% for product in products %}
+					{% if loop.index > 9 and loop.index % 9 == 1 %}
+						<a href="#"
+							data-datalayer-scroll-page="{{ (loop.index / 9)|round + 1 }}"
+							style="display:block;float:left;"></a>
+					{% endif %}
+
+					{# {% if (products|length > limit) and ((loop.index % limit) == 0) %}
+						<a href="#" data-page-no="{{ (loop.index / limit)|round + 1 }}"
+							style="display:block;float:left;"></a>
+					{% endif %} #}
+
+					{{ include('themes/ninewest/widgets/products/_element/list', {product: product, gorunum: gorunum,free_shipping_limit:free_shipping_limit,season_options:season_options,categoryId: category_id,manufacturerId: manufacturer_id,gender: gender_general,query: q}) }}
+
+					{# {% if loop.index == (products_count * 4 / 5)|round(0, 'ceil') %}
+						<a class="commerce-load-more-button"
+							data-page-no="{{ current_page + 1 }}"
+							data-params="page={{ current_page + 1 }}"></a>
+					{% endif %} #}
+				{% endfor %}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+
+				{% set activeFilters = '' %}
+				{% if q != empty %}
+					{% set activeFilters = activeFilters ~ '&q=' ~ q %}
+				{% endif %}
+
+				{% if active_sorting != empty %}
+					{% set activeFilters = activeFilters ~ '&sort=' ~ active_sorting %}
+				{% endif %}
+
+				{% for key, value in queries %}
+					{% set activeFilters = activeFilters ~ '&'~ key ~'=' ~ value %}
+				{% endfor %}
+
+				{% if aggregations['price'].min %}
+					{% set activeFilters = activeFilters ~ '&min=' ~ aggregations['price'].min %}
+				{% endif %}
+
+				{% if aggregations['price'].max %}
+					{% set activeFilters = activeFilters ~ '&max=' ~ aggregations['price'].max %}
+				{% endif %}
+
+
+				{% if aggregations['price_percent'].percent_min %}
+
+					{% set activeFilters = activeFilters ~ '&percent_min=' ~ aggregations['price_percent'].percent_min %}
+				{% endif %}
+
+				{% if aggregations['price_percent'].percent_max %}
+					{% set activeFilters = activeFilters ~ '&percent_max=' ~ aggregations['price_percent'].percent_max %}
+				{% endif %}
+				{{ pagination(current_page, total_count, limit, 1, (original_request_url), activeFilters, 'pagination-lg justify-content-center') }}
+			</div>
+
+		{% else %}
+
+		<div class="whitepage w-100 not-found text-center">
+			{% if q is empty %}
+				<p>{{ 'İlgili kategori ile ilgili sonuç bulunamamıştır.' | translate }}</p>
+			{% else %}
+				<p><strong>{{ q }} </strong>{{ 'ile ilgili sonuç bulunamamıştır.' | translate }}</p>
+				<div class="">
+					{{ widget('products', 'product_slider', {title: 'Sizin İçin Seçtiklerimiz' | translate, data_source: 'sizin-icin-sectiklerimiz' }) }}
+				</div>
+			{% endif %}
+		</div>
+
+		{% endif %}
+	</div>
+</div>
+
+{{ widget('datalayer', q is empty ? 'category' : 'search', {layerData: {productList: products, categoryList: breadcrumb, categoryId: category_id, totalCount: total_count, query: q, queries:queries, original_request_url: original_request_url, gorunum: gorunum, sorting_options: sorting_options, active_sorting: active_sorting, activePage: current_page}} ) }}
+
+<script type="application/ld+json"> 
+{
+	"@context": "http://schema.org",
+	"@type": "BreadcrumbList",
+	"itemListElement": [
+		{% for item in breadcrumb %}
+		{
+			"@type": "ListItem",
+			"position": {{ loop.index }},
+			"item": {
+				"@id": "{{ config('env.webservice.url.web') }}{{ item.url }}", "name ": "{{ item.name }}"
+			}
+		}{% if loop.last != true %},{% endif %}
+		{% endfor %}
+	]
+}
+</script>
+{% endif %}

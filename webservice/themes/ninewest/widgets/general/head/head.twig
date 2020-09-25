@@ -1,0 +1,64 @@
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+<meta name="robots" content="{% if meta_robots.robots is empty %}INDEX,FOLLOW{% else %}{{ meta_robots.robots }}{% endif %}" />
+<title> {{ registry("page_title")|default(meta.title) }}</title>
+<meta name="description" content="{{ meta.description }}"/>
+<link rel="canonical" href="{{ meta.canonical }}" />
+<link rel="alternate" href="{{ meta.alternate }}" hreflang="tr" />
+
+{% if meta.prev is not empty %}
+<link rel="prev" href="{{ meta.prev }}" />
+{% endif %}
+{% if meta.next is not empty %}
+<link rel="next" href="{{ meta.next }}" />
+{% endif %}
+<meta name="google-site-verification" content="O56PMaF5T-u2-qKfS4AZoAPxg3YzFNHqIa-IV18vIv8" />
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+{# <meta name="apple-itunes-app" content="ap-id=1436146422" />
+<meta name="google-play-app" content="app-id=tr.com.flo" /> #}
+{% if registry("page_type") == "search" %}
+
+    <meta name="robots" content="noindex, follow" />
+{% endif %}
+<meta property="og:locale" content="tr_TR" />
+<meta property="og:title" content="{{ registry("page_title")|default(meta.title) }}">
+<meta property="og:site_name" content="www.ninewest.com.tr">
+<meta property="og:image" content="{{ meta.image }}">
+<meta property="og:url" content="{{ meta.canonical }}">
+<meta property="og:type" content="website">
+<meta property="fb:app_id" content="{{ registry('fb_app_id') }}">
+<meta property="fb:admins" content="">
+<meta property="og:description" content="{{ meta.description }}" />
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@ninewestturkiye">
+<meta name="twitter:creator" content="@ninewestturkiye">
+<meta name="twitter:title" content="{{ registry("page_title")|default(meta.title) }}">
+<meta name="twitter:description" content="{{ meta.description }}">
+<meta name="twitter:image" content="{{ meta.image }}">
+<link  rel="shortcut icon" type="image/x-icon" href="{{ config('env.webservice.url.web') }}pub/assets/ninewest/img/favicon.jpg" />
+
+{# <li1nk rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:300,400,500,600,700&amp;subset=latin-ext&display=block" /> #}
+
+{% if config('env.development') == true %}
+	<link rel="stylesheet" href="/pub/assets/ninewest/fonts/proximanova-a/style.css">
+	<link rel="stylesheet" href="/pub/assets/lib/bootstrap3/css/bootstrap.min.css?v={{ git_version() }}"/>
+	<link rel="stylesheet" href="/pub/assets/lib/fontawesome4/css/all.css?v={{ git_version() }}"/>
+	<link rel="stylesheet" href="/pub/assets/lib/swiper/swiper.min.css?v={{ git_version() }}"/>
+	<link rel="stylesheet" href="/pub/assets/lib/fancybox/jquery.fancybox.min.css?v={{ git_version() }}"/>
+	<link rel="stylesheet" href="/pub/assets/lib/niceselect/jquery.nice-select.min.css?v={{ git_version() }}">
+	<link rel="stylesheet" href="/pub/assets/lib/mmenu/jquery.mmenu.all.css?v={{ git_version() }}">
+	<link rel="stylesheet" href="/pub/assets/lib/jssocials/jssocials.css?v={{ git_version() }}">
+	<link rel="stylesheet" href="/pub/assets/lib/jssocials/jssocials-theme-flat.css?v={{ git_version() }}">
+	<link rel="stylesheet" href="/pub/assets/ninewest/css/ninewest.css?v={{ git_version() }}"/>
+	<link rel="stylesheet" href="/pub/assets/ninewest/css/custom.css?v={{ git_version() }}"/>
+{% else %}
+    {% set themeName = (config('env.webservice.theme.web')[0]) %}
+
+    <style>
+        {{ loadCSS('pub/assets/dist/'~ themeName ~'/'~ themeName ~'-prod.css') }}
+    </style>
+{% endif %}
+<script>
+	window.mapMarkerIcon = '';
+</script>

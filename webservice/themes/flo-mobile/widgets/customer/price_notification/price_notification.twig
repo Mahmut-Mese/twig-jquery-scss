@@ -1,0 +1,61 @@
+<main role="main">
+
+    <div class="account-page-wrapper">
+        <div class="page-title-bar">
+            <a href="/" class="go-back-link">
+                <i class="svg-slide-arrow-left svg-slide-arrow-left-dims"></i>
+            </a>
+            <h1>GERİ DÖN</h1>
+        </div>
+        {% if price_alerts is empty %}
+            <div class="bg-white p-4">
+                <h5 class="font-weight-normal mb-3">FİYAT HABERCİSİ</h5>
+                <div class="row justify-content-center text-center">
+                    <div class="col-10 font-weight-normal">
+                        <div>
+                            <img src="/pub/assets/flo/img/empty-price-alerts.svg">
+                        </div>
+                        <div>
+                            <img src="/pub/assets/flo/img/empty-favourites-shadow.png">
+                        </div>
+                        <h4 class="mb-4">Fiyat Habercisi’nde Henüz Ürün Yok
+                        </h4>
+                        <p class="mb-4 pb-2">Aşağıdaki butonuna tıklayıp, Alışverişe Başlayabilir  istediğiniz ürünleri Fiyat Habercisi’ne ekleyebilirsiniz.</p>
+                        <a href="/" class="btn orange-gradient w-75 fs-14 ml-auto mr-auto mb-4">ALIŞVERİŞE BAŞLA <i class="fa fa-angle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="p-3">
+                <h5 class="font-weight-normal mb-3">FİYAT HABERCİSİ</h5>
+                <div class="price-page-wrapper">
+                    <div class="row medium-gutter mb-5">
+                        {% for price_alert in price_alerts %}
+                            <div class="col-6">
+                                <a href="{{ price_alert.url }}" class="product-box">
+                                    <figure>
+                                        <span class="badge badge-info">İnternete özel</span>
+                                        <img src="{{ price_alert.image|resize('280x280') }}">
+                                        <span class="remove-from-price-button" data-product-id="{{ price_alert.id}}"></span>
+                                    </figure>
+                                    <span class="title">{{ price_alert.manufacturer }}</span>
+                                    <span class="description">{{ price_alert.name }}</span>
+                                    <span class="prices discounted">
+                                                   {% if price_alert.special_price %}
+                                                       <span class="old-price">{{ price_alert.price | price }}</span> &nbsp;
+                                                   {% endif %}
+                                                <span class="price">{{ price_alert | price}}</span>
+                                                </span>
+                                 <!--   <span class="discount">
+                                                    Sepette %20 İndirim
+                                                    <span class="text-warning">129,99 TL</span>
+                                                </span> -->
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</main>

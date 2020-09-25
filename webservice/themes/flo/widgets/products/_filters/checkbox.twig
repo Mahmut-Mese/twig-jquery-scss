@@ -1,0 +1,17 @@
+<div class="form-group">
+    <span class="open">{{ filter.name | translate }}</span>
+    <div class="all">
+        {% for agg in aggregations %}
+            <div class="{% if filter.box %}checkboxs{% else %}checkbox{% endif %} {% if filter.full %} full {% endif %}input {% if ( agg.value in filters) %}selected{% endif %}" data-value="{{ agg.value }}" data-name="filters[]" {% if ( agg.value in filters) %}data-is-selected="1"{% endif %}>
+                <label class="">
+                {% if filter.box %}
+                    <div class="icbtn" style="position: relative;"></div>
+                {% else %}
+                    <div class="icheckbox_square_gold" style="position: relative;"></div>
+                {% endif %}
+                    {{ agg.name | translate | raw }}
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,154 @@
+{% if layerData.cart %}
+    <script>
+        var dataLayer = window.dataLayer || [];
+
+        domReadyCallbacks.push(function () {
+            $(function () {
+                $.cookie('creditcard_saved', $('#save-card-command').hasClass('checked') ? 1 : 0);
+            });
+        });
+
+        dataLayer.push({
+            'event': 'checkoutOption',
+            'ecommerce': {
+                'checkout_option': {
+                    'actionField': {
+                        'step': 2,
+                        'option': '{{ layerData.cart.extension_attributes.shipping_assignments.0.shipping.method }}'
+                    }
+                }
+            }
+        });
+
+        var google_tag_params = {
+            site_type: "d",
+            page_type: "payment",
+            url: "{{ config('env.webservice.url.web') }}checkout/payment",
+            breadcrumb: {
+                path: "Anasayfa > Ödeme",
+                last_crumb: "Ödeme"
+            },
+            checkout_cart: {
+                cart_id: "{{ layerData.cart.id }}",
+                cart_totalValue: "{{ layerData.cart.base_grand_total }}",
+                cart_totalQuantity: "{{ layerData.cart.items_qty }}"
+            }
+        };
+
+        google_tag_params.checkout_cart.brand = [];
+        google_tag_params.checkout_cart.color = [];
+        google_tag_params.checkout_cart.size = [];
+        google_tag_params.checkout_cart.currency = [];
+        google_tag_params.checkout_cart.tying_type = [];
+        google_tag_params.checkout_cart.model = [];
+        google_tag_params.checkout_cart.group_id = [];
+        google_tag_params.checkout_cart.discount_rate = [];
+        google_tag_params.checkout_cart.discount_amount = [];
+        google_tag_params.checkout_cart.main_category = [];
+        google_tag_params.checkout_cart.sub_category = [];
+        google_tag_params.checkout_cart.category_id = [];
+        google_tag_params.checkout_cart.gender = [];
+        google_tag_params.checkout_cart.material = [];
+        google_tag_params.checkout_cart.sku = [];
+        google_tag_params.checkout_cart.price = [];
+        google_tag_params.checkout_cart.special_price = [];
+        google_tag_params.checkout_cart.name = [];
+        google_tag_params.checkout_cart.short_desc = [];
+        google_tag_params.checkout_cart.season = [];
+        google_tag_params.checkout_cart.category_ids = [];
+        google_tag_params.checkout_cart.variant = [];
+        google_tag_params.checkout_cart.image = [];
+        google_tag_params.checkout_cart.url_key = [];
+        google_tag_params.checkout_cart.stock_status = [];
+        google_tag_params.checkout_cart.stock_qty = [];
+        google_tag_params.checkout_cart.quantity = [];
+        google_tag_params.checkout_cart.offer = [];
+        google_tag_params.checkout_cart.offer_status = [];
+
+        {% for item in layerData.cart.items %}
+        google_tag_params.checkout_cart.brand.push('{{ item.data.manufacturer }}');
+        google_tag_params.checkout_cart.color.push('{{ item.data.renk }}');
+        google_tag_params.checkout_cart.variant.push('{{ item.data.renk }}');
+
+        {% for option in item.data.options %}
+        {% if option.is_selected %}
+        google_tag_params.checkout_cart.size.push('{{ option.option_value }}');
+        {% endif %}
+        {% endfor %}
+
+        google_tag_params.checkout_cart.currency.push('TRY');
+        google_tag_params.checkout_cart.tying_type.push('{{ item.data.baglama_sekli }}');
+        google_tag_params.checkout_cart.model.push('{{ item.model }}');
+        google_tag_params.checkout_cart.group_id.push('{{ item.data.sku }}');
+        google_tag_params.checkout_cart.discount_rate.push('{{ item.discount_percent }}');
+        google_tag_params.checkout_cart.discount_amount.push('{{ item.discount_amount }}');
+        google_tag_params.checkout_cart.main_category.push('{{ item.data.categories|first.name }}');
+        google_tag_params.checkout_cart.sub_category.push('{{ item.data.categories|last.name }}');
+        google_tag_params.checkout_cart.category_id.push('{{ item.data.categories|first.id }}');
+        google_tag_params.checkout_cart.gender.push('{{ item.data.gender }}');
+        google_tag_params.checkout_cart.material.push('{{ item.data.saya_malzeme }}');
+        google_tag_params.checkout_cart.sku.push('{{ item.sku }}');
+        google_tag_params.checkout_cart.price.push('{{ item.data.price | default(item.price) | number_format(2) }}');
+        google_tag_params.checkout_cart.special_price.push('{{ item.data.third_price | default(item.third_price) | default(item.data.special_price) | default(item.price) | number_format(2) }}');
+        google_tag_params.checkout_cart.name.push('{{ item.name }}');
+        google_tag_params.checkout_cart.short_desc.push('{{ item.description }}');
+        google_tag_params.checkout_cart.season.push('{{ item.data.sezon_yil }} - {{ item.data.season }}');
+        google_tag_params.checkout_cart.category_ids.push('{{ item.data.category_ids|join(',') }}');
+        google_tag_params.checkout_cart.image.push('{{ item.data.image }}');
+        google_tag_params.checkout_cart.url_key.push('{{ item.data.url_key }}');
+        google_tag_params.checkout_cart.stock_status.push('{{ item.data.is_in_stock ? 1 : 0 }}');
+        google_tag_params.checkout_cart.stock_qty.push('{{ item.data.qty }}');
+		google_tag_params.checkout_cart.quantity.push('{{ item.qty }}');
+		
+		{% set rule = item.data.rule_info | first %}
+		google_tag_params.checkout_cart.offer_status.push({{ item.data.rule_info ? 1 : 0 }});
+		google_tag_params.checkout_cart.offer.push('{{ rule.label }}');
+		
+        {% endfor %}
+
+        var ecommerce = {
+            checkout: {
+                actionField: {
+                    step: 3,
+                    action: "checkout"
+                },
+                products: [
+                    {% for item in layerData.cart.items %}
+                    {
+                        id: "{{ item.data.sku }}",
+                        name: "{{ item.data.name }}",
+                        brand: "{{ item.data.manufacturer }}",
+                        price: "{{ item.third_price | default(item.price_incl_tax) | number_format(2) }}",
+                		category: "{{ item.data.ecommerce_categories | default(item.data.categories|first.name ~ '/' ~ item.data.categories|last.name) }}",
+                        variant: "{{ item.data.renk }}",
+                        quantity: "{{ item.qty }}",
+                        dimension2: "{% for option in item.data.options %}{% if option.is_selected %}{{ option.option_value }}{% endif %}{% endfor %}",
+                        dimension9: "{{ item.data.model }}",
+                        dimension17: "{{ item.data.gender }}",
+                        dimension18: "{{ item.data.sezon_yil }} - {{ item.data.season }}",
+                        dimension29: "{{ item.data.category_ids|last }}",
+                        dimension30: "{{ item.data.categories|first.name }}",
+                        dimension31: "{{ item.data.categories|last.name }}",
+                        dimension32: "{{ item.data.saya_malzeme }}",
+                        dimension33: "{{ item.data.qty }}",
+                        dimension34: "{{ item.data.price }}",
+                        dimension35: "{{ item.data.is_in_stock ? 1 : 0 }}",
+                        dimension36: "TRY",
+                        dimension37: "{{ item.sku }}",		
+						
+						{% set rule = item.data.rule_info | first %}
+						dimension40: {{ item.data.rule_info ? 1 : 0 }},
+						dimension41: "{{ rule.label }}",
+                    }{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                ]
+            }
+        };
+
+        dataLayer.push({
+            'event': 'checkout_step3',
+            'ecommerce': ecommerce,
+            'google_tag_params': google_tag_params
+        });
+    </script>
+{% endif %}

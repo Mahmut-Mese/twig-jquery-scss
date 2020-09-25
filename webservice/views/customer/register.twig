@@ -1,0 +1,119 @@
+<div class="page searchnone">
+    <div class="container-fluid">
+        <div class="page-content sab">
+            <div class="whitepage">
+                <div class="title">{{ 'Üye Ol' | translate }}</div>
+                <div class="form online">
+                    <div class="centersGiris">
+                        <div class="form online">
+                            <form id="customer-register-form" class="customer-register-form "  method="POST">
+                                <div class="form-group required">
+                                    <em>{{ 'Adınız' | translate }}*</em>
+                                    <input name="first_name" type="text" class="validate[required,custom[onlyLetterSp],minSize[2],funcCall[maskCaracter],funcCall[characterSpace]]" placeholder="" value="{{ first_name }}">
+                                </div>
+                                <div class="form-group required">
+                                    <em>{{ 'Soyadınız' | translate }}*</em>
+                                    <input name="last_name" type="text" class="validate[required,custom[onlyLetterSp],minSize[2],funcCall[maskCaracter],funcCall[characterSpace]]" placeholder="" value="{{ last_name }}">
+                                </div>
+                                <div class="form-group required">
+                                    <em>{{ 'E-Posta Adresi' | translate }}*</em>
+                                    <input name="email" type="text"  class="validate[required,custom[email],funcCall[characterTurkish]] customer-email" placeholder="" value="{{ email }}">
+                                </div>
+                                <div class="form-group required">
+                                    <em>{{ 'Telefon Numarası' | translate }}*</em>
+                                    <input type="text" name="phone" class=" phones  validate[required] inputmask" placeholder="0 (5 _ _ ) _ _ _  _ _  _ _" data-inputmask="'mask': '0(599)-9999999'">
+
+                                </div>
+                                <div class="form-group pass required">
+                                    <em>{{ 'Şifreniz' | translate }}*</em>
+                                    <input name="password" type="password" class="validate[required,minSize[5]]" placeholder="">
+                                </div>
+                                <div class="form-group date-select hidden ">
+                                    <em>{{ 'Doğum Tarihiniz' | translate }}*</em>
+                                    <select style="display: none;" name="dob_day">
+                                        <option value="day">Gün</option>
+                                        {% for i in 1..31 %}
+                                            <option value="{{ "%02d"|format(i) }}">{{ "%02d"|format(i) }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <select style="display: none;" name="dob_month">
+                                        <option value="month">Ay</option>
+                                        {% for i in 1..12 %}
+                                            <option value="{{ "%02d"|format(i) }}">{{ "%02d"|format(i) }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <select style="display: none;" name="dob_year">
+                                        <option value="year">{{ 'Yıl' | translate }}</option>
+                                        {% for i in 'now'|date('Y')..1900 %}
+                                            <option value="{{ i }}">{{ i }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="form-group date-select gender">
+                                    <em>{{ 'Cinsiyet' | translate }} *</em>
+                                    <div class="checkbox-group">
+                                        <div class="checkbox checkbox-radio">
+                                            <label>
+                                                <div class="new-radio">
+                                                    <input class="new-radio validate[required]" type="radio" value="2" name="gender"
+                                                    >{{ 'Kadın' | translate }}
+                                                    <ins></ins>
+                                                </div>
+
+                                            </label>
+                                        </div>
+                                        <div class="checkbox checkbox-radio ">
+                                            <label>
+                                                <div class="new-radio iradio_square_gold">
+                                                    <input type="radio" value="1" name="gender" class="validate[required]"
+                                                    >{{ 'Erkek' | translate }}
+                                                    <ins></ins>
+                                                </div>
+
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if re_captcha.active == true and rf_post_time >= re_captcha.fail_num %}
+                                    <div class="field">
+                                        <div class="form-group">
+                                            <div class="col-md-3"></div>
+                                            <div class="col-md-8">
+                                                <div class="g-recaptcha" data-sitekey="{{ re_captcha.site_key }}"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                <div class="note">*{{ 'Yıldızlı alanların girişi zorunludur.' | translate }} </div>
+                                <div class="form-group adim2lastcheck ">
+                                    <div class="checkbox">
+                                        {% for aggrement in aggrements %}
+                                            <label>
+                                                <div class="icheckbox_square_gold new-checkbox ">
+                                                    <input type="checkbox" autocomplete="off" name="{{ aggrement.alias }}" value="{{ aggrement.aggrement_id }}" class="{{ aggrement.alias }} {% if  aggrement.alias == 'uyelik_sozlesmesi' or aggrement.alias == 'subscribed_kvkk'   %} validate[required] {% endif %}">
+                                                </div>
+
+                                                {{ aggrement.front_text|raw }}
+                                            </label>
+
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="submit">
+                                    <button class="register-submit">{{ 'ÜYE OL' | translate }}</button>
+                                </div>
+                                <div class="submit" style="margin-bottom: 10px;">
+                                    <a id="facebook-login" class="facebook-login" href="#">{{ 'FACEBOOK İLE ÜYE OL' | translate }}</a>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{ widget('social', 'facebook') }}

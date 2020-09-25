@@ -1,0 +1,17 @@
+<div class="banners pb-3 lazy swiper-container swiper-autoinit"
+     data-swiper-slides-per-view="2.2"
+     data-swiper-space-between="9"
+>
+    <div class="swiper-wrapper">
+        {% for spotlight in spotlights %}
+            <div class="swiper-slide">
+                <a href="{{ spotlight.link }}" class="banner-box" data-spotlight-id="{{ spotlight.spotlight_id }}">
+                    {{ img('lazyloading/blank.png', '', {  class:'w-100', cdn: 'general' }, spotlight.image_mobil) }}
+                    <span class="title">{{ spotlight.title }}</span>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: spotlights}}) }}

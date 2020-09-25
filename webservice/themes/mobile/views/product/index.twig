@@ -1,0 +1,12 @@
+<div class="page no-footer">
+    <div class="container-fluid">
+        {{ widget('products', 'detail') }}
+
+        <div class="product-your">
+            <div class="container-fluid">
+                {{ widget('products', 'product_slider', {title: 'Sizin İçin Seçtiklerimiz' | translate, data_source: 'sizin-icin-sectiklerimiz' }) }}
+            </div>
+        </div>
+
+    </div>
+</div>

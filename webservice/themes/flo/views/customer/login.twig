@@ -1,0 +1,90 @@
+<script src='https://www.google.com/recaptcha/api.js?hl=tr'></script>
+<div class="login-page-wrapper">
+    <div class="container">
+        <div class="breadcrumbs-bar title-only mt-3">
+            <div class="page-title">
+                <h1>ÜYE GİRİŞİ</h1>
+            </div>
+        </div>
+        <div class="row medium-gutter mb-4">
+            <div class="col-sm-6">
+                <div class="bg-white p-4 h-100">
+                    <form id="customer-login-form" action="" class="login-form" novalidate="novalidate"  method="POST">
+                        <div class="form-group animated">
+                            <label>E-Mail</label>
+                            <input type="text" class="form-control" name="username">
+                        </div>
+                        <div class="form-group animated">
+                            <label>Şifreniz</label>
+                            <input type="password" class="form-control" name="password">
+                        </div>
+                        {% if login.failures_num >= login.show_fail_num and login.active == true %}
+                            <div class="text-right mb-3">
+                                <div class="g-recaptcha" data-sitekey="{{ login.site_key }}"></div>
+                            </div>
+                        {% endif %}
+                        <div class="text-right mb-3">
+                            <a href="/customer/password-forget">Şifremi Unuttum</a>
+                        </div>
+                        <button type="submit" class="btn btn-lg btn-block btn-warning text-white mb-3">ÜYE GİRİŞİ <i
+                                    class="fa fa-angle-right"></i></button>
+						<button type="button" class="btn btn-lg btn-block btn-info mb-4 facebook-login"><i
+									class="fab fa-facebook-f"></i> FACEBOOK İLE GİRİŞ YAP <i
+									class="fa fa-angle-right"></i></button>
+                        <div class="text-center">
+                            <a href="/customer/register">Hesabınız yoksa hemen üye ol</a>
+                        </div>
+
+
+						{{ widget('social', 'facebook') }}
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="bg-white p-4">
+                    <h2>ÜYELİK AVANTAJLARI</h2>
+                    <div class="icon-box">
+                        <i class="svg-login-advantage-1 svg-login-advantage-1-dims"></i>
+                        <div>
+                            <h4>Kampanya</h4>
+                            <p>Kampanya dönemlerinde yapılan sürpriz indirimlerden,
+                                stoklar ve bedenler tükenmeden ilk sizin haberiniz olsun.</p>
+                        </div>
+                    </div>
+                    <div class="icon-box">
+                        <i class="svg-login-advantage-2 svg-login-advantage-2-dims"></i>
+                        <div>
+                            <h4>Size Özel Kupon Fırsatları</h4>
+                            <p>Üyelerimize özel yaptığımız kupon etkinliklerinden faydalanın</p>
+                        </div>
+                    </div>
+                    <div class="icon-box">
+                        <i class="svg-login-advantage-3 svg-login-advantage-3-dims"></i>
+                        <div>
+                            <h4>Kolay İade Seçeneği</h4>
+                            <p>Flo Üyeleri, hiç kullanmadığı ürünleri 60 gün içerisinde hızlı ve kolay
+                                bir işlemle iade edebilme avantajından yararlanırlar.</p>
+                        </div>
+                    </div>
+                    <div class="icon-box">
+                        <i class="svg-login-advantage-4 svg-login-advantage-4-dims"></i>
+                        <div>
+                            <h4>Kapıda Nakit Ödeme</h4>
+                            <p>Flo üyeleri kapıda nakit ödeme avantajından yararlanabilirler.</p>
+                        </div>
+                    </div>
+                    <div class="icon-box">
+                        <i class="svg-login-advantage-5 svg-login-advantage-5-dims"></i>
+                        <div>
+                            <h4>FLO Mobil Uygulamamız ile Sürpriz Avantajlar</h4>
+                            <p>Flo Mobil Uygulamasına özel yaptığımız etkinliklerden ilk
+                                sizin haberiniz olsun.</p>
+                        </div>
+                    </div>
+                    <a href="/customer/register" class="btn btn-lg btn-success btn-block mt-4">ÜYE OL <i
+                                class="fa fa-angle-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

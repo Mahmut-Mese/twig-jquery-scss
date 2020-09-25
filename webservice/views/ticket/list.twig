@@ -1,0 +1,50 @@
+<div class="page searchnone">
+    <div class="container-fluid">
+        <div class="page-content sab">
+            <div class="whitepage">
+                <div class="title orange">{{ 'HESABIM / MÜŞTERİ HİZMETLERİ' | translate }}</div>
+                <div class="content">
+                    <div class="centerContent">
+                        {% if ticket.list %}
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">{{ 'TALEP NO' | translate }}</th>
+                                        <th class="text-left">{{ 'KONU' | translate }}</th>
+                                        <th class="text-left">{{ 'SON CEVAP TARİHİ' | translate }}</th>
+                                        <th class="text-left">{{ 'TALEP TARİHİ' | translate }}</th>
+                                        <th class="text-left">{{ 'DURUMU' | translate }}</th>
+                                        <th class="text-left">{{ 'İŞLEM' | translate }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in ticket.list %}
+                                    <tr>
+                                        <td>{{ row.screenId }}</td>
+                                        <td>{{ row.subject }}</td>
+                                        <td>{% if row.yanit_sayisi > 1 %}
+                                            {{ row.lastReplyTime | date('d.m.Y H:i')}}
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ row.createTime | date('d.m.Y H:i') }}</td>
+                                        <td>{{ row.statusLabel }}</td>
+
+
+                                        <td>
+                                            <a href="/ticket/detail?ticket_id={{ row.ticketId }}" >{{ 'DETAY' | translate }}</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                        <div class="title">
+                            <a href="/ticket/new" class="save-button" style="width: 400px;">{{ 'Yeni Talep Oluştur' | translate }}</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

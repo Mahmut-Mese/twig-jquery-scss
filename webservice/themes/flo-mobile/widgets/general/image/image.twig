@@ -1,0 +1,5 @@
+<a class="lazy d-block" href="{{ spotlight.link }}" data-spotlight-id="{{ spotlight.spotlight_id }}">
+    <img src="/pub/media/lazyloading/blank.png" data-src="/pub/media/{{ spotlight.image_desktop }}" class="w-100" alt="{{ spotlight.title }}">
+</a>
+
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: [spotlight], element: '.promotion_image'}}) }}

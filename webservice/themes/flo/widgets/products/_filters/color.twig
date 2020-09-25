@@ -1,0 +1,36 @@
+{# <div class="form-group">
+    <span class="open"></span>
+    <div class="all">
+        {% for agg in aggregations %}
+            <div class="{% if filter.box %}checkboxs{% else %}checkbox{% endif %} {% if filter.full %} full {% endif %}input {% if ( agg.value in filters or agg.value_star in filters) %}selected{% endif %}" data-value="{{ agg.value }}" data-name="filters[]" {% if ( agg.value in filters) %}data-is-selected="1"{% endif %}>
+                <label class="">
+                {% if filter.box %}
+                    <div class="icbtn" style="position: relative;"></div>
+                {% else %}
+                    <div class="icheckbox_square_gold" style="position: relative;"></div>
+                {% endif %}
+                    {{ agg.name | translate | raw }}
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+</div> #}
+
+<div class="card {% if collapseHide != true %} active {% endif %}">
+    <a class="btn btn-link" data-toggle="collapse">
+        {{ filter.name | translate }} <i class="fa fa-angle-right"></i>
+    </a>
+    <div class="collapse">
+        <div class="card-body">
+            <div class="color-choices">
+
+                {% for agg in aggregations %}
+                    <label class="flo-checkbox {% if ( agg.value in filters or agg.value_star in filters) %}selected{% endif %}" data-value="{{ agg.value }}" data-name="filters[]" {% if ( agg.value in filters) %}data-is-selected="1"{% endif %}>
+                        <input type="checkbox"> {{ agg.name | translate | raw }}
+                        <span><i class="fa fa-check"></i></span>
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

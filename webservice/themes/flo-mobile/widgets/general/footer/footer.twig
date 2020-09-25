@@ -1,0 +1,88 @@
+{% if(footer_desc is not empty) %}
+    <div class="footer-content">
+        <div class="container">
+            <div class="holder">
+                {{ footer_desc | raw }}
+            </div>
+            <div class="text-center">
+                <a href="javascript:;" class="read-more">
+                    <i class="svg-arrow-up svg-arrow-up-dims"></i>
+                    <span>DEVAMI</span>
+                    <i class="svg-arrow-down svg-arrow-down-dims"></i>
+                </a>
+            </div>
+
+
+        </div>
+    </div>
+{% endif %}
+<footer class="site-footer lazy">
+    <div class="container">
+        <div class="footer-top">
+            <div class="widgets-holder">
+                <div class="footer-widget">
+                    <h5>Müşteri Hizmetleri</h5>
+                    <ul class="footer-links">
+                        <li><a href="/kampanyalar">Kampanyalar</a></li>
+                        <li><a href="/page?url=sss-mobile">Sıkça Sorulan Sorular</a></li>
+                        <li><a href="/page?url=sss-mobile-uyelik&tab=uyelik">Üyelik İşlemleri</a></li>
+                        <li><a href="/page?url=sss-mobile-iade&tab=iade">İade ve Değişim</a></li>
+                        <li><a href="/iletisim">Yardım</a></li>
+                        <li><a href="/tuketici-yasasi-mobile">Tüketici Yasası</a></li>
+                        <li><a href="/gizlilik-ve-cerez-mobile">Gizlilik ve Çerez Politikası</a></li>
+                        <li><a href="/kisisel-verilerin-korunmasi-mobile">Kişisel Verilerin Korunması</a></li>
+                        <li><a href="/page?url=tikla-gel-al">Tıkla Gel Al</a></li>
+                        <li><a href="/sevdiklerinize-hediyeler">{{ 'Hediye' | translate }}</a></li>
+                    </ul>
+                </div>
+                <div class="footer-widget">
+                    <h5>Kurumsal</h5>
+                    <ul class="footer-links">
+                        <li><a href="/magaza">Mağazalarımız</a></li>
+                        <li><a href="/page?url=ik-politikamiz">İnsan Kaynakları</a></li>
+                        <li><a href="/page?url=kurumsal-iletisim">İletişim</a></li>
+                        <li class="logged-out"><a href="/guest-order-verify">{{ 'Sipariş Takibi' | translate }}</a></li>
+                        <li ><a  href="/turuncu-bagcik">{{ 'Turuncu Bağcıklar' | translate }}</a></li>
+                        <li ><a href="http://flotomic.com/">{{ 'Flotomic' | translate }}</a></li>
+
+
+                    </ul>
+                </div>
+                <div class="footer-widget">
+                    <h5>Takip Edin</h5>
+                    <ul class="footer-links">
+                        <li><a target="_blank" href="https://www.facebook.com/floayakkabi">Facebook</a></li>
+                        <li><a target="_blank" href="https://twitter.com/floayakkabi">Twitter</a></li>
+                        <li><a target="_blank" href="https://tr.pinterest.com/flomagazacilik/">Pinterest</a></li>
+                        <li><a target="_blank" href="https://www.instagram.com/floayakkabi/">Instagram</a></li>
+                        <li><a target="_blank" href="https://www.flo.com.tr/blog/">FLO Blogger</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="app-links" id="deeplink"
+                 data-android-url="https://play.google.com/store/apps/details?id=com.flo.ayakkabi"
+                 data-ios-url="https://app.adjust.com/ezo46eq?deep_link=flo://home"
+                 data-deep-url="flo://home">
+                {% if device == 'Android' %}
+                <a href="/" class="d-block mb-3" id="open" >
+                    <img src="/pub/media/lazyloading/blank.png" data-src="/pub/assets/flo-mobile/img/google-play.png">
+                </a>
+                {% endif %}
+                {% if device == 'iPhone' or device == 'iPad' or device == 'iPod' %}
+                    <a href="/" class="d-block mb-3" id="open">
+                        <img src="/pub/media/lazyloading/blank.png" data-src="/pub/assets/flo-mobile/img/appstore.png">
+                    </a>
+                {% endif %}
+
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <img src="/pub/media/lazyloading/blank.png" data-src="/pub/assets/flo-mobile/img/m-footer-payment.svg" class="w-100 mb-3">
+            <img src="/pub/media/lazyloading/blank.png" data-src="/pub/assets/flo-mobile/img/m-footer-cards.svg" class="w-100">
+        </div>
+    </div>
+    <div class="copyright">
+        © 2019 FLO.COM.TR. TÜM HAKLARI SAKLIDIR.
+    </div>
+</footer></div>
+

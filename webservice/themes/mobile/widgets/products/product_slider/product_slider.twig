@@ -1,0 +1,21 @@
+<div class="all">
+    <div class="title">{{ title }}</div>
+    <div class="list">
+        <div class="items">
+            {% set bannerItems = [] %}
+            {% for product in products.products %}
+                {% set bannerItems = bannerItems|merge([
+                    {
+                        spotlight_id: product.id,
+                        link: product.url,
+                        image: product.image|resize('250x250'),
+                        title: product.name,
+                        sorder: loop.index
+                    }]
+                    ) %}
+                {{ include('widgets/products/_element/general_mobile', {product: product, isSpotlight: true}) }}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: bannerItems, element: '.our-your-select'}}) }}

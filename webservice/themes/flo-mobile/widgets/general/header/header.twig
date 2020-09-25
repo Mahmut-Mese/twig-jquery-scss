@@ -1,0 +1,97 @@
+{% if config('env.gtm') %}
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id={{ config('env.gtm.accountId') }}"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+{% endif %}
+<header class="site-header lazy">
+    <div class="main-menu">
+        <div class="top-menu">
+            <div class="menu-left">
+                <a href="#mobile-menu" class="open-menu-button">
+                    <i class="svg-bars svg-bars-dims"></i>
+                </a>
+                <a href="/" class="logo">
+                    <img src="/pub/assets/flo/img/logo.svg" alt="FLO">
+                </a>
+            </div>
+            <div class="menu-right">
+                <ul class="nav-top">
+                    {% if search_bar == 'close'  %}
+                        <li>
+                            <a href="javascript:;" class="open-search-panel">
+                                <i class="svg-search svg-search-dims"></i>
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li class="logged-out">
+                        <a class="customer-login">
+                            <i class="svg-user svg-user-dims"></i>
+                        </a>
+                    </li>
+                    <li class="logged-in hide">
+                        <a href="/customer/myaccount">
+                            <i class="svg-user svg-user-dims"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/customer/wishlist">
+                            <i class="svg-heart svg-heart-dims"></i>
+                        </a>
+                    </li>
+                    <li class="mini-cart">
+                        <a href="{{ basket_base_url() }}/basket">
+                            <span style="position:relative;">
+                                <span class="">
+                                    <span class="number cart-count cart-count-mobile"></span>
+                                </span>
+                                <i class="svg-mini-cart svg-mini-cart-dims"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% if search_bar != 'close'  %}
+            <form action="/" class="search-form">
+                <input type="text" class="form-control open-search-panel" placeholder="42 Numara Kinetix">
+                <button type="submit"><i class="svg-search svg-search-dims"></i></button>
+            </form>
+        {% endif %}
+        {% if menubar != 'close'  %}
+            <div class="bottom-menu swiper-container swiper-autoinit" data-swiper-free-mode="true" data-swiper-slides-per-view="auto" data-swiper-space-between="0">
+                <ul class="swiper-wrapper">
+                    <li class="swiper-slide"><a href="/kadin">Kadın</a></li>
+                    <li class="swiper-slide"><a href="/erkek">Erkek</a></li>
+                    <li class="swiper-slide"><a href="/cocuk">Çocuk</a></li>
+                    <li class="swiper-slide"><a href="/spor-ayakkabi">Spor</a></li>
+                    <li class="swiper-slide"><a href="/aksesuar">Aksesuar</a></li>
+                    <li class="swiper-slide"><a href="/giyim">Giyim</a></li>
+                    <li class="swiper-slide"><a href="/tum-kategoriler?min=&max=&percent_min=40&percent_max=80">Outlet</a></li>
+                    <li class="swiper-slide"><a href="/marka">Markalar</a></li>
+                    <li class="swiper-slide"><a href="/tum-kategoriler">Tüm Kategoriler</a></li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+    <nav id="mobile-menu-custom" class="mobile-menu lazy">
+        {{ menuHtmlMobile|raw }}
+    </nav>
+</header>
+
+<div class="search-panel">
+    <div class="panel-header">
+        <a href="javascript:;" class="close-search-panel"><i class="svg-slide-arrow-left svg-slide-arrow-left-dims"></i></a>
+        
+        <form action="/search" class="search-form">
+            <input type="text" class="form-control commerce-autocomplete" placeholder="42 Numara Kinetix" name="q">
+            <button><i class="svg-search-orange svg-search-orange-dims"></i></button>
+        </form>
+    </div>
+    
+    <div class="panel-body">
+        {{ widget('products', 'autocomplete') }}
+    </div>    
+</div>

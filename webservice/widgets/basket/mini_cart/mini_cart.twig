@@ -1,0 +1,41 @@
+<div class="cart-item-count">
+    {{ 'Sepetinizde <i class="cart-count"></i> ürün <span class="cart-text">bulunmaktadır</span>.' | translate | raw }}
+</div>
+{% for item in basket.items %}
+    <div class="item">
+        <div class="text">
+            <div class="images" style="cursor: pointer;">
+                <img src="{{ item.data.image|resize('100x65') }}" class="resimatt" onclick="location.href='{{ item.data.url }}'"/>
+            </div>
+            <div class="als">
+                <span class="brand-name"><a href="/search?q={{ item.data.manufacturer |raw }}">{{ item.data.manufacturer | raw }}</a></span>
+
+                <span onclick="location.href='{{ item.data.url }}'" style="cursor: pointer">{{ item.data.name }}</span>
+                <div class="money">
+                    {% if item.data.third_price is not empty %}
+                        <i class="next">{{ item.qty }} x {{ item.data.third_price | price }}</i>
+                    {% else %}
+                        <i class="next">{{ item.qty }} x {{ item.base_price_incl_tax | price }}</i>
+                    {% endif %}
+                    {% if item.data.special_price %}
+                        <i class="prev">{{ item.qty }} x {{ item.data.price | price }}</i>
+                    {% endif %}
+
+                </div>
+            </div>
+            <i class="close close-minicart" id="close-minicart-desktop" data-id="{{ item.item_id }}" data-sku="{{ item.sku }}">x</i>
+        </div>
+    </div>
+{% endfor %}
+
+{{ widget('datalayer', 'all_pages', {layerData: {cart: basket}, pushEvent: false}) }}
+
+{% if basket.items|length %}
+    <div class="more">
+        <a href="{{ basket_base_url() }}/basket">{{ 'SEPETE GİT' | translate }}</a>
+    </div>
+{% else %}
+    {# <div class="more">
+        <a href="javascript:void(0)" onclick="$.fancybox.close()">{{ 'ALIŞVERİŞE DEVAM ET' | translate }}</a>
+    </div> #}
+{% endif %}

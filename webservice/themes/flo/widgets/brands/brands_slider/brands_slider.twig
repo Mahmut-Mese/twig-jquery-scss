@@ -1,0 +1,18 @@
+<div class="logos-bar lazy swiper-container swiper-autoinit"
+    data-swiper-slides-per-view="8"
+    data-swiper-navigation="false"
+    data-swiper-free-mode="true"
+>
+    <div class="swiper-wrapper">
+        {% for brand in brands %}
+            <div class="swiper-slide">
+                <a href="/{{ brand.url }}" class="logo-box" data-spotlight-id="{{ brand.brand_id }}">
+                    {{ img('lazyloading/blank.png', '', { title: brand.title, cdn: 'general' }, brand.image) }}
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: brands}}) }}
+

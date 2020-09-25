@@ -1,0 +1,47 @@
+<div class="account-page-wrapper">
+    <div class="page-title-bar">
+        <a href="/" class="go-back-link"><i class="svg-slide-arrow-left svg-slide-arrow-left-dims"></i></a>
+        <h1>Hesabım</h1>
+    </div>
+    <div class="container">
+        <ul class="account-menu">
+            <li>
+                <a href="/customer/edit"><i class="svg-account svg-account-dims"></i> Hesap Bilgileri</a>
+            </li>
+			<li>
+				<a href="/customer/wishlist" class="{% if active_class=='customer_wishlist' %}active{% endif %}"><i
+							class="svg-orders-cart svg-orders-cart-dims"></i> Favorilerim</a>
+			</li>
+            <li>
+                <a href="/customer/orders"><i class="svg-orders-cart svg-orders-cart-dims"></i> Siparişlerim</a>
+            </li>
+            <li>
+                <a href="/customer/address/index"><i class="svg-addresses svg-addresses-dims"></i> Adres Defteri</a>
+            </li>
+            <li>
+                <a href="/customer/coupons"><i class="svg-discount svg-discount-dims"></i> İndirim Kuponları</a>
+            </li>
+            <li>
+                <a href="/customer/subscriptions"><i class="svg-newsletter svg-newsletter-dims"></i> Haber Bülteni Üyeliği</a>
+            </li>
+			<li>
+				<a href="/stock/index" class="{% if active_class=='stock_index' %}active{% endif %}"><i class="svg-newsletter svg-newsletter-dims"></i> Stok Alarmları</a>
+			</li>
+			<li>
+				<a href="/customer/most-viewed-products" class="{% if active_class=='most_viewed_products' %}active{% endif %}"><i class="svg-newsletter svg-newsletter-dims"></i> Son Görüntülenenler</a>
+			</li>
+            {# <li>
+                <a href="/customer/price-notification"><i class="svg-price-alert svg-price-alert-dims"></i> Fiyat Habercisi</a>
+            </li> #}
+           {# <li>
+                <a href="/customer/credit"><i class="svg-credit svg-credit-dims"></i> Mağaza Kredisi</a>
+            </li>#}
+            <li>
+                <a href="/ticket/list"><i class="svg-help svg-help-dims"></i> Yardım</a>
+            </li>
+            <li>
+                <a href="/#" class="customer-logout"><i class="svg-remove svg-remove-dims"></i> Çıkış</a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+<div class="order-status">
+        {% if level == 1 %}
+            <div class="status-box active">
+                <figure class="">
+                    <i class="svg-order-cancelled svg-order-cancelled-dims"></i>
+                </figure>
+                <div>
+                    <div class="status">{{ status_list[status] }}</div>
+                    <div class="date">{{ ekol_order_updates['canceled'] is not empty ? ekol_order_updates['canceled'] | date('d.m.Y H:i')}}</div>
+                </div>
+            </div>
+            {% elseif level == 2 %}
+            <div class="status-box">
+                <figure class="">
+                    <i class="svg-order-returned svg-order-returned-dims"></i>
+                </figure>
+                <div>
+                    <div class="status">{{ status_list[status] }}</div>
+                </div>
+            </div>
+        {% else %}
+            <div class="status-box active">
+                <figure class="">
+                    <i class="svg-order-received-small svg-order-received-small-dims"></i>
+                </figure>
+                <div>
+                    <div class="status">Sipariş Alındı</div>
+                    <div class="date">{{ siparis_tarihi | date('d.m.Y H:i')}}</div>
+                </div>
+            </div>
+
+        {% endif %}
+    {% if level != 1 and level != 2 %}
+        <div class="status-box {% if level >=4 %}active{% endif %}">
+            <figure class="">
+                <i class="{% if level >=4 %}svg-order-preparing-green svg-order-preparing-green-dims{% else %}svg-order-preparing-gray svg-order-preparing-gray-dims{% endif %}"></i>
+            </figure>
+            <div>
+                <div class="status">Hazırlanıyor</div>
+                <div class="date">{{ ekol_order_updates['allocated'] is not empty ? ekol_order_updates['allocated'] | date('d.m.Y H:i'): ''}}</div>
+            </div>
+        </div>
+        <div class="status-box {% if level >=5 %}active{% endif %}">
+            <figure class="">
+                <i class="{% if level >=5 %}svg-order-shipping-green svg-order-shipping-green-dims{% else %}svg-order-shipping-gray svg-order-shipping-gray-dims{% endif %}"></i>
+            </figure>
+            <div>
+                <div class="status">Kargoya Verildi</div>
+                <div class="date">{{ ekol_order_updates['shipped'] is not empty ? ekol_order_updates['shipped'] | date('d.m.Y H:i')}}</div>
+            </div>
+        </div>
+        <div class="status-box {% if level >=6 %}active{% endif %}">
+            <figure class="">
+                <i class="{% if level >=6 %}svg-order-delivered-green svg-order-delivered-green-dims{% else %}svg-order-delivered-gray svg-order-delivered-gray-dims{% endif %}"></i>
+            </figure>
+            <div>
+                <div class="status">
+                    {% if status == 'store_arrived' %}
+                        Mağazaya Teslim Edildi
+                    {% elseif status == 'store_collect' %}
+                        Mağaza Teslim Aldı
+                    {% else %}
+                        Teslim Edildi
+                    {% endif %}
+                </div>
+                <div class="date">{{ ekol_order_updates['complete'] is not empty ? ekol_order_updates['complete'] | date('d.m.Y H:i')}}</div>
+            </div>
+        </div>
+    </div>
+{% endif %}

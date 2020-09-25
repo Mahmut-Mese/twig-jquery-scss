@@ -1,0 +1,62 @@
+<script src='https://www.google.com/recaptcha/api.js?hl=tr'></script>
+<div class="page">
+    <div class="container-fluid">
+        <div class="page-content">
+            <div class="whitepage">
+                <div class="title">{{ 'MÜŞTERİ HİZMETLERİ' | translate }}</div>
+                <div class="content">
+                    <div class="my-account-list">
+                        <div class="mini-title">
+                            <h3>{{ 'NASIL YARDIMCI OLABİLİRİZ' | translate }}</h3>
+                            <p>{{ 'Lütfen iletşime geçmek istediğiniz konu ile ilgili başlık yazınız.' | translate }}</p>
+                        </div>
+                        <div class="siparis-box">
+                            <div class="forms">
+                                <form id="yeni-ticket-form">
+                                    <div class="form-group">
+                                        <input type="text" name="name" class="validate[required]" placeholder="{{ 'BAŞLIK YAZINIZ' | translate }} *" value="">
+                                    </div>
+                                    <div class="form-group" >
+                                        <select name="department_id" id="department_id">
+                                            <option value="TEST">{{ 'DEPARTMAN SEÇİNİZ' | translate }} *</option>
+                                            < {% for row in yeni_ticket.departman_list %}
+                                                <option value="{{ row.id }}">{{ row.title }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <select name="department_parent_id" id="department_parent_id">
+                                            <option value="">{{ 'DEPARTMAN KONUSU SEÇİNİZ' | translate }} *</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <select name="" id="">
+                                            <option value="">{{ 'SİPARİŞE BAĞLI İSE SİPARİŞ SEÇİNİZ' | translate }}*</option>
+                                            {% for row in yeni_ticket.siparis_list %}
+                                                <option value="{{ row.entity_id }}">{{ row.entity_id }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea  name="message" placeholder="{{ 'MESAJINIZ' | translate }} *" class="validate[required]"></textarea>
+                                    </div>
+                                    {% if re_captcha.active == true and tf_post_time >= re_captcha.fail_num %}
+                                        <div class="form-group">
+                                            <div class="g-recaptcha" data-sitekey="{{ re_captcha.site_key }}"></div>
+                                        </div>
+                                    {% endif %}
+                                    <div class="note">* {{ 'Yıldızlı alanların girişi zorunludur.' | translate }}</div>
+
+                                    <div class="submit">
+                                        <input type="submit" id="btn-ticket" class="btn-ticket" value="{{ 'GÖNDER' | translate }}">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

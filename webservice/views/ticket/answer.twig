@@ -1,0 +1,65 @@
+<div id="ticket-detail" class="page searchnone">
+    <div class="container-fluid">
+        <div class="page-content sab">
+            <div class="whitepage">
+                <form id="ticket-cevap-form">
+                    <input type="hidden" name="ticket_id" value="{{ ticket.list.row_id }}" />
+                    <div class="title orange">{{ 'HESABIM / YARDIM TALEBİ DETAYI' | translate }}</div>
+                    <div class="pagecenter othertwo">
+                        <div class="help-desk-item">
+                            <div class="drm">
+                                <b class="code">{{ ticket.list.screen_id }} - {{ ticket.list.row_id }}</b>
+                                <b class="right">{{ 'Durum' | translate }}: <i class="active">{{ ticket.list.status_label }}</i></b>
+                            </div>
+                            <div class="cnt">
+                                <ul>
+                                    <li><b>{{ 'Başlık' | translate }} <em>:</em></b> {{ ticket.list.subject }}</li>
+                                    <li><b>{{ 'Departman' | translate }} <em>:</em></b> {{ ticket.list.department_name }}</li>
+                                    <li><b>{{ 'Sipariş No' | translate }} <em>:</em></b> {{ ticket.list.order_id }}</li>
+                                    <li><b>{{ 'Konu' | translate }}<em>:</em></b> {{ ticket.list.name }}</li>
+                                </ul>
+                            </div>
+                            <div class="msg">
+                                <div class="tp">
+                                    <div class="name">
+                                        {{ ticket.list.firstname ~ ' ' ~ ticket.list.lastname  }}
+                                    </div>
+                                    <div class="date">
+                                        {{ ticket.list.create_date | date('d.m.Y H:i') }}
+                                    </div>
+                                </div>
+                                <div class="text">
+                                    {{ ticket.list.message }}
+                                </div>
+                            </div>
+                            {% for key,row in ticket.parent_list  %}
+                                {% if key > 0 %}
+                                    <div class="msg">
+                                        <div class="tp">
+                                            <div class="name">
+                                                {% if row.Direction == 1 %}  {{ ticket.list.firstname ~ ' ' ~ ticket.list.lastname  }} {% else %}  Müşteri Hizmetleri {% endif %}
+                                            </div>
+                                            <div class="date">
+                                                {% if row.CreatedOn is not empty %} {{row.CreatedOn | date('d.m.Y H:i') }} {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="text">
+                                            {{ row.Description }}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            <div class="c-text">
+                                <textarea name="message" placeholder="{{ 'YANIT YAZ' | translate }}" name="" id="" rows="8" class="validate[required]"></textarea>
+                            </div>
+                            <div class="buttons">
+                                <a class="mc-md-6" href="javascript:;" id="btn-cevap-yaz">{{ 'Cevap Yaz' | translate }}</a>
+                                <a class="mc-md-6" href="javascript:void(0);" data-ticket_id="{{ ticket.list.row_id }}" id="btn-close-request">{{ 'Talebi Kapat' | translate }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

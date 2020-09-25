@@ -1,0 +1,163 @@
+<div class="account-page-wrapper mt-3 siparis-cancel">
+    <div class="container">
+        <div class="row medium-gutter">
+            <div class="col-sm-12">
+                <div class="breadcrumbs-bar title-only">
+                    <div class="left-nav">
+                        <a href="/guest-order-verify" class="go-back-link"><i class="fas fa-angle-left"></i>Geri Dön</a>
+                    </div>
+                    <div class="page-title">
+                        <h1>SİPARİŞ DETAYI</h1>
+                    </div>
+                </div>
+                {% if error == 1 %}
+                    <div class="order-detail-box mb-3">
+                        <div class="cart-page-wrapper">
+                            <div class="container">
+                                <div class="bg-white mt-2">
+                                    <div class="empty-cart-alert text-center">
+                                        <i class="svg-cart-big svg-cart-big-dims mb-3"></i>
+                                        <h1>Sipariş bulunamadı</h1>
+                                        <p class="mb-5">Sipariş numaranızı kontrol ederek  tekrar deneyiniz. </p>
+                                        <a href="/" class="btn btn-warning btn-lg text-white btn-block d-flex align-items-center justify-content-center">ALIŞVERİŞE BAŞLA <i class="fa fa-angle-right ml-3"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                {% else %}
+                    {% if receipt_error is defined %}
+                        <div class="alert alert-danger" role="alert">E-arşiv faturanız henüz oluşmamıştır, lütfen daha sonra tekrar deneyiniz.</div>
+                    {% endif %}
+                    {% for sub_order in order.sub_orders %}
+                        <div class="order-detail-box mb-3">
+                            <div class="detailed-infos">
+                                <ul>
+                                    <li>Sipariş No : <span class="text-warning">{{ sub_order.increment_id }}</span></li>
+                                    <li>Sipariş Tarihi : <span class="text-warning">{{ sub_order.created_at | date('d.m.Y H:i')}}</span></li>
+                                    <li>Tahmini Kargoya Teslim Tarihi : <span class="text-warning">{{ sub_order.estimated_last | date('d.m.Y')}}</span></li>
+                                </ul>
+                                {% if sub_order.status in is_cancelable %}
+                                    <a href="javascript:;" class="btn outline-gray siparis_iptal_modal" data-increment-id="{{ sub_order.increment_id }}" data-warehouse-transaction-id="{{ sub_order.protect_code }}">SİPARİŞ İPTAL <i class="svg-order-cancel svg-order-cancel-dims"></i></a>
+                                {% endif %}
+                            </div>
+                            {{ widget('order','order_status',{'status':sub_order.status,'siparis_tarihi':sub_order.created_at,'ekol_order_updates':order.ekol_order_updates}) }}
+                            <div class="products">
+                                <div class="row">
+                                    {% for product in sub_order.products %}
+                                        <div class="col-sm-6">
+                                            <div class="product">
+                                                <img src="{{ product.image }}" onerror="this.src='/pub/assets/flo/img/placeholders/product.jpg'" alt="" />
+                                                <div>
+                                                    <div class="title">{{ product.manufacturer }}</div>
+                                                    <a class="description" href="{{ product.url_key }}">{{ product.name }}</a>
+                                                    <div class="props">
+                                                        <span class="text-dark">{{ product.option_name | translate}}:</span> {{ product.option_value }}
+                                                        <span class="text-dark">Renk:</span> {{ product.renk }} <span class="text-dark">{{ 'Adet' | translate }}:</span> {{ product.qty_ordered | number_format(0) }}</div>
+                                                    <div class="prices">
+                                                        {% if product.special_price and product.special_price != product.price %}
+                                                            <span class="old">{{ product.price | price }}</span>
+                                                            {{ product.special_price | price }}
+                                                        {% else %}
+                                                            {{ product.base_row_total_incl_tax | price }}
+                                                        {% endif %}
+                                                    </div>
+                                                    {% if product.qty_canceled and product.qty_canceled != '0.0000' %}
+                                                        <span class="badge badge-dark">Bu Ürünün gönderimi İptal edildi !</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="actions pt-3">
+                                {% if sub_order.shipping_link_url %}
+                                    <a href="{{ sub_order.shipping_link_url }}" target="_blank" class="btn outline-gray mr-xl-3 mr-sm-2">KARGO TAKİP <i class="svg-order-cancel svg-order-cancel-dims"></i></a>
+                                {% endif %}
+                                {% if order.info.ibm_receipt_no or sub_order.ibm_receipt_number %}
+                                    <a target="_blank" href="/customer/orderPdf?id={% if sub_order.ibm_receipt_number is null %}{{ order.info.increment_id }}{% else %}{{ sub_order.increment_id }}&split=1{% endif %}" class="btn outline-gray mr-xl-3 mr-sm-2">FATURA GÖRÜNTÜLE <i class="svg-order-cancel svg-order-cancel-dims"></i></a>
+                                {% endif %}
+
+
+                                <!--       <a href="javascript:;" class="btn outline-gray">KOLAY İADE <i class="svg-order-cancel svg-order-cancel-dims"></i></a> -->
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="row mb-4">
+                        <div class="col-sm-6">
+                            <div class="info-box">
+                                <h4>TESLİMAT BİLGİLERİ</h4>
+                                <p>{{ order.shipping.street }}<br>
+                                    {{ order.shipping.city }}/ {{ order.shipping.region }}</p>
+                                <div class="links hidden">
+                                    <a href="/" class="mr-3">Satış Sözleşmesi</a>
+                                    <a href="/">İade Koşulları</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            {% if order.payment.method.odeme_turu == 'cashondelivery' %}
+                                <div class="info-box">
+                                    <h4>ÖDEME BİLGİLERİ </h4>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="text-center pr-4">
+                                                <i class="svg-pay-home svg-pay-home-dims"></i>
+                                                <div class="font-weight-light">Kapıda Ödeme</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="mb-2">Ürün Toplamı : <span class="text-warning">{{ order.info.base_subtotal_incl_tax | price}}</span></p>
+                                            {% if order.info.base_cash_on_delivery_fee > 0 %}
+                                            <p class="mb-2">Kapıda Ödeme Tutarı : <span class="text-warning">{{ order.info.base_cash_on_delivery_fee | price}}</span></p>
+                                            {% endif %}
+                                            <p class="mb-2">İndirim Tutarı : <span class="text-warning">{{ order.info.discount_amount | price}}</span></p>
+                                            <p class="mb-2">Toplam Fiyat : <span class="text-warning">{{ order.info.base_grand_total | price}}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="info-box">
+                                    <h4>ÖDEME BİLGİLERİ </h4>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <img src="{{ card_images_icon[card_images_name] }}" class="mb-3">
+                                            <p>{{ order.payment.method.cc_number }}</p>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="mb-2">Ürün Toplamı : <span class="text-warning">{{ order.info.base_subtotal_incl_tax | price}}</span></p>
+                                            <p class="mb-2">Kargo Tutarı : <span class="text-warning">{{ order.info.shipping_incl_tax | price}}</span></p>
+                                            <p class="mb-2">İndirim Tutarı : <span class="text-warning">{{ order.info.discount_amount | price}}</span></p>
+                                            <p class="mb-2">Toplam Fiyat : <span class="text-warning">{{ order.info.base_grand_total | price}}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="modal flomodal fade" id="cancelOrderModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm modal-dialog-centered cart-modal" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">SİPARİŞ İPTALİ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h4 class="text-center pt-5 pb-5">Siparişinizi iptal etmek istediğinize emin misiniz?</h4>
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:;" class="btn btn-secondary" data-dismiss="modal">Vazgeç</a>
+                    <a href="javascript:;" class="btn btn-danger" data-increment-id="" data-warehouse-transaction-id="" id="flo_siparis_iptal">İptal Et</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

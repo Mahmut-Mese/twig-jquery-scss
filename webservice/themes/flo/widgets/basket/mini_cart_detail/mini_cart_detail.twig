@@ -1,0 +1,48 @@
+<div class="holder">
+    <table>
+        <tr>
+            <td>{{ 'ARA TOPLAM' | translate }}</td>
+            <td class="cargo">{{ basket.subtotal_incl_tax|price }}</td>
+        </tr>
+        <tr class="mini-cart-detail-discount {% if basket.base_discount_amount == 0 %}hide{% endif %}">
+            {% set sales_title = '' %}
+            {% for roww in basket.salesrule %}
+                {% set sales_title = sales_title ~ roww['name'] ~ ', '  | raw %}
+            {% endfor %}
+            {% set sales_title = sales_title | slice(0, -2) %}
+            <td><span class="d-flex align-items-center">{{ 'İNDİRİM' | translate }} <i class="fa fa-info-circle ml-2"
+                                                                                       data-toggle="tooltip"
+                                                                                       data-placement="top"
+                                                                                       title="{{ sales_title }}"></i></span>
+            </td>
+            <td class="indirim">{{ basket.base_discount_amount|price }}</td>
+        </tr>
+        {% if is_app is not empty %}
+            <tr>
+                <td>{{ 'KARGO ÜCRETİ' | translate }}</td>
+                <td><span class="shipping-amount-label"> <span class="cargomoney">{{ basket.shipping_amount }}</span></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="cashondelivery-label">{{ 'KAPIDA ÖDEME ÜCRETİ' | translate }}</td>
+                <td><i class="cargomoney">{{ cash_on_delivery_fee|price }}</i></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td>{{ 'KARGO ÜCRETİ' | translate }}</td>
+                <td><span class="shipping-amount-label"> <span class="cargomoney"></span></span>
+                </td>
+            </tr>
+            <tr style="display: none;">
+                <td class="cashondelivery-label">{{ 'KAPIDA ÖDEME ÜCRETİ' | translate }}</td>
+                <td><i class="cargomoney">{{ cash_on_delivery_fee|price }}</i></td>
+            </tr>
+        {% endif %}
+        <tr class="total">
+            <td>{{ 'GENEL TOPLAM' | translate }}</td>
+            <td class="">
+                <span class="text-warning generic-total">{{ (basket.subtotal_incl_tax + basket.discount_amount)|price }}</span></td>
+        </tr>
+    </table>
+</div>
+{{ widget('datalayer', 'all_pages', {layerData: {cart: basket}, pushEvent: false}) }}

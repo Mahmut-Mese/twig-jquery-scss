@@ -1,0 +1,49 @@
+<div class="page searchnone">
+    <div class="container-fluid">
+        <div class="row not-found-section">
+            <div class="col-sm-6 not-found-desc">
+                <h1>Üzgünüz, aradığınız sayfayı bulamadık</h1>
+                <p>Sayfa kaldırılmış ya da taşınmış olabilir.</p>
+            </div>
+            <div class="col-sm-6">
+                <figure class="page-animation">
+                    <img src="/pub/assets/instreet/images/is_404_gif.gif">
+
+                </figure>
+            </div>
+        </div>
+        <div class="row not-found-section">
+            <div class="col-sm-4">
+                <div class="not-found-cat">
+                    <a href="/kadin" class="category-box">
+                        <img src="/pub/assets/instreet/images/kadin.png">
+                        <h4>Kadın</h4>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="not-found-cat">
+                    <a href="/erkek" class="category-box">
+                        <img src="/pub/assets/instreet/images/erkek.png">
+                        <h4>Erkek</h4>
+                    </a>
+                </div>
+
+            </div>
+            <div class="col-sm-4">
+                <div class="not-found-cat">
+                    <a href="/cocuk" class="category-box">
+                        <img src="/pub/assets/instreet/images/cocuk.png">
+                        <h4>Çocuk</h4>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        <div class="row suggested-products not-found-section">
+            {{ widget('products', 'product_slider', {title: 'Sizin İçin Seçtiklerimiz' | translate, data_source: 'sizin-icin-sectiklerimiz' }) }}
+        </div>
+        {{ widget('datalayer', 'page_404', {}) }}
+    </div>
+</div>
+

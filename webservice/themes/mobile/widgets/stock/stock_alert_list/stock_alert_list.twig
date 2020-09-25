@@ -1,0 +1,51 @@
+<div class="page">
+    <div class="container-fluid">
+        <div class="page-content">
+            <div class="whitepage">
+                <div class="title orange">{{ 'HESABIM / STOK ALARMLARI' | translate }}</div>
+                <div class="content">
+                    <div class="my-account-list" id="stockAlert">
+                        <div class="siparis-box">
+                            <div class="fav">
+                                <table>
+                                    {% for product in products %}
+                                        <tr>
+                                            <td>
+                                                <a href="{{ product.data.url }}">
+                                                    <div class="images">
+                                                        <img src="{{ product.data.image|resize('268x268') }}" alt="">
+                                                    </div>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <div class="text">
+                                                    <span>{{ product.manufacturer }}</span>
+                                                    <p>{{ product.name }}</p>
+                                                    <div class="details">
+                                                        <ul>
+                                                            <li>{{ 'Beden' | translate }}: <b>{{ product.beden }}</b></li>
+                                                            <li>{{ 'Adet' | translate }}: <b>{{ product.qty }}</b></li>
+                                                            <li>{{ 'Renk' | translate }}: <b>{{ product.renk }}</b></li>
+                                                            <li>{{ 'Durum' | translate }}:
+                                                                <b>{% if (product.is_in_stock) %} {{ 'Stokta Mevcut' | translate }} {% else %} {{ 'Stokta Yok' | translate }} {% endif %}</b>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <button><img src="/pub/assets/instreet/images/cop.png" alt=""
+                                                             data-product-id="{{ product.id }}"
+                                                             class="stockAlert-remove"></button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

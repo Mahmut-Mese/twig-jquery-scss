@@ -1,0 +1,26 @@
+<div class="search-results show">
+
+   {% for product in products %}
+         <a href="{{ product.url }}" class="product">
+            <div class="d-flex align-items-center">
+				{{ img( product.image|resize('80x80'), { class: 'tiny_img' } ) }}
+               <span class="info-holder">
+                  <span class="title">{{ product.manufacturer }}</span>
+                  <span class="description">{{ product.name }}</span>
+               </span>
+            </div>
+            <span class="price-holder">
+
+                  {% if product.special_price %}
+                  <span class="old-price">{{ product.price | price }}</span>
+                  <span class="price">{{ product.special_price | price }}</span>
+                  {% else %}
+                  <span class="price">{{ product.price | price }}</span>
+                  {% endif %}
+
+            </span>
+         </a>
+   {% endfor %}
+
+</div>
+<a href="/search?q={{ query }}" class="btn btn-success show-all show">{{ 'TÜMÜNÜ GÖSTER' | translate }} (<span>{{ total_count|number_format(0, '.', ',') }}</span>)</a>

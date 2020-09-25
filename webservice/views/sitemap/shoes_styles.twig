@@ -1,0 +1,7 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    {% for category in sc_categories %}
+    <url>
+            <loc>{{ config('env.webservice.url.web') }}{{ category.url_key_flo }}</loc>
+        </url>
+    {% endfor %}
+</urlset>

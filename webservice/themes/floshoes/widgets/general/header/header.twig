@@ -1,0 +1,164 @@
+{% if config('env.gtm') %}
+<!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ config('env.gtm.accountId') }}"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+<!-- End Google Tag Manager (noscript) -->
+{% endif %}
+
+<header class="site-head">
+    <div class="top-text">
+        {{ 'TÜM TÜRKİYE’YE KARGO BEDAVA FIRSATINI KAÇIRMA' | translate }}
+    </div>
+    <div class="container-fluid">
+        <div class="top">
+            <div class="mobile-btn">
+                <button type="button" class="navbar-toggle" onclick="javascript: mobileMenuOpen(this)">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="logo">
+                <h1 class="hidden">{{ registry('head_one')|default('FLOSHOES') }}</h1>
+                <a href="/"><img src="/pub/assets/floshoes/images/logo.png" alt="InStreet"></a>
+            </div>
+            <div class="search">
+                <form action="/search">
+                    <div class="form-group">
+                        <input class="commerce-autocomplete" type="text" name="q" value="{{ search_query }}" autocomplete="off" placeholder="{{ '42 Numara Kinetix' | translate }}">
+                    </div>
+                    <div class="submit">
+                        <input type="submit">
+                    </div>
+                </form>
+            </div>
+            {{ widget('products', 'autocomplete') }}
+            <div class="new-card  menu-drop">
+                <ul><li> <div id="commerce-mini-cart-icon" class="basket-button ">
+                            <a href="javascript:void(0)" class="new-icon">
+                                <img src="/pub/assets/instreet/images/big-basket.png" class="" alt="">
+                                <i class="cart-count"></i>
+                                <br>
+                                {{ 'Sepetim' | translate }}
+                            </a>
+                            <ul id="mini-cart" class="lab-list">
+                                {{ widget('basket', 'mini_cart') }}
+                            </ul
+                        </div></li></ul>
+
+            </div>
+                <div class="new-login menu-button login menu-drop logged-out">
+
+                    <ul>
+                        <li>
+                            <a class="login-register" >
+                                <img src="/pub/assets/instreet/images/icon_kisisel_bilgilerim_s@2x.png" class="" alt="">
+                                <br>
+                               {{ 'Giriş Yap' | translate }}
+                            </a>
+                            <ul class="account">
+                                <li>
+                                    <a href="/customer/login">{{ 'Giriş Yap' | translate }}</a>
+
+                                </li>
+                                <li>
+                                    <a href="/customer/register">{{ 'Üye Ol' | translate }}</a>
+
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="new-login menu-button login menu-drop logged-in hide">
+                    <ul class="account">
+                        <li>
+                            <a class="login-register" href="javascript:void(0);">
+
+
+                                <img src="/pub/assets/instreet/images/icon_kisisel_bilgilerim_s@2x.png" class="" alt="">
+                                <br>
+                                {{ 'Hesabım' | translate }}
+                            </a>
+                            <ul class="account-links">
+                                <li>
+                                    <span id="full-name-login"  >{{ full_name }}</span>
+                                </li>
+                                <li>
+                                    <div class="acoount-links-img"> <img src="/pub/assets/instreet/images/icon_siparislerim_s@2x.png"> </div>  <a href="/customer/orders">{{ 'Siparişlerim' | translate }}</a>
+                                </li>
+                                <li>
+                                    <div class="acoount-links-img">    <img src="/pub/assets/instreet/images/icon_kisisel_bilgilerim_s@2x.png"> </div>    <a href="/customer/edit">{{ 'Kişisel Bilgilerim' | translate }}</a>
+                                </li>
+                                <li>
+                                    <div class="acoount-links-img">    <img src="/pub/assets/instreet/images/icon_adreslerim_s@2x.png"> </div>    <a href="/customer/password-edit">{{ 'Şifremi Değiştir' | translate }}</a>
+                                </li>
+                                <li>
+                                    <div class="acoount-links-img">    <img src="/pub/assets/instreet/images/icon_haber_bulteni_s@2x.png"> </div>   <a href="/customer/subscriptions">{{ 'Haber Bülteni Üyeliklerim' | translate }}</a>
+                                </li>
+                                <li>
+                                    <div class="acoount-links-img">   <img src="/pub/assets/instreet/images/icon_adreslerim_s@2x.png"> </div>  <a href="/customer/address/index">{{ 'Adreslerim' | translate }}</a>
+                                </li>
+                                <li class="hidden">
+                                    <div class="acoount-links-img">   <img src="/pub/assets/instreet/images/icon_kayitli_kartlarim_s@2x.png"> </div>    <a href="/customer/savedcard/index">{{ 'Kayıtlı Kartlarım' | translate }}</a>
+                                </li>
+                                <li>
+                                    <div class="acoount-links-img">   <img src="/pub/assets/instreet/images/icon_kayitli_kuponlarim_s@2x.png"> </div>     <a href="/customer/coupons">{{ 'Kayıtlı Kuponlarım' | translate }}</a>
+                                </li>
+                                <li>
+                                    <div class="acoount-links-img">   <img src="/pub/assets/instreet/images/icon_favori_listem_s@2x.png"> </div>   <a href="/customer/wishlist">{{ 'Favori Listem' | translate }}</a>
+                                </li>
+                                <li>
+                                    <div class="acoount-links-img">  <img src="/pub/assets/instreet/images/icon_stok_alarm_s@2x.png"> </div>   <a href="/stock/index">{{ 'Stok Alarmları' | translate }}</a>
+                                </li>
+                                <li>
+                                    <div class="acoount-links-img">  <img src="/pub/assets/instreet/images/icon_musteri_hizmetleri_s@2x.png"> </div>  <a href="/ticket/list">{{ 'Müşteri Hizmetleri' | translate }}</a>
+                                </li>
+                                <li>
+                                    <div class="acoount-links-img">  <img src="/pub/assets/instreet/images/icon_cikis_s@2x.png"> </div>   <a class="customer-logout" href="">{{ 'ÇIKIŞ' | translate }}</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            <div class="new-countries menu-button login menu-drop">
+
+                <ul>
+                    <li>
+                        <a class="new-icon" >
+
+                            <img src="/pub/assets/floshoes/images/example.png" class="" alt="">
+                            <br>
+                           {{ 'Ship to' | translate }} /  <span class="country-name"></span>
+
+                        </a>
+                        <ul class="new-countries-list">
+
+                            {% set list = ['at', 'be','ch','de','dk','es','fr','it','nl','se'] %}
+                            {% for i in 0..list|length-1  %}
+                                <li>
+                                    <div class="acoount-links-img">
+                                        <img src="/pub/assets/floshoes/images/desktop_{{ list[i] }}.png" class="" alt="">
+                                    </div> <a href="javascript:void(0)">{{ list[i]|upper }}</a>
+                                </li>
+
+                            {% endfor %}
+                            <li>
+                                <div class="acoount-links-img">
+                                    <img src="/pub/assets/floshoes/images/desktop_tr.png" class="" alt="">
+                                </div> <a href="https://www.flo.com.tr">{{ 'tr'|upper }}</a>
+                            </li>
+
+                        </ul>
+                    </li>
+            </div>
+        </div>
+
+        <div class="menu">
+            <div class="menulist">
+                {{ menuHtml|raw }}
+            </div>
+        </div>
+    </div>
+</header>

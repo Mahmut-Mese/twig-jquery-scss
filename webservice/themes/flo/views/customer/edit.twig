@@ -1,0 +1,32 @@
+<div class="account-page-wrapper mt-3">
+    <div class="container">
+        <div class="row medium-gutter">
+            <div class="col-sm-3">
+                {{ widget('customer', 'account_left_menu') }}
+            </div>
+            <div class="col-sm-9">
+                <div class="breadcrumbs-bar title-only">
+                    <div class="left-nav">
+                        <a href="/" class="go-back-link"><i class="fas fa-angle-left"></i>Geri Dön</a>
+                    </div>
+                    <div class="page-title">
+                        <h1>HESAP BİLGİLERİ</h1>
+                    </div>
+                </div>
+                <div class="bg-white p-3 mb-3">
+                    <div class="row">
+                        <div class="col-lg-7 col-sm-12 mb-lg-0 mb-sm-5 column-border pr-xl-5 pr-lg-3">
+                            {{ widget('customer','edit') }}
+                        </div>
+                        <div class="col-lg-5 col-sm-7 pl-xl-5 pl-lg-3 pr-xl-5 pr-lg-3">
+                            {{ widget('customer','password_edit') }}
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white pl-3 pr-3 pt-3 mb-3">
+                    {{ widget('customer','savedcard') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

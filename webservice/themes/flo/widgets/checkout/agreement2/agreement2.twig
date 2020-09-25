@@ -1,0 +1,319 @@
+<style type="text/css">
+    /* Line styles */
+
+    .wu-line, .wu-line > span {
+        line-height: 160%;
+    }
+
+    .wu-line.wu-right {
+        text-align: right;
+    }
+
+    .wu-line.wu-center {
+        text-align: center;
+    }
+
+    .wu-line.wu-justify {
+        text-align: justify;
+    }
+
+    /* Line spacing */
+
+    .wu-line_spacing_05, .wu-line_spacing_05 > span {
+        line-height: 50%;
+    }
+
+    .wu-line_spacing_06, .wu-line_spacing_06 > span {
+        line-height: 60%;
+    }
+
+    .wu-line_spacing_07, .wu-line_spacing_07 > span {
+        line-height: 70%;
+    }
+
+    .wu-line_spacing_08, .wu-line_spacing_08 > span {
+        line-height: 80%;
+    }
+
+    .wu-line_spacing_09, .wu-line_spacing_09 > span {
+        line-height: 90%;
+    }
+
+    .wu-line_spacing_10, .wu-line_spacing_10 > span {
+        line-height: 100%;
+    }
+
+    .wu-line_spacing_11, .wu-line_spacing_11 > span {
+        line-height: 110%;
+    }
+
+    .wu-line_spacing_12, .wu-line_spacing_12 > span {
+        line-height: 120%;
+    }
+
+    .wu-line_spacing_13, .wu-line_spacing_13 > span {
+        line-height: 130%;
+    }
+
+    .wu-line_spacing_14, .wu-line_spacing_14 > span {
+        line-height: 140%;
+    }
+
+    .wu-line_spacing_15, .wu-line_spacing_15 > span {
+        line-height: 150%;
+    }
+
+    .wu-line_spacing_16, .wu-line_spacing_16 > span {
+        line-height: 160%;
+    }
+
+    .wu-line_spacing_17, .wu-line_spacing_17 > span {
+        line-height: 170%;
+    }
+
+    .wu-line_spacing_18, .wu-line_spacing_18 > span {
+        line-height: 180%;
+    }
+
+    .wu-line_spacing_19, .wu-line_spacing_19 > span {
+        line-height: 190%;
+    }
+
+    .wu-line_spacing_20, .wu-line_spacing_20 > span {
+        line-height: 200%;
+    }
+
+    /* Lists */
+
+    .wu-disc, .wu-square {
+        display: list-item;
+        list-style: inside;
+    }
+
+    .wu-lower-alpha, .wu-lower-roman, .wu-lower-roman, .wu-upper-alpha, .wu-upper-roman {
+        display: block;
+    }
+
+    .wu-disc {
+        list-style-type: disc;
+    }
+
+    .wu-lower-alpha:before {
+        counter-increment: item;
+        content: counter(item, lower-alpha) ". "
+    }
+
+    .wu-lower-roman:before {
+        counter-increment: item;
+        content: counter(item, lower-roman) ". "
+    }
+
+    .wu-square {
+        list-style-type: square;
+    }
+
+    .wu-upper-alpha:before {
+        counter-increment: item;
+        content: counter(item, upper-alpha) ". "
+    }
+
+    .wu-upper-roman:before {
+        counter-increment: item;
+        content: counter(item, upper-roman) ". "
+    }
+
+    .wu-ordered {
+        display: block;
+    }
+
+    .wu-ordered:before {
+        counter-increment: item;
+        content: counter(item) ". "
+    }
+
+    .wu-reset-counter {
+        counter-reset: item;
+    }
+
+    /* Heading */
+
+    .wu-line.wu-heading1, .wu-line.wu-heading1 span {
+        display: block;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        font-size: 135%;
+    }
+
+    .wu-line.wu-heading2, .wu-line.wu-heading2 span {
+        display: block;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        font-size: 130%;
+    }
+
+    .wu-line.wu-heading3, .wu-line.wu-heading3 span {
+        display: block;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        font-size: 125%;
+    }
+
+    .wu-line.wu-heading4, .wu-line.wu-heading4 span {
+        display: block;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        font-size: 120%;
+    }
+
+    .wu-line.wu-heading5, .wu-line.wu-heading5 span {
+        display: block;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        font-size: 115%;
+    }
+
+    .wu-line.wu-heading6, .wu-line.wu-heading6 span {
+        display: block;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        font-size: 110%;
+    }
+
+    .wu-line.wu-heading1 span, .wu-line.wu-heading2 span, .wu-line.wu-heading3 span, .wu-line.wu-heading4 span, .wu-line.wu-heading5 span, .wu-line.wu-heading6 span {
+        display: inline-block;
+    }
+
+    /* Text styles */
+
+    .wu-text.wu-bold {
+        font-weight: bold;
+    }
+
+    .wu-text.wu-underline {
+        text-decoration: underline;
+    }
+
+    .wu-text.wu-italic {
+        font-style: italic;
+    }
+
+    .wu-text.wu-strikethrough {
+        text-decoration: line-through;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    div.editor {
+        word-wrap: break-word;
+        font-size: 16px;
+        font-family: Arial;
+        line-height: 120%;
+        padding: 3px
+    }
+
+    div.editor span {
+        font-size: 16px;
+        font-family: Arial;
+    }
+    .nbe  strong{
+        font-weight: bold;
+    }
+
+</style>
+<div class="nbe editor">
+    <div class="wu-root">
+        <div class="wu-line"><span class="wu-text wu-bold"> MADDE 1 - SATICI VE ÜRÜN BİLGİLERİ</span><br></div>
+        <div class="wu-line"><span class="wu-text"><strong>Unvanı:</strong> FLO Mağazacılık ve Pazarlama A.Ş. (kısaca "FLO" olarak anılacaktır)</span><br>
+        </div>
+        <div class="wu-line"><span class="wu-text"><strong>Merkez Adresi :</strong> Taşocağı Caddesi No: 24 Bağcılar 34217 İstanbul / Türkiye</span><br>
+        </div>
+        <div class="wu-line"><span class="wu-text"><strong>Mersis No :</strong> 0388023942900019</span><br></div>
+        <div class="wu-line"><span class="wu-text"><strong>Telefon :</strong> 0 212 446 22 88 </span><br></div>
+        <div class="wu-line"><span class="wu-text"><strong>Faks:</strong> 0 212 446 22 55</span><br></div>
+        <div class="wu-line"><span class="wu-text"><strong>Eposta:</strong> musteriiliskileri@flo.com.tr</span><br></div>
+        <div class="wu-line"><span class="wu-text"><strong>Şikayet Hattı:</strong> 0850 290 3 FLO(356)</span><span class="wu-text">
+</span><br></div>
+        <div class="wu-line"><span class="wu-text wu-bold">MADDE 2 - SATIŞA KONU MALIN TEMEL ÖZELLİKLERİ</span><span
+                    class="wu-text"> </span><br></div>
+        <div class="wu-line"><span class="wu-text">Satışı yapılacak Ürünün özellikleri, fiyatı ve diğer bilgiler şu şekildedir;</span><br>
+        </div>
+        <table class="table" align="left" cellpadding="0" width="100%">
+            <tbody>
+            <tr>
+                <td>
+                    <p><strong>{{ 'Urun Adi' | translate }} </strong></p>
+                </td>
+                <td width="40">
+                    <p><strong>{{ 'Adet' | translate }}</strong></p>
+                </td>
+                <td width="100">
+                    {{ '<p><strong>Satis Bedeli <br></strong>(KDV dahil toplam)</p>' | translate | raw }}
+
+                </td>
+            </tr>
+            {% for item in basket.items %}
+                <tr class="say">
+                    <td>
+                        <p>{{ item.name }}</p>
+                    </td>
+                    <td>{{ item.qty }}</td>
+                    <td>
+                        <p>{{ item.row_total_incl_tax | number_format(2) }} {{ basket.base_currency_code }}</p>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {{ widget('basket','mini_cart_detail',{ basket : basket, cash_on_delivery_fee: cash_on_delivery_fee,is_app:is_app}) }}
+        <div class="wu-line"><span
+                    class="wu-text">ALICI Tarafından Karşılanacak Diğer Masraflar:&nbsp;Kargo Bedeli</span><span
+                    class="wu-text">
+</span><br></div>
+        <div class="wu-line"><span class="wu-text wu-bold">MADDE 3 - KONU:</span><br></div>
+        <div class="wu-line"><span class="wu-text">İşbu Ön Bilgilendirme Formu'nun ("Form") konusu aşağıda nitelik ve satış fiyatı belirtilen Ürünlerin satışı ve teslimi ile ilgili olarak 6502 sayılı Tüketicilerin Korunması Hakkında Kanun ve 27 Kasım 2014 tarihli ve 29188 sayılı Resmi Gazete'de yayımlanan Mesafeli Sözleşmelere Dair Yönetmelik hükümleri gereğince bilgilendirilmesidir.</span><br>
+        </div>
+        <div class="wu-line"><span class="wu-text"> MADDE 4 - &nbsp;ÖDEME ARAÇLARI:&nbsp;</span><br></div>
+        <div class="wu-line"><span class="wu-text">Ödemeler https://www.flo.com.tr/page?url=sss-desktop linkinde "ÖDEME" başlığında belirtilen ödeme araçları ile yapılabilmektedir.</span><br>
+        </div>
+        <div class="wu-line"><span class="wu-text"> </span><span class="wu-text wu-bold">MADDE 5 - &nbsp;GÖNDERİM KISITLAMALARI:&nbsp;</span><br>
+        </div>
+        <div class="wu-line"><span class="wu-text"> </span><span class="wu-text wu-bold">5.1</span><span
+                    class="wu-text">. Gönderim kısıtlamaları hakkında bilgi almak için lütfen https://www.flo.com.tr/musteri hizmetleri/sss linkinde "KARGO ve TESLİMAT" başlığında yer alan bilgileri kontrol ediniz.</span><br>
+        </div>
+        <div class="wu-line"><span class="wu-text"> </span><span class="wu-text wu-bold">5.2.</span><span
+                    class="wu-text"> Teslimat, FLO tarafından kargo aracılığı ile yukarıda belirtilen teslimat adresine sipariş onaylandıktan sonra 10 (on) iş günü içinde yapılacaktır. Resmi tatiller ve dini/milli bayram günleri bu süreden sayılmaz. Teslimat sırasında Müşteri ürünü muayene ettikten sonra teslim tutanağını imzalayacaktır.</span><span
+                    class="wu-text">
+</span><br></div>
+        <div class="wu-line"><br></div>
+        <div class="wu-line"><span class="wu-text">Müşteri veya Müşteri adına hareket eden kişi bu teslim tutanağını imzalamakla, ürünü tam, eksiksiz ve hasarsız olarak teslim aldığını beyan etmiş olacaktır. Kargo/nakliye ücreti alınmamaktadır. Fiyat dahil işbu vaatlerin geçerliliği sipariş tarihinden itibaren 30 (otuz) gündür.</span><span
+                    class="wu-text">
+</span><br></div>
+        <div class="wu-line"><span class="wu-text wu-bold">MADDE 6 - CAYMA HAKKI:</span><br></div>
+        <div class="wu-line"><span class="wu-text"> </span><span class="wu-text wu-bold">6.1</span><span
+                    class="wu-text">. ALICI, aşağıdaki istisnalar hariç olmak üzere sözleşme konusu ürünün kendisine veya gösterdiği adresteki kişi(ler)/kuruluşa tesliminden itibaren 14 (ondört) gün içinde cayma hakkını kullanabilir. Cayma hakkının kullanılması için bu süre içinde SATICI'ya teyidi alınmak suretiyle faks, e-mail veya telefon ile bildirimde bulunulması (mesafeli sözleşme ekindeki cayma formu kullanılarak veya sair şekillerde) şarttır. Bu hakkın kullanılması halinde, 3. kişiye veya ALICI'ya teslim edilen ürünün SATICI'ya iade gönderildiğine ilişkin kargo teslim tutanağı örneği ile fatura aslının iadesi zorunludur. Bu belgelerin tam ve eksiksiz olarak SATICI’ya ulaşmasını takip eden 14 (ondört) gün içinde ürün bedeli ALICI'ya iade edilir. Cayma hakkı nedeni ile iade edilen ürünün kargo bedeli SATICI tarafından karşılanır. Yurtdışı gönderilerinin iade edilmesi durumunda oluşan gümrük borçlandırmaları alıcı tarafından ödenecektir. ALICI, cayma hakkını kullandığı yönünde bildirim gerçekleştirdiği tarihi takip eden 10 (on) gün içinde ürünü SATICI’ya iade etmelidir.</span><br>
+        </div>
+        <div class="wu-line"><span class="wu-text"> </span><span class="wu-text wu-bold">6.2.</span><span
+                    class="wu-text"> ALICI isteğine veya kişisel ihtiyaçlarına istinaden özel hazırlanmış veya ürünün standart niteliklerinde değişiklik yapılmış ürünler, hızlı bozulan veya son kullanım tarihi geçebilecek ürünler ve tesliminden sonra ambalaj, bant, mühür, paket gibi koruyucu unsurları açılmış olan ve iadesi sağlık ve hijyen açısından uygun olmayan ürünler için cayma hakkı kullanılamaz. Ürünlerde cayma hakkının kullanılması, ürünün ambalajının bozulmamış, ürünün kullanılmamış ve yeniden satılabilirlik özelliğini yitirmemiş olması şartına bağlıdır.</span><br>
+        </div>
+        <div class="wu-line"><span class="wu-text"> </span><span class="wu-text wu-bold">6.3.</span><span
+                    class="wu-text"> ALICI, Mesafeli Sözleşmeler Yönetmeliği gereği cayma hakkına ilişkin bilgilendirmenin gereği gibi yapıldığını kabul eder.</span><br>
+        </div>
+        <div class="wu-line"><span class="wu-text"> </span><span
+                    class="wu-text wu-bold">MADDE 7 - YETKİLİ MAHKEME</span><br></div>
+        <div class="wu-line"><span class="wu-text">İşbu sözleşmenin uygulanmasından doğacak uyuşmazlıklarda Sanayi ve Ticaret Bakanlığı’nca ilan edilen değere kadar Tüketici Hakem Heyetleri ile SATICI'nın yerleşim yerindeki Tüketici Mahkemeleri tek yetkilidir. </span><br>
+        </div>
+        <div class="wu-line"><span class="wu-text">İşbu sözleşme elektronik ortamda taraflarca okunup, kabul edilip, teyit edilmiştir. İşbu sözleşmede </span><span
+                    class="wu-text wu-bold">düzenlenmemiş hususlarda 6502 sayılı Tüketicinin Korunması Hakkında Kanun hükümleri uygulanır.</span><br>
+        </div>
+        <div class="wu-line"><span class="wu-text wu-bold">MADDE 8 - DİĞER HÜKÜMLER</span><br></div>
+        <div class="wu-line"><span class="wu-text">8.1. Yukarıda verilen bilgiler tanıtma veya reklam amaçlı değildir. Ticari amaçla, ürün satışına yönelik verilmişlerdir. Kredi kartı bilgilerinizi girmeniz ve satış işlemine onay vermeniz halinde siparişiniz işleme konacaktır.</span><br>
+        </div>
+        <div class="wu-line"><span class="wu-text"> 8.2. "Müşteri", http://www.flo.com.tr/ internet sitesinde satışı yapılan ürüne ait 2. maddede belirtilen temel özellikleri, ve 3. maddede belirtilen tüm vergiler dahil satış fiyatı, ödeme şekli ve teslimata ilişkin ön bilgileri okuyup bilgi sahibi olduğunu ve elektronik ortamda bu hususlara ilişkin gerekli teyidi verdiğini beyan ve kabul eder.</span><span
+                    class="wu-text">
+</span><br></div>
+
+    </div>
+</div>

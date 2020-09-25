@@ -1,0 +1,37 @@
+{% set isMobile = is_mobile() %}
+<section class="our-choices">
+    <h3>{{ title }}</h3>
+    <div class="products-slider swiper-container swiper-autoinit"
+		{% if isMobile %}
+        data-swiper-slides-per-view="2"
+		{% else %}
+        data-swiper-slides-per-view="5.5"
+		{% endif %}
+        data-swiper-space-between="0"
+        data-swiper-free-mode="true"
+    >
+        <div class="swiper-wrapper">
+
+        {% set bannerItems = [] %}
+        {% for product in products.products %}
+            {% set bannerItems = bannerItems|merge([
+                {
+                    spotlight_id: product.id,
+                    link: product.url,
+                    image: product.image|resize('250x250'),
+                    title: product.name,
+                    sorder: loop.index
+                }]
+                ) %}
+            <div class="swiper-slide">
+                {{ include('themes/ninewest/widgets/products/_element/list', {product: product, free_shipping_limit: free_shipping_limit, season_options: season_options, isSpotlight: true, is_gallery_item: 1}) }}
+            </div>
+        {% endfor %}
+        </div>
+
+		<div class="swiper-pagination"></div>
+    </div>
+</section>
+
+
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: bannerItems, element: '.our-your-select'}}) }}

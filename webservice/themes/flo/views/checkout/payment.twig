@@ -1,0 +1,30 @@
+<main role="main" class="page cart-page-wrapper">
+    <div class="container">
+        <div class=" row basket-page checkout-payment">
+
+            <div class="col-sm-9 pa">
+                {{ widget('checkout', 'payment') }}
+
+				<div class="flo-agreement-wrapper" style="margin-bottom: 100px;">
+					<div class="flo-agreement">
+						<div class="flo-agreement-title">{{ 'Mesafeli Satış Sözleşmesi' | translate }}</div>
+						<div class="flo-agreement-content">
+							{{ widget('checkout', 'agreement1') }}
+						</div>
+					</div>
+
+					<div class="flo-agreement">
+						<div class="flo-agreement-title">{{ 'Ön Bilgilendirme Formu' | translate }}</div>
+						<div class="flo-agreement-content">
+							{{ widget('checkout', 'agreement2') }}
+						</div>
+					</div>
+				</div>
+            </div>
+
+            <div class="col-sm-3 basket-container">
+                {{ widget('basket', 'sidebar', {'next_url': '/checkout/success', 'button_label':'ÖDEMEYİ TAMAMLA','aggrement':'aggrement', 'coupon_hide':' coupon', 'ispayment': 'ispayment' }) }}
+            </div>
+        </div>
+    </div>
+</main>

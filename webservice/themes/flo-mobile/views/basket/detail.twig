@@ -1,0 +1,98 @@
+{#
+<div class="page basket-page short-header">
+    <div class="container-fluid">
+        <div class="page-content">
+            <div class="my-basket">
+                <div class="basket-list">
+                    <div class="step">
+                        <ul>
+                            <li class="active"><i>{{ 'SEPET' | translate }}</i></li>
+                            <li><i>{{ 'ADRES' | translate }}</i></li>
+                            <li><i>{{ 'ÖDEME' | translate }}</i></li>
+                        </ul>
+                    </div>
+                    <div class="basket-detail">
+                        {% if is_basket_empty %}
+                        <div class="basket-page">
+                            <div class="my-basket">
+                                <div class="basket-list">
+                                    <div class="basket-detail">
+                                        <div class="bottom-pro no-product">
+                                            <b>{{ 'Sepetinizde Ürün Yok' | translate }}</b><hr> <br>    <a href="/" style="text-align:center">{{ 'Alışverişe Devam Et' | translate }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% else %}
+                        {{ widget('basket', 'items') }}
+                        {{ widget('basket', 'sidebar') }}
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="basket-button">
+                <div class="linkto">
+                    <a onclick="window.location.href='/checkout/shipping'">{{ 'SEPETİ ONAYLA' | translate }}</a>
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+#}
+<main role="main">
+
+		{% if is_basket_empty %}
+		<div class="cart-page-wrapper empty-cart">
+			<div class="page-title-bar">
+				<a href="/" class="go-back-link"><i class="svg-slide-arrow-left svg-slide-arrow-left-dims"></i></a>
+				<h1>SEPETİM</h1>
+			</div>
+			<div class="bg-white mt-2">
+				<div class="empty-cart-alert text-center">
+					<i class="svg-cart-big svg-cart-big-dims mb-3"></i>
+					<h2 class="mb-3">Alışveriş Sepetiniz Boş</h2>
+					<p>Binlerce ürün ve model seni bekliyor, göz<br> atmak için <a href="/">tıkla</a></p>
+				</div>
+			</div>
+			<a href="/" class="btn btn-warning btn-lg text-white btn-block d-flex align-items-center justify-content-center mb-4">ALIŞVERİŞE BAŞLA <i class="fa fa-angle-right ml-3"></i></a>
+		</div>
+		<script>
+			domReadyCallbacks.push(function () {
+				$.cookie('cart-count', null, { expires: -1 });
+			});
+		</script>
+		{% else %}
+
+
+        <div class="cart-page-wrapper basket-page">
+
+        <ul class="steps">
+            <li class="active">
+                <a href="{{ basket_base_url() }}/basket">
+                    Sepet
+                </a>
+            </li>
+            <li>
+                <a href="javascript:void(0);">
+                    Adres
+                </a>
+            </li>
+            <li>
+                <a href="javascript:void(0);">
+                    Ödeme
+                </a>
+            </li>
+        </ul>
+        {{ widget('basket', 'items') }}
+        {{ widget('basket', 'sidebar', {'continous':'continous' }) }}
+
+		<a class="btn btn-success confirm-cart-button linkto" href="javascript:;" onclick="javascript:RG.Overlay.block('');window.location.href='/checkout/shipping';">{{ 'SEPETİ ONAYLA' | translate }} <i class="fa fa-angle-right"></i></a>
+    </div>
+	{% endif %}
+</main>

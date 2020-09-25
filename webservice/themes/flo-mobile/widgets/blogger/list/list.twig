@@ -1,0 +1,21 @@
+<div class="blogger lazy">
+    <div class="container">
+        <div class="text-center mb-3">
+            <img src="/pub/media/lazyloading/blank.png" data-src="/pub/assets/flo-mobile/img/blogger-logo.jpg">
+        </div>
+        <div class="row no-gutters">
+
+        {% for post in blog_posts %}
+            <div class="col-6">
+                <a href="{{ post.url }}" class="blog-box">
+                    <img src="/pub/media/lazyloading/blank.png" data-src="{{ post.image }}" class="w-100">
+                    <h5>{{ post.title }}</h5>
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+        <div class="text-center">
+            <a href="https://www.flo.com.tr/blog" target="_blank" class="btn btn-dark">{{ 'FLO BLOGGER' | translate }}</a>
+        </div>
+    </div>
+</div>

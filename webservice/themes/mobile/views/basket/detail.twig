@@ -1,0 +1,45 @@
+<div class="page basket-page short-header">
+    <div class="container-fluid">
+        <div class="page-content">
+            <div class="my-basket">
+                <div class="basket-list">
+                    <div class="step">
+                        <ul>
+                            <li class="active"><i>{{ 'SEPET' | translate }}</i></li>
+                            <li><i>{{ 'ADRES' | translate }}</i></li>
+                            <li><i>{{ 'ÖDEME' | translate }}</i></li>
+                        </ul>
+                    </div>
+                    <div class="basket-detail">
+                        {% if is_basket_empty %}
+                        <div class="basket-page">
+                            <div class="my-basket">
+                                <div class="basket-list">
+                                    <div class="basket-detail">
+                                        <div class="bottom-pro no-product">
+                                            <b>{{ 'Sepetinizde Ürün Yok' | translate }}</b><hr> <br>    <a href="/" style="text-align:center">{{ 'Alışverişe Devam Et' | translate }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% else %}
+                        {{ widget('basket', 'items') }}
+                        {{ widget('basket', 'sidebar') }}
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="basket-button">
+                <div class="linkto">
+                    <a onclick="window.location.href='/checkout/shipping'">{{ 'SEPETİ ONAYLA' | translate }}</a>
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>

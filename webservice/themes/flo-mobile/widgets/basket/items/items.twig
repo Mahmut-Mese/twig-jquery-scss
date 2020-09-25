@@ -1,0 +1,113 @@
+{% set totalNotInStock =0  %}
+
+<div class="my-basket">
+    <div class="basket-list">
+        <div class="product-list basket-detail ">
+            <table class="cart-detail ">
+                <tbody>
+                {% for item in basket.items %}
+                    <tr data-id="{{ item.item_id }}" data-sku="{{ item.sku }}" class="basket-item">
+                        <td>
+                            <div class="product">
+                                <a href="javascript:void(0);">
+                                    <div class="close remove" data-id="{{ item.item_id }}" data-sku="{{ item.sku }}"
+                                         data-update="1">x
+                                    </div>
+                                </a>
+                                <figure class="images">
+                                    <a href="{{ item.data.image }}" data-fancybox="{{ item.item_id }}">
+										{{ img(item.data.image, { style: 'width: 120px;' }) }}
+                                    </a>
+                                </figure>
+                                <div class="text-holder text">
+                                    <h3>{{ item.data.manufacturer }}</h3>
+                                    <div class="info"> {{ item.name }}</div>
+                                    <div class="info"><b>{{ 'Renk' | translate }}:</b> {{ item.data.renk }}</div>
+                                    <div class="adet count">
+                                        <span><b>Beden:</b></span>
+                                        <div class="text optn  ">
+                                            <div class="  select">
+
+
+                                                    {% for option in item.data.options %}
+                                                        {% if option.is_selected %}
+                                                     {{ option.option_value }}
+                                                        {% endif %}
+                                                    {% endfor %}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="count adet">
+                                        <span><b>Adet:</b></span>
+                                        <div class="text qty">
+                                            <div class="qty-select select ">
+                                                <ul class="list">
+
+                                                    {% for option in item.data.options %}
+                                                        {% if option.is_selected %}
+                                                            <li class="option"
+                                                                data-value="{{ item.qty }}">{{ item.qty }}</li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    {% for option in item.data.options %}
+                                                        {% if option.qty > 1 %}
+                                                            {% if option.is_selected %}
+                                                                {% for i in 1..option.qty  if i != item.qty and i < 8 %}
+                                                                    <li class="option"
+                                                                        data-value="{{ i }}">{{ i }}</li>       {% endfor %} {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    {% if item.not_in_stock %}
+                                                        {% set totalNotInStock = totalNotInStock + 1 %}
+                                                    {% endif %}
+                                                </ul>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="price">{{ (item.base_price_incl_tax) | price }}</div>
+                                    {% if item.data.price > item.base_price_incl_tax %}
+                                        <div class="old-price"><span>{{ item.data.price }} TL</span></div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% if totalNotInStock %}
+                <div class="modal flomodal no-stock fade" id="cartInfoModal1" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-sm modal-dialog-centered cart-modal" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">SEPET</h5>
+                                <button type="button" class="close cart-info-modal-close" data-dismiss="modal" aria-label="Close">
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="total-count">
+                                    <i class="svg-cart-big svg-cart-big-dims"></i>
+                                    <span class="">{{ totalNotInStock }}</span>
+                                </div>
+                                <h4>Sepetinizdeki {{ totalNotInStock }} ürünün stoğu tükenmiştir.</h4>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="{{ basket_base_url() }}/basket" class="btn btn-success w-100 delete-item" style="margin-left: -1px !important;">SEPETTEN ÜRÜNÜ SİL <i class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    domReadyCallbacks.push(function () {
+                        $('#cartInfoModal1').modal('show');
+                    });
+                </script>
+            {% endif %}
+
+            {{ widget('datalayer', 'checkout_cart', {layerData: {cart: basket, refresh: isAjax}}) }}
+        </div>
+    </div>
+</div>

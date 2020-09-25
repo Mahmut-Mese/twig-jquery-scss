@@ -1,0 +1,44 @@
+{% if(basket.items|length == 0) %}
+    <div class="item minicart-null">
+        <span class="fa fa-shopping-cart"></span>
+        {{ 'Sepetiniz Boş' | translate }}
+    </div>
+{% else %}
+    <div class="cart-item-count">
+        {{ 'Sepetinizde <i class="cart-count"></i> ürün bulunmaktadır.' | translate | raw }}
+    </div>
+    {% for item in basket.items %}
+        <div class="item">
+            <a href="#">
+                <img src="{{ item.data.image|resize('70x70') }}" style="width: 70px; height: 70px;" class="" alt="" onclick="location.href='{{ item.data.url }}'">
+
+                <span onclick="location.href='{{ item.data.url }}'">
+                    <div class="brand-name">
+                        {{ item.data.manufacturer | raw }}
+                    </div>
+                    {{ item.data.name }}
+                    {% if item.data.third_price is not empty %}
+                        <i> {{ item.qty }} x {{ item.data.third_price | price }} </i>
+                    {% else %}
+                        <i> {{ item.qty }} x {{ item.base_price_incl_tax | price }} </i>
+                    {% endif %}
+
+
+                </span>
+            </a>
+            <i class="close close-minicart" id="close-minicart" data-id="{{ item.item_id }}" data-sku="{{ item.sku }}">x</i>
+        </div>
+    {% endfor %}
+{% endif %}
+
+{{ widget('datalayer', 'all_pages', {layerData: {cart: basket}, pushEvent: false}) }}
+
+{% if basket.items|length %}
+    <div class="more">
+        <a href="{{ basket_base_url() }}/basket">{{ 'SEPETE GİT' | translate }}</a>
+    </div>
+{% else %}
+    <div class="more">
+        <a href="javascript:void(0)" onclick="$.fancybox.close()">{{ 'ALIŞVERİŞE DEVAM ET' | translate }}</a>
+    </div>
+{% endif %}

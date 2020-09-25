@@ -1,0 +1,30 @@
+{% set filter_is_active = false %}
+{% for agg in aggregations %}
+    {% if ( agg.value in filters) %}
+        {% set filter_is_active = true %}
+    {% endif %}
+{% endfor %}
+<div class="form-group">
+    <span >{{ filter.name | translate }}</span>
+    <ins>
+        {% for agg in aggregations %}
+            {% if ( agg.value in filters) %}
+                <i>
+                    {{ agg.name }}
+                </i>
+            {% endif %}
+        {% endfor %}
+    </ins>
+    <div class="all hidden ">
+        {% for agg in aggregations %}
+            <div class="checkbox input {% if ( agg.value in filters) %}selected{% endif %}" data-value="{{ agg.value }}" data-name="filters[]" {% if ( agg.value in filters) %}data-is-selected="1"{% endif %}>
+                <label class="">
+                    <div class="icheckbox_square-blue" style="position: relative;">
+                    </div>
+                    {{ agg.name }}
+                </label>
+            </div>
+
+        {% endfor %}
+    </div>
+</div>

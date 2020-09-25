@@ -1,0 +1,37 @@
+<div class="page size-qty">
+    <div class="container-fluid">
+        {% if is_basket_empty %}
+        <div class="basket-page">
+            <div class="my-basket">
+                <div class="basket-list">
+                    <div class="basket-detail">
+                        <div class="bottom-pro no-product">
+                         <b>{{ 'Sepetinizde Ürün Yok' | translate }}</b><hr> <br>    <a href="/" style="text-align:center">{{ 'Alışverişe Devam Et' | translate }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="basket-page">
+            <div class="mc-md-9 mc-sm-12 pa">
+                <div class="my-basket">
+                    <div class="basket-list">
+                        <div class="step">
+                            <ul>
+                                <li class="okey"><i>{{ 'SEPET' | translate }}</i></li>
+                                <li><i>{{ 'ADRES' | translate }}</i></li>
+                                <li><i>{{ 'ÖDEME' | translate }}</i></li>
+                            </ul>
+                        </div>
+                        {{ widget('basket', 'items', {isAjax: is_ajax}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="mc-md-3 mc-sm-12 pa">
+                {{ widget('basket', 'sidebar', {'next_url': '/checkout/shipping'}) }}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>

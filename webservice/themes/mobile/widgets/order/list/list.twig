@@ -1,0 +1,100 @@
+<div class="page searchnone my-orders" id="siparis-cancel">
+    <div class="container-fluid">
+        <div class="page-content sab">
+            <div class="whitepage">
+                <div class="row">
+                    <div class="col-sm-12"><h4 class="my-orders-title">{{ 'Siparişlerim' | translate }}</h4></div>
+                </div>
+                <div class="content">
+                    <div class="centerContent">
+                        <div class="account">
+                            <div class="siparis-box">
+                                <div class="item">
+                                    <div class="list">
+                                        {% if orders is empty %}
+                                            <p style="text-align: center">{{ 'Henüz bir siparişiniz bulunmamaktadır.' | translate }}</p>
+                                        {% endif %}
+                                        {% if orders is empty %}
+                                            <div class="breadcrumbs-bar title-only">
+                                                <div class="empty-cart-alert text-center" style="margin: 0 auto;">
+                                                    <i class="svg-cart-big svg-cart-big-dims mb-3"></i>
+                                                    <h1>Henüz siparişiniz bulunmamaktadır</h1>
+                                                    <p class="mb-5">Binlerce ürün ve model seni bekliyor, göz atmak için
+                                                        <a href="/">tıkla</a></p>
+                                                    <a href="/"
+                                                       class="btn btn-warning btn-lg text-white btn-block d-flex align-items-center justify-content-center">ALIŞVERİŞE
+                                                        BAŞLA <i class="fa fa-angle-right ml-3"></i></a>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            {% for order in orders %}
+                                                <div class=" order-box">
+                                                    <div class="infos-holder">
+                                                        <table>
+                                                            {% set totalCount = 0 %}
+                                                            {% for orderItem in order_detail[order.entity_id] %}
+                                                                {% set totalCount = totalCount + (orderItem.qty_ordered | number_format) %}
+                                                            {% endfor %}
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="orders-left">
+                                                                        <span>Sipariş No: {{ order.increment_id }}</span><br>
+                                                                        <span>Sipariş Tarihi: </span>
+                                                                        {{ date_translate(order.created_at ,'%e %B %H:%M') }}
+                                                                        <br>
+                                                                        <span>Sipariş Tutar: </span><span
+                                                                                class="order-total"> {{ order.base_grand_total | price }}</span><br>
+                                                                    </div>
+                                                                    <div class="orders-right">
+                                                                        <span>Alıcı: </span>{{ order.shipping_address_info.firstname }} {{ order.shipping_address_info.lastname }}
+                                                                        <br>
+                                                                        <a href="order?id={{ order.entity_id }}"
+                                                                           class="btn orange">Sipariş Detayı <i
+                                                                                    class="svg-order-detail svg-order-detail-dims"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="status-holder">
+                                                                        <div class="order-status {{ order.status }}">
+                                                                            <div class="status-date mr-4 hidden">
+                                                                                <div class="status d-flex align-items-center {% if order.status == 'order_canceled' or order.status == 'canceled' %} text-danger {% else %} text-success {% endif %}  mb-2">
+                                                                                    <i class="{{ icon_status_list[order.status] }} mr-3"></i> {{ status_list[order.status] }}
+                                                                                </div>
+                                                                                <!-- <div class="date">TESLİMAT TARİHİ: {{ order.ekol_order_updates.ekol_date is empty ? "" : order.ekol_order_updates.ekol_date | date('d.m.Y') }}</div>-->
+                                                                            </div>
+                                                                            <ul class="products">
+
+                                                                                {% for product in order_detail[order.entity_id] %}
+                                                                                    <li><a href="{{ product.url_key }}"
+                                                                                           class="orders-list-imgs"><img
+                                                                                                    src="{{ product.image }}"
+                                                                                                    alt=""
+                                                                                                    onerror="this.src='/pub/assets/flo/img/placeholders/product.jpg'"></a>
+                                                                                    </li>
+                                                                                {% endfor %}
+                                                                            </ul>
+                                                                        </div>
+                                                                        <!--<a href="javascript:;" class="btn outline-gray" id="siparis_iptal_{{ order.increment_id }}_{{ order.protect_code }}">KOLAY İADE <i class="svg-order-return svg-order-return-dims"></i></a> -->
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                            {{ pagination(current_page, total_count, limit, 1, (original_request_url), activeFilters, 'pagination-lg justify-content-center') }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

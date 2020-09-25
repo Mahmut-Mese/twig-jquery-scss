@@ -1,0 +1,29 @@
+<div class="slider-full">
+    <div class="container-fluid">
+        <div class="list">
+
+        </div>
+    </div>
+</div>
+
+<div class="slider-new">
+    <div class="container-fluid">
+        <div class="list-tp">
+            <div class="sld-for">
+                {% for spotlight in spotlights %}
+                    <div class="all">
+                        <a href="{{ spotlight.link }}" data-spotlight-id="{{ spotlight.spotlight_id }}" class="spotlightItem">
+                            <div class="images">
+                                {{ img('wysiwyg/mobil_slider_images_360x201.jpg', '', {   width: '360px', height:'201px', cdn: 'general' },spotlight.image_mobil, 'data-lazy') }}
+                            </div>
+                            <div class="more">
+                                <img src="/pub/assets/instreet/mobile/images/button.jpg" class="resimatt" alt="">
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: spotlights}}) }}

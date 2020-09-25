@@ -1,0 +1,593 @@
+<div class="cm lazy">
+	<div class="cm-spotlight">
+		<img src="/pub/assets/flo/coupon_madness/IS/muhtesem-indirim.gif" />
+	</div>
+
+	<div class="container">
+		<div class="cm-campaigns">
+
+			{% set aliases = [banner_1_tum_kampanyalar] %}
+
+			{% set index = 1 %}
+			{% for campaigns in aliases %}
+				{% if campaigns | length %}
+					<div class="cm-campaign-tabs cm-campaign-tab-{{index}}">
+					{% for banner in campaigns %}
+						{% set surprise = false %}
+						{% if date(banner.start_date) > date() %}
+							{% set surprise = true %}
+						{% endif %}
+
+						<div class="cm-campaign-item {% if surprise %}{% endif %}">
+							<a href="{{ banner.link }}">
+								<div class="cm-campaign-image">
+									{% if surprise %}
+										<img src="/pub/assets/flo/coupon_madness/campaign-surprise.png">
+										<div class="cm-campaign-image-title">SÜRPRİZ FIRSAT</div>
+									{% else %}
+										{{ img(banner.image_desktop, '', {  class:'w-100', cdn: 'general' }) }}
+									{% endif %}
+								</div>
+								<div class="cm-campaign-info">
+									<div class="row">
+										<div class="col-sm-7">
+											<span class="cm-campaign-title">
+												{% if surprise %}
+													{{ 'Takipte Kalan Herkes Stoklar Tükenmeden Fırsatı Yakalıyor.' | translate }}
+												{% else %}
+													{{ banner.title }}
+												{% endif %}
+											</span>
+										</div>
+										<div class="col-sm-5 text-right">
+											{% if surprise %}
+												<span class="cm-campaign-timer"><span class="cm-campaign-timer-icon"></span> 03:15:22</span>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+							</a>
+						</div>
+					{% endfor %}
+					</div>
+					{% set index = index + 1 %}
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="cm-coupons">
+		<div class="cm-coupons-title">
+			<img src="/pub/assets/flo/coupon_madness/IS/coupons-title.png" alt="Kupon Çılgınlığı"/>
+		</div>
+
+		<ul class="cm-coupon-list">
+			{% for campaign in campaigns %}
+				{% if customer_campaigns[campaign.rule_id] %}
+					<li class="cm-coupon-used"></li>
+				{% else %}
+					<li class="cm-coupon-item">
+						<a href="#" data-rule="{{ campaign.rule_id }}" class="cm-set-coupon"
+							data-price="{% if campaign.yuzde %}%{% endif %}{{ campaign.discount_amount | number_format }}"
+							data-ispercent="{{ campaign.yuzde }}"
+							data-description="{{ campaign.description }}"
+						>
+							<span class="cm-coupon-price">
+								{% if campaign.yuzde %}
+									%{{ campaign.discount_amount | number_format }}
+								{% else %}
+									{{ campaign.discount_amount | number_format }} TL
+								{% endif %}
+							</span>
+							<span class="cm-coupon-description">{{ campaign.name }}</span>
+						</a>
+					</li>
+				{% endif %}
+
+				{% if (loop.index) % 3 == 0 %}
+					<li class="cm-coupon-newline"></li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+
+		<h1 class="cm-coupons-title text-center">Muhteşem İndirim Günleri</h1>
+		<div class="cm-coupons-description">
+			Muhteşem İndirim Kuponları 1 - 12 Kasım 2019 kazanılabilir. Kazanılan kuponlar 8-12 Kasım 2019 tarihleri arasında kullanılabilir.
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="footer-description">
+	<h2>Instreet’ten Kasım Ayına Özel Muhteşem İndirimler</h2>
+	<p>InStreet'te kasım ayına özel indirim festivali başladı! Muhteşem kampanyalarla ünlü markala-rın birbirinden şık ürünlerine sahip olmak isteyenlere müjde! InStreet'te sizler için düzenlenen özel promosyonlar sayesinde hayalinizdeki ürünlere en avantajlı fiyatlarla sahip olabilirsiniz. InStreet'te her tarza uygun farklı ürün seçeneğini bulabilirsiniz. Giyim, spor giyim, ayakkabı, çanta ve aksesuar kategorilerinde binlerce ürün sizleri bekliyor. Hem çocuklar hem de yetiş-kinler için tasarlanan, birbirinden şık ve kullanışlı InStreet ürünlerindeki muhteşem indirimleri yakalamak istiyorsanız sizi InStreet’e bekliyoruz.</p>
+
+	<h2>Kasım Ayına Özel Instreet İndirim Kuponlarını Kaçırmayın!</h2>
+	<p>Instreet; kadın, erkek, çocuk kategorilerinde sunduğu sayısız ayakkabı, giyim ürünü ve akse-suar seçeneklerinde dev indirimlerle kasım ayı alışveriş festivaline damgasını vuruyor. Sezon ürünlerinde büyük indirim oranları; outlet ürünlerinde ekstra avantaj sağlıyor. Bu kategorilerin haricinde outdoor ürünleri ve spor ekipmanları başlıklarında da sürpriz indirimler kasım ayı kampanyaları süresince sizi şaşırtmaya devam ediyor. Sepette ekstra indirimlerle sezon alış-verişlerinizde yüzünüzü güldüren InStreet'in sizler için düzenlediği mükemmel fırsatları kaçır-mayın!</p>
+
+	<h2>Ünlü Markaların Ürünlerinde Efsane İndirimler Başlıyor</h2>
+	<p>InStreet'te dünyaca ünlü markaların zengin ürün seçenekleri satışa sunuluyor. Bu markalar arasında Lacoste, Skechers, New Balance, Nike, Adidas, Puma gibi isimler yer alıyor. InSt-reet'in kasım ayı indirimleri ile bu markalardan yapacağınız alışverişler; en kaliteli ve trend ürünlere en uygun fiyatlarla sahip olmanızı sağlıyor. InStreet'te yer alan tüm markaların so-ğuk hava koşullarına dayanıklı ve stil sahibi bot modelleri; her yaşa ve her tarzla uyum sağla-dığı gibi muhteşem indirimler sayesinde bütçenize de uygun hale geliyor. Ünlü spor markala-rının günlük ve spor ayakkabı modelleri ise fonksiyonuna özel olarak tasarlanmış fitness, koşu ve yürüyüş ayakkabısı modelleri ile birlikte InStreet'in muhteşem indirim kampanyaları kapsamındaki yerini alıyor. Size de Instreet indirim kuponları ile birbirinden kaliteli ve marka ürünlere uygun fiyatlarla sahip olmak kalıyor.</p>
+
+	<h2>Lisanslı Ürünlerde Geçerli Kampanyalar</h2>
+	<p>Çocuklar için hazırladığı özel koleksiyonları ile tanınan Disney, kendi imzasını taşıyan özel tasarım ürünleri ile InStreet'te! Kasım ayı alışveriş festivalinde siz de InStreet'in efsane kam-panyaları sayesinde çocuğunuzun sevdiği Disney temalı ürünlerden satın alarak onlara kulla-nışlı ve eğlenceli hediyeler alabilirsiniz. Türkiye'nin bir numaralı spor kulüpleri tarafından ta-sarlanan lisanslı çocuk ve yetişkin ürünlerine de InStreet'ten ulaşabilir; kasım ayı indirimleri sayesinde tuttuğunuz takımın ayakkabı ve terlik modellerine indirimli fiyatlarla sahip olabilirsi-niz.</p>
+
+	<h2>En Kullanışlı Kadın Ayakkabı Modellerinde Eşsiz Fırsatlar</h2>
+	<p>Kadınların en büyük tutkusu olan ayakkabı alışverişlerinde onlara sayısız ürün seçeneği su-nan InStreet'in size özel kupon kampanyaları sayesinde siz de koleksiyonunuza yepyeni par-çalar ekleyebilirsiniz. Rahat ve hafif topuklu sandaletler, parmak arası terlikler, birbirinden şık babetler ile yaz kombinlerinizi tamamlayabilir; farklı renklerdeki loafer ve oxford tipi kadın ayakkabı modelleri ile casual stilinizi taçlandırabilirsiniz.</p>
+	<p>Spor aktivitelerinde kullanacağınız farklı özelliklerdeki spor ayakkabı modelleri ile maksimum konfora ulaşmak için kasım ayı indirimlerini kaçırmayın. Nike, Adidas, Reebok, Puma gibi dünya devi markaların en rahat spor ayakkabı modelleri ile konforlu bir şekilde spor yapma-nın tadını çıkarın!</p>
+
+	<h2>Erkek Ayakkabı Ürünlerinde Büyük İndirimler</h2>
+	<p>Spor şıklığı yakalamak isteyen erkekler için birbirinden kullanışlı ayakkabı modelleri In-Street’te vitrine çıkıyor. Müthiş indirimler ile inanılmaz fiyatlara sahip olabileceğiniz bu ayak-kabı seçenekleri arasında ev ayakkabısından bot ve çizmelere varıncaya kadar pek çok farklı ayakkabı modeli yer alıyor. Günlük giyimde kombinlerinizi tamamlayacak rengarenk sneaker-lar, rahat günlük ayakkabı modelleri ve spor modeller InStreet’te sürpriz indirimlerle sizi bek-lerken kışa hazırlık yapmak isteyenler içinse birbirinden şık ve sağlam erkek bot ve çizme modelleri dikkat çekiyor. The North Face, Timberland, Lumberjack ve Merrel gibi prestijli isimlerin ürünlerini bulabileceğiniz erkek bot ve çizme kategorisinde uygulanacak promos-yonlu fiyatlarla kışa sımsıcak bir giriş yapmak istiyorsanız; InStreet’in özel indirimleri tam size göre! Ayak numaranız kaç olursa olsun, InStreet’in kampanyalı erkek ayakkabı modelleri ara-sında 39’dan 48’e varıncaya kadar her bedene uygun çok sayıda farklı ayakkabı seçeneğine ulaşabilirsiniz. Outdoor çizme ve ayakkabı modelleri ile en zorlu hava şartlarında dahi açık hava aktivitelerinde dahil olabilir; InStreet’in eşsiz indiriminden aldığınız birbirinden kullanışlı ayakkabıların tadını doyasıya çıkarabilirsiniz. InStreet’in muhteşem indirim kuponlarının ayakkabı modelleri ile sınırlı kalmadığını ve giyim, spor ekipmanları, aksesuar kategorilerinde de sizleri sürpriz indirimlerin bekliyor olduğunu unutmayın! Saat, güneş gözlüğü, çanta, valiz gibi aksesuarların yanı sıra olumsuz hava şartlarına karşı korunmanızı sağlayacak, birbirin-den şık atkı, bere ve eldiven modelleri için InStreet’in özel kampanyalarından yararlanın. Kendiniz ve sevdikleriniz için birbirinden şık, sağlam ve kullanışlı ürünleri en uygun fiyatlara satın alabileceğiniz kasım indirimleri ile InStreet’te başlayacak eşsiz alışveriş festivaline hazır olun! 11 Kasım’da gün boyu sürecek bu indirimden yararlanarak beğendiğiniz ürünleri tüken-meden sepetinize ekleyin ve online alışveriş kolaylığını yaşayın!</p>
+
+	</div>
+</div>
+
+<div class="modal flomodal fade" id="cmSelectCoupon" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-sm modal-dialog-centered cart-modal" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">KUPON ÇILGINLIĞI</h5>
+				<button type="button" class="close cart-info-modal-close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<h2></h2>
+				<h4></h4>
+			</div>
+			<div class="modal-footer">
+				<a href="javascript:;" class="btn btn-success btn-block cm-appyl-coupon-code" data-dismiss="modal" aria-label="Close"> İNDİRİMİ YAKALA </a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal flomodal fade" id="cmErrorModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-sm modal-dialog-centered cart-modal" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">KUPON ÇILGINLIĞI</h5>
+				<button type="button" class="close cart-info-modal-close" data-dismiss="modal" aria-label="Close">
+				</button>
+			</div>
+			<div class="modal-body">
+				<h4></h4>
+			</div>
+			<div class="modal-footer">
+				<a href="javascript:;" class="btn btn-success btn-block" data-dismiss="modal" aria-label="Close"> TAMAM </a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	header {
+		float: none;
+	}
+
+	.container {
+		width: 100%;
+		max-width: 1230px;
+	}
+
+	.cm {
+		max-width: 100%;
+		overflow:hidden;
+	}
+
+	.cm-spotlight {
+		max-width: 1230px;
+		margin: 0 auto 20px;
+		padding: 0 15px;
+	}
+
+	.cm-spotlight img {
+		width: 100%;
+		margin-bottom: 0;
+	}
+
+	.cm-categories {
+		padding: 0;
+		margin: 0 0 20px 0;
+		list-style: none;
+
+		font-size: 0;
+
+		text-align: center;
+	}
+
+	.cm-categories > li {
+		display:inline-block;
+		vertical-align: middle;
+
+		width: 170px;
+		height: 170px;
+
+		margin-right: 11px;
+
+		position: relative;
+	}
+
+	.cm-categories > li:last-child {
+		margin-right: 0;
+	}
+
+	.cm-categories > li.all{background:#C30000;}
+	.cm-categories > li.woman{background:#d35500;}
+	.cm-categories > li.man{background:#a1292a;}
+	.cm-categories > li.child{background:#6c1975;}
+	.cm-categories > li.sport{background:#30377b;}
+	.cm-categories > li.accessory{background:#03858b;}
+	.cm-categories > li.dress{background:#19772b;}
+
+	.cm-categories > li:before {
+		content: '';
+
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		bottom: 60px;
+		left: 20px;
+		z-index: 0;
+
+		background: #fcbd39;
+		border-radius: 100%;
+
+		-webkit-filter: blur(35px);
+		filter: blur(35px);
+	}
+
+	.cm-categories > li:after {
+		content: '';
+
+		display: none;
+
+		position: absolute;
+		top: 100%;
+		left: 50%;
+
+		margin-left: -12.5px;
+
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 12px 12.5px 0 12.5px;
+		border-color: transparent transparent transparent transparent;
+	}
+
+	.cm-categories > li.all:after{border-top-color:#C30000;}
+	.cm-categories > li.woman:after{border-top-color:#d35500;}
+	.cm-categories > li.man:after{border-top-color:#a1292a;}
+	.cm-categories > li.child:after{border-top-color:#6c1975;}
+	.cm-categories > li.sport:after{border-top-color:#30377b;}
+	.cm-categories > li.accessory:after{border-top-color:#03858b;}
+	.cm-categories > li.dress:after{border-top-color:#19772b;}
+	.cm-categories > li.active:after { display: block; }
+
+	.cm-categories > li span {
+		display: block;
+
+		font-size: 20px;
+		line-height: 1;
+		text-align: center;
+
+		color: #ffffff;
+
+		position: absolute;
+		bottom: 13px;
+		left:5px;
+		right:5px;
+
+		padding-top: 20px;
+
+		border-top: solid 1px rgba(255, 255, 255, .2);
+	}
+
+	.cm-categories > li img {
+		width: 112px;
+		height: 112px;
+
+		position: relative;
+		z-index: 2;
+	}
+
+	.cm-campaigns {
+		margin-bottom: 35px;
+	}
+
+	.cm-campaign-tabs {
+		display: none;
+	}
+
+	.cm-campaign-item {
+		margin-bottom: 35px;
+	}
+
+	.cm-campaign-item.surprise .cm-campaign-image:before{
+		content: '';
+
+		position: absolute;
+		top:0;
+		right:0;
+		bottom:0;
+		left: 0;
+
+		z-index: 1;
+
+		opacity: 0.9;
+		background-color: #ff7600;
+	}
+
+	.cm-campaign-image {
+		position: relative;
+	}
+
+	.cm-campaign-image img {
+		width: 100%;
+	}
+
+	.cm-campaign-image-title {
+		font-size: 130px;
+		color: #ffffff;
+
+		position: absolute;
+		top: 50%;
+		left: 50%;
+
+		z-index: 2;
+
+		transform: translate3d(-50%, -50%, 1px);
+
+		white-space: nowrap;
+	}
+
+	.cm-campaign-info {
+		background: #ffffff;
+
+		padding: 15px 30px;
+	}
+
+	.cm-campaign-link {
+		text-decoration: underline;
+	}
+
+	.cm-campaign-timer,
+	.cm-campaign-link,
+	.cm-campaign-title{
+		font-size: 24px;
+		line-height: 1;
+		color: #000000;
+	}
+
+	.cm-campaign-timer-icon {
+		width: 24px;
+		height: 24px;
+
+		background: url(/pub/assets/flo/coupon_madness/timer.png) no-repeat;
+		background-size: cover;
+
+		display: inline-block;
+		vertical-align: middle;
+
+		margin-top: -6px;
+		margin-right: 20px;
+	}
+
+	.cm-coupons {
+		background: #ffffff;
+		padding: 30px 0;
+	}
+
+	.cm-coupons-title {
+		text-align: center;
+		margin-bottom: 20px;
+	}
+
+	.cm-coupons-title img {
+		box-shadow: 10px 90px 30px -90px rgba(0,0,0,.3);
+		-webkit-box-shadow: 10px 90px 30px -90px rgba(0,0,0,.3);
+	}
+
+	.cm-coupon-list {
+		padding: 0;
+		margin: 0;
+		list-style: none;
+
+		font-size: 0;
+		text-align: center;
+	}
+
+	.cm-coupon-newline {
+		display: block;
+	}
+
+	.cm-coupon-used,
+	.cm-coupon-guest,
+	.cm-coupon-item {
+		position: relative;
+
+		width: 383px;
+		height: 174px;
+
+		display: inline-block;
+		vertical-align: middle;
+
+		margin: 0 18px 18px 0;
+
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+
+	.cm-coupon-item {
+		background-image: url(/pub/assets/flo/coupon_madness/IS/coupon-available.png);
+	}
+
+	.cm-coupon-guest {
+		background-image: url(/pub/assets/flo/coupon_madness/IS/coupon-guest.png);
+	}
+
+	.cm-coupon-used {
+		background-image: url(/pub/assets/flo/coupon_madness/IS/coupon-used.png);
+	}
+
+	.cm-coupon-guest > a,
+	.cm-coupon-item > a{
+		display: block;
+		height: 100%;
+	}
+
+	.cm-coupon-price {
+		position: absolute;
+
+		top: 36px;
+		right: 0;
+
+		width: 170px;
+
+		font-size: 40px;
+		line-height: 20px;
+		color: #ffffff;
+		text-align: center;
+
+		white-space: nowrap;
+	}
+
+	.cm-coupon-description {
+		position: absolute;
+		bottom: 30px;
+		right: 30px;
+
+		font-size: 12px;
+		color: #ffffff;
+
+		max-width: 120px;
+	}
+
+	.cm-coupons-description {
+		text-align: center;
+
+		font-size: 18px;
+		color: #000000;
+	}
+
+	.cm-banners{
+		background: #ffffff;
+	}
+
+	.cm-banner {
+		display: block;
+		margin-bottom: 30px;
+	}
+
+	.cm-banner img {
+		width: 100%;
+	}
+
+	#cmSelectCoupon h2 {
+		font-size: 30px;
+		margin-top: 0;
+	}
+
+	#cmSelectCoupon h2 .price {
+		font-size: 60px;
+		line-height: 1;
+		vertical-align: bottom;
+	}
+
+	#cmSelectCoupon h4 {
+		font-size: 20px;
+		text-align: center;
+		color: #707070;
+		font-style: normal;
+	}
+
+	.modal-dialog {
+		width: 500px;
+	}
+
+	.modal-footer {
+		padding: 0;
+	}
+
+	.modal-content {
+		border-radius: 0;
+	}
+
+	.modal-header {
+		padding: 10px;
+		-ms-flex-align: center;
+		align-items: center;
+		-ms-flex-pack: center;
+		justify-content: center;
+		background-color: #f1f1f1;
+		border-bottom: none;
+	}
+
+	.modal-header h5 {
+		font-size: 30px;
+		font-weight: 500;
+		text-align: center;
+		color: #000;
+		text-shadow: none;
+	}
+
+	.modal-body {
+		display: -ms-flexbox;
+		display: flex;
+		-ms-flex-align: center;
+		align-items: center;
+		-ms-flex-pack: center;
+		justify-content: center;
+		-ms-flex-direction: column;
+		flex-direction: column;
+		padding: 30px;
+		color: #000;
+	}
+
+	.modal-footer a {
+		margin: 0!important;
+		padding: 17px;
+		font-size: 20px;
+		background: #ff671b;
+		border-color: #ff671b;
+		border-radius: 0;
+	}
+
+	.modal-footer a:hover {
+		background: #ff671b;
+		border-color: #ff671b;
+	}
+
+	.modal.fade .modal-dialog {
+		-webkit-transform: translate(0, 100%);
+		-ms-transform: translate(0, 100%);
+		-o-transform: translate(0, 100%);
+		transform: translate(0, 100%);
+		top: 50%;
+	}
+
+	.modal.in .modal-dialog {
+		-webkit-transform: translate(0,-50%);
+		-ms-transform: translate(0,-50%);
+		-o-transform: translate(0,-50%);
+		transform: translate(0,-50%);
+	}
+
+	.footer-description h2{
+		font-size: 24px;
+	}
+</style>
+
+<script>
+	domReadyCallbacks.push(function() {
+		$('.cm-categories a').on('click', function (e) {
+			e.preventDefault();
+
+			var $self = $(this);
+			var $parent = $self.parent();
+			var index = $parent.index() + 1;
+
+			$('.cm-campaign-tabs').hide().filter('.cm-campaign-tab-' + index).fadeIn();
+
+			$self.closest('ul').find('li').removeClass('active');
+			$parent.addClass('active');
+		}).first().trigger('click');
+	});
+</script>

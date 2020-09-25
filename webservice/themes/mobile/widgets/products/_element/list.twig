@@ -1,0 +1,68 @@
+<div class="hep clearfix" data-gtm-product-id="{{ product.sku }}" id="product-{{ product.sku }}">
+    <div class="tp">
+        <div class="fav">
+            <a href="javascript:void(0);" class="add-wishlist" data-product-id="{{ product.id }}" data-sku="{{ product.sku }}"></a>
+        </div>
+        <div class="water-ico">
+            {#<img style="width: 240px; height: 240px;" src="{{ product.image }}" class="resimatt" alt="">#}
+        </div>
+    </div>
+    <div class="bt">
+        {% set camp = "" %}
+
+        {% if categoryId is not empty and categoryId > 0 %}
+            {% set camp = "?campaign=c_" ~ categoryId %}
+        {% elseif manufacturerId is not empty and manufacturerId > 0 %}
+            {% set camp = "?campaign=m_" ~ manufacturerId %}
+        {% elseif gender is not empty %}
+            {% set camp = "?campaign=g_" ~ gender %}
+        {% elseif query is not empty %}
+            {% set camp = "?campaign=s_" ~ query %}
+        {% else %}
+            {% set camp = "" %}
+        {% endif %}
+        <a href="{{ product.url }}{{ camp }}" data-product-id="{{ product.id }}"
+           onclick='RG.DataLayer.trigger("category_product_click", {productId: {{ product.id }}});'>
+            <div class="images">
+                <img src="{{ product.image|resize('268x268') }}" class="resimatt" alt="">
+            </div>
+            <div class="text   {% if product.rule_info %}  basket-discount-price  {% if product.third_price %} only-cart-rule{% endif %}  {% endif %}">
+                <div class="type-list">
+                    <ul>
+                        <li class="active hidden">{{ 'Yeni' | translate }}</li>
+                        {% if product.special_price %}
+                            {% set indirim_orani = (((product.price - product.filter_price)/ product.price) * 100) | number_format(0, '.', ',') %}
+                            <li  class="{% if product.third_price  %} discount-label {% endif %}">%{{ '%s ' | translate | format( indirim_orani ) }} </li>
+                        {% endif %}
+
+                        {% if  product.third_price is not empty and  product.third_price > free_shipping_limit %}
+                            <li class="active">{{ 'Kargo Bedava' | translate }}</li>
+                        {% elseif product.third_price is empty and product.filter_price > free_shipping_limit %}
+                            <li class="active">{{ 'Kargo Bedava' | translate }}</li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <span>{{ product.manufacturer }}</span>
+                <p>{{ product.name }}</p>
+                <div class="money">
+                    {% if product.special_price %}
+                        <i class="prev">{{ product.price|price }}</i>
+                    {% endif %}
+                    <i class="next">{{ product|price }}</i>
+                    {% if product.rule_info %}
+                         <div class="basket-discount">
+                            <div class="discount-rate">
+                                {% for key,info in product.rule_info %}
+                                    {% if key == 0 %}
+                                        {{ info['label'] }}
+                                    {% endif %}
+                                {% endfor %}</div>
+                             {% if product.third_price  %}
+                             <i class="next">{{ product.third_price|price }}</i>
+                             {% endif %}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

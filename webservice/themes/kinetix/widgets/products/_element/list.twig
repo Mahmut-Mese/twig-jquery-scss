@@ -1,0 +1,117 @@
+{# <div class="hep" data-gtm-product-id="{{ product.sku }}" id="product-{{ product.sku }}">
+    <div class="tp">
+        <div class="fav">
+            <a href="javascript:void(0);" class="add-wishlist" data-product-id="{{ product.id }}" data-sku="{{ product.sku }}"></a>
+        </div>
+        <div class="water-ico">
+            <img style="width: 240px; height: 240px;" src="{{ product.image }}" class="resimatt" alt="">
+        </div>
+    </div>
+    <div class="bt">
+        <a href="{{ product.url }}" data-product-id="{{ product.id }}"
+           onclick='RG.DataLayer.trigger("category_product_click", {productId: {{ product.id }}});'>
+            <div class="images">
+                <img src="{{ product.image|resize('268x268') }}" class="resimatt" alt="">
+            </div>
+            <div class="text">
+                <div class="type-list">
+                    <ul>
+                        {% if product.season in season_options %}
+                            <li class="active">{{ 'Yeni' | translate }}</li>
+                        {% endif %}
+                        {% if product.special_price %}
+                            {% set indirim_orani = (((product.price - product.filter_price)/ product.price) * 100) | number_format(0, '.', ',') %}
+                            <li>%{{ '%s İndirim' | translate | format( indirim_orani ) }} </li>
+                        {% endif %}
+
+                        {% if product.filter_price > free_shipping_limit  %}
+                            <li class="active">{{ 'Kargo Bedava' | translate }}</li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <span>{{ product.manufacturer }}</span>
+                <p>{{ product.name }}</p>
+                <div class="money">
+                    {% if product.special_price %}
+                        <i class="prev">{{ product.price|price }}</i>
+                    {% endif %}
+                    <i class="next">{{ product|price }}</i>
+                </div>
+            </div>
+        </a>
+    </div>
+</div> #}
+
+<div data-gtm-product-id="{{ product.sku }}" id="product-{{ product.sku }}">
+    {% set camp = "" %}
+
+    {% if categoryId is not empty and categoryId > 0 %}
+        {% set camp = "?campaign=c_" ~ categoryId %}
+    {% elseif manufacturerId is not empty and manufacturerId > 0 %}
+        {% set camp = "?campaign=m_" ~ manufacturerId %}
+    {% elseif gender is not empty%}
+        {% set camp = "?campaign=g_" ~ gender %}
+    {% elseif query is not empty %}
+        {% set camp = "?campaign=s_" ~ query %}
+    {% else %}
+        {% set camp = "" %}
+    {% endif %}
+    <a class="product-box fff" href="http://flo.mage{{ product.url }}{{ camp }}" data-product-id="{{ product.id }}"
+           onclick='RG.DataLayer.trigger("category_product_click", {productId: {{ product.id }}});'>
+        <figure class="lazy pos-relative">
+            {% if  (1130) in product.category_ids %}
+                <span class="badge badge-success active">{{ 'Yeni' | translate }}</span>
+            {% endif %}
+            <span class="badge badge-warning active">{{ 'Fırsat Ürünü' | translate }}</span>
+            {% if product.filter_price > free_shipping_limit  %}
+                <span class="badge badge-dark active">{{ 'Kargo Bedava' | translate }}</span>
+            {% endif %}
+
+			<div class="badges">
+                {% set cnt = 0 %}
+                {% set limit = 2 %}
+                {% for badge in  product.dynamic_badges %}
+                    {% if badge.show_on_list == 1 and cnt < limit %}
+                        <img src="{{badge.desktop_image}}" />
+                    {% endif %}
+                    {% set cnt = cnt + 1 %}
+                {% endfor %}
+            </div>
+
+
+            <img src="/pub/assets/flo/img/placeholders/product.jpg" data-src="{{ product.image|resize('268x268') }}" alt="{{ product.name }}">
+
+            {% if product.media_gallery %}
+                <div class="product-other-images lazy" data-total="{{ product.media_gallery | length }}">
+                    {% for media in product.media_gallery %}
+                        <img src="/pub/media/lazyloading/blank.png" data-src="{{ media.url|resize('268x268') }}" alt="{{ product.name }}">
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            <span class="add-to-favourites-button add-wishlist" data-favourited="false" data-product-id="{{ product.id }}" data-sku="{{ product.sku }}">
+                <i class="svg-favourite svg-favourite-dims"></i>
+            </span>
+        </figure>
+        <span class="title">{{ product.manufacturer }}</span>
+        <span class="description">{{ product.name }}</span>
+        <span class="prices {% if product.rule_info %} discounted {% endif%}">
+                {% if product.special_price %}
+                    <span class="old-price">{{ product.price|price }}</span>
+                {% endif %}
+            <span class="price {% if product.third_price %} second-price {% endif %}"> {{ product|price }}</span>
+        </span>
+            {% if product.rule_info %}
+                 <span class="discount">
+                {% for key,info in product.rule_info %}
+                    {% if key == 0 %}
+                        {{ info['label'] }}
+                    {% endif %}
+                {% endfor %}
+                     {% if product.third_price %}
+                <span class="third-price"> {{ product.third_price|price }}</span>
+                     {% endif %}
+            </span>
+            {% endif %}
+    </a>
+</div>

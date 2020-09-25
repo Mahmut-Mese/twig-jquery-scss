@@ -1,0 +1,14 @@
+<div class="page">
+    <div class="container-fluid">
+        <div class="basket-page checkout-payment">
+
+            <div class="mc-md-9 mc-sm-12 pa">
+            {{ widget('checkout', 'payment') }}
+
+            </div>
+            <div class="mc-md-3 mc-sm-12 pa basket-container">
+                {{ widget('basket', 'sidebar', {'next_url': '/checkout/success'}) }}
+            </div>
+        </div>
+        </div>
+    </div>

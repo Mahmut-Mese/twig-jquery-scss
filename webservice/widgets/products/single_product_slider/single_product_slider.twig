@@ -1,0 +1,23 @@
+<div class="mc-md-4 pa mc-sm-12">
+    <div class="chance-pro with_arrows our-your-select">
+        <div class="all">
+            <div class="title">{{ title }}</div>
+            <div class="content">
+                {% set bannerItems = [] %}
+                {% for product in products.products %}
+                    {% set bannerItems = bannerItems|merge([
+                        {
+                            spotlight_id: product.id,
+                            link: product.url,
+                            image: product.image|resize('250x250'),
+                            title: product.name,
+                            sorder: loop.index
+                        }]
+                        ) %}
+                    {{ include('widgets/products/_element/general', {product: product, free_shipping_limit:free_shipping_limit, season_options:season_options, isSpotlight: true}) }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: bannerItems, element: '.our-your-select'}}) }}

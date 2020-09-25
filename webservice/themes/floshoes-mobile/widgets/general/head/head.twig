@@ -1,0 +1,81 @@
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+<meta name="robots" content="{% if meta.robots is empty %}INDEX,FOLLOW{% else %}{{ meta.robots }}{% endif %}" />
+<title>{{ registry("page_title")|default(meta.title) }}</title>
+<meta name="description" content="{{ meta.description }}"/>
+<link rel="canonical" href="{{ meta.canonical }}" />
+<link rel="alternate" href="{{ meta.alternate }}" hreflang="tr" />
+
+<meta name="google-site-verification" content="VVVx-AmrekGhmhtF8i2r4fcqFM-af8C2QQ144md5CvA" />
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<meta name="apple-itunes-app" content="ap-id=1436146422" />
+<meta name="google-play-app" content="app-id=tr.com.instreet" />
+{% if registry("page_type") == "search" %}
+
+    <meta name="robots" content="noindex, follow" />
+{% endif %}
+
+<link rel="alternate" href="ios-app://1436146422/https/www.instreet.com" />
+<link rel="alternate" href="android-app://tr.com.instreet/https/www.instreet.com.tr" />
+
+<meta property="al:android:url" content="instreet://" />
+<meta property="al:android:package" content="tr.com.instreet" />
+<meta property="al:android:app_name" content="instreet" />
+
+<meta property="al:ios:url" content="instreet://" />
+<meta property="al:ios:app_store_id" content="1436146422" />
+<meta property="al:ios:app_name" content="instreet" />
+
+
+<meta property="og:locale" content="tr_TR" />
+<meta property="og:title" content="{{ registry("page_title")|default(meta.title) }}">
+<meta property="og:site_name" content="www.instreet.com.tr">
+<meta property="og:image" content="{{ meta.image }}">
+<meta property="og:url" content="{{ meta.canonical }}">
+<meta property="og:type" content="website">
+<meta property="fb:app_id" content="{{ registry('fb_app_id') }}">
+<meta property="fb:admins" content="">
+<meta property="og:description" content="{{ meta.description }}" />
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@instreet">
+<meta name="twitter:creator" content="@instreet">
+<meta name="twitter:title" content="{{ registry("page_title")|default(meta.title) }}">
+<meta name="twitter:description" content="{{ meta.description }}">
+<meta name="twitter:image" content="{{ meta.image }}">
+
+
+<meta name="keywords" content="instreet"/>
+<link rel="shortcut icon" href="/pub/assets/instreet/mobile/images/favicon.ico"/>
+<link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=block'>
+
+{% if config('env.development') == true %}
+<link href="/pub/assets/lib/bootstrap/bootstrap.min.css?v={{ git_version() }}" rel="stylesheet">
+<link href="/pub/assets/lib/fontawesome/fontawesome.min.css?v={{ git_version() }}" rel="stylesheet">
+<link href="/pub/assets/lib/slick/slick.min.css?v={{ git_version() }}" rel="stylesheet">
+<link href="/pub/assets/lib/niceselect/jquery.nice-select.min.css?v={{ git_version() }}" rel="stylesheet">
+<link href="/pub/assets/lib/fancybox/jquery.fancybox.min.css?v={{ git_version() }}" rel="stylesheet">
+<link href="/pub/assets/lib/jquery.validationengine/jquery.validationengine.css?v={{ git_version() }}" rel="stylesheet">
+<link href="/pub/assets/lib/mmenu/jquery.mmenu.all.css" rel="stylesheet"/>
+<link href="/pub/assets/lib/mhead/jquery.mhead.css" rel="stylesheet" type="text/css">
+<link href="/pub/assets/lib/hamburgers/hamburgers.min.css" rel="stylesheet" type="text/css">
+
+<link rel="stylesheet" href="/pub/assets/instreet/mobile/css/style.css?v={{ git_version() }}"/>
+<link rel="stylesheet" href="/pub/assets/css/rg.commerce.css?v={{ git_version() }}"/>
+<link rel="stylesheet" href="/pub/assets/css/mobile/main.css?v={{ git_version() }}"/>
+<link rel="stylesheet" href="/pub/assets/floshoes/css/mobile/css/floshoes.main.css?v=adsasdasd"/>
+
+{% else %}
+    {% set themeName = config('env.webservice.theme.mobile')|join(':') %}
+
+    <style>
+        {{ loadCSS('pub/assets/dist/'~ themeName ~'/'~ themeName ~'-prod.css') }}
+    </style>
+    {# <link rel="stylesheet" href="/pub/assets/dist/{{ themeName }}/{{ themeName }}-prod.css?v={{ git_version() }}" /> #}
+{% endif %}
+
+
+
+

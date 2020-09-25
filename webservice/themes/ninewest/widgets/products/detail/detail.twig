@@ -1,0 +1,643 @@
+{{ widget('datalayer', 'product_detail', {layerData: {product: product, breadcrumbs: breadcrumb}} ) }}
+
+<div class="container {% if is_quick_view == '1' %}product-detail-quickbuy{% endif %}">
+	{% if is_quick_view != '1'  %}
+	<ol class="breadcrumb">
+		<li><a href="/">{{ 'ANASAYFA' | translate }}</a></li>
+		{% for item in breadcrumb %}
+			<li> <a href="/{{ item.url }}">{{ item.name | translate | upper_tr }}</a></li>
+		{% endfor %}
+	</ol>
+	{% else %}
+		<a data-fancybox-close href="javascript:;" class="close header-minibasket-close">&times;</a>
+	{% endif %}
+	<div class="product-detail">
+		<div class="row">
+			<div class="col-xs-12 col-sm-6">
+				<div class="product-detail-image">
+					{% set firstImage = product.media_gallery[0].url | default(product.image) %}
+					<div data-zoom-image="{{ firstImage }}" class="product-detail-image-big">
+						<div data-swiper-slides-per-view="1" class="swiper-container swiper-autoinit">
+							<div class="swiper-wrapper">
+								{% for item in product.media_gallery %}
+								<div class="swiper-slide"><img src="{{ item.url }}" alt="{{ product.name }}" /></div>
+								{% endfor %}
+							</div>
+
+							<div class="swiper-button-next hidden visible-xs"></div>
+							<div class="swiper-button-prev hidden visible-xs"></div>
+						</div>
+{# 
+						{% if is_quick_view != '1' %}
+						<div class="product-detail-image-big-description"> <i class="fa fa-search"></i> Mouse over to zoom in</div>
+						{% endif %} #}
+					</div>
+
+					<div class="product-detail-image-thumbs {% if is_quick_view == '1' %} pos-relative {% endif %}">
+						<div 
+								{% if is_quick_view == '1' %}
+									data-swiper-width="100"
+									data-swiper-space-between="0"
+									data-swiper-slide-to-clicked-slide="true"
+								{% elseif is_mobile() %}
+									data-swiper-width="60"
+									data-swiper-space-between="0"
+								{% else %}
+									data-swiper-direction="vertical" 
+									data-swiper-slides-per-view="auto" 
+									data-swiper-slide-to-clicked-slide="true" 
+									data-swiper-space-between="10"
+								{% endif %}
+
+								class="swiper-container swiper-autoinit"
+							>
+							<div class="swiper-wrapper">
+								{% for item in product.media_gallery %}
+								<div class="swiper-slide image-wrapper {% if loop.first %}active{% endif %}"
+									data-image="{{ item.url }}"
+								>
+									<a href="javascript:;">
+										<img src="{{ item.url | resize('100x100') }}" alt="{{ product.name }}" />
+									</a>
+								</div>
+								{% endfor %}
+							</div>
+
+							{% if is_quick_view == '1' %}
+								<div class="swiper-button-next"></div>
+								<div class="swiper-button-prev"></div>
+							{% endif %}
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6">
+				<div class="product-detail-content">
+					<h1 class="product-name">{{ product.name }}</h1>
+					<div class="product-rating">
+						<div class="rating"><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span></div><a href="#" class="product-review-count">25 REVIEWS</a>
+					</div>
+					<div class="product-price">
+						{% if product.special_price %}
+							<span class="product-price-old ml-0 mr-3">{{ product.price | price }}</span>
+						{% endif %}
+
+						{{ product.special_price | default(product.price) | price }}
+					</div>
+
+                    {% if product.rule_info %}
+                        {% set firstItem = product.rule_info[0] %}
+                        {% if firstItem.label or product.third_price %}
+                            <div class="product-third-price mt-3">
+                                {{ firstItem.label }}
+                                {% if product.third_price %}
+                                    <span class="third-price">{{ product.third_price|price }}</span>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+
+					{% if product.color_options %}
+						{% set selectedColorOption = product.color_options[0] %}
+
+						{% for item in product.color_options %}
+							{% if item.sku == product.sku %}
+								{% set selectedColorOption = item %}
+							{% endif %}
+						{% endfor %}
+
+
+						<div class="product-options">
+							<div class="product-options-title">renk: <strong>{% if product.options | length == 1 %}{{ selectedColorOption.option_title | translate | upper_tr }}{% endif %}</strong></div>
+							<ul class="product-options-list list-inline variants">
+								{% for item in product.color_options %}
+									<li class="image-wrapper {% if item.sku == product.sku %}active{% endif %}"><a href="{{ item.url }}"><img src="{{ item.image | resize('40x40') }}" alt="{{ item.option_title }}"/></a></li>
+								{% endfor %}
+							</ul>
+						</div>
+					{% endif %}
+
+					{% if product.options %}
+					{% set firstOption = product.options[0] %}
+					<div class="product-options size">
+						<div class="product-options-title">{{ firstOption.option_name }}: <strong>{% if product.options | length == 1 %}{{ firstOption.option_value }}{% endif %}</strong>
+							{% if firstOption.option_name == 'beden' or firstOption.option_name == 'size' %}
+								<a href="#" class="product-options-size-chart product-options-size-chart-toggle">{{ 'Beden Tablosu' | translate }}</a>
+							{% endif %}
+						</div>
+						<ul class="product-options-list list-inline size">
+
+							{% for option in product.options %}
+								<li class="{% if option.is_in_stock == '0' %}nostok{% endif %} {% if product.options | length == 1 %}active{% endif %}">
+									
+									
+									<label class="form-check-label">{{ option.option_value }}
+										<input class="form-check-input input-radio input-hidden no-filter
+											{% if product.options|length == 1 %} selected{% endif %}"
+											   type="radio" name="sizeSelection"
+											   value="{{ option.option_value }}"
+											{% if product.options|length == 1 %} checked{% endif %}
+											{% if product.options|length == 1 %} data-selected="1" {% endif %}
+												{% if option.is_in_stock is empty %} data-disabled="1" {% endif %}
+											   data-name="option_sku_{{ product.id }}" data-value="{{ option.sku }}"
+											   id="option_sku_{{ product.id }}_{{ option.sku }}"
+											   data-option-id="{{ option.entity_id }}"
+											   data-option="{{ option.option_value }}">
+									</label>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+					{% endif %}
+
+					{# <div class="product-options">
+						<div class="product-options-title">width: <strong>M</strong></div>
+						<ul class="product-options-list list-inline size">
+							<li><label>XS</label></li>
+							<li class="disabled"><label>S</label></li>
+							<li class="active"><label>M</label></li>
+							<li><label>L</label></li>
+							<li><label>XL</label></li>
+						</ul>
+					</div> #}
+
+						<div class="product-detail-content-bottom">
+							{# <div class="product-quantity"><span>quantity : </span>
+								<input type="text" placeholder="1" value="1" class="form-control" id="product-detail-quantity"/>
+							</div> #}
+							
+							<div class="product-add-button-wrapper">
+								<a id="clickSepeteekle" class="hidden various d-visible"
+								   href="#sepeteekle">{{ 'SEPETE EKLE' | translate }}</a>
+								<a class="btn btn-primary product-add-button add-to-cart" id="add2cart"
+								   data-has-option="{% if product.options %}1{% else %}0{% endif %}"
+								   data-product-id="{{ product.id }}"
+								   data-sku="{{ product.options|length == 1 ? product.options|first.sku : product.sku }}"
+								   class="add-to-cart"
+								   href="">{% if product.qty %}{{ 'SEPETE EKLE' | translate }}{% else %}{{ 'HABER VER' | translate }}{% endif %}</a>
+
+								<a class="btn btn-link btn-block product-favorite add-wishlist" data-favourited="false" data-product-id="{{ product.id }}" data-sku="{{ product.sku }}">
+									<i class="far fa-heart"></i>FAVORİLERİME EKLE
+								</a>
+
+								{# <a href="#" class="btn btn-link product-policy-button">SHIPPING & RETURNS POLICY</a> #}
+
+								{% if is_quick_view != '1' %}
+									<div id="social-share"></div>
+								{% endif %}
+							</div>
+						</div>
+
+					{# {% if is_quick_view != '1' %}
+						<div class="product-detail-content-description">Clear inserts adorn our Toffee pointy-toe pumps sporting an elegant half d’Orsay silhouette. Toffee is perched on a 4” stiletto heel.</div>
+					{% endif %} #}
+				</div>
+			</div>
+		</div>
+
+		{% if is_quick_view != '1' %}
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="product-detail-info">
+					<h4 class="product-detail-info-title"><a href="#product-detail-info-container" data-toggle="collapse" aria-expanded="true">{{ 'ÜRÜN BİLGİLERİ' | translate }}<i class="fa fa-minus"></i><i class="fa fa-plus"></i></a></h4>
+					<div id="product-detail-info-container" class="product-detail-info-container collapse in active">
+						<div class="product-detail-info-inner">
+							<div class="row">
+								<div class="col-xs-12 col-sm-3">
+									{# <strong>{{ 'Taban Malzemesi' | translate }}</strong>manmade<br/> #}
+									{# <strong>{{ 'Marka' | translate }}</strong>{{ product.manufacturer }}<br/> #}
+									<strong>{{ 'Model' | translate }} </strong> {{ product.model }}<br/>
+									<strong>{{ 'Renk' | translate }} </strong> {{ product.renk }}<br/>
+									<strong>{{ 'Saya Malzeme' | translate }}</strong> {{ product.saya_malzeme }} <br/>
+								</div>
+								<div class="col-xs-12 col-sm-3">
+									<strong>{{ 'SKU' | translate }}</strong>{{ product.sku }}<br/>
+									<strong>{{ 'Model Kodu' | translate }}</strong>{{ product.model_code }}<br/>
+
+									{# <strong>{{ 'Astar Malzemesi' | translate }}</strong>synthetic<br/> #}
+									{# <strong>{{ 'Üst Malzemesi' | translate }}</strong>leather<br/> #}
+									{# <strong>{{ 'Topuk Yüksekliği' | translate }}</strong>high<br/> #}
+									{# <strong>{{ 'Topuk Yüksekliği Ölçüsü' | translate }}</strong>3.94"<br/> #}
+									{# <strong>{{ 'Uç Tipi' | translate }}</strong>pointy<br/> #}
+									{# <strong>Country of Origin</strong>imported</div>								 #}
+								</div>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{# <div class="row">
+			<div class="col-xs-12">
+				<div class="product-detail-review">
+					<h4 class="product-detail-review-title">REVIEWS</h4>
+					<ul class="product-detail-review-tabs list-inline"> 
+						<li><a href="#">Review More Purchases</a></li>
+						<li><a href="#">My Posts</a></li>
+					</ul>
+					<div class="row">
+						<div class="col-xs-3">
+							<div class="product-detail-review-box">
+								<div class="clearfix">
+									<div class="product-detail-review-rating"><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span></div><span class="product-detail-review-point">4.7 / 5.0</span>
+								</div>
+								<div class="product-detail-review-count">664 Reviews</div>
+								<ul class="product-detail-review-rating-list">
+									<li><strong>5 Stars</strong>
+										<div><i style="width:77.2590361445783%"></i></div><span>513</span>
+									</li>
+									<li><strong>4 Stars</strong>
+										<div><i style="width:14.759036144578314%"></i></div><span>98</span>
+									</li>
+									<li><strong>3 Stars</strong>
+										<div><i style="width:7.981927710843372%"></i></div><span>53</span>
+									</li>
+									<li><strong>2 Stars</strong>
+										<div><i style="width:0%"></i></div><span>0</span>
+									</li>
+									<li><strong>1 Stars</strong>
+										<div><i style="width:0%"></i></div><span>0</span>
+									</li>
+								</ul><a href="#" class="btn btn-secondary product-detail-review-button">WRITE REVIEW</a>
+							</div>
+						</div>
+						<div class="col-xs-9">
+							<div class="clearfix">
+								<div class="pull-right">
+									<select class="form-control product-detail-review-sort">
+										<option value="bestR">Sort by Most Helpful</option>
+										<option value="mostRecent" selected="selected">Sort by Most Recent Review</option>
+										<option value="highLow">Sort Highest to Lowest</option>
+										<option value="lowHigh">Sort Lowest to Highest</option>
+									</select>
+								</div>
+							</div>
+							<ul class="product-detail-review-list">
+								<li class="product-detail-review-item">
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-rating"><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span></div>
+										<div class="product-detail-review-range"><span class="product-detail-review-range-title">Width</span>
+											<div class="product-detail-review-range-inner"><span class="seperator"></span><span class="seperator"></span><span class="seperator"></span></div><span class="product-detail-review-range-bullet"></span><span class="product-detail-review-range-label">Runs narrow</span><span class="product-detail-review-range-label">Runs wide</span>
+										</div>
+										<div class="product-detail-review-range"><span class="product-detail-review-range-title">Width</span>
+											<div class="product-detail-review-range-inner"><span class="seperator"></span><span class="seperator"></span><span class="seperator"></span></div><span class="product-detail-review-range-bullet"></span><span class="product-detail-review-range-label">Runs narrow</span><span class="product-detail-review-range-label">Runs wide</span>
+										</div>
+									</div>
+									<div class="product-detail-review-item-col-lg">
+										<h5 class="product-detail-review-item-title">Dempsey Shoe</h5>
+										<div class="product-detail-review-item-description">Awesome!  Wish I could get them in the red I keep seeing!</div>
+										<ul class="list-inline product-detail-review-item-actions">
+											<li>
+													
+												Was this review helpful? <a href="#">Yes (1)</a>&nbsp;<a href="#">No (0)</a>
+											</li>
+											<li> <a href="#" class="product-detail-review-item-reports">Flag as Inappropriate</a></li>
+										</ul>
+									</div>
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-item-date">June 21, 2019</div>
+										<div class="product-detail-review-item-username">Steph H</div>
+										<div class="product-detail-review-item-info">Purchased<br/>4 weeks ago</div>
+									</div>
+								</li>
+								<li class="product-detail-review-item">
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-rating"><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span></div>
+									</div>
+									<div class="product-detail-review-item-col-lg">
+										<div class="product-detail-review-item-description">Awesome!  Wish I could get them in the red I keep seeing!</div>
+										<ul class="list-inline product-detail-review-item-actions">
+											<li>
+													
+												Was this review helpful? <a href="#">Yes (1)</a>&nbsp;<a href="#">No (0)</a>
+											</li>
+											<li> <a href="#" class="product-detail-review-item-reports">Flag as Inappropriate</a></li>
+										</ul>
+									</div>
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-item-date">June 21, 2019</div>
+										<div class="product-detail-review-item-username">Steph H</div>
+										<div class="product-detail-review-item-info">Purchased<br/>4 weeks ago</div>
+									</div>
+								</li>
+								<li class="product-detail-review-item">
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-rating"><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span></div>
+										<div class="product-detail-review-range"><span class="product-detail-review-range-title">Width</span>
+											<div class="product-detail-review-range-inner"><span class="seperator"></span><span class="seperator"></span><span class="seperator"></span></div><span class="product-detail-review-range-bullet"></span><span class="product-detail-review-range-label">Runs narrow</span><span class="product-detail-review-range-label">Runs wide</span>
+										</div>
+									</div>
+									<div class="product-detail-review-item-col-lg">
+										<h5 class="product-detail-review-item-title">Dempsey Shoe</h5>
+										<div class="product-detail-review-item-description">Awesome!  Wish I could get them in the red I keep seeing!</div>
+										<ul class="list-inline product-detail-review-item-actions">
+											<li>
+													
+												Was this review helpful? <a href="#">Yes (1)</a>&nbsp;<a href="#">No (0)</a>
+											</li>
+											<li> <a href="#" class="product-detail-review-item-reports">Flag as Inappropriate</a></li>
+										</ul>
+									</div>
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-item-date">June 21, 2019</div>
+										<div class="product-detail-review-item-username">Steph H</div>
+										<div class="product-detail-review-item-info">Purchased<br/>4 weeks ago</div>
+									</div>
+								</li>
+								<li class="product-detail-review-item">
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-rating"><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span></div>
+										<div class="product-detail-review-range"><span class="product-detail-review-range-title">Width</span>
+											<div class="product-detail-review-range-inner"><span class="seperator"></span><span class="seperator"></span><span class="seperator"></span></div><span class="product-detail-review-range-bullet"></span><span class="product-detail-review-range-label">Runs narrow</span><span class="product-detail-review-range-label">Runs wide</span>
+										</div>
+									</div>
+									<div class="product-detail-review-item-col-lg">
+										<div class="product-detail-review-item-description">Awesome!  Wish I could get them in the red I keep seeing!</div>
+										<ul class="list-inline product-detail-review-item-actions">
+											<li>
+													
+												Was this review helpful? <a href="#">Yes (1)</a>&nbsp;<a href="#">No (0)</a>
+											</li>
+											<li> <a href="#" class="product-detail-review-item-reports">Flag as Inappropriate</a></li>
+										</ul>
+									</div>
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-item-date">June 21, 2019</div>
+										<div class="product-detail-review-item-username">Steph H</div>
+										<div class="product-detail-review-item-info">Purchased<br/>4 weeks ago</div>
+									</div>
+								</li>
+								<li class="product-detail-review-item">
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-rating"><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span></div>
+										<div class="product-detail-review-range"><span class="product-detail-review-range-title">Width</span>
+											<div class="product-detail-review-range-inner"><span class="seperator"></span><span class="seperator"></span><span class="seperator"></span></div><span class="product-detail-review-range-bullet"></span><span class="product-detail-review-range-label">Runs narrow</span><span class="product-detail-review-range-label">Runs wide</span>
+										</div>
+									</div>
+									<div class="product-detail-review-item-col-lg">
+										<h5 class="product-detail-review-item-title">Dempsey Shoe</h5>
+										<div class="product-detail-review-item-description">Awesome!  Wish I could get them in the red I keep seeing!</div>
+										<ul class="list-inline product-detail-review-item-actions">
+											<li>
+													
+												Was this review helpful? <a href="#">Yes (1)</a>&nbsp;<a href="#">No (0)</a>
+											</li>
+											<li> <a href="#" class="product-detail-review-item-reports">Flag as Inappropriate</a></li>
+										</ul>
+									</div>
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-item-date">June 21, 2019</div>
+										<div class="product-detail-review-item-username">Steph H</div>
+										<div class="product-detail-review-item-info">Purchased<br/>4 weeks ago</div>
+									</div>
+								</li>
+								<li class="product-detail-review-item">
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-rating"><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span></div>
+									</div>
+									<div class="product-detail-review-item-col-lg">
+										<div class="product-detail-review-item-description">Awesome!  Wish I could get them in the red I keep seeing!</div>
+										<ul class="list-inline product-detail-review-item-actions">
+											<li>
+													
+												Was this review helpful? <a href="#">Yes (1)</a>&nbsp;<a href="#">No (0)</a>
+											</li>
+											<li> <a href="#" class="product-detail-review-item-reports">Flag as Inappropriate</a></li>
+										</ul>
+									</div>
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-item-date">June 21, 2019</div>
+										<div class="product-detail-review-item-username">Steph H</div>
+										<div class="product-detail-review-item-info">Purchased<br/>4 weeks ago</div>
+									</div>
+								</li>
+								<li class="product-detail-review-item">
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-rating"><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span></div>
+										<div class="product-detail-review-range"><span class="product-detail-review-range-title">Width</span>
+											<div class="product-detail-review-range-inner"><span class="seperator"></span><span class="seperator"></span><span class="seperator"></span></div><span class="product-detail-review-range-bullet"></span><span class="product-detail-review-range-label">Runs narrow</span><span class="product-detail-review-range-label">Runs wide</span>
+										</div>
+										<div class="product-detail-review-range"><span class="product-detail-review-range-title">Width</span>
+											<div class="product-detail-review-range-inner"><span class="seperator"></span><span class="seperator"></span><span class="seperator"></span></div><span class="product-detail-review-range-bullet"></span><span class="product-detail-review-range-label">Runs narrow</span><span class="product-detail-review-range-label">Runs wide</span>
+										</div>
+									</div>
+									<div class="product-detail-review-item-col-lg">
+										<h5 class="product-detail-review-item-title">Dempsey Shoe</h5>
+										<div class="product-detail-review-item-description">Awesome!  Wish I could get them in the red I keep seeing!</div>
+										<ul class="list-inline product-detail-review-item-actions">
+											<li>
+													
+												Was this review helpful? <a href="#">Yes (1)</a>&nbsp;<a href="#">No (0)</a>
+											</li>
+											<li> <a href="#" class="product-detail-review-item-reports">Flag as Inappropriate</a></li>
+										</ul>
+									</div>
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-item-date">June 21, 2019</div>
+										<div class="product-detail-review-item-username">Steph H</div>
+										<div class="product-detail-review-item-info">Purchased<br/>4 weeks ago</div>
+									</div>
+								</li>
+								<li class="product-detail-review-item">
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-rating"><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span></div>
+									</div>
+									<div class="product-detail-review-item-col-lg">
+										<div class="product-detail-review-item-description">Awesome!  Wish I could get them in the red I keep seeing!</div>
+										<ul class="list-inline product-detail-review-item-actions">
+											<li>
+													
+												Was this review helpful? <a href="#">Yes (1)</a>&nbsp;<a href="#">No (0)</a>
+											</li>
+											<li> <a href="#" class="product-detail-review-item-reports">Flag as Inappropriate</a></li>
+										</ul>
+									</div>
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-item-date">June 21, 2019</div>
+										<div class="product-detail-review-item-username">Steph H</div>
+										<div class="product-detail-review-item-info">Purchased<br/>4 weeks ago</div>
+									</div>
+								</li>
+								<li class="product-detail-review-item">
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-rating"><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span></div>
+										<div class="product-detail-review-range"><span class="product-detail-review-range-title">Width</span>
+											<div class="product-detail-review-range-inner"><span class="seperator"></span><span class="seperator"></span><span class="seperator"></span></div><span class="product-detail-review-range-bullet"></span><span class="product-detail-review-range-label">Runs narrow</span><span class="product-detail-review-range-label">Runs wide</span>
+										</div>
+									</div>
+									<div class="product-detail-review-item-col-lg">
+										<h5 class="product-detail-review-item-title">Dempsey Shoe</h5>
+										<div class="product-detail-review-item-description">Awesome!  Wish I could get them in the red I keep seeing!</div>
+										<ul class="list-inline product-detail-review-item-actions">
+											<li>
+													
+												Was this review helpful? <a href="#">Yes (1)</a>&nbsp;<a href="#">No (0)</a>
+											</li>
+											<li> <a href="#" class="product-detail-review-item-reports">Flag as Inappropriate</a></li>
+										</ul>
+									</div>
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-item-date">June 21, 2019</div>
+										<div class="product-detail-review-item-username">Steph H</div>
+										<div class="product-detail-review-item-info">Purchased<br/>4 weeks ago</div>
+									</div>
+								</li>
+								<li class="product-detail-review-item">
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-rating"><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span></div>
+										<div class="product-detail-review-range"><span class="product-detail-review-range-title">Width</span>
+											<div class="product-detail-review-range-inner"><span class="seperator"></span><span class="seperator"></span><span class="seperator"></span></div><span class="product-detail-review-range-bullet"></span><span class="product-detail-review-range-label">Runs narrow</span><span class="product-detail-review-range-label">Runs wide</span>
+										</div>
+									</div>
+									<div class="product-detail-review-item-col-lg">
+										<div class="product-detail-review-item-description">Awesome!  Wish I could get them in the red I keep seeing!</div>
+										<ul class="list-inline product-detail-review-item-actions">
+											<li>
+													
+												Was this review helpful? <a href="#">Yes (1)</a>&nbsp;<a href="#">No (0)</a>
+											</li>
+											<li> <a href="#" class="product-detail-review-item-reports">Flag as Inappropriate</a></li>
+										</ul>
+									</div>
+									<div class="product-detail-review-item-col-sm">
+										<div class="product-detail-review-item-date">June 21, 2019</div>
+										<div class="product-detail-review-item-username">Steph H</div>
+										<div class="product-detail-review-item-info">Purchased<br/>4 weeks ago</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> #}
+		{% endif %}
+	</div>
+</div>
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": "{{ product.name }}",
+        "image": [
+        {% for media in product.media_gallery %}
+            "{{ media.url }}"{% if not loop.last %},{% endif %}
+        {% endfor %}
+        ],
+        "description": "{{ product.image_label|default(product.name) }}",
+        "brand": {
+            "@type": "Thing",
+            "name": "{{ product.manufacturer }}"
+        },
+        "offers": {
+            "@type": "Offer",
+            "priceCurrency": "TL",
+            "price": "{{ product.third_price | default(product.special_price) |default(product.price) }}",
+            "priceValidUntil": "{{ product.special_to_date }}",
+            "itemCondition": "https://schema.org/NewCondition",
+            {% if product.qty %}
+            	"availability": "https://schema.org/InStock",
+			{% else %}
+            	"availability": "https://schema.org/OutOfStock",
+			{% endif %}
+            "url": "{{ config('env.webservice.url.web') ~ product.url|trim('/', 'left') }}",
+            "seller": {
+                "@type": "Organization",
+                "name": "Nine West"
+            }
+        },
+        "sku": "{{ product.sku }}"
+    }
+</script>
+
+<script type="application/ld+json"> 
+{
+	"@context": "http://schema.org",
+	"@type": "BreadcrumbList",
+	"itemListElement": [
+		{
+			"@type": "ListItem",
+			"position": {{ 1 }},
+			"item": {
+				"@id": "{{ config('env.webservice.url.web') }}", "name ": "Nine West"
+			}
+		},
+		{% for item in breadcrumb %}
+		{
+			"@type": "ListItem",
+			"position": {{ loop.index + 1 }},
+			"item": {
+				"@id": "{{ config('env.webservice.url.web') }}{{ item.url }}", "name ": "{{ item.name }}"
+			}
+		},
+		{% endfor %}
+		{
+			"@type": "ListItem",
+			"position": {{ breadcrumb | length + 1 }},
+			"item": {
+				"@id": "{{ config('env.webservice.url.web') }}", "name ": "{{ product.name }}"
+			}
+		}
+	]
+}
+</script>
+
+{% if is_mobile() %}
+<div id="mobile-size-container">
+	<div class="msz-lightbox"></div>
+	<div class="msz-inner">
+		<div class="msz-product">
+			<a href="#" class="msz-close"><i class="fa fa-times"></i></a>
+			<div class="msz-image">
+				<img src="{{ (product.media_gallery[0]).url | resize('84x84') }}" alt="{{ product.name }}" />
+			</div>
+			<div class="msz-content">
+				<div class="msz-product-brand">{{ product.manufacturer | raw | capitalize }}</div>
+				<div class="msz-product-name">{{ product.name }}</div>
+				<div class="msz-product-price">
+					<div class="prices">
+						{% if product.special_price %}
+							<span>{{ product.price|price }}</span>
+						{% endif %} 
+						<strong class="{% if product.rule_info is null %}text-highlight{% endif %}">{{ product|price }}</strong>
+					</div>
+				</div>
+
+                {% if product.rule_info %}
+                    {% set firstItem = product.rule_info[0] %}
+                    {% if firstItem.label or product.third_price %}
+                        <div class="msz-product-price-rule">
+                            <div class="discount ">
+                                {{ firstItem.label }}
+                                {% if product.third_price %}
+                                    <span class="text-warning">{{ product.third_price|price }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+			</div>
+
+			<div class="msz-size">
+				<div class="choices-box product-detail-content pb-1">
+					{% if product.options %}
+					<div class="product-options">
+						<div class="product-options-title">Beden Seçiniz</strong></div>
+						<ul class="product-options-list list-inline size">
+
+							{% for option in product.options %}
+								<li class="{% if option.is_in_stock == '0' %}nostok{% endif %} {% if product.options | length == 1 %}active{% endif %}">
+									<label class="form-check-label" for="option_sku_{{ product.id }}_{{ option.sku }}">{{ option.option_value }}
+									</label>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+					{% endif %}
+			</div>
+		</div>
+
+	</div>
+</div>
+{% endif %}

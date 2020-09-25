@@ -1,0 +1,388 @@
+{% if(footer_desc is not empty) %}
+<div class="footer-content">
+    <div class="container">
+        <div class="holder">
+            {{ footer_desc | raw }}
+        </div>
+        <div class="text-center">
+            <a href="javascript:;" class="read-more">
+                <i class="svg-arrow-up svg-arrow-up-dims"></i>
+                <span>DEVAMI</span>
+                <i class="svg-arrow-down svg-arrow-down-dims"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<footer class="footer">
+	<div class="footer-top">
+		<div class="container">
+			<div class="row">
+				{# <div class="col-sm-6">
+					<form action="#" class="footer-newsletter validation-control" id="newsletter-subscription">
+						<label for="newsletter_email" class="footer-newsletter-label">{{ 'E-BÜLTENİMİZE ÜYE OL %s İNDİRİM KUPONU KAZAN!' | translate  | format('%10') | raw }}</label>
+
+						<div class="form-group">
+							<input type="text" name="email" id="newsletter_email" placeholder="{{ 'E-mail Adresinizi Giriniz' }}" class="form-control"/>
+							<button type="submit" class="btn btn-primary">{{ 'KAYDOL' }}</button>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-10">
+								<div class="clearfix">
+									<label class="nw-checkbox">
+										{{ aggrement.front_text|raw }}
+										<input type="checkbox" name="{{ aggrement.alias }}" value="{{ aggrement.aggrement_id }}" class="{{ aggrement.alias }} validate[required]">
+									</label>
+								</div>
+							</div>
+						</div>
+					</form>
+					<ul class="list-inline footer-social">
+						<li><a href="#"> <i class="fab fa-facebook-square"></i></a></li>
+						<li><a href="#"> <i class="fab fa-twitter"></i></a></li>
+						<li><a href="#"> <i class="fab fa-pinterest"></i></a></li>
+						<li><a href="#"> <i class="fab fa-instagram"></i></a></li>
+					</ul>
+				</div> #}
+				<div class="col-sm-3">
+					<div class="footer-links">
+						<h5 class="footer-links-title">{{ 'MÜŞTERİ HİZMETLERİ' | translate }}</h5>
+						<ul class="footer-links-items">
+							<li><a href="/kampanyalar">{{ 'Kampanyalar' | translate }}</a></li>
+							<li><a href="/page?url=sss-desktop">{{ 'Sıkça Sorulan Sorular' | translate }}</a></li>
+							{# <li><a href="/page?url=sss-desktop-uyelik&tab=uyelik">{{ 'Üyelik İşlemleri' | translate }}</a></li>
+							<li><a href="/page?url=sss-desktop-iade&tab=iade">{{ 'İade ve Değişim' | translate }}</a></li> #}
+							<li><a href="/iletisim" rel="nofollow">{{ 'Yardım' | translate }}</a></li>
+							<li><a href="/tuketici-yasasi" rel="nofollow">{{ 'Tüketici Yasası' | translate }}</a></li>
+							<li><a href="/page?url=gizlilik-ve-cerez" rel="nofollow">{{ 'Gizlilik ve Çerez Politikası' | translate }}</a></li>
+							<li><a href="/page?url=kisisel-verilerin-korunmasi" rel="nofollow">{{ 'Kişisel Verilerin Korunması' | translate }}</a></li>
+ 						</ul>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="footer-links">
+						<h5 class="footer-links-title">{{ 'KURUMSAL' | translate }}</h5>
+						<ul class="footer-links-items">
+							<li><a href="/ninewest-hakkinda">{{ 'NINE WEST Hakkında' | translate }}</a></li>
+							<li><a href="/store">{{ 'Mağazalarımız' | translate }}</a></li>
+							<li><a href="/page?url=kurumsal-iletisim">{{ 'İletişim' | translate }}</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-6 text-right">
+					<a href="/guest-order-verify" class="btn btn-primary footer-track-order-button">{{ 'SİPARİŞİNİ TAKİP ET' | translate }}</a>
+					<ul class="list-inline footer-social {{ is_mobile() ? 'text-center' : 'text-right'}}">
+						<li><a href="https://www.facebook.com/ninewest/" target="_blank"> <i class="fab fa-facebook-square"></i></a></li>
+						<li><a href="https://twitter.com/ninewestturkiye" target="_blank"> <i class="fab fa-twitter"></i></a></li>
+						<li><a href="https://tr.pinterest.com/ninewestfashion/" target="_blank"> <i class="fab fa-pinterest"></i></a></li>
+						<li><a href="https://www.instagram.com/ninewestturkiye" target="_blank"> <i class="fab fa-instagram"></i></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="footer-line"></div>
+		</div>
+	</div>
+	<div class="footer-bottom">
+		<ul class="list-inline footer-bottom-links">
+			<li><a href="/page?url=gizlilik-ve-cerez" class="btn" rel="nofollow">{{ 'Gizlilik Politikası' }}</a></li>
+			<li><a href="/page?url=sss-desktop" class="btn" rel="nofollow">{{ 'Sıkça Sorulan Sorular' | translate }}</a></li>
+			<li><a href="/page?url=kisisel-verilerin-korunmasi" class="btn" rel="nofollow">{{ 'Kişisel Verilerin Korunması' | translate }}</a></li>
+		</ul>
+		<div class="footer-copyright">© 2018 Nine West.  Her hakkı saklıdır.</div>
+		<ul class="list-inline footer-bottom-categories">
+			<li><a href="/tum-kategoriler">{{ 'Yeniler' | translate }}</a></li>
+			<li><a href="/ayakkabi">{{ 'Ayakkabı' | translate }}</a></li>
+			<li><a href="/topuklu-ayakkabi">{{ 'Topuklular' | translate }}</a></li>
+			<li><a href="/bot">{{ 'Bot' | translate }}</a></li>
+			<li><a href="/cizme">{{ 'Çizme' | translate }}</a></li>
+			<li><a href="/canta">{{ 'Çanta' | translate }}</a></li>
+		</ul>
+	</div>
+</footer>
+
+<div class="add-to-cart-success-modal" id="addToCartSuccess" style="display: none;">
+	<p class="mb-5">
+		{{ 'Sepetinize ' | translate }} <span id="addToCartSuccess-productName"></span> {{ 'ürününü eklediniz.' | translate }}
+	</p>
+	<div class="form-group">
+		<a data-fancybox-close href="javascript:;" class="btn btn-primary btn-sm btn-block">{{ 'ALIŞVERİŞE DEVAM ET' | translate  }}</a>
+	</div>	
+	<div class="form-group">
+		<a href="{{ basket_base_url() }}/basket" class="btn btn-primary btn-sm btn-block">{{ 'SEPETE GİT' | translate  }}</a>
+	</div>	
+
+	<div id="addToCartSuccess-products"></div>
+</div>
+
+<div id="size-chart">
+	<div class="size-chart-container">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="row">
+				<div class="col-sm-7">
+					<h5>Doğru Ayak Ölçüsü Alma</h5>
+					<p>Eğer ayak numaranızdan emin değilseniz basit bir yöntemlerle ayak numaranızı
+						öğrenebilirsiniz.</p>
+					<ul class="pl-5">
+						<li>Boş bir kağıdı yere koyun, ayağınızı üstüne koyduktan sonra bir kalem
+							yardımı ile şekildeki gibi ayak baş parmağınızın hizasından ve topuk uç
+							hizanızdan düz şekilde çizin.
+						</li>
+						<li>Sonra çizgilerin arasındaki mesafeyi cetvel ile ölçün, çıkan sonuç sizin
+							ayak uzunluğunuzdur.
+						</li>
+						<li>Aşağıdaki tablodan cinsiyetinizi seçtikten sonra, ayak uzunluğunuza
+							uygun CM
+							değerini seçtiğinizde, tablo size ayak uzunluğunuza karşılık gelen beden
+							numaralarını gösterecektir.
+						</li>
+					</ul>
+				</div>
+				<div class="col-sm-5 lazy">
+					<img src="/pub/media/lazyloading/blank.png" data-src="/pub/assets/ninewest/img/ayak.jpg"
+							class="w-100 mb-3">
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12">
+			<div>
+				<div class="tab-content">
+					<div class="tab-pane fade active in" id="woman" role="tabpanel">
+						<div class="foot-size-list">
+							<table class="table table-bordered hidden visible-xs">
+								<thead>
+									<tr>
+										<th>CM</th>
+										<th>US</th>
+										<th>Türkiye</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>22.4</td>
+										<td>5</td>
+										<td>35</td>
+									</tr>
+									<tr>
+										<td>22.8</td>
+										<td>5.5</td>
+										<td>36</td>
+									</tr>
+									<tr>
+										<td>23.2</td>
+										<td>6</td>
+										<td>36.5</td>
+									</tr>
+									<tr>
+										<td>23.5</td>
+										<td>6.5</td>
+										<td>37</td>
+									</tr>
+									<tr>
+										<td>24</td>
+										<td>7</td>
+										<td>37.5</td>
+									</tr>
+									<tr>
+										<td>24.5</td>
+										<td>7.5</td>
+										<td>38</td>
+									</tr>
+									<tr>
+										<td>24.9</td>
+										<td>8</td>
+										<td>38.5</td>
+									</tr>
+									<tr>
+										<td>25.3</td>
+										<td>8.5</td>
+										<td>39</td>
+									</tr>
+									<tr>
+										<td>25.7</td>
+										<td>9</td>
+										<td>40</td>
+									</tr>
+									<tr>
+										<td>26.2</td>
+										<td>9.5</td>
+										<td>40.5</td>
+									</tr>
+									<tr>
+										<td>26.6</td>
+										<td>10</td>
+										<td>41</td>
+									</tr>
+									<tr>
+										<td>27</td>
+										<td>10.5</td>
+										<td>41.5</td>
+									</tr>
+									<tr>
+										<td>27.4</td>
+										<td>11</td>
+										<td>42</td>
+									</tr>
+									<tr>
+										<td>27.9</td>
+										<td>11.5</td>
+										<td>43</td>
+									</tr>
+									<tr>
+										<td>28.3</td>
+										<td>12</td>
+										<td>44</td>
+									</tr>
+								</tbody>
+							</table>
+							<ul class="hidden-xs">
+								<li class="sshead">
+									<ul>
+										<li>CM</li>
+										<li>US</li>
+										<li>Türkiye</li>
+									</ul>
+								</li>
+								<li class="ss_btns">
+									<ul>
+										<li><a href="#"><span>22.4</span></a></li>
+										<li><a href="#"><span>5</span></a></li>
+										<li><a href="#"><span>35</span></a></li>
+										<li class="ivline"></li>
+									</ul>
+								</li>
+								<li class="ss_btns">
+									<ul>
+										<li><a href="#"><span>22.8</span></a></li>
+										<li><a href="#"><span>5.5</span></a></li>
+										<li><a href="#"><span>36</span></a></li>
+										<li class="ivline"></li>
+									</ul>
+								</li>
+								<li class="ss_btns">
+									<ul>
+										<li><a href="#"><span>23.2</span></a></li>
+										<li><a href="#"><span>6</span></a></li>
+										<li><a href="#"><span>36.5</span></a></li>
+										<li class="ivline"></li>
+									</ul>
+								</li>
+								<li class="ss_btns">
+									<ul>
+										<li><a href="#"><span>23.5</span></a></li>
+										<li><a href="#"><span>6.5</span></a></li>
+										<li><a href="#"><span>37</span></a></li>
+
+										<li class="ivline"></li>
+									</ul>
+								</li>
+								<li class="ss_btns">
+									<ul>
+										<li><a href="#"><span>24</span></a></li>
+										<li><a href="#"><span>7</span></a></li>
+										<li><a href="#"><span>37.5</span></a></li>
+
+										<li class="ivline"></li>
+									</ul>
+								</li>
+								<li class="ss_btns">
+									<ul>
+										<li><a href="#"><span>24.5</span></a></li>
+										<li><a href="#"><span>7.5</span></a></li>
+										<li><a href="#"><span>38</span></a></li>
+
+										<li class="ivline"></li>
+									</ul>
+								</li>
+								<li class="ss_btns">
+									<ul>
+										<li><a href="#"><span>24.9</span></a></li>
+										<li><a href="#"><span>8</span></a></li>
+										<li><a href="#"><span>38.5</span></a></li>
+
+										<li class="ivline"></li>
+									</ul>
+								</li>
+								<li class="ss_btns">
+									<ul>
+										<li><a href="#"><span>25.3</span></a></li>
+										<li><a href="#"><span>8.5</span></a></li>
+										<li><a href="#"><span>39</span></a></li>
+
+										<li class="ivline"></li>
+									</ul>
+								</li>
+								<li class="ss_btns">
+									<ul>
+										<li><a href="#"><span>25.7</span></a></li>
+										<li><a href="#"><span>9</span></a></li>
+										<li><a href="#"><span>40</span></a></li>
+
+										<li class="ivline"></li>
+									</ul>
+								</li>
+								<li class="ss_btns">
+									<ul>
+										<li><a href="#"><span>26.2</span></a></li>
+										<li><a href="#"><span>9.5</span></a></li>
+										<li><a href="#"><span>40.5</span></a></li>
+
+										<li class="ivline"></li>
+									</ul>
+								</li>
+								<li class="ss_btns">
+									<ul>
+										<li><a href="#"><span>26.6</span></a></li>
+										<li><a href="#"><span>10</span></a></li>
+										<li><a href="#"><span>41</span></a></li>
+
+										<li class="ivline"></li>
+									</ul>
+								</li>
+								<li class="ss_btns">
+									<ul>
+										<li><a href="#"><span>27</span></a></li>
+										<li><a href="#"><span>10.5</span></a></li>
+										<li><a href="#"><span>41.5</span></a></li>
+
+										<li class="ivline"></li>
+									</ul>
+								</li>
+								<li class="ss_btns">
+									<ul>
+										<li><a href="#"><span>27.4</span></a></li>
+										<li><a href="#"><span>11</span></a></li>
+										<li><a href="#"><span>42</span></a></li>
+
+										<li class="ivline"></li>
+									</ul>
+								</li>
+								<li class="ss_btns">
+									<ul>
+										<li><a href="#"><span>27.9</span></a></li>
+										<li><a href="#"><span>11.5</span></a></li>
+										<li><a href="#"><span>43</span></a></li>
+
+										<li class="ivline"></li>
+									</ul>
+								</li>
+								<li class="ss_btns">
+									<ul>
+										<li><a href="#"><span>28.3</span></a></li>
+										<li><a href="#"><span>12</span></a></li>
+										<li><a href="#"><span>44</span></a></li>
+
+										<li class="ivline"></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>

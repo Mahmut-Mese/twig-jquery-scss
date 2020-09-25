@@ -1,0 +1,97 @@
+{#
+<div class="page size-qty">
+    <div class="container-fluid">
+        {% if is_basket_empty %}
+        <div class="basket-page">
+            <div class="my-basket">
+                <div class="basket-list">
+                    <div class="basket-detail">
+                        <div class="bottom-pro no-product">
+                         <b>{{ 'Sepetinizde Ürün Yok' | translate }}</b><hr> <br>    <a href="/" style="text-align:center">{{ 'Alışverişe Devam Et' | translate }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="basket-page">
+            <div class="mc-md-9 mc-sm-12 pa">
+                <div class="my-basket">
+                    <div class="basket-list">
+                        <div class="step">
+                            <ul>
+                                <li class="okey"><i>{{ 'SEPET' | translate }}</i></li>
+                                <li><i>{{ 'ADRES' | translate }}</i></li>
+                                <li><i>{{ 'ÖDEME' | translate }}</i></li>
+                            </ul>
+                        </div>
+                        {{ widget('basket', 'items', {isAjax: is_ajax}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="mc-md-3 mc-sm-12 pa">
+                {{ widget('basket', 'sidebar', {'next_url': '/checkout/shipping'}) }}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+#}
+<main>
+
+	{% if is_basket_empty %}
+		<div class="cart-page-wrapper">
+			<div class="container">
+				<div class="bg-white mt-2">
+					<div class="empty-cart-alert text-center">
+						<i class="svg-cart-big svg-cart-big-dims mb-3"></i>
+						<h1>Alışveriş Sepetiniz Boş</h1>
+						<p class="mb-5">Binlerce ürün ve model seni bekliyor, göz atmak için <a href="/">tıkla</a></p>
+						<a href="/" class="btn btn-warning btn-lg text-white btn-block d-flex align-items-center justify-content-center">ALIŞVERİŞE BAŞLA <i class="fa fa-angle-right ml-3"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			domReadyCallbacks.push(function () {
+				$.cookie('cart-count', null, { expires: -1 });
+			});
+		</script>
+	{% else %}
+
+    <div class="cart-page-wrapper basket-page size-qty ">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9">
+                    <ul class="steps">
+                        <li class="active">
+                            <a href="{{ basket_base_url() }}/basket">
+                                Sepet
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/checkout/address">
+                                Adres
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">
+                                Ödeme
+                            </a>
+                        </li>
+                    </ul>
+                    {{ widget('basket', 'items', {isAjax: is_ajax}) }}
+
+                </div>
+                <div class="col-sm-3">
+                    {{ widget('basket', 'sidebar', {'next_url': '/checkout/shipping','campaign':'campaign' }) }}
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+	{% endif %}
+
+</main>

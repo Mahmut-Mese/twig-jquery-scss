@@ -1,0 +1,139 @@
+<div class="cs-head mb-10">
+	{{ img(aperiodic_banner_area_1[0].image_mobil, '', {  class:'w-100 cs-head-image', cdn: 'general' }) }}
+</div>
+
+<div class="container custom-container">
+	<div class="row">
+		{% for banner in aperiodic_banner_area_2 %}
+			<div class="col-6">
+				<a href="{{ banner.link }}">
+					{{ img(banner.image_mobil, '', {  class:'w-100', cdn: 'general' }) }}
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+
+	<div class="row mb-10">
+		{% for banner in aperiodic_banner_area_3 %}
+			<div class="col-6">
+				<a href="{{ banner.link }}">
+					{{ img(banner.image_mobil, '', {  class:'w-100', cdn: 'general' }) }}
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+
+<div class="mb-10">
+{{ widget('products', 'product_slider', {title: (settingsBlock.productGalleryTitle | default('Sizin İçin Seçtiklerimiz')) | translate, data_source: (settingsBlock.productGallerySource | default('sizin-icin-sectiklerimiz'))  }) }}
+</div>
+
+<div class="container">
+	<div class="row">
+		{% for banner in aperiodic_banner_area_4 %}
+			<div class="col-12 mb-10">
+				<a href="{{ banner.link }}">
+					{{ img(banner.image_mobil, '', {  class:'w-100', cdn: 'general' }) }}
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+
+	<div class="row mb-10">
+		{% for banner in aperiodic_banner_area_5 %}
+			<div class="col-6">
+				<a href="{{ banner.link }}">
+					{{ img(banner.image_mobil, '', {  class:'w-100', cdn: 'general' }) }}
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+
+	<div class="row">
+		{% for banner in aperiodic_banner_area_6 %}
+			<div class="col-12 mb-10">
+				<a href="{{ banner.link }}">
+					{{ img(banner.image_mobil, '', {  class:'w-100', cdn: 'general' }) }}
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+
+	<div class="row mb-10">
+		{% for banner in aperiodic_banner_area_7 %}
+			<div class="col-6">
+				<a href="{{ banner.link }}">
+					{{ img(banner.image_mobil, '', {  class:'w-100', cdn: 'general' }) }}
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+
+	<div class="row">
+		{% for banner in aperiodic_banner_area_8 %}
+			<div class="col-12 mt-10 mb-10">
+				<a href="{{ banner.link }}">
+					{{ img(banner.image_mobil, '', {  class:'w-100', cdn: 'general' }) }}
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+
+	<div class="row mb-10">
+		{% for banner in aperiodic_banner_area_9 %}
+			<div class="col-6">
+				<a href="{{ banner.link }}">
+					{{ img(banner.image_mobil, '', {  class:'w-100', cdn: 'general' }) }}
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+
+</div>
+
+{% if seoText %}
+<div class="footer-content">
+    <div class="container">
+        <div class="holder text-left">
+			{{ seoText }}
+        </div>
+        <div class="text-center">
+            <a href="javascript:;" class="read-more">
+                <i class="svg-arrow-up svg-arrow-up-dims"></i>
+                <span>DEVAMI</span>
+                <i class="svg-arrow-down svg-arrow-down-dims"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+<style>
+	.cs-head-image {
+		width: 100%;
+	}
+
+	.custom-container {
+		padding-left: 7.5px;
+		padding-right: 7.5px;
+	}
+
+	.custom-container > .row {
+		margin-left: -7.5px;
+		margin-right: -7.5px;
+	}
+	.custom-container > .row div[class*="col-"] {
+		padding-left: 7.5px;
+		padding-right: 7.5px;
+		margin-bottom: 10px;
+	}
+
+	.mt-10 {
+		margin-top: 10px;
+	}
+
+	.mb-10 {
+		margin-bottom: 10px;
+	}
+</style>

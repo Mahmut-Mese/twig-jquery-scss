@@ -1,0 +1,55 @@
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+<meta name="robots" content="noindex" />
+<title>{{ registry("page_title")|default(meta.title) }}</title>
+<meta name="description" content="{{ meta.description }}"/>
+<link rel="canonical" href="{{ meta.canonical }}" />
+<link rel="alternate" href="{{ meta.alternate }}" hreflang="en" />
+
+<meta name="google-site-verification" content="roXNpPfGhaXkWPPu-sHot78TdzcAYtL5UCJQLrcAN5Y" />
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+
+<meta property="og:locale" content="en_EN" />
+<meta property="og:title" content="{{ registry("page_title")|default(meta.title) }}">
+<meta property="og:site_name" content="www.floshoes.com">
+<meta property="og:image" content="{{ meta.image }}">
+<meta property="og:url" content="{{ meta.canonical }}">
+<meta property="og:type" content="website">
+<meta property="fb:app_id" content="{{ registry('fb_app_id') }}">
+<meta property="fb:admins" content="">
+<meta property="og:description" content="{{ meta.description }}" />
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@floshoes">
+<meta name="twitter:creator" content="@floshoes">
+<meta name="twitter:title" content="{{ registry("page_title")|default(meta.title) }}">
+<meta name="twitter:description" content="{{ meta.description }}">
+<meta name="twitter:image" content="{{ meta.image }}">
+
+<link rel="shortcut icon" href="/pub/assets/floshoes/images/favicon.ico"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=block"/>
+
+{% if config('env.development') == true %}
+    {# <link rel="stylesheet" href="/pub/assets/instreet/css/mediaclick-dist.css"/> #}
+    <link href="/pub/assets/lib/bootstrap/bootstrap.min.css?v={{ git_version() }}" rel="stylesheet">
+    <link href="/pub/assets/lib/fontawesome/fontawesome.min.css?v={{ git_version() }}" rel="stylesheet">
+    <link href="/pub/assets/lib/slick/slick.min.css?v={{ git_version() }}" rel="stylesheet">
+    <link href="/pub/assets/lib/niceselect/jquery.nice-select.min.css?v={{ git_version() }}" rel="stylesheet">
+    <link href="/pub/assets/lib/fancybox/jquery.fancybox.min.css?v={{ git_version() }}" rel="stylesheet">
+    <link href="/pub/assets/lib/jquery.validationengine/jquery.validationengine.css?v={{ git_version() }}" rel="stylesheet">
+
+    <link href="/pub/assets/instreet/css/style.css?v={{ git_version() }}" rel="stylesheet"/>
+    <link href="/pub/assets/css/rg.commerce.css?v={{ git_version() }}" rel="stylesheet"/>
+    <link href="/pub/assets/css/rg.commerce.en.css" rel="stylesheet"/>
+    <link href="/pub/assets/css/main.css?v={{ git_version() }}" rel="stylesheet"/>
+    <link href="/pub/assets/floshoes/css/floshoes.css" rel="stylesheet"/>
+{% else %}
+    {% set themeName = (config('env.webservice.theme.web')[0]) %}
+
+    <style>
+        {{ loadCSS('pub/assets/dist/'~ themeName ~'/'~ themeName ~'-prod.css') }}
+    </style>
+    {# <link rel="stylesheet" href="/pub/assets/dist/{{ themeName }}/{{ themeName }}-prod.css?v={{ git_version() }}" /> #}
+{% endif %}

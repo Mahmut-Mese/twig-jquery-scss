@@ -1,0 +1,124 @@
+{% if config('env.gtm') %}
+<script type="text/javascript">
+    var dataLayer = window.dataLayer || [];
+    {% if layerData.customer is not empty %}
+    var customer = {
+        session_id: layerData.customer.id,
+        server_name: '{{ config('env.webservice.url.web') }}',
+        type: "old",
+
+        {% if layerData.customer is not empty %}
+        register_date: "{{ layerData.customer.created_at|date("Y-m-d H:i:s") }}",
+        facebook_login: "false",
+        last_login: "",
+        sms_optin: "",
+        email_optin: "",
+        id: "{{ layerData.customer.id }}",
+        hashed_email: "cfd8e102e54363e49e7fafc8fcee384b",
+        hashed_email_sha: "7431039a321204748384da2896eb13a5a3aea7c441986ffb9c7beb75e55e1e95",
+        email_domain: "gmail.com",
+        {% if layerData.coupons is not empty %}
+        coupons: [
+            {% for coupon in layerData.coupons %}
+            {
+                code: "FL5B1A8C17B64A5",
+                coupon_status: "1",
+                name: "Yeni Üyelik 25 TL İndirim ",
+                created_at: "08-06-2018",
+                simple_action: "cart_fixed",
+                discount_amount: "25",
+                from_date: "01-11-2018",
+                expiration_date: "30-04-2031",
+                to_date: "30-04-2031",
+                final_expiration_date: "30-04-2031",
+                rule_condition: "Kupon 150 TL ve üzeri alışverişlerinizde geçerlidir. Efsane İndirim Kampanyası Ürünlerinde geçerli değildir.",
+                description: "150 TL ve üzeri alışverişlerde 25 TL İndirim",
+                code_label: "Yeni Üyelik 25 TL İndirim ",
+                final_discount_amount: "25 TL",
+                coupon_status_label: "Aktif"
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ]
+        {% endif %}
+        {% endif %}
+    };
+
+    GtmDataLayer.set('customer', cart);
+    {% else %}
+    
+    if (GtmDataLayer.get('customer')) {
+        var customer = GtmDataLayer.get('customer');
+    } else {
+        var customer = {
+            session_id: "",
+            server_name: '{{ config('env.webservice.url.web') }}',
+            type: "guest",
+        };
+    }
+
+    {% endif %}
+
+    {% if layerData.cart is not empty %}
+    var cart = {
+        cart_id: "{{ layerData.cart.id }}",
+        cart_totalQuantity: "{{ layerData.cart.items_qty }}",
+        subtotal: "{{ layerData.cart.subtotal_incl_tax }}",
+        grand_total: "{{ layerData.cart.base_grand_total + layerData.cart.shipping_amount }}",
+        tax: "{{ layerData.cart.tax_amount }}",
+        shipping: "{{ layerData.cart.shipping_amount }}",
+        items: [
+            {% for item in layerData.cart.items %}
+            {% set optionValue = '' %}
+            {% set optionSku = item.data.sku %}
+            {% for option in item.data.options %}
+            {% if option.is_selected == 1 %}
+            {% set optionValue = option.option_value %}
+            {% set optionSku = option.sku %}
+            {{ break }}
+            {% endif %}
+            {% endfor %}
+            {
+                sku: "{{ optionSku }}",
+                name: "{{ item.name }}",
+                price: "{{ item.data.price }}",
+                special_price: "{{ item.data.special_price|default(item.data.price) }}",
+                color: "{{ item.data.renk }}",
+                size: "{{ optionValue }}",
+                product_id: "{{ item.product_id }}",
+                discount_amount: "{{ item.data.special_price ? item.data.price - item.data.special_price : 0 }}",
+                discount_rate: "{{ item.data.discount_percent|default(0) }}",
+                gender: "{{ item.data.gender }}",
+                season: "{{ item.data.sezon_yil }} - {{ item.data.season }}",
+                model: "{{ item.data.model }}",
+                material: "{{ item.data.saya_malzeme }}",
+                stock_qty: {{ item.data.qty|default(0) }},
+                main_category: "{{ item.data.categories|first.name }}",
+                category_id: "{{ item.data.categories|first.id }}",
+                sub_category: "{{ item.data.categories|last.name }}",
+                qty: "{{ item.qty }}",
+                brand: "{{ item.data.manufacturer }}"
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ]
+    };
+
+    GtmDataLayer.set('cart', cart);
+    {% else %}
+
+    if (GtmDataLayer.get('cart')) {
+        var cart = GtmDataLayer.get('cart');
+    } else {
+        var cart = {};
+    }
+    {% endif %}
+
+    {% if pushEvent is not defined or pushEvent != false %}
+    dataLayer.push({
+        'event': 'magento_all_pages',
+        'cart': cart,
+        'customer': customer,
+		'userid': (customer || {}).id || ''
+    });
+    {% endif %}
+</script>
+{% endif %}

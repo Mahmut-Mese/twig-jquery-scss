@@ -1,0 +1,94 @@
+<main>
+    <div class="cart-page-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="order-complete text-center">
+                        <i class="svg-success svg-success-dims mt-2 mb-3"></i>
+                        {% set order_length = order.products | length %}
+                        {% if order_length > 1  %}
+                            <span class="success-depo-info hidden" style="font-size: 23px;color: red;margin-bottom: 35px;float: left;font-weight: 300;">
+                                <i class="fa fa-info-circle" style="font-size: 25px;"></i> Depomuzun taşınması nedeniyle, siparişinizdeki ürünler, ayrı ayrı paketlenerek, kargo firmasına teslim edilecek ve size gönderimi sağlanacaktır. Anlayışınız için teşekkür ederiz.
+                            </span>
+                        {% endif %}
+                        <p class="text-warning">SİPARİŞİNİZ BAŞARI İLE TAMAMLANMIŞTIR</p>
+                        <p>FLO’dan alışveriş yaptığınız için<br>
+                            teşekkür ederiz.</p>
+                        <p class="small text-warning mb-0"><u>Sipariş No: {{ order.info.increment_id }}</u></p>
+
+						{% if order.sub_orders | length > 1 %}
+							<p class="small mt-3 text-warning" style="line-height: normal;">
+								Siparişiniz birden fazla depodan tedarik edileceği için siparişiniz ayrı kargolar ile gönderilecektir. <br>
+								Hesabım > siparişlerim sayfası altından veya "Sipariş Takibi" ekranından siparişinizin durumunu takip edebilirsiniz.
+							</p>
+						{% endif %}
+                    </div>
+                    <div class="cart-extended">
+                        <table class="table cart-table order-table mb-0">
+                            <thead>
+                            <tr>
+                                <th>ÜRÜN</th>
+                                <th>ÜRÜN ADI</th>
+                                <th>RENK</th>
+                                <th>BEDEN</th>
+                                <th>ADET</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in order.products %}
+                                <tr>
+                                    <td><img class="product-image" src="{{ item.image }}"></td>
+                                    <td>{{ item.manufacturer }}<br>
+                                        {{ item.raw_data.name }}
+                                    </td>
+                                    <td>{{ item.renk }}</td>
+                                    <td>{{ item.option_value }}</td>
+                                    <td>{{ item.qty_ordered | number_format(0) }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="bg-white pb-2">
+                        <table class="order-summary mb-3">
+                            <tr>
+                                <td class="text-center">
+                                    <span class="text-warning">Sipariş Tarihi:</span> {{ order.created_at | date('d.m.Y') }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <span class="text-warning">Ödeme Şekli:</span> {{ order.payment.method.method_title | translate}} - {{ order.info.base_grand_total | number_format(2,',',".") }} {{ order.info.base_currency_code }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <span class="text-warning">Tahmini Kargoya Teslim Tarihi:</span> {{ estimated_last | date('d.m.Y') }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <span class="text-warning">İrtibat Tel:</span> {{ order.shipping.telephone }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <div class="text-warning">Teslimat Adresi:</div>
+                                    {{ order.shipping.street }}, {{ order.shipping.city }}, {{ order.shipping.region }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="cart-summary">
+                        <img src="/pub/assets/flo/img/sample/campaign.png" class="w-100">
+                        <a href="/" class="btn btn-success text-white confirm-cart-button">ALIŞVERİŞE DEVAM ET <i
+                                    class="fa fa-angle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{{ widget('datalayer', 'checkout_success', {layerData: {order: order, creditcardSaved: creditcard_saved, useSavedCard: use_saved_card }}) }}

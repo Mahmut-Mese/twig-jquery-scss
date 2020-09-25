@@ -1,0 +1,67 @@
+<div class="account-page-wrapper most-page-wrapper">
+    <div class="container">
+        <div class="row">
+            {% if is_mobile() == '0' %}
+                <div class="col-sm-3">
+                    {{ widget('customer', 'account_left_menu') }}
+                </div>
+            {% endif %}
+            <div class="{% if is_mobile() %}col-xs-12{% else %}col-sm-9{% endif %}">
+                <div class="breadcrumbs-bar title-only">
+                    <div class="left-nav"><a href="/" class="go-back-link"><i class="fas fa-angle-left"></i>{{'Geri Dön' | translate }}</a></div>
+                    <div class="page-title"><h1>{{ 'FAVORİLERİM' | translate }}</h1></div>
+                </div>
+                {% if products is empty %}
+                    <div class="bg-white p-4 text-center">
+                        <div class="row justify-content-center">
+                            <div class="col-xl-4 col-lg-6 col-md-8">
+                                <div>
+                                    <img src="/pub/assets/flo/img/empty-favourites.png">
+                                </div>
+                                <div>
+                                    <img src="/pub/assets/flo/img/empty-favourites-shadow.png">
+                                </div>
+                                <h4 class="mb-4">Son Görüntülenen Listenizde Henüz Ürün Yok</h4>
+                                <a href="/" class="btn btn-lg orange-gradient w-75 ml-auto mr-auto mb-4">ALIŞVERİŞE BAŞLA <i class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if products is not empty %}
+                    <div class="row">
+                        {% for product in products %}
+                            {{ include('themes/ninewest/widgets/products/_element/list', {product: product, gorunum: gorunum,free_shipping_limit:free_shipping_limit,season_options:season_options,categoryId: category_id,manufacturerId: manufacturer_id,gender: gender_general,query: q, visibleMostButton: 1, classes: 'product-box'}) }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- <div class="row justify-content-center">
+             <div class="col-sm-9">
+                 <nav class="pagination-wrapper">
+                     <ul class="pagination pagination-lg justify-content-center">
+                         <li class="page-item prev">
+                             <a class="page-link" href="#" aria-label="Previous">
+                                 <i class="fa fa-angle-left"></i>
+                             </a>
+                         </li>
+                         <li class="page-item"><a class="page-link" href="#">1</a></li>
+                         <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                         <li class="page-item"><a class="page-link" href="#">3</a></li>
+                         <li class="page-item"><a class="page-link" href="#">4</a></li>
+                         <li class="page-item"><a class="page-link" href="#">5</a></li>
+                         <li class="page-item more"><a class="page-link">...</a></li>
+                         <li class="page-item"><a class="page-link" href="#">10</a></li>
+                         <li class="page-item next">
+                             <a class="page-link" href="#" aria-label="Next">
+                                 <i class="fa fa-angle-right"></i>
+                             </a>
+                         </li>
+                     </ul>
+                 </nav>
+             </div>
+         </div> -->
+    </div>
+</div>
+{{ widget('datalayer', 'favourite', {layerData: {productList: products}} ) }}

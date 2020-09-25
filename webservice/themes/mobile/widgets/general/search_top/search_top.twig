@@ -1,0 +1,9 @@
+<div class="search-top">
+    <form action="/search" class="search-form">
+        <input class="commerce-autocomplete" autocomplete="off" type="text" name="q">
+        <input type="submit">
+    </form>
+</div>
+<div class="back-to" onclick="window.location.href='/'"><img src="/pub/assets/instreet/images/left-arrow-key.png"></div>
+
+{{ widget('products', 'autocomplete') }}

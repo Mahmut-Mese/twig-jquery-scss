@@ -1,0 +1,13 @@
+<p>FILTRE
+    <a href="?alias=send_order">Siparisler</a>,
+    <a href="?alias=cancel_order">Iptaller</a>,
+    <a href="?alias=update_order_status">Siparis Durum Guncellemeleri</a>,
+    <a href="?alias=update_stock">Stok Bildirimleri</a>
+</p>
+<pre id="json-renderer"></pre>
+<script src="/pub/assets/js/json-viewer/jquery.json-viewer.js"></script>
+<link href="/pub/assets/js/json-viewer/jquery.json-viewer.css" type="text/css" rel="stylesheet" />
+<script>
+    let data = {{ rows | raw }};
+    $('#json-renderer').jsonViewer(data);
+</script>

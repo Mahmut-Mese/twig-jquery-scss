@@ -1,0 +1,44 @@
+<div class="page searchnone" id="siparis-cancel">
+    <div class="container-fluid">
+        <div class="page-content sab">
+            <div class="whitepage">
+                <div class="title orange">{{ 'HESABIM / SİPARİŞLERİM' | translate }}</div>
+                <div class="content">
+                    <div class="centerContent">
+                        <div class="account">
+                            <div class="siparis-box">
+                                <div class="item">
+                                    <div class="list">
+                                        {% if orders is empty %}
+                                            <p style="text-align: center">{{ 'Henüz bir siparişiniz bulunmamaktadır.' | translate }}</p>
+                                        {% endif %}
+                                        {% for order in orders %}
+                                        <div class="content">
+                                            <ul>
+                                                <li>{{ 'Sipariş No' | translate }}: <b>{{ order.increment_id }}  </b></li>
+                                                <li>{{ 'Sipariş Tarihi' | translate }}: <b>{{ order.created_at | date('d.m.Y H:i') }}</b></li>
+                                                <li>{{ 'Sipariş Durumu' | translate }}: <b>{{ status_list[order.status] }}</b></li>
+                                                <li>{{ 'Kargo' | translate }}: <b>{{ order.shipping_description }}</b></li>
+                                            </ul>
+                                            <div class="link-all">
+                                                <ol>
+                                                    <li><a href="order?id={{ order.entity_id }}"><em>{{ 'SİPARİŞ DETAYI' | translate }}</em></a></li>
+                                                    {% if order.shipping_link_url %}
+                                                    <li><a target="_blank" href="{{ order.shipping_link_url }}"><em>{{ 'KARGO TAKİP' | translate }}</em></a></li>
+                                                    {% endif %}
+                                                    <li><a href="/page?url=destek-ve-iletisim"><em>{{ 'YARDIM' | translate }}</em></a></li>
+                                                </ol>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                        {{ pagination(current_page, total_count, limit, 1, (original_request_url), activeFilters, 'pagination-lg justify-content-center') }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

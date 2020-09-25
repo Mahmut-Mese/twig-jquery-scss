@@ -1,0 +1,65 @@
+<div class="page" id="ticket-detail">
+    <div class="container-fluid">
+        <div class="page-content">
+            <div class="whitepage">
+                <div class="title">{{ 'YARDIM TALEBİ DETAYI' | translate }}</div>
+                <div class="content">
+                    <div class="my-account-list">
+                        <div class="siparis-box">
+                            <div class="item">
+                                <div class="help-desk-item">
+                                    <div class="drm">
+                                        <b class="code">{{ ticket.list.screen_id | translate }}</b>
+                                        <b class="right">{{ 'Durum' | translate }} : <i class="active">{{ ticket.list.status_label }}</i></b>
+                                    </div>
+                                    <div class="cnt">
+                                        <ul>
+                                            <li><b>{{ 'Başlık' | translate }} <em>:</em></b> {{ ticket.list.subject }}</li>
+                                            <li><b>{{ 'Departman' | translate }} <em>:</em></b>{{ ticket.list.department_name }}</li>
+                                            <li><b>{{ 'Sipariş No' | translate }} <em>:</em></b>  {{ ticket.list.order_id }}</li>
+                                            <li><b>{{ 'Konu' | translate }} <em>:</em></b>  {{ ticket.list.name }}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="msg">
+                                        <div class="tp">
+                                            <div class="name">
+                                                {{ ticket.list.name }}
+                                            </div>
+                                            <div class="date">
+                                                {{ ticket.list.create_date | date("d.m.Y H:i")}}
+                                            </div>
+                                        </div>
+                                        <div class="text">
+                                            {{ ticket.list.message }}
+                                        </div>
+                                    </div>
+                                    {% for key,row in ticket.parent_list  %}
+                                        {% if key > 0 %}
+                                            <div class="msg">
+                                                <div class="tp">
+                                                    <div class="name">
+                                                        {% if row.Direction == 1 %}  {{ ticket.list.firstname ~ ' ' ~ ticket.list.lastname  }} {% else %}  Müşteri Hizmetleri {% endif %}
+                                                    </div>
+                                                    <div class="date">
+                                                        {{ row.CreatedOn | date('d.m.Y H:i') }}
+                                                    </div>
+                                                </div>
+                                                <div class="text">
+                                                    {{ row.Description }}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <div class="buttons">
+                                        <a class="mc-md-6" href="/ticket/answer?ticket_id={{ ticket.list.row_id }}">{{ 'Cevap Yaz' | translate }}</a>
+                                        <a class="mc-md-6" href="javascript:void(0);" data-ticket_id="{{ ticket.list.row_id }}" id="btn-close-request">{{ 'Talebi Kapat' | translate }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

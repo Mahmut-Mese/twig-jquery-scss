@@ -1,0 +1,54 @@
+<div class="account-page-wrapper">
+    <div class="page-title-bar">
+        <a href="/" class="go-back-link">
+            <i class="svg-slide-arrow-left svg-slide-arrow-left-dims"></i>
+        </a>
+        <h1>GERİ DÖN</h1>
+    </div>
+    <div class="bg-white p-3">
+        <h2 class="form-title">{{ 'HESABIM / HABER BÜLTENİ ÜYELİKLERİM' | translate }}</h2>
+        <form action="/" method="POST" id="customer-bulten-form" class="pb-5 subscribe-form">
+            <div class="newsletter-choice">
+                <label class="flo-checkbox mb-0 mr-4">
+                    <input type="checkbox" name="newsletter_email" value="{{ email }}" {{ email == 1 ? " checked" : "" }}  > Email
+                    <span><i class="fa fa-check"></i></span>
+                </label>
+                <p>Kampanyalar ve duyurular hakkında e-mail almak istiyorum</p>
+            </div>
+            <div class="newsletter-choice">
+                <label class="flo-checkbox mb-0 mr-4">
+                    <input type="checkbox" name="newsletter_sms" value="{{ sms }}" {{ sms == 1 ? " checked" : "" }}  > SMS
+                    <span><i class="fa fa-check"></i></span>
+                </label>
+                <p>Kampanyalar ve duyurular hakkında e-mail almak istiyorum.</p>
+            </div>
+            {% for aggrement in aggrements %}
+                <div class="newsletter-choice">
+                    <label class="flo-checkbox mb-0 mr-4">
+                        <input type="checkbox" name="{{ aggrement.alias }}" value="{{ aggrement.aggrement_id }}" class="{{ aggrement.alias }} {% if  aggrement.alias == 'uyelik_sozlesmesi' or aggrement.alias == 'subscribed_kvkk'   %} validate[required] {% endif %}">
+                        <span><i class="fa fa-check"></i></span>
+                    </label>
+                    <p class="info-text">{{ aggrement.front_text|raw }}</p>
+                </div>
+            {% endfor %}
+            <div class="modal fade aydinlatma" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {{ static_page.content|raw }}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" id="btn-bulten-save" class="btn outline-gray">Güncelle <i class="svg-refresh svg-refresh-dims"></i></button>
+        </form>
+    </div>
+</div>

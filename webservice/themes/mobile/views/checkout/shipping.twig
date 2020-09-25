@@ -1,0 +1,170 @@
+
+<div class="page basket-page short-header">
+    <div class="container-fluid">
+        <div class="page-content">
+            <div class="my-basket">
+                <div class="basket-list">
+                    <div class="step">
+                        <ul>
+                            <li class="active"><i>{{ 'SEPET' | translate }}</i></li>
+                            <li><i>{{ 'ADRES' | translate }}</i></li>
+                            <li><i>{{ 'ÖDEME' | translate }}</i></li>
+                        </ul>
+                    </div>
+                    <div class="basket-detail">
+                        <div class="adim2">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#home">{{ 'GİRİŞ YAP' | translate }}</a></li>
+                                <li><a data-toggle="tab" href="#menu1">{{ 'ÜYE OL' | translate }}</a></li>
+                                <li><a data-toggle="tab" href="#menu2">{{ 'ÜYE OLMADAN DEVAM ET' | translate }}</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="home" class="tab-pane fade in active">
+                                    <div class="form online">
+                                        <form id="customer-login-form" action="#" data-redirect-url="/checkout/address"  method="POST">
+                                            <div class="brd">
+                                                <div class="form-group">
+                                                    <input name="username" type="text" class="validate[required]" placeholder="{{ 'E-POSTA ADRESİNİZ' | translate }}">
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <input name="password" type="password" class="validate[required]" placeholder="{{ 'ŞİFRENİZ' | translate }}">
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="checkbox">
+                                                        <a class="sfru" href="/customer/reset">{{ 'ŞİFREMİ UNUTTUM' | translate }}</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="submit">
+                                                <button type="submit" value="{{ 'GİRİŞ YAP' | translate }}">{{ 'GİRİŞ YAP' | translate }}</button>
+                                                <a class="facebook-login" href="#">{{ 'FACEBOOK İLE BAĞLAN' | translate }}</a>
+                                            </div>
+
+
+                                        </form>
+                                    </div>
+                                </div>
+                                <div id="menu1" class="tab-pane fade">
+                                    <div class="form online">
+                                        <form id="customer-register-form" action="#" data-redirect-url="/checkout/address"  method="POST">
+                                            <div class="brd">
+                                                <div class="form-group">
+                                                    <input name="first_name" type="text"
+                                                           class="validate[required,custom[onlyLetterSp],minSize[2],funcCall[maskCaracter],funcCall[characterSpace]] input_ucfirst"
+                                                           placeholder="{{ 'ADINIZ' | translate }}">
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <input name="last_name" type="text"
+                                                           class="validate[required,custom[onlyLetterSp],minSize[2],funcCall[maskCaracter],funcCall[characterSpace]] input_ucfirst"
+                                                           placeholder="{{ 'SOYADINIZ' | translate }}">
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <input name="email" type="text" class="validate[required,custom[email],funcCall[characterTurkish]]" placeholder="{{ 'E-POSTA ADRESİNİZ' | translate }}">
+
+                                                </div>
+                                                <div class="form-group">
+
+                                                    <input name="phone" type="text" class="phones validate[required,custom[phone]]" placeholder="{{ 'TELEFON NUMARASI' | translate }} *	">
+
+                                                </div>
+                                                <div class="form-group pass">
+                                                    <input name="password" type="password" class="validate[required,minSize[5]]"  placeholder="{{ 'ŞİFRENİZ' | translate }}">
+
+                                                    <i class="pas">{{ 'GÖSTER' | translate }}</i>
+                                                </div>
+                                                <div class="form-group date-select hidden">
+                                                    <label>{{ 'DOĞUM TARİHİNİZ' | translate }} *</label>
+                                                    <br>
+                                                    <select style="display: none;" name="dob_day">
+                                                        <option value="day">{{ 'GÜN' | translate }}</option>
+                                                        {% for i in 1..31 %}
+                                                            <option value="{{ "%02d"|format(i) }}">{{ "%02d"|format(i) }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <select style="display: none;" name="dob_month">
+                                                        <option value="month">{{ 'AY' | translate }}</option>
+                                                        {% for i in 1..12 %}
+                                                            <option value="{{ "%02d"|format(i) }}">{{ "%02d"|format(i) }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <select style="display: none;" name="dob_year">
+                                                        <option value="year">{{ 'YIL' | translate }}</option>
+                                                        {% for i in 'now'|date('Y')..1900 %}
+                                                            <option value="{{ i }}">{{ i }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="form-group date-select">
+                                                    <label>{{ 'CİNSİYETİNİZ' | translate }} *</label>
+                                                    <div class="checkboxs new-radio">
+                                                        <label>
+                                                            <input type="radio" value="1" name="gender" checked>{{ 'KADIN' | translate }}
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" value="2" name="gender" checked>{{ 'ERKEK' | translate }}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="note">* {{ 'Yıldızlı alanların girişi zorunludur.' | translate }}</div>
+
+                                                <div class="form-group adim2lastcheck">
+                                                    <div class="checkbox">
+                                                        {% for aggrement in aggrements %}
+                                                            <label>
+                                                                <div class="icheckbox_square_gold new-checkbox">
+                                                                    <input type="checkbox" autocomplete="off" name="{{ aggrement.alias }}" value="{{ aggrement.aggrement_id }}" class="{{ aggrement.alias }} {% if  aggrement.alias == 'uyelik_sozlesmesi' or aggrement.alias == 'subscribed_kvkk'   %} validate[required] {% endif %}">
+                                                                </div>
+                                                                {{ aggrement.front_text|raw }}
+                                                            </label>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="submit">
+                                                <button type="submit" class="register-submit">{{ 'ÜYE OL' | translate }}</button>
+                                                <a class="facebook-login" href="#">{{ 'FACEBOOK İLE ÜYE OL' | translate }}</a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div id="menu2" class="tab-pane fade">
+                                    <div class="form online">
+                                        <form id="guest-form" action="#" data-redirect-url="/checkout/address">
+                                            <div class="brd">
+                                                <div class="form-group">
+                                                    <input type="text" class="validate[required,custom[onlyLetterSp],minSize[2],funcCall[maskCaracter],funcCall[characterSpace]]" name="firstname" placeholder="{{ 'ADINIZ' | translate }} *">
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" class="validate[required,custom[onlyLetterSp],minSize[2],funcCall[maskCaracter],funcCall[characterSpace]]" placeholder="{{ 'SOYADINIZ' | translate }} *" name="lastname">
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" class="validate[required,custom[email],funcCall[characterTurkish]]" name="email" placeholder="{{ 'E-POSTA ADRESİNİZ ' | translate }}*">
+
+                                                </div>
+                                                <div class="note">
+                                                    {{ ' Kişişel verilerin işlenmesine ilişkin detaylı bilgilere <br>
+                                                    <a href="/page?url=kisisel-verilerin-korunmasi"> Kişişel Verilerin Korunması ver İşlenmesi Politikası</a>’ından ulaşabilirsiniz.' | translate  | raw}}
+
+                                                </div>
+                                            </div>
+                                            <div class="submit">
+                                                <button  type="submit">{{ 'ÜYE OLMADAN DEVAM ET' | translate }}</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{ widget('social', 'facebook') }}

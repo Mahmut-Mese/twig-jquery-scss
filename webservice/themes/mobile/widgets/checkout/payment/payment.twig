@@ -1,0 +1,226 @@
+<div class="my-basket checkout-payment">
+    <div class="basket-list">
+        <div class="step">
+            <ul>
+                <li class="active okey" onclick="window.location.href='{{ basket_base_url() }}/basket'"><i>{{ 'SEPET' | translate }}</i></li>
+                <li class="active okey" onclick="window.location.href='/checkout/address'"><i>{{ 'ADRES' | translate }}</i></li>
+                <li class="active"><i>{{ 'ÖDEME' | translate }}</i></li>
+            </ul>
+        </div>
+        <div class="basket-detail">
+
+
+
+            <div class="adim5">
+                <div class="tab-2">
+                <ul class="nav nav-tabs">
+                    {% set i = 0 %}
+                    {% for payment in payment_methods %}
+
+                        {% if payment.code == 'cashondelivery' %}
+                            {% set cash_text=1 %}
+                            <li><input type="hidden" data-name="method" value="{{ payment.code }}"><a data-toggle="tab" data-method="{{ payment.code }}" class="payment-method-choice" href="#{{ payment.code }}">{{ payment.title }}</a></li>
+                        {%  else %}
+                            {% set i = i + 1 %}
+                            <li {% if i == 1 %}class="active"{% endif %}> <input type="hidden" data-name="method" value="{{ payment.code }}">
+                                <a data-toggle="tab" data-method="{{ payment.code }}" class="payment-method-choice" href="#{{ payment.code }}" {% if i == 1 %}aria-expanded="true" {% endif %}>{{ payment.title }}</a>
+                            </li>
+                        {% endif %}
+
+                    {% endfor %}
+                </ul>
+                    <div class="tab-content">
+                        {% for payment in payment_methods %}
+                            {% if payment.code == 'cashondelivery' %}
+                                <div id="{{ payment.code }}" class="tab-pane fade">
+                                    <form id="kapida-odeme">
+                                        <div class="kapida-ode">
+                                            <div class="brd">
+                                                <div class="text">
+                                                    <span>{{ 'KAPIDA ÖDEME BİLGİLERİ' | translate }}</span>
+                                                    {{ '<p>
+                                                        Alışveriş tutarınıza kargo firması tarafından talep edilen <i>9,00&nbsp;TL</i>  kapıda ödeme ücreti eklenecektir.</p>' | translate | raw }}
+
+
+
+                                                </div>
+
+                                                <div class="form-group cash">
+                                                    <div class="checkbox">
+                                                        <label class="">
+                                                            <div class="icheckbox_square_gold new-checkbox iread iread-cash" id="iread-cash">
+                                                                <input type="checkbox" name="cc_ddd" class="validate[required]">
+                                                            </div><br>
+                                                            {{ '<a class="various d-visible" href="#modal-agreement">Mesafeli Satış Sözleşmesini</a> ve <a class="various d-visible" href="#modal-agreement">Ön Bilgilendirme Formu </a> \'nu okudum ve onaylıyorum.' | translate | raw }}
+
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            {%  else %}
+                                <div id="{{ payment.code }}" class="tab-pane fade in active">
+                                    <div class="form online">
+                                        <form action="#" id="cc_cart_info">
+                                            <div class="brd">
+                                                <div class="use-saved-cart" {{ saved_card_tokens ? '' : 'hidden' }}>
+                                                    {% if not saved_card_tokens is empty %}
+                                                        <div class="form-group card-all">
+                                                        <span>{{ 'KAYITLI KARTLARIM' | translate }}</span>
+                                                        <select id="saved-card-list">
+                                                            {% for token in saved_card_tokens %}
+                                                                <option data-platform="{{ token.program_name }}" data-id="{{ token.saved_card_id }}">{{ token.program_name }} No: {{ token.bin_number }} </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                        <div class="form-group taksit" style="margin-top: 10px;">
+                                                            <label>{{ 'Taksit Seçenekleri' | translate }}</label>
+                                                            <div class="nice-select cc_installment" tabindex="0">
+                                                                <span  data-value="1" class="current">{{ 'Tek Çekim' | translate }}</span>
+                                                                <ul class="list">
+                                                                    <li data-value="1" class="option selected focus">{{ 'Tek Çekim' | translate }}</li>
+
+                                                                </ul></div>
+                                                            <a class="various d-visible"
+                                                               href="#taksit">{{ 'Taksit Tablosu' | translate }}</a>
+                                                        </div>
+                                                        <a class="continue-new-card fl-right" href="javascript:void(0);">{{ 'Yeni Bir Kart İle Devam Et' | translate }}</a>
+                                                    {% endif %}
+                                                </div>
+
+                                                <div class="use-card-number" {{ saved_card_tokens ? 'hidden' : '' }}>
+
+
+                                                    <div class="form-group required">
+                                                        <label>{{ 'Kart Numarası' | translate }}*</label>
+                                                        <input type="text" data-name="cc_number" class="card-numbers validate[required,creditCard]" >
+                                                    </div>
+                                                    <div class="form-group date required">
+                                                        <label>{{ 'Son Kullanma Tarihi' | translate }} *</label>
+                                                        <div class="nice-select cc_date month" tabindex="0">
+                                                            <span class="current">Ay</span>
+                                                            <ul class="list">
+
+                                                                <li data-value="01" class="option">01</li>
+                                                                <li data-value="02" class="option">02</li>
+                                                                <li data-value="03" class="option selected focus">03</li>
+                                                                <li data-value="04" class="option">04</li>
+                                                                <li data-value="05" class="option">05</li>
+                                                                <li data-value="06" class="option">06</li>
+                                                                <li data-value="07" class="option">07</li>
+                                                                <li data-value="08" class="option">08</li>
+                                                                <li data-value="09" class="option">09</li>
+                                                                <li data-value="10" class="option">10</li>
+                                                                <li data-value="11" class="option">11</li>
+                                                                <li data-value="12" class="option">12</li>
+                                                            </ul></div>
+                                                        <div class="nice-select hidden cc_date" tabindex="0">
+                                                            <span class="  current">/</span>
+                                                        </div>
+                                                        <div class="nice-select cc_date year" tabindex="0">
+
+                                                            <span class="current">{{ 'Yıl' | translate }}</span>
+                                                            <ul class="list">
+                                                                {% for i in 2019..2040 %}
+                                                                    <li data-value="{{ i }}" class="option">{{ i }}</li>
+                                                                {% endfor %}
+
+                                                            </ul></div>
+                                                    </div>
+                                                    <div class="form-group cvv required">
+                                                        <label>{{ '(CVV)' | translate }}*</label>
+                                                        <input type="text" data-name="cc_cvv"  class="inputQuantity validate[required]" min="0" max="9999" maxlength="3">
+                                                    </div>
+                                                    <div class="form-group taksit" style="margin-top: 10px;">
+                                                        <label>{{ 'Taksit Seçenekleri' | translate }}</label>
+                                                        <div class="nice-select cc_installment" tabindex="0">
+                                                            <span  data-value="1" class="current">{{ 'Tek Çekim' | translate }}</span>
+                                                            <ul class="list">
+                                                                <li data-value="1" class="option selected focus">{{ 'Tek Çekim' | translate }}</li>
+
+                                                            </ul></div>
+                                                        <a class="various d-visible"
+                                                           href="#taksit">{{ 'Taksit Tablosu' | translate }}</a>
+                                                    </div>
+                                                    {% if(isLogged is not empty) %}
+                                                        <div class="form-group save-card">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <div class=" new-checkbox checked" id="save-card-command"></div>
+                                                                    {{ 'Sonraki İşlemler İçin Kredi Kartımı Sakla' | translate }}
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        {% endif %}
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="form-group ">
+                                                <div class="checkbox agreement-payment" >
+                                                    <label>
+                                                        <div class=" new-checkbox iread iread-payu required">
+                                                            <input type="checkbox" name="cc_check" class="validate[required]">
+                                                        </div>
+                                                        <a href="#modal-agreement" class="various d-visible"
+                                                           >{{ 'Mesafeli Satış Sözleşmesini' | translate }}</a> {{ 've <a class="various d-visible" href="#modal-agreement">Ön Bilgilendirme Formu</a> \'nu okudum ve onaylıyorum.' | translate | raw }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+            {{ widget('basket', 'sidebar', {'no_coupon': 'no_coupon', 'next_url': '/checkout/success'}) }}
+
+
+
+            <ul class="cash-text">
+                {{ '<li>Kapıda ödeme seçeneğinde sadece MNG kargo ile gönderim yapılmaktadır.</li>
+                                            <li>Kapıda ödeme seçeneğiyle alınan ürünlerin iadesi mağazalarımızdan veya iade adresimize gönderilerek yapılabilir.</li>
+                                            <li>İade tutarının banka hesabınıza yatırılması için IBAN numaranızı iletişim sayfamızdan bize iletebilirsiniz.</li>
+                                            <li>İade işlemlerinde fatura ibrazı zorunludur, faturasız iade kabul edilmemektedir.</li>
+                                            <li>Mağazalardan nakit iade yapılmamaktadır.</li>' | translate | raw}}
+
+
+            </ul>
+
+        </div>
+    </div>
+    <div class="basket-container">
+    <div class="basket-button ">
+        <div class="linkto ">
+            <a onclick="window.location.href='/checkout/success'">{{ 'SEPETİ ONAYLA' | translate }}</a>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+{{ widget('general', 'modal_installment_table',{price:total}) }}
+{{ widget('general', 'modal_agreement_table') }}
+<a class="hidden various d-visible" id="clicksmsactivation" href="#smsaktivasyon">SATIN AL</a>
+<div id="smsaktivasyon" style="display: none;">
+    <form onsubmit="return false">
+        <div class="title">{{ 'SMS AKTİVASYON' | translate }}</div>
+        <div class="detail-bas">
+            <p>{{ 'Telefonunuza gönderilen <br> 4 haneli aktivasyon kodunu giriniz' | translate | raw}}.</p>
+            <div class="form-group">
+                <input type="text" id="activation_code">
+            </div>
+            <div class="bottom">
+                <input type="button" id="check_activation_sms" value="{{ 'GÖNDER' | translate }}">
+            </div>
+        </div>
+    </form>
+</div>
+
+{{ widget('datalayer', 'checkout_payment', {layerData: {cart: basket}}) }}

@@ -1,0 +1,67 @@
+<header class="header">
+	<div class="header-notification hidden hidden-xs"><a href="/customer/register">{{ "ÜYE OL ANINDA %10 İNDİRİM KAZAN!" | translate }}</a>
+		{# <a href="#" class="show-more">*{{ 'Detay' | translate }}</a> #}
+	</div>
+	<div class="header-top container hidden-xs">
+		<div class="pull-right"><span class="header-top-message">{{ '250 TL VE ÜZERİ ÜCRETSİZ KARGO' | translate }}</span>
+			<ul class="header-top-links list-inline logged-in hide">
+				<li><a href="/customer/edit">{{ 'HESABIM' | translate }}</a></li>
+				<li>/</li>
+				<li><a href="javascript:;" class="customer-logout">{{ 'ÇIKIŞ YAP' | translate }}</a></li>
+			</ul>
+
+			<ul class="header-top-links list-inline logged-out">
+				<li><a href="/customer/register">{{ 'ÜYE OL' | translate }}</a></li>
+				<li>/</li>
+				<li><a class="customer-login">{{ 'GİRİŞ YAP' | translate }}</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="header-bottom container">
+		<div class="row">
+			<div class="col-xs-7 col-sm-12">
+				<a href="#mobile-menu" class="header-mobile-menu-toggle open-menu-button"><i class="fas fa-bars"></i></a>
+				<a href="/"> <img src="/pub/assets/ninewest/img/logo.jpg" alt="NINEWEST" class="header-logo"/></a>
+			</div>
+			<div class="col-sm-8 hidden-xs">
+				{{ menuHtml|raw }}
+			</div>
+			<div class="col-sm-4 col-xs-5">
+				<ul class="list-inline pull-right header-nav-right">
+					<li class="hidden visible-xs-inline-block header-customer-mobile">
+						<a href="/customer/myaccount" class="logged-in hide"><i class="fa fa-user"></i></a>
+						<a class="customer-login logged-out"><i class="fa fa-user"></i></a>
+					</li>
+					<li class="header-search search-form-wrapper pos-relative">
+						<a href="#" class="header-search-toggle"> <i class="fas fa-search"></i></a>
+						<div id="headerSearchForm" class="header-search-container hide">
+							<a href="#" class="header-search-result-close hidden visible-xs"><i class="fa fa-times"></i></a>
+							<i></i>
+							<form action="" class="header-search-form">
+								<input type="search" class="form-control commerce-autocomplete"/>
+								<button class="btn btn-primary">{{ 'ARA' }}</button>
+							</form>
+							{{ widget('products', 'autocomplete') }}
+						</div>
+					</li>
+					<li class="header-basket">
+						<a href="#" class="header-basket-toggle header-basket-toggle-dropdown" id="commerce-mini-cart-mobile">
+							<i class="fas fa-shopping-bag"></i>
+							<span class="header-basket-count cart-count"></span>
+						</a>
+
+						<div class="dropdown-menu header-minibasket" id="header-minibasket">
+							<a href="#header-minibasket" class="header-minibasket-close close">&times;</a>
+
+							{{ widget('basket', 'mini_cart') }}
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div id="mobile-menu" class="mobile-menu">
+		{{ menuHtmlMobile|raw }}
+	</div>
+</header>

@@ -1,0 +1,56 @@
+{# <div class="alls">
+    <div class="fav">
+        <a href="javascript:void(0);" class="add-wishlist" data-product-id="{{ product.id }}"
+           data-sku="{{ product.sku }}"></a>
+    </div>
+
+    {#<div class="water-ico">#}
+    {#<img src="/pub/assets/instreet/images/water.jpg" class="resimatt" alt="">#}
+    {#</div>
+    <div class="images lazy">
+        <a href="{{ product.url }}" {% if isSpotlight == true %}class="spotlightItem"
+           data-spotlight-id="{{ product.id }}"{% endif %}>
+            <img data-src="{{ product.image|resize('250x250') }}"
+                 src="/pub/media/lazyloading/blank.png" class="resimatt" alt="">
+        </a>
+    </div>
+    <div class="text">
+        <div class="type-list">
+            <ul>
+                {% if product.season in season_options %}
+                    <li class="active">{{ 'Yeni' | translate }}</li>
+                {% endif %}
+                {% if product.special_price %}
+                    {% set indirim_orani = (((product.price - product.filter_price)/ product.price) * 100) | number_format(0, '.', ',') %}
+                    <li>%{{ '%s İndirim' | translate | format( indirim_orani ) }} </li>
+                {% endif %}
+
+                {% if product.filter_price > free_shipping_limit %}
+                    <li class="active">{{ 'Kargo Bedava' | translate }}</li>
+                {% endif %}
+            </ul>
+        </div>
+        <a href="{{ product.url }}" {% if isSpotlight == true %}class="spotlightItem"
+           data-spotlight-id="{{ product.id }}"{% endif %}>
+            <span>{{ product.manufacturer }}</span>
+            <p>{{ product.name }}</p>
+            <div class="money">
+                {% if product.special_price %}
+                    <i class="prev">{{ product.price|price }}</i>
+                {% endif %}
+                <i class="next">{{ product|price }}</i>
+            </div>
+        </a>
+    </div>
+</div> #}
+
+ <a href="{{ product.url }}" class="product-box lazy">
+    <img data-src="{{ product.image|resize('250x250') }}" src="/pub/assets/flo/img/placeholders/product.jpg" alt="{{ product.name }}">
+    <span class="title">{{ product.manufacturer }}</span>
+    <span class="prices">
+        {% if product.special_price %}
+        <span class="old-price">{{ product.price|price }}</span>
+        {% endif %}
+        <span class="price">{{ product|price }}</span>
+    </span>
+</a>

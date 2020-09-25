@@ -1,0 +1,25 @@
+<div class="blogger lazy">
+    <div class="container">
+        <div class="text-center mb-4">
+            <img src="/pub/media/lazyloading/blank.png" data-src="/pub/assets/flo/img/blogger-logo.jpg">
+        </div>
+        <div class="row no-gutters">
+            {% for spotlight in spotlights %}
+                {% if spotlight.image_mobil is not empty %}
+                    <div class="col-6">
+                        <a href="{{ spotlight.link }}" class="blog-box" data-spotlight-id="{{ spotlight.spotlght_id }}">
+                            {{ img('lazyloading/blank.png', '', {  class:'w-100', cdn: 'general' }, spotlight.image_mobil) }}
+    {#                        <img src="/pub/media/lazyloading/blank.png" data-src="/pub/media/{{ spotlight.image_desktop }}" class="w-100">#}
+                            <h5>{{ spotlight.title }}</h5>
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="text-center">
+            <a href="https://www.flo.com.tr/blog" target="_blank" class="btn btn-dark">{{ 'FLO BLOGGER' | translate }}</a>
+        </div>
+    </div>
+</div>
+
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: spotlights}}) }}

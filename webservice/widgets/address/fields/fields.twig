@@ -1,0 +1,217 @@
+<input name="form_key" type="hidden" value="l4EFzCZObjNl9Kk4" id="adressss">
+<input type="hidden" name="error_url" value="">
+<input type="hidden" name="address_id" value="{{ address.id }}">
+
+<div class="form-group">
+    <em>{{ 'ADRES BAŞLIĞI' | translate }} *</em>
+    <input name="{% if address_key is empty %}title_address{% else %}{{ address_key }}[title_address]{% endif %}"
+           type="text" class="validate[required]"
+           placeholder="{{ 'Ör: Ev Adresim' | translate }}"
+           value="{{ address.title_address }}">
+</div>
+
+<div class="field field-name-firstname required">
+    <div class="control-amir form-group">
+        <em class="required-em">{{ 'ADINIZ' | translate }} </em><em class="required-star">*</em>
+        <input type="text"
+               name="{% if address_key is empty %}firstname{% else %}{{ address_key }}[firstname]{% endif %}"
+               value="{{ address.firstname }}"
+               title="{{ 'First Name' | translate }}"
+			   maxlength="50"
+               class="validate[required,custom[onlyLetterSp],minSize[2],funcCall[maskCaracter],funcCall[characterSpace]] input-text required-entry"
+               data-validate="{required:true}">
+
+    </div>
+</div>
+<div class="field field-name-lastname required">
+    <div class="control-amir form-group">
+        <em class="required-em">{{ 'SOYADINIZ' | translate }} </em><em class="required-star">*</em>
+        <input type="text"
+               name="{% if address_key is empty %}lastname{% else %}{{ address_key }}[lastname]{% endif %}"
+               value="{{ address.lastname }}" title="{{ 'Last Name' | translate }}"
+			   maxlength="50"
+               class="validate[required,custom[onlyLetterSp],minSize[2],funcCall[maskCaracter],funcCall[characterSpace]] input-text required-entry"
+               data-validate="{required:true}">
+
+
+    </div>
+</div>
+{% if address_key == 'shipping_address' %}
+    <div class="field field-name-email required">
+        <div class="control-amir form-group">
+            <em class="required-em">{{ 'EMAİL' | translate }} </em><em class="required-star">*</em>
+            <input type="email" id="guest_email" name="guest_email"
+                   value="" title="{{ 'Email' | translate }}"
+                   class="validate[required,custom[email],funcCall[characterTurkish]] input-text required-entry"
+                   data-validate="{required:true}">
+
+        </div>
+    </div>
+{% endif %}
+<div class="field required">
+    <div class="form-group">
+        <em class="required-em">{{ 'TELEFON NUMARASI' | translate }} </em><em class="required-star">*</em>
+        <input class="phones validate[required]" type="text"
+               placeholder="0 (5 _ _ ) _ _ _  _ _  _ _"
+               data-inputmask-removeMaskOnSubmit="false"
+               data-inputmask="'mask': '0(599)-9999999'"
+               name="{% if address_key is empty %}telephone{% else %}{{ address_key }}[telephone]{% endif %}"
+               value="{{ address.telephone }}" title="{{ 'Email' | translate }}"
+               >
+
+    </div>
+</div>
+<div class="hidden field choice sms-alert">
+    <input type="checkbox"
+           name="{% if address_key is empty %}sms_alert{% else %}{{ address_key }}[sms_alert]{% endif %}"
+           value="{{ address.sms_alert }}"
+           title="{{ 'Send SMS order notifications' | translate }}" id="sms_alert">
+    <label for="sms_alert" class="label">
+        <span>{{ 'Email' | translate }}Send SMS notifications to the telephone number above.</span>
+    </label>
+</div>
+<div class="field required">
+    <div class="form-group">
+        <em class="required-em">{{ 'ŞEHİR' | translate }} </em><em class="required-star">*</em>
+        <select id="region_{{ address_key }}" data-key="{{ address_key }}"
+                name="{% if address_key is empty %}region{% else %}{{ address_key }}[region]{% endif %}" >
+            <option value="0"></option>
+            {% for region in regions %}
+                <option
+                        data-region-id="{{ region.region_id }}"
+                        value="{{ region.default_name }}"
+                        {% if address.region_id == region.region_id %}selected{% endif %}>{{ region.default_name }}
+                </option>
+            {% endfor %}
+        </select>
+        <input id="region_id_{{ address_key }}" type="hidden"
+               name="{% if address_key is empty %}region_id{% else %}{{ address_key }}[region_id]{% endif %}"
+               value="{% if address.region %}{{ address.region_id }}{% else %}0{% endif %}">
+    </div>
+</div>
+<div class="field required">
+    <div class="form-group">
+
+        <em class="required-em">{{ 'İLÇE' | translate }}</em> <em  class="required-star">*</em>
+        <select id="city_{{ address_key }}" class="validate[requried]"
+                name="{% if address_key is empty %}city{% else %}{{ address_key }}[city]{% endif %}">
+            {% for town in towns %}
+                <option
+                        value="{{ town.default_name }}"
+                        {% if address.city == town.default_name %}selected{% endif %}>{{ town.default_name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+
+<div class="field required hidden" style="display: block;">
+    <div class="control">
+        <input name="{% if address_key is empty %}country_id{% else %}{{ address_key }}[country_id]{% endif %}"
+               id="country" class="required-entry"
+               title="{{ 'Country' | translate }}" data-validate="{'validate-select':true}"
+               aria-required="true" value="TR">
+    </div>
+</div>
+
+<div class="field required hidden">
+    <div class="form-group">
+        <em class="required-em">{{ 'POSTA KODU' | translate }} </em><em class="required-star">*</em>
+        <input type="text" name="{% if address_key is empty %}postcode{% else %}{{ address_key }}[postcode]{% endif %}"
+               value="{{ address.postcode }}" title="Post Code"
+               id="zip">
+    </div>
+</div>
+<div class="field required">
+    <div class="form-group address-area">
+        <em class="required-em">{{ 'ADRES' | translate }} </em><em class="required-star">*</em>
+        <textarea class="validate[required,minSize[3],funcCall[characterUclu]] " placeholder="{{ 'Mahalle, cadde, sokak ve diğer bilgilerinizi giriniz.' | translate }}"
+               name="{% if address_key is empty %}street{% else %}{{ address_key }}[street]{% endif %}"
+			   maxlength="200"
+               value="{{ address.street | join(' ')}}" title="{{ 'Street Address' | translate }}"
+                  >{{ address.street | join(' ') }}</textarea>
+    </div>
+</div>
+ <div class="form-group date-select centersGiris bill-type">
+    <em>{{ 'FATURA TİPİ' | translate }} *</em>
+    <div class="checkbox-group gender">
+        <div class="checkbox checkbox-radio ">
+            <label>
+                <div class="new-radio checked">
+                    <input  type="radio" value="2"  name="personal" checked
+                    >{{ 'Bireysel' | translate }}
+                    <ins></ins>
+                </div>
+
+            </label>
+        </div>
+        <div class="checkbox checkbox-radio">
+            <label>
+                <div class="new-radio">
+                    <input  type="radio" value="1"  name="organizational"
+                    >{{ 'Kurumsal' | translate }}
+                    <ins></ins>
+                </div>
+
+            </label>
+        </div>
+    </div>
+</div>
+
+{% if re_captcha.active == true and na_post_time >= re_captcha.fail_num %}
+    <div class="field">
+        <div class="form-group">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="g-recaptcha" data-sitekey="{{ re_captcha.site_key }}"></div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<div class="field organizational hide">
+    <div class="form-group">
+        <em>{{ 'VERGİ / TC KİMLİK NUMARASI' | translate }}</em>
+        <input id="tax_number" type="text"
+               name="{% if address_key is empty %}tax_number{% else %}{{ address_key }}[tax_number]{% endif %}"
+               value="{{ address.tax_number }}"
+               class="tax-number validate[funcCall[taxNumberCheck]]] ">
+    </div>
+</div>
+<div class="field organizational hide">
+    <div class="form-group">
+        <em>{{ 'VERGİ DAİRESİ' | translate }}</em>
+        <input id="tax_office" maxlength="20" type="text"
+               name="{% if address_key is empty %}tax_office{% else %}{{ address_key }}[tax_office]{% endif %}"
+               value="{{ address.tax_office }}"
+               class="tax_office validate[funcCall[taxOfficeCheck]]]">
+
+    </div>
+</div>
+
+{% if address_key is empty %}
+<div class="field required hidden">
+    <div class="form-group ship-method">
+        <em>{{ 'Varsayılan Teslimat Adresim' | translate }}</em>
+        <div class="icheckbox_square_gold new-checkbox checked"
+             style="position: relative;">
+            <input type="checkbox" name="default_shipping"
+                   value="1"
+                   title="{{ 'default shipping' | translate }}"
+                   id="default_shipping" checked>
+        </div>
+    </div>
+</div>
+<div class="field required hidden">
+    <div class="form-group ship-method">
+        <em>{{ 'Varsayılan Fatura Adresim' | translate }}</em>
+        <div class="icheckbox_square_gold new-checkbox  checked"
+             style="position: relative;">
+            <input type="checkbox" name="default_billing"
+                   value="1" title="{{ 'billing' | translate }}"
+                   id="default_billing" checked>
+        </div>
+
+    </div>
+</div>
+{% endif %}

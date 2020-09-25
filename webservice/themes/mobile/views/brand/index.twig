@@ -1,0 +1,63 @@
+<div class="page brands-page-wrapper">
+    <div class="container-fluid">
+        <div class="page-content">
+            <div class="whitepage tpnone">
+                <div class="content">
+                    <div class="brand-page-mobil">
+                        <div class="page-title-bar">
+                            <a href="/" class="go-back-link"><i
+                                        class="svg-slide-arrow-left svg-slide-arrow-left-dims"></i></a>
+
+                        </div>
+                        <div class="container">
+                            <div class="search-form-wrapper">
+                                <h2>Markalar</h2>
+                                <form action="/" class="search-form">
+                                    <input type="text" class="form-control autocomplete" value="">
+                                    <button name="dddd" type="button"><i
+                                                class="svg-search-white svg-search-white-dims fa fa-search"></i></button>
+                                </form>
+                            </div>
+                            <div class="brand-boxes">
+                                <div class="row small-gutter">
+                                    {% for brand in brands %}
+                                        {% if brand.page_brand_image is not empty %}
+                                        <div class="brand-box mc-md-4 mc-xs-6 pa filter_div">
+                                            <span class="hidden">{{ brand.title }}</span>
+                                            <a href="/{{ brand.url }}">
+                                                {{ img(brand.image, '', {alt:brand.page_title, width: '74px', height:'74px', class: 'resim-att', cdn: 'general'}) }}
+                                            </a>
+                                        </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="brand-list-holder">
+                                <ul class="alphabetic-list">
+                                    {% for letter in 'A'..'Z' %}
+                                        <li><a href="javascript:" data-target="{{ letter }}">{{ letter }} </a></li>
+                                    {% endfor %}
+                                </ul>
+                                {% for letter in 'A'..'Z' %}
+                                    <div class="single-letter-brand" data-starting-letter="{{ letter }}">
+                                        <div class="letter">{{ letter }}</div>
+                                        <ul>
+                                            {% for brand in brands %}
+                                                {% set start = brand.title | slice(0,1) | upper_tr %}
+                                                {% if letter == start %}
+                                                    <li><a href='/{{ brand.url }}'>{{ brand.title }}</a></li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endfor %}
+                                {# <a href="javascript:" class="show-all-brands">TÜM MARKALAR <i
+                                            class="fa fa-angle-right ml-2"></i></a> #}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

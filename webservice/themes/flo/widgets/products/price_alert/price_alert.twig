@@ -1,0 +1,14 @@
+<div class="discount-alert">
+    {% if product_alerts is not empty %}
+    <button type="button" id="remove_price_alert" class="get-informed-button" data-product-id="{{ product_id }}" data-sku="{{ sku }}">
+        <i class="svg-bell-slash svg-bell-slash-dims"></i>İndirim bilgilendirmesini kaldır
+    </button>
+    {% else %}
+        <button type="button" id="add_price_alert" class="get-informed-button" data-product-id="{{ params.product_id }}" data-sku="{{ params.sku }}">
+            <i class="svg-bell svg-bell-dims"></i>İndirime girince haber ver
+        </button>
+    {% endif %}
+    <div class="seller-info" style="display:none;visibility:hidden">
+        <a href="/"><span class="text-warning">Satıcı:</span> Lorem Ipsum Dolor Sit Amet</a>
+    </div>
+</div>

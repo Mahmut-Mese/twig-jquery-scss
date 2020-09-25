@@ -1,0 +1,60 @@
+{{ widget('general', 'spotlight') }}
+
+<div class="type-list-home">
+    <div class="container-fluid">
+        <div class="slogans-bar">
+            <div class="container-fluid">
+                <div class="icons-holder">
+                    <div class="icon-box">
+                        <i class="svg-cash svg-cash-dims"></i>
+                        <h4>{{ 'Kapıda Nakit Ödeme' | translate }}</h4>
+                    </div>
+                    <div class="icon-box">
+                        <i class="svg-free-shipping svg-free-shipping-dims"></i>
+                        <h4>{{ '150 TL Üzeri Kargo Bedava' | translate }}</h4>
+                    </div>
+                    <div class="icon-box">
+                        <i class="svg-change svg-change-dims"></i>
+                        <h4>{{ 'Mağazada Değişim İade' | translate }}</h4>
+                    </div>
+                    <div class="icon-box">
+                        <i class="svg-call-center svg-call-center-dims"></i>
+                        <h4>0850 290 0 747</h4>
+                    </div>
+                    <div class="icon-box">
+                        <i class="svg-installment svg-installment-dims"></i>
+                        <h4>{{ '30 Gün İade' | translate }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# <ul></ul> #}
+    </div>
+</div>
+<div class="pad50">
+    <div class="container-fluid">
+        <div class="pad27">
+            {{ widget('brands', 'brands_slider') }}
+            {{ widget('session', 'new_session') }}
+
+            {{ widget('categories', 'main_categories', {element: '.categories-home'}) }}
+
+            <div class="proandtek">
+                <div class="container-fluid">
+                    {{ widget('products', 'single_product_slider', {title: 'Günün Fırsatı' | translate, data_source: 'gunun-firsati', isSpotlight: true}) }}
+                    <div class="homeImage">
+                        {{ widget('general', 'image', {element: '.homeImage'}) }}
+                    </div>
+                </div>
+            </div>
+
+            {{ widget('products', 'product_slider', {title: 'Sizin İçin Seçtiklerimiz' | translate, data_source: 'sizin-icin-sectiklerimiz' }) }}
+
+            {# Todo: Dinamik hale getirilirken yapı korunmalı #}
+            <div class="three-box">
+                {{ widget('general', 'image_with_title', {element: '.three-box'}) }}
+            </div>
+        </div>
+    </div>
+</div>

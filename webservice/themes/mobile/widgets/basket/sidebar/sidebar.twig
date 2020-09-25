@@ -1,0 +1,86 @@
+{% if  basket.items_qty > 0 %}
+    <script>
+        function rgBasketUpdate(){
+            if(RG.Basket.is_cash_on_delivery !== 0){
+                RG.Basket.is_cash_on_delivery = {{ is_method_cash_on_delivery }};
+            }
+            RG.Basket.is_installment_set = 0;
+            RG.Basket.shipping_amount = {{ basket.shipping_amount ?? 0 }};
+            RG.Basket.base_total = {{ basket.subtotal_incl_tax + basket.discount_amount }};
+            RG.Basket.free_shipping_limit = {{ free_shipping_limit ?? 0}};
+            RG.Basket.cash_on_delivery_fee = {{ cash_on_delivery_fee ?? 0}};
+            RG.Basket.prepareSidebar();
+        };
+
+        if (window.jQuery) { $(rgBasketUpdate); } 
+        else { 
+            domReadyCallbacks.push(function () {
+                $(function () { rgBasketUpdate() });
+            }); 
+        }
+    </script>
+{#    <li class="hidden" id="is-cash-on-delivery" data-is-cash-on-delivery="{{ is_method_cash_on_delivery }}"></li>
+    <li class="hidden" id="check-installment-set" data-check-installment-set="0"></li>
+    <li class="hidden" id="shipping-amount" data-shipping-amount="{{ shipping_amount }}"></li>
+    <li class="hidden" id="base-subtotal" data-base-subtotal="{{ base_subtotal }}"></li>
+    <li class="hidden" id="free-shipping-limit" data-free-shipping-limit="{{ free_shipping_limit }}"></li>
+    <li class="hidden" id="cash-on-delivery-fee" data-cash-on-delivery-fee="{{ cash_on_delivery_fee }}"></li>#}
+
+    {% if no_coupon %}
+    {% else %}
+        <div class="campaing-code">
+            <form action="" id="cart-coupon">
+                <div class="form-group">
+                    <label>{{ 'KAMPANYA KODU' | translate }} : </label>
+                    <input type="text" name="code" value="{{ basket.coupon_code ? basket.coupon_code : '' }}">
+                    {% if basket.coupon_code is defined %}
+                        <input type="submit" id="cart-coupon-remove" value="{{ 'İPTAL' | translate }}">
+                    {% else %}
+                        <input type="submit" value="{{ 'UYGULA' | translate }}">
+                    {% endif %}
+                </div>
+            </form>
+            {{ widget('basket','coupons') }}
+        </div>
+    {% endif %}
+    <div class="total-box">
+        <ul>
+            <li>{{ 'ARA TOPLAM' | translate }} <i><span class="cargo">{{ (basket.subtotal_incl_tax)|price }}</span></i></li>
+            {% set sales_title = '' %}
+            {% for roww in basket.salesrule %}
+                {% set sales_title = sales_title ~ roww['name'] ~ ', '  | raw %}
+            {% endfor %}
+            {% set sales_title = sales_title | slice(0, -2) %}
+            <li>{{ 'İNDİRİM' | translate }} <ins class="fa fa-info-circle ml-2"
+                                                 data-toggle="tooltip"
+                                                 data-placement="top"
+                                                 title="{{ sales_title }}"></ins>
+                <i><span class="indirim">{{ basket.base_discount_amount|price }}</span></i>
+            </li>
+            <li class="shipping-amount-label">{{ 'KARGO ÜCRETİ' | translate }}
+                <i class="cargomoney"></i></li>
+            <li style="display: none;" id="cashondelivery-label" class="cashondelivery-label">{{ 'KAPIDA ÖDEME ÜCRETİ' | translate }}
+                <i class="cargomoney">{{ cash_on_delivery_fee|price }}</i></li>
+            {% if basket.total_segments.fee.value > 0 %}
+                <!-- <li>{{ 'VADE FARKI' | translate }} <i><span class="feemoney">{{ basket.total_segments.fee.value|price }}</span></i></li> -->
+            {% endif %}
+            <li>{{ 'GENEL TOPLAM' | translate }}
+                <i><span class="generic-total">{{ (basket.subtotal_incl_tax + basket.discount_amount)|price }}</span></i></li>
+        </ul>
+    </div>
+{% else %}
+    <div class="basket-page">
+        <div class="my-basket">
+            <div class="basket-list">
+                <div class="basket-detail">
+                    <div class="bottom-pro no-product">
+                        <b>{{ 'Sepetinizde Ürün Yok' | translate }} </b>
+                        <hr>
+                        <br> <a href="/" style="text-align:center">{{ 'Alışverişe Devam Et' | translate }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+

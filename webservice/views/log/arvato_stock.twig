@@ -1,0 +1,6 @@
+<pre>
+sku,arvato_qty,magento_qty
+{% for row in rows %}
+{{ row.sku }},{{ row.arvato_qty|number_format(0) }},{{ row.magento_qty|number_format(0) }}
+{% endfor %}
+</pre>

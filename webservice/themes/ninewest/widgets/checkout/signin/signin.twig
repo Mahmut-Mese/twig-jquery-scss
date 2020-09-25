@@ -1,0 +1,324 @@
+<div class="my-basket">
+    <div class="basket-list">
+        <div class="basket-detail">
+            <div class="payment-type-tabs">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="login-tab" data-toggle="tab" href="#login" role="tab"
+                           aria-controls="login" aria-selected="true">Giriş Yap</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab"
+                           aria-controls="register" aria-selected="false">Üye Ol</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nonregister-tab" data-toggle="tab" href="#nonregister" role="tab"
+                           aria-controls="nonregister" aria-selected="false">Üye Olmadan Devam Et</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                        <div class="login-form-holder cart-login-form">
+                            
+							<form id="customer-login-form" action="#" data-redirect-url="/checkout/address" class="login-form"  method="POST">
+								<div class="register-box">
+									{# <h2 class="register-box-title">{{ 'KAYITLI KULLANICI' }}</h2> #}
+								
+									<div class="form-group"> 
+										<div class="row">
+											<div class="col-sm-4">
+												<label> <span>{{ 'E-posta Adresiniz' | translate}}<sup>*</sup></span></label>
+											</div>
+											<div class="col-sm-8">
+												<input type="email" name="username" value="" class="form-control"/>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group"> 
+										<div class="row">
+											<div class="col-sm-4">
+												<label> <span>{{ 'Şifreniz' | translate}}<sup>*</sup></span></label>
+											</div>
+											<div class="col-sm-8">
+												<input type="password" name="password" value="" class="form-control" />
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group text-center"> 
+										<a href="/customer/password-forget" class="btn btn-link register-back"> {{ 'Şifremi Unuttum' | translate }} </a>
+									</div>
+
+									<div class="register-actions clearfix">
+										<div class="pull-left">
+											<a href="javascript:;" class="btn btn-facebook facebook-login"> <i class="fab fa-facebook-f"></i> {{ 'Facebook İle Üye Ol' | translate }}</a>
+										</div>
+
+										<div class="pull-right">
+											<button class="btn btn-primary">{{ 'GİRİŞ YAP' | translate }}</button>
+										</div>
+									</div>
+								</div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                        <div class="register-form-holder cart-login-form">
+                            <form id="customer-register-form" action="#" data-redirect-url="/checkout/address" class="register-form"  method="POST">
+								<div class="register-box">
+									{# <h2 class="register-box-title">{{ 'KİŞİSEL BİLGİLER' }}</h2> #}
+									<div class="form-group"> 
+										<div class="row">
+											<div class="col-sm-4">
+												<label> <span>{{ 'Adınız' | translate}} <sup>*</sup></span></label>
+											</div>
+											<div class="col-sm-8">
+												<input type="text" name="first_name" value="{{ first_name }}" class="form-control"/>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"> 
+										<div class="row">
+											<div class="col-sm-4">
+												<label> <span>{{ 'Soyadınız' | translate}}<sup>*</sup></span></label>
+											</div>
+											<div class="col-sm-8">
+												<input type="text" name="last_name" value="{{ last_name }}" class="form-control"/>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"> 
+										<div class="row">
+											<div class="col-sm-4">
+												<label> <span>{{ 'E-posta Adresiniz' | translate}}<sup>*</sup></span></label>
+											</div>
+											<div class="col-sm-8">
+												<input type="email" name="email" value="{{ email }}" class="form-control"/>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"> 
+										<div class="row">
+											<div class="col-sm-4">
+												<label> <span>{{ 'Şifreniz' | translate}}<sup>*</sup></span></label>
+											</div>
+											<div class="col-sm-8">
+												<input type="password" name="password" value="{{ password }}" 
+													class="form-control register-password"
+													data-minlength-error="{{ 'Şifreniz en az 8 karakter olmalıdır.' | translate }}" 
+													data-character-error="{{ 'Şifreniz küçük harf, büyük harf ve özel karakter içermelidir.' | translate }}"
+												/>
+												<div class="register-password-strength">
+													<div class="register-password-strength-label">{{ 'Şifre Zorluğu' | translate }}: <span>{{ 'Şifre Giriniz' | translate }}</span></div>
+												</div>
+												<div class="register-password-error"></div>
+											</div>
+										</div>
+									</div>
+									
+									<div class="form-group"> 
+										<div class="row">
+											<div class="col-sm-4">
+												<label> <span>{{ 'Telefon Numaranız' | translate}}<sup>*</sup></span></label>
+											</div>
+											<div class="col-sm-8">
+												<input type="tel" name="phone" class="form-control inputmask" placeholder="0 (5 _ _ ) _ _ _  _ _  _ _" data-inputmask="'mask': '0(599)-9999999'">
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group"> 
+										<div class="row">
+											<div class="col-sm-4">
+												<label> <span>{{ 'Cinsiyetiniz' | translate}}<sup>*</sup></span></label>
+											</div>
+											<div class="col-sm-8">
+
+												<label class="mr-5">
+													<input type="radio" class="new-radio validate[required]" value="2" name="gender" checked="">
+													&nbsp;Kadın
+												</label>
+												
+												<label class="flo-radio">
+													<input type="radio" class="new-radio validate[required]" value="1" name="gender">
+													&nbsp;Erkek
+												</label>
+
+											</div>
+										</div>
+									</div>
+									{# <div class="form-group"> 
+										<div class="row">
+											<div class="col-sm-4">
+												<label> <span>{{ 'Resimde gördüğünüz karakterleri girin' | translate}} <sup>*</sup></span></label>
+											</div>
+											<div class="col-sm-8">
+												<input type="text" name="captcha" value="" class="form-control"/>
+												<div class="row register-captcha">
+													<div class="col-sm-6">
+														<div>CAPTCHA</div>
+													</div>
+													<div class="col-sm-6"><a href="#" class="btn btn-primary btn-block">{{ 'Resmi Yenile' | translate }}</a></div>
+												</div>
+											</div>
+										</div>
+									</div> #}
+
+									{% for aggrement in aggrements %}
+										<div class="form-group">
+											<div class="col-xs-12">
+												<div class="checkbox">
+													<label>
+														{{ aggrement.front_text|raw }}
+
+														<input type="checkbox" autocomplete="off" name="{{ aggrement.alias }}"
+																value="{{ aggrement.aggrement_id }}"
+																class="{{ aggrement.alias }} {% if  aggrement.alias == 'uyelik_sozlesmesi' or aggrement.alias == 'subscribed_kvkk' %} validate[required] {% endif %}">
+													</label>
+												</div>
+											</div>
+										</div>
+									{% endfor %}
+									
+									<div class="register-actions clearfix">
+										<div class="pull-left"><a href="javascript:window.history.back();" class="btn btn-link register-back"> {{ 'GERİ' | translate }} </a></div>
+										<div class="pull-right">
+											<a href="javascript:;" class="btn btn-facebook facebook-login"> <i class="fab fa-facebook-f"></i> {{ 'Facebook İle Üye Ol' | translate }}</a>
+											<button href="#" class="btn btn-primary">{{ 'ÜYE OL' | translate }}</button>
+										</div>
+									</div>
+								</div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nonregister" role="tabpanel" aria-labelledby="nonregister-tab">
+                        <div class="nonregister-form-holder cart-login-form">
+                            <form id="guest-form" action="#" data-redirect-url="#" class="nonregister-form">
+
+								<div class="register-box">
+									{# <h2 class="register-box-title">{{ 'KAYITLI KULLANICI' }}</h2> #}
+								
+									<div class="form-group"> 
+										<div class="row">
+											<div class="col-sm-4">
+												<label> <span>{{ 'Adınız' | translate}}<sup>*</sup></span></label>
+											</div>
+											<div class="col-sm-8">
+												<input type="text" name="firstname" value="" class="form-control"/>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group"> 
+										<div class="row">
+											<div class="col-sm-4">
+												<label> <span>{{ 'Soyadınız' | translate}}<sup>*</sup></span></label>
+											</div>
+											<div class="col-sm-8">
+												<input type="text" name="lastname" value="" class="form-control" />
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group"> 
+										<div class="row">
+											<div class="col-sm-4">
+												<label> <span>{{ 'E-posta Adresiniz' | translate}}<sup>*</sup></span></label>
+											</div>
+											<div class="col-sm-8">
+												<input type="email" name="email" value="" class="form-control" />
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group"> 
+										<p>Kişisel verilerinizin işlenmesine ilişkin detaylı bilgilere <a href="/kisisel-verilerin-korunmasi" target="_blank"><strong>Kişisel Verilerin Korunması ve İşlenmesi Politikası</strong></a>’ndan ulaşabilirsiniz.</p>
+									</div>
+									
+									<div class="register-actions clearfix">
+										<div class="pull-right">
+											<button class="btn btn-primary nonregister-next-step-button">{{ 'SONRAKİ ADIM' | translate }}</button>
+										</div>
+									</div>
+								</div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{ widget('social', 'facebook') }}
+
+<!-- New Address Modal -->
+<div class="modal flomodal fade" id="newShippingAddressModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Adres Bilgileri</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="addresses-form" class="new-address-form widget_checkout_address">
+                    <input type="hidden" name="success_url"
+                           value="/checkout/address">
+                    {#                    {{ widget('address','fields',{address: address,regions:regions,towns:towns,countries:countries}) }}#}
+                    {{ widget('address','fields',{address_key:'shipping_address',towns:towns,regions:regions,countries:countries}) }}
+
+
+                    <div class="text-right mt-3 linkto">
+                        <a href="javascript:void(0);">
+                            <button type="button" id="formAddresSave"
+                                    class="btn btn-warning btn-lg text-white pl-5 pr-5">KAYDET
+                        </button>
+                        </a>
+
+                    </div>
+                    <input class="hidden" type="radio" name="shipping_method" value="FloShippingMng" checked>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	var initialize = function () {
+		$(document).on('form.ajax.success', function (e, data) {
+			var id = $(data.el).attr('id');
+			var option = '';
+
+			if (id === 'customer-login-form') {
+				option = 'Giriş Yap';
+			} else if (id === 'customer-register-form') {
+				option = 'Üye Ol';
+			} else if (id === 'guest-form') {
+				option = 'Üye Olmadan Devam Et';
+			}
+
+            try {
+                dataLayer.push({
+                    'event': 'checkoutOption',
+                    'ecommerce': {
+                        'checkout_option': {
+                            'actionField': {'step': 1, 'option': option}
+                        }
+                    }
+                });
+            } catch (err) {
+                console.log(err.message);
+            }
+
+
+
+		});
+	}
+
+	if (window.$) {
+		$(initialize);
+	} else {
+		domReadyCallbacks.push(initialize);
+	}
+</script>

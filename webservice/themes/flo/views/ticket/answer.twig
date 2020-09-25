@@ -1,0 +1,76 @@
+<script src='https://www.google.com/recaptcha/api.js?hl=tr'></script>
+<div class="account-page-wrapper mt-3" id="ticket-detail">
+    <div class="container">
+        <div class="row medium-gutter">
+            <div class="col-sm-3">
+                {{ widget('customer', 'account_left_menu') }}
+            </div>
+            <div class="col-sm-9">
+                <div class="breadcrumbs-bar title-only">
+                    <div class="left-nav">
+                        <a href="/ticket/detail?ticket_id={{ ticket.list.row_id }}" class="go-back-link"><i class="fas fa-angle-left"></i>Geri Dön</a>
+                    </div>
+                    <div class="page-title">
+                        <h1>YARDIM</h1>
+                    </div>
+                </div>
+                <form id="ticket-cevap-form">
+                    <input type="hidden" name="ticket_id" value="{{ ticket.list.row_id }}" />
+                    <div class="bg-white p-3 mb-3">
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <th>Başlık</th>
+                                <td>: {{ ticket.list.subject }}</td>
+                            </tr>
+                            <tr>
+                                <th>Departman</th>
+                                <td>: {{ ticket.list.department_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Sipariş No</th>
+                                <td>: {{ ticket.list.order_id }}</td>
+                            </tr>
+                            <tr>
+                                <th>Durum</th>
+                                <td>: {{ ticket.list.status_label }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        {% for key,row in ticket.parent_list  %}
+                                <div class="order-box">
+                                    <div class="infos-holder">
+                                        <table>
+                                            <tr>
+                                                <td>{% if row.Direction == 1 %}  {{ ticket.list.firstname ~ ' ' ~ ticket.list.lastname  }} {% else %}  Müşteri Hizmetleri {% endif %}</td>
+                                                <td class="text-right">{% if row.CreatedOn is not empty %} {{row.CreatedOn | date('d.m.Y H:i') }} {% endif %}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="status-holder">
+                                        <div class="order-status">
+                                            {{ row.Description}}
+                                        </div>
+                                    </div>
+                                </div>
+                        {% endfor %}
+
+                        <div class="form-group animated">
+                                        <textarea name="message" cols="30" rows="8" class="form-control"
+                                                  placeholder="Cevap Yaz"></textarea>
+                        </div>
+                        {% if re_captcha.active == true and tia_post_time >= re_captcha.fail_num %}
+                            <div class="field">
+                                <div class="form-group">
+                                    <div class="g-recaptcha" data-sitekey="{{ re_captcha.site_key }}"></div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <a href="javascript:;"  id="btn-cevap-yaz" class="btn orange">Gönder <i class="fas fa-paper-plane"></i></a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

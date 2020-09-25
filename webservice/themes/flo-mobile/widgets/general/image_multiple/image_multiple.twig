@@ -1,0 +1,17 @@
+<div class="banners pb-3 lazy swiper-container swiper-autoinit"
+    data-swiper-slides-per-view="2.2"
+    data-swiper-space-between="9"
+>
+    <div class="swiper-wrapper">
+    {% for banner in banners %}
+        <div class="swiper-slide">
+            <a href="{{ banner.url }}" class="banner-box">
+                <img src="/pub/media/lazyloading/blank.png" data-src="{{ banner.image }}" class="w-100">
+                <span class="title">{{ banner.title }}</span>
+            </a>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+
+{# {{ widget('datalayer', 'spotlight', {layerData: {spotlights: [spotlight], element: '.promotion_image'}}) }} #}

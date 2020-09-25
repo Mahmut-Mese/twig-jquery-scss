@@ -1,0 +1,17 @@
+<div class="home-mark-list">
+    <div class="container-fluid">
+        <div class="all lazy">
+             <div class="list">
+                <ul>
+                    {% for brand in brands %}
+                        <li>
+                            <a href="/{{ brand.url }}">
+                                {{ img('wysiwyg/desktop_marka_images.jpg', '', { title: brand.page_title, height:'62', class:'resimatt', cdn: 'general' },brand.image) }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

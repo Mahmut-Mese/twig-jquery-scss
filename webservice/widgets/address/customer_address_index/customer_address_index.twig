@@ -1,0 +1,42 @@
+<div class="page searchnone">
+    <div class="container-fluid">
+        <div class="page-content sab">
+            <div class="whitepage" id="addressRemove">
+                <div class="title orange">{{ 'HESABIM / ADRES BİLGİLERİM' | translate }}</div>
+                <div class="content">
+                    <div class="account">
+                        <div class="location-page pad">
+
+                            {% for key, address in addresses %}
+                                {% if key == 0 %}
+                                    {% set shippingId = address['id'] %}
+                                {% endif %}
+                                {% if  key == 0 or shippingId != address['id'] %}
+                                    <div class="items">
+                                        <span>{{ address['title_address'] }} </span>
+                                        <div class="locbox">
+                                            {{ address['street'] }} - {{ address['region'] }} / {{ address['city'] }}
+                                        </div>
+                                        <div class="islem">
+                                            <a href="/customer/address/edit?id={{ address['id'] }}">
+                                                <button>{{ 'ADRESİ DÜZENLE' | translate }}</button>
+                                            </a>
+                                            <button data-address-id="{{ address.id }}" class="address-remove">
+                                                {{ 'ADRESİ SİL' | translate }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            <div class="add">
+                                <a href="/customer/address/new">
+                                    <em>{{ 'YENİ ADRES EKLE' | translate }} </em>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

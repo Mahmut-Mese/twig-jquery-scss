@@ -1,0 +1,51 @@
+<div class="page most-page-wrapper">
+    <div class="container-fluid">
+        <div class="page-content">
+            <div class="whitepage">
+                <div class="title orange">{{ 'HESABIM / SON GÖRÜNTÜLENLER' | translate }}</div>
+                <div class="content">
+                    <div class="my-account-list">
+                        <div class="siparis-box">
+                            <div class="fav">
+                                {% if products is empty %}
+                                    <p style="text-align: center">{{ 'Son görüntülenen herhangi bir ürün bulunamadı.' | translate }}</p>
+                                {% endif %}
+                                <table id="wishlist-items">
+                                    {% for product in products %}
+                                        <tr>
+                                            <td>
+                                                <a href="{{ product.url }}" class="favourite" data-product-id="{{ product.id }}">
+                                                    <div class="images">
+                                                        <img src="{{ product.image|resize('88x87') }}" alt="">
+                                                    </div>
+                                                </a>
+                                            </td>
+                                            <td style="width:100%">
+                                                <div class="text">
+                                                    <span>{{ product.manufacturer }}</span>
+                                                    <a href="{{ product.url }}" class="favourite" data-product-id="{{ product.id }}">
+                                                        <p>{{ product.name }}</p>
+                                                    </a>
+                                                    <div class="money">
+                                                        {% if product.special_price %}
+                                                            <i class="prev">{{ product.price|price }}</i>
+                                                        {% endif %}
+                                                        <i class="next">{{ product|price }}</i>
+                                                    </div>
+                                                    <button class="remove-most">
+                                                        <img src="/pub/assets/instreet/images/cop.png" class="product-box" alt="" data-product-id = "{{ product.id }}" data-sku="{{ product.sku }}">
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{ widget('datalayer', 'favourite', {layerData: {productList: products}} ) }}

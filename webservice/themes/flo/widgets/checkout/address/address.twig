@@ -1,0 +1,881 @@
+{% set need_title = true %}
+{% if customer is empty %}
+	{% set need_title = false %}
+{% endif %}
+<main>
+    <div class="cart-page-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9">
+                    <ul class="steps">
+                        <li class="completed">
+                            <a href="{{ basket_base_url() }}/basket">
+                                Sepet
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="/checkout/address">
+                                Adres
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">
+                                Ödeme
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="shipping-type-tabs">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="delivery-address-tab" data-toggle="tab" href="#delivery-address"
+                                   role="tab"
+                                   aria-controls="delivery-address" aria-selected="true">ADRESE TESLİMAT</a>
+                            </li>
+                            {% if clickCollectIsActive %}
+                                <li class="nav-item">
+                                    <a class="nav-link" id="ship-shop-tab" data-toggle="tab" href="#ship-shop" role="tab"
+                                       aria-controls="ship-shop" aria-selected="false">{{ clickCollectTitle }}</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="delivery-address" role="tabpanel"
+                                 aria-labelledby="delivery-address-tab">
+                                <form action="#" id="addresses-form" class="ship-address-form" >
+
+                                    <div class="tab-card item">
+                                        <div class="row">
+                                            <div class="col-sm-6 pr-3">
+                                                <div class="ship-address addresses-holder" id="ship-address">
+                                                    {% set updateid = '' %}
+                                                    {% if addresses is empty %}
+                                                        <div class="section-title">
+                                                            <h4>Teslimat Adresiniz</h4>
+                                                        </div>
+                                                        <div class="brd fields">
+															{% set address = {} %}
+															{% if customer is empty %}
+																{% set address = guestAddress %}
+															{% endif %}
+
+                                                            {{ widget('address','fields',{address_key:'shipping_address',towns:towns,regions:regions,need_title:need_title, address: address, guestTowns: guestTowns}) }}
+                                                            <div class="note">
+                                                                * {{ 'Yıldızlı alanların girişi zorunludur.' | translate }}</div>
+                                                        </div>
+
+                                                    {% else %}
+                                                        <div class="section-title">
+                                                            <h4>Teslimat Adresiniz</h4>
+                                                            <div>
+                                                                <a href="javascript:;" class="text-dark" data-toggle="modal"
+                                                                   data-target="#newShippingAddressModal">Yeni Adres
+                                                                    Ekle</a>
+                                                            </div>
+                                                        </div>
+                                                        {% set selectedAddress = addresses[0] %}
+                                                            {% for  address in addresses %}
+                                                                {% if  cookie_adress.newShip  == 'ship' %}
+                                                                    {% if loop.last %}    {% set selectedAddress = address %}{% endif %}
+
+                                                                {% elseif  cookie_adress.shipping_address == address.id %}
+                                                                    {% set selectedAddress = address %}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        {% set selectedAddressId = selectedAddress.id %}
+
+                                                        <div class="address-card active">
+															<label class="flo-radio">
+																<input type="radio" name="shipping_address" checked="" value="{{ selectedAddress.id }}" data-id="{{ selectedAddress.id }}">
+																<i></i>
+																<div class="text-holder">
+																	<h5>{{ selectedAddress.title_address }}</h5>
+																	<p>{{ selectedAddress.street }}<br>
+																	{{ selectedAddress.city  }} / {{ selectedAddress.region }}</p>
+
+                                                                    <a class="editAddressModal address-cookie" href="javascript:;"
+                                                                       data-toggle="modal"
+                                                                       data-target="#editAddressModal"
+                                                                       data-address-id="{{ selectedAddress.id }}">Düzenle</a>
+
+                                                                </div>
+															</label>
+														</div>
+
+														<div class="other-addresses {% if addresses | length == 1 %}hide{% endif %}">
+															<a class="btn btn-link" data-toggle="collapse">
+																<span>Diğer Adreslerim</span> <i class="fa fa-angle-down"></i>
+															</a>
+															<div class="address-list collapse" style="">
+
+															{% set ship_update='' %}
+															{% set bill_update='' %}
+															{% for  key, address in addresses  %}
+																{% set ship_update=addresses[0].id %}
+																{% if selectedAddressId != address.id %}
+																<div class="address-card">
+																	<label class="flo-radio">
+																		<input type="radio" name="shipping_address" class="custom-shipping-address"  value="{{ address.id }}" data-id="{{ address.id }}">
+																		<i></i>
+																		<div class="text-holder">
+																			<h5>{{ address.title_address }}</h5>
+																			<p>{{ address.street }}<br>
+																			{{ address.city  }} / {{ address.region }}</p>
+                                                                            <a class="editAddressModal address-cookie"
+                                                                               href="javascript:;" data-toggle="modal"
+                                                                               data-target="#editAddressModal"
+                                                                               data-address-id="{{ address.id }}">Düzenle</a>
+																		</div>
+																	</label>
+																</div>
+																{% endif %}
+															{% endfor %}
+
+
+                                                            </div>
+														</div>
+
+														<select id="selected-ship-address" class="hide">
+															{% for  key, address in addresses  %}
+																{% set ship_update=addresses[0].id %}
+																<option checked data-id="{{ address.id }}" data-company="{{ address.company }}"
+																		data-region_id="{{ address.region_id }}"
+																		data-country_id="{{ address.country_id }}" data-region_code="{{ address.region_code }}"
+																		data-prefix="{{ address.prefix }}" data-firstname="{{ address.firstname }}"
+																		data-lastname="{{ address.lastname }}" data-email="{{ address.email }}" data-city="{{ address.city }}"
+																		data-same_as_billing="{{ address.same_as_billing}}" data-telephone="{{ address.telephone }}" data-postcode="{{ address.postcode }}"
+																		data-region="{{ address.region }}"
+																		data-street="{{ address.street }}"
+																		{% if selectedAddressId == address.id %}selected{% endif %}
+																		class=" address-card flo-radio"
+																></option>
+															{% endfor %}
+														</select>
+
+                                                    {% endif %}
+                                                </div>
+                                                <label id="ship_same"
+                                                       class="flo-checkbox color-inherit mt-3 billing-address-selection  {{    cookie_adress.checked ? '' : 'active' }} ">
+                                                    <input type="checkbox" name="billing_choice"
+
+                                                            {{    cookie_adress.checked ? '' : 'checked' }} > “Fatura
+                                                    Adresim”
+                                                    “Teslimat Adresim” ile Aynı
+                                                    <span><i class="fa fa-check"></i></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-6 pl-3">
+                                                <div class="billing-addresses"   style="display: {{    cookie_adress.checked  ? 'block' : 'none' }}">
+                                                    <div class="addresses-holder">
+
+
+                                                        {% if addresses is empty %}
+                                                            <div class="section-title">
+                                                                <h4>Fatura Adresiniz</h4>
+                                                            </div>
+                                                            <div class="brd fields">
+                                                                {{ widget('address','fields',{address_key:'billing_address',towns:towns,regions:regions,need_title:need_title}) }}
+                                                                <div class="note">
+                                                                    * {{ 'Yıldızlı alanların girişi zorunludur.' | translate }}</div>
+                                                            </div>
+
+                                                        {% else %}
+
+                                                            <div class="section-title">
+                                                                <h4>Fatura Adresiniz</h4>
+                                                                <div>
+                                                                    <a href="javascript:;" class="text-dark"
+                                                                       data-toggle="modal"
+                                                                       data-target="#newBillingAddressModal">Yeni Adres
+                                                                        Ekle</a>
+                                                                </div>
+                                                            </div>
+
+                                                            {% set selectedAddress = addresses[0] %}
+                                                                {% for  address in addresses %}
+                                                                    {% if  cookie_adress.newShip  == 'bill' %}
+                                                                        {% if loop.last %}    {% set selectedAddress = address %}{% endif %}
+                                                                    {% elseif  cookie_adress.billing_address == address.id %}
+                                                                        {% set selectedAddress = address %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            {% set selectedAddressId = selectedAddress.id %}
+                                                            <div class="address-card active">
+                                                                <label class="flo-radio">
+                                                                    <input type="radio" name="billing_address"
+                                                                           checked="" value="{{ selectedAddress.id }}"
+                                                                           data-id="{{ selectedAddress.id }}">
+                                                                    <i></i>
+                                                                    <div class="text-holder">
+                                                                        <h5>{{ selectedAddress.title_address }}</h5>
+                                                                        <p>{{ selectedAddress.street }}<br>
+                                                                            {{ selectedAddress.city }}
+                                                                            / {{ selectedAddress.region }}</p>
+
+                                                                        <a class="editAddressModal address-cookie" href="javascript:;"
+                                                                           data-toggle="modal"
+                                                                           data-target="#editAddressModal"
+                                                                           data-address-id="{{ selectedAddress.id }}">Düzenle</a>
+
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+
+                                                            <div class="other-addresses {% if addresses | length == 1 %}hide{% endif %}">
+                                                                <a class="btn btn-link" data-toggle="collapse">
+                                                                    <span>Diğer Adreslerim</span> <i
+                                                                            class="fa fa-angle-down"></i>
+                                                                </a>
+                                                                <div class="address-list collapse" style="">
+
+                                                                    {% set ship_update='' %}
+                                                                    {% set bill_update='' %}
+                                                                    {% for  key, address in addresses %}
+                                                                        {% set ship_update=addresses[0].id %}
+                                                                        {% if selectedAddressId != address.id %}
+                                                                            <div class="address-card">
+                                                                                <label class="flo-radio">
+                                                                                    <input type="radio"
+                                                                                           name="billing_address"
+                                                                                           class="custom-billing-address"
+                                                                                           value="{{ address.id }}"
+                                                                                           data-id="{{ address.id }}">
+                                                                                    <i></i>
+                                                                                    <div class="text-holder">
+                                                                                        <h5>{{ address.title_address }}</h5>
+                                                                                        <p>{{ address.street }}<br>
+                                                                                            {{ address.city }}
+                                                                                            / {{ address.region }}</p>
+                                                                                        <a class="editAddressModal address-cookie"
+                                                                                           href="javascript:;"
+                                                                                           data-toggle="modal"
+                                                                                           data-target="#editAddressModal"
+                                                                                           data-address-id="{{ address.id }}">Düzenle</a>
+                                                                                    </div>
+                                                                                </label>
+                                                                            </div>
+                                                                        {% endif %}
+                                                                    {% endfor %}
+
+
+                                                                </div>
+                                                            </div>
+
+                                                            <select id="selected-bill-address" class="hide">
+                                                                {% for  key, address in addresses %}
+                                                                    {% set ship_update=addresses[0].id %}
+                                                                    <option checked data-id="{{ address.id }}"
+                                                                            data-company="{{ address.company }}"
+                                                                            data-region_id="{{ address.region_id }}"
+                                                                            data-country_id="{{ address.country_id }}"
+                                                                            data-region_code="{{ address.region_code }}"
+                                                                            data-prefix="{{ address.prefix }}"
+                                                                            data-firstname="{{ address.firstname }}"
+                                                                            data-lastname="{{ address.lastname }}"
+                                                                            data-email="{{ address.email }}"
+                                                                            data-city="{{ address.city }}"
+                                                                            data-same_as_billing="{{ address.same_as_billing }}"
+                                                                            data-telephone="{{ address.telephone }}"
+                                                                            data-postcode="{{ address.postcode }}"
+                                                                            data-region="{{ address.region }}"
+                                                                            data-street="{{ address.street }}"
+                                                                            {% if selectedAddressId == address.id %}selected{% endif %}
+                                                                            class=" address-card flo-radio"
+                                                                    ></option>
+                                                                {% endfor %}
+                                                            </select>
+
+                                                        {% endif %}
+                                                        {#{% if addresses is empty %}
+
+                                                            <div class="brd fields">
+                                                                {{ widget('address','fields',{address_key:'billing_address',regions:regions,towns:towns,countries:countries,need_title:true}) }}
+                                                                <div class="note">
+                                                                    * {{ ' Yıldızlı alanların girişi zorunludur.' | translate }}</div>
+                                                            </div>
+                                                        {% else %}
+                                                            <select id="selected-bill-address">
+                                                                {% set bill_update='' %}
+                                                                {% for  key, address in addresses  %}
+
+                                                                    {% set bill_update=addresses[1].id %}
+                                                                    <option data-id="{{ bill_update }}" data-company="{{ address.company }}"  data-region_id="{{ address.region_id }}"
+                                                                            data-country_id="{{ address.country_id }}"  data-region_code="{{ address.region_code }}"
+                                                                            data-prefix="{{ address.prefix }}"  data-firstname="{{ address.firstname }}"
+                                                                            data-lastname="{{ address.lastname }}"  data-email="{{ address.email }}" data-city="{{ address.city }}"
+                                                                            data-same_as_billing="{{ address.same_as_billing}}" data-telephone="{{ address.telephone }}"  data-postcode="{{ address.postcode }}"
+                                                                            data-region="{{ address.region }}" data-street="{{ address.street }}" data-title="{{ address.title_address }}">
+                                                                        {{ address.title_address }}, {{ address.firstname }} {{ address.lastname }}, {{ address.street }}, {{ address.region }}, {{ address.city  }}
+                                                                    </option>
+
+                                                                {% endfor %}
+                                                            </select>
+                                                            <div class="our">
+                                                                <a href="#" id="fatura-adres-duzenle">{{  'DÜZENLE' | translate  }}</a>
+                                                            </div>
+
+                                                        {% endif %}#}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-card">
+                                        {{ widget('checkout', 'shipping_methods') }}
+
+                                    </div>
+                                    <div class="tab-card {% if addresses[0].tax_number is not empty %} active{% endif %}">
+                                        <div class="d-flex align-items-center">
+                                            <label class="flo-checkbox color-inherit corporate-bill mb-0 ">
+                                                <input type="checkbox" name="billing_invoice" {% if addresses[0].tax_number is not empty %} checked{% endif %} > Kurumsal Fatura İstiyorum
+                                                <span><i class="fa fa-check"></i></span>
+                                            </label>
+                                        </div>
+                                        <div class="corporate-infos mt-3">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group animated">
+                                                        <label>Vergi / TC Kimlik No</label>
+                                                        <input  type="tax_number" class="form-control inputmask"
+                                                               name="tax_number" minlength="10" maxlength="11" value="{{ addresses[0].tax_number }}"
+                                                               data-inputmaskdelete="'mask': '99999999999'"    >
+                                                    </div>
+                                                    <div class="form-group animated">
+                                                        <label>Şirket Adı</label>
+                                                        <input type="text" class="form-control" name="company" value="{{ addresses[0].company_name }}"
+                                                               maxlength="50">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="form-group animated">
+                                                        <label>Vergi Dairesi</label>
+                                                        <input type="text" name="tax_office" class="form-control" name="tax_office" value="{{ addresses[0].tax_office }}"
+                                                               maxlength="20">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+									{% set giftMessage = basket.gift_message %}
+                                    <div class="tab-card">
+                                        <label class="flo-checkbox color-inherit mr-3 gift-selection mb-0 {% if giftMessage %}active{% endif %}">
+                                            <input type="checkbox" name="gift_package" {% if giftMessage %}checked{% endif %}> Hediye Paketi İstiyorum
+                                            <span><i class="fa fa-check"></i></span>
+                                        </label>
+                                        <div class="gift-infos mt-3" {% if giftMessage %}style="display:block;"{% endif %}>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group animated">
+                                                        <label>Alıcı Adı</label>
+                                                        <input type="text" class="form-control" name="receiver_name"
+                                                               maxlength="50" value="{{ giftMessage.recipient }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+														<textarea class="form-control" maxlength="64" name="gift_message" placeholder="Mesajınızı Buraya Yazabilirsiniz (Max:64 Karakter)">{{ giftMessage.message }}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            {% if clickCollectIsActive %}
+                                <div class="tab-pane fade" id="ship-shop" role="tabpanel" aria-labelledby="ship-shop-tab">
+                                    <div class="tab-card">
+                                        <a href="javascript:;" class="pick-from-shop-info" data-toggle="modal"
+                                           data-target="#shopPickupModal"><i>!</i><span>Mağazadan nasıl teslim alırım?</span></a>
+                                        <label class="flo-checkbox color-inherit pickup-selection with-links active">
+                                            <input type="checkbox" id="receive-myself" name="pick_from_shop" checked>
+                                            <span><i class="fa fa-check"></i></span>
+                                            Mağazadan <u>Kendim</u> Teslim Alacağım
+                                        </label>
+
+
+                                        <div class="pickup-infos mt-3">
+                                            <form action="/" class="pickup-address-form">
+                                                <div class="pickup-person-infos">
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <div class="form-group animated">
+                                                                <label>Alıcının Adı</label>
+                                                                <input type="text" name="first_name" id="self-firstname"
+                                                                       data-customer-email="{{ customer.email }}"
+                                                                       data-firstname="{{ customer.firstname }}"
+                                                                       class="form-control input_ucfirst">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-8">
+                                                            <div class="form-group animated">
+                                                                <label>Alıcının Soyadı</label>
+                                                                <input type="text" name="last_name" id="self-lastname"
+                                                                       data-lastname="{{ customer.lastname }}"
+                                                                       class="form-control input_ucfirst">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-8">
+                                                            <div class="form-group phone-input">
+                                                                <label>Alıcının Telefon Numarası</label>
+                                                                <input type="tel" name="phone_number"
+                                                                       class="form-control inputmask"
+                                                                       placeholder="0 (5 _ _ ) _ _ _  _ _  _ _"
+                                                                       id="self-phone"
+                                                                       data-phone="{{ phone }}"
+                                                                       data-inputmask="'mask': '0(999)-9999999'">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="tab-card">
+                                        <h5 class="section-title">Mağaza Adresi</h5>
+                                    <!--    <a href="javascript:;" class="find-nearest-shop text-gray mb-3 d-block"><u>Size en
+                                                yakın
+                                                FLO mağazasını bulmak için tıklayınız.</u></a> -->
+                                        <div class="row align-items-center">
+                                            <div class="col-sm-6">
+                                                <div class="form-group animated">
+                                                    <select name="city" id="city" class="form-control">
+                                                        <option value="">İl Seçiniz</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group animated">
+                                                    <select name="district" id="district" class="form-control">
+                                                        <option value="">İlçe Seçiniz</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button type="button"
+                                                        class="btn btn-warning text-white mb-3 search-shop">MAĞAZA ARA
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="shop-list">
+                                            <div class="row">
+
+                                            </div>
+                                            <div class="text-left mt-1">
+                                                <a href="javascript:;" class="show-on-map">HARİTADA GÖSTER</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-card">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <form action="#" id="addresses-form-click-collect">
+                                                    {% set updateid = '' %}
+                                                    {% if addresses is empty %}
+                                                        <div class="section-title">
+                                                            <h4>Fatura Adresiniz</h4>
+                                                        </div>
+                                                        <div class="brd fields">
+                                                            {{ widget('address','fields',{address_key:'billing_address',towns:towns,regions:regions,need_title:need_title}) }}
+                                                            <div class="note">
+                                                                * {{ 'Yıldızlı alanların girişi zorunludur.' | translate }}</div>
+                                                        </div>
+
+                                                    {% else %}
+                                                        <div class="section-title">
+                                                            <h4>Fatura Adresiniz</h4>
+                                                            <div>
+                                                                <a href="javascript:;" class="text-dark" data-toggle="modal"
+                                                                   data-target="#newShippingAddressModal">Yeni Adres
+                                                                    Ekle</a>
+                                                            </div>
+                                                        </div>
+                                                        {% set selectedAddress = addresses[0] %}
+                                                        {% set selectedAddressId = selectedAddress.id %}
+                                                        <div class="address-card active">
+                                                            <label class="flo-radio">
+                                                                <input type="radio" name="shipping_address" checked=""
+                                                                       value="{{ selectedAddress.id }}"
+                                                                       data-id="{{ selectedAddress.id }}">
+                                                                <i></i>
+                                                                <div class="text-holder">
+                                                                    <h5>{{ selectedAddress.title_address }}</h5>
+                                                                    <p>{{ selectedAddress.street }}<br>
+                                                                        {{ selectedAddress.city }}
+                                                                        / {{ selectedAddress.region }}</p>
+
+                                                                    <a class="editAddressModal address-cookie" href="javascript:;"
+                                                                       data-toggle="modal"
+                                                                       data-target="#editAddressModal"
+                                                                       data-address-id="{{ selectedAddress.id }}">Düzenle</a>
+
+                                                                </div>
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="other-addresses {% if addresses | length == 1 %}hide{% endif %}">
+                                                            <a class="btn btn-link" data-toggle="collapse">
+                                                                <span>Diğer Adreslerim</span> <i
+                                                                        class="fa fa-angle-down"></i>
+                                                            </a>
+                                                            <div class="address-list collapse" style="">
+
+                                                                {% set ship_update='' %}
+                                                                {% set bill_update='' %}
+                                                                {% for  key, address in addresses %}
+                                                                    {% set ship_update=addresses[0].id %}
+                                                                    {% if selectedAddressId != address.id %}
+                                                                        <div class="address-card">
+                                                                            <label class="flo-radio">
+                                                                                <input type="radio" name="shipping_address"
+                                                                                       class="custom-billing-address"
+                                                                                       value="{{ address.id }}"
+                                                                                       data-id="{{ address.id }}">
+                                                                                <i></i>
+                                                                                <div class="text-holder">
+                                                                                    <h5>{{ address.title_address }}</h5>
+                                                                                    <p>{{ address.street }}<br>
+                                                                                        {{ address.city }}
+                                                                                        / {{ address.region }}</p>
+                                                                                    <a class="editAddressModal address-cookie"
+                                                                                       href="javascript:;"
+                                                                                       data-toggle="modal"
+                                                                                       data-target="#editAddressModal"
+                                                                                       data-address-id="{{ address.id }}">Düzenle</a>
+                                                                                </div>
+                                                                            </label>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                {% endfor %}
+
+
+                                                            </div>
+                                                        </div>
+
+                                                        <select id="selected-ship-address" class="hide">
+                                                            {% for  key, address in addresses %}
+                                                                {% set ship_update=addresses[0].id %}
+                                                                <option checked data-id="{{ address.id }}"
+                                                                        data-company="{{ address.company }}"
+                                                                        data-region_id="{{ address.region_id }}"
+                                                                        data-country_id="{{ address.country_id }}"
+                                                                        data-region_code="{{ address.region_code }}"
+                                                                        data-prefix="{{ address.prefix }}"
+                                                                        data-firstname="{{ address.firstname }}"
+                                                                        data-lastname="{{ address.lastname }}"
+                                                                        data-email="{{ address.email }}"
+                                                                        data-city="{{ address.city }}"
+                                                                        data-same_as_billing="{{ address.same_as_billing }}"
+                                                                        data-telephone="{{ address.telephone }}"
+                                                                        data-postcode="{{ address.postcode }}"
+                                                                        data-region="{{ address.region }}"
+                                                                        data-street="{{ address.street }}"
+                                                                        {% if selectedAddressId == address.id %}selected{% endif %}
+                                                                        class=" address-card flo-radio"
+                                                                ></option>
+                                                            {% endfor %}
+                                                        </select>
+                                                        <select id="selected-bill-address-click-collect" class="hide">
+                                                            {% for  key, address in addresses %}
+                                                                {% set ship_update=addresses[0].id %}
+                                                                <option checked data-id="{{ address.id }}"
+                                                                        data-company="{{ address.company }}"
+                                                                        data-region_id="{{ address.region_id }}"
+                                                                        data-country_id="{{ address.country_id }}"
+                                                                        data-region_code="{{ address.region_code }}"
+                                                                        data-prefix="{{ address.prefix }}"
+                                                                        data-firstname="{{ address.firstname }}"
+                                                                        data-lastname="{{ address.lastname }}"
+                                                                        data-email="{{ address.email }}"
+                                                                        data-city="{{ address.city }}"
+                                                                        data-same_as_billing="{{ address.same_as_billing }}"
+                                                                        data-telephone="{{ address.telephone }}"
+                                                                        data-postcode="{{ address.postcode }}"
+                                                                        data-region="{{ address.region }}"
+                                                                        data-street="{{ address.street }}"
+                                                                        {% if selectedAddressId == address.id %}selected{% endif %}
+                                                                        class=" address-card flo-radio"
+                                                                ></option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    {% endif %}
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            <!-- New Address Modal -->
+                            <!-- Edit Address Modal -->
+                            <!-- Edit Address Modal -->
+                            <div class="modal flomodal fade" id="shopPickupModal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title fs-18 text-warning">Mağazadan Teslimat Bilgileri</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            </button>
+                                        </div>
+                                        <div class="modal-body fs-15">
+                                            <p>1- Siparişiniz kargo aracılığıyla ilgili mağazamıza teslim
+                                                edilecektir.</p>
+
+                                            <p>2- Mağazadan teslimat seçeneği sadece belirli mağazalarımızda
+                                                geçerlidir.</p>
+
+                                            <p>3- Mağazadan teslimat seçeneğinde ödemelerinizi sadece kredi kartı ile
+                                                yapabilirsiniz</p>
+
+                                            <p>4- Siparişiniz talep ettiğiniz mağazaya ulaştığında otomatik SMS ve
+                                                e-mail
+                                                gönderimi ile bilgi verilecektir.</p>
+
+                                            <p>5- Mağazalarımızdan siparişinizi teslim alırken sipariş no, ad, soyad, TC
+                                                kimlik no ve size gönderilen güvenlik kodunuzu mağaza personeline
+                                                bildirmeniz gerekmektedir.</p>
+
+                                            <p>6- Mağazalarımıza teslim edilen siparişleriniz "3 iş günü içerisinde
+                                                teslim
+                                                alınmalıdır."</p>
+
+                                            <p>7- Mağazalarımıza ulaşan siparişleriniz zamanında teslim alınmadığında
+                                                iptal
+                                                edilecektir.</p>
+
+                                            <p>8- Mağazalarımızdan teslimat hergün 10:00 - 20:00 saatleri arasında
+                                                yapılmaktadır.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 basket-container">
+                    {{ widget('basket', 'sidebar', {'next_url': '/checkout/payment', 'button_label':'ÖDEME ADIMINA GEÇ'}) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal flomodal fade" id="newShippingAddressModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adres Bilgileri</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="maincontent" class="page searchnone"><a id="contentarea" tabindex="-1"></a>
+                        <div class="page-content sab">
+                            <script async=""
+                                    src="https://maps.google.com/maps/api/js?key=&amp;libraries=places,geometry"></script>
+                            <input name="form_key" type="hidden" value="l4EFzCZObjNl9Kk4">
+                            <div id="authenticationPopup" data-bind="scope:'authenticationPopup'"
+                                 style="display: none;">
+                                <script>
+                                    window.authenticationPopup = {
+                                        "autocomplete": "off",
+                                        "customerRegisterUrl": "http:\/\/instreet.mage\/customer\/account\/create\/",
+                                        "customerForgotPasswordUrl": "http:\/\/instreet.mage\/customer\/account\/forgotpassword\/",
+                                        "baseUrl": "http:\/\/instreet.mage\/"
+                                    };
+                                </script>
+                                <!-- ko template: getTemplate() -->
+                                <!-- /ko -->
+                            </div>
+                            </div>
+                            <div class="my-basket">
+                                <div class="basket-list">
+                                    <div class="basket-detail">
+                                        <div class="adim4  adim3">
+                                            <div class="form">
+                                                <form class="form-address-edit new-address-form new-shipping-address"
+                                                      method="POST"
+                                                      id="address-add-form" enctype="multipart/form-data"
+                                                      data-hasrequired="* Required Fields" novalidate="novalidate">
+
+                                                    <input type="hidden" name="success_url"
+                                                               value="/checkout/address?id=:insert_id">
+                                                        {{ widget('address','fields',{towns:towns,regions:regions,countries:countries,need_title:need_title}) }}
+
+                                                        <div class="actions-toolbar fixedbottom disabled text-right mt-3">
+                                                            <div class="submit">
+                                                                <button id="formAddresSave" type="submit"
+                                                                        class="actionOff saveOff primaryOff btn btn-warning btn-lg text-white pl-5 pr-5"
+                                                                        data-action="save-address"
+                                                                        title="{{ 'KAYDET' | translate }}"
+                                                                        value="{{ 'KAYDET' | translate }}">{{ 'KAYDET' | translate }}
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="modal flomodal fade" id="newBillingAddressModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adres Bilgileri</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="maincontent" class="page searchnone"><a id="contentarea" tabindex="-1"></a>
+                        <div class="page-content sab">
+                            <script async=""
+                                    src="https://maps.google.com/maps/api/js?key=&amp;libraries=places,geometry"></script>
+                            <input name="form_key" type="hidden" value="l4EFzCZObjNl9Kk4">
+                            <div id="authenticationPopup" data-bind="scope:'authenticationPopup'"
+                                 style="display: none;">
+                                <script>
+                                    window.authenticationPopup = {
+                                        "autocomplete": "off",
+                                        "customerRegisterUrl": "http:\/\/instreet.mage\/customer\/account\/create\/",
+                                        "customerForgotPasswordUrl": "http:\/\/instreet.mage\/customer\/account\/forgotpassword\/",
+                                        "baseUrl": "http:\/\/instreet.mage\/"
+                                    };
+                                </script>
+                                <!-- ko template: getTemplate() -->
+                                <!-- /ko -->
+                            </div>
+                        </div>
+                        <div class="my-basket">
+                            <div class="basket-list">
+                                <div class="basket-detail">
+                                    <div class="adim4  adim3">
+                                        <div class="form">
+                                            <form class="form-address-edit new-address-form  "
+                                                  method="POST"
+                                                  id="address-add-form" enctype="multipart/form-data"
+                                                  data-hasrequired="* Required Fields" novalidate="novalidate">
+
+                                                <input type="hidden" name="success_url"
+                                                       value="/checkout/address?id=:insert_id">
+                                                {{ widget('address','fields',{towns:towns,regions:regions,countries:countries,need_title:need_title}) }}
+
+                                                <div class="actions-toolbar fixedbottom disabled text-right mt-3">
+                                                    <div class="submit">
+                                                        <button id="formAddresSave" type="submit"
+                                                                class="actionOff saveOff primaryOff btn btn-warning btn-lg text-white pl-5 pr-5"
+                                                                data-action="save-address"
+                                                                title="{{ 'KAYDET' | translate }}"
+                                                                value="{{ 'KAYDET' | translate }}">{{ 'KAYDET' | translate }}
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="emarsys-wrapper"><!-- This code will embeded on all pages --></div>
+    </div>
+
+    <div class="modal flomodal fade" id="editAddressModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adres Bilgileri</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div id="maincontent" class="page searchnone"><a id="contentarea" tabindex="-1"></a>
+                        <div class="page-content sab">
+                            <script async="" src="https://maps.google.com/maps/api/js?key=&amp;libraries=places,geometry"></script>
+                            <input name="form_key" type="hidden" value="l4EFzCZObjNl9Kk4">
+                            <div id="authenticationPopup" data-bind="scope:'authenticationPopup'" style="display: none;">
+                                <script>
+                                    window.authenticationPopup = {
+                                        "autocomplete": "off",
+                                        "customerRegisterUrl": "http:\/\/instreet.mage\/customer\/account\/create\/",
+                                        "customerForgotPasswordUrl": "http:\/\/instreet.mage\/customer\/account\/forgotpassword\/",
+                                        "baseUrl": "http:\/\/instreet.mage\/"
+                                    };
+                                </script>
+                                <!-- ko template: getTemplate() -->
+
+                                <!-- /ko -->
+                            </div>
+
+
+                            <div id="monkey_campaign" style="display:none;">
+                            </div>
+                            <div class="my-basket">
+                                <div class="basket-list">
+
+
+                                    <div class="basket-detail">
+                                        <div class="adim4 adim3">
+                                            <div class="form">
+
+                                                <form class="form-address-edit edit-address-form no-redirect"
+                                                      method="POST"
+                                                      id="address-edit-form" enctype="multipart/form-data"
+                                                      data-hasrequired="* Required Fields" novalidate="novalidate">
+                                                    <div class="brd">
+                                                        <input type="hidden" name="success_url"
+                                                               value="/checkout/address">
+
+                                                        {{ widget('address','fields',{address: address,regions:regions,towns:towns,countries:countries,need_title:need_title}) }}
+
+                                                        <div class="note">* {{ 'Yıldızlı alanların girişi zorunludur.' | translate }}</div>
+
+                                                        <div class="actions-toolbar fixedbottom disabled text-right mt-3">
+                                                            <div class="submit">
+                                                                <button id="formAddresSave" type="submit"
+                                                                        class="actionOff saveOff primaryOff btn btn-warning btn-lg text-white pl-5 pr-5"
+                                                                        data-action="save-address"
+                                                                        title="{{ 'KAYDET' | translate }}"
+                                                                        value="{{ 'KAYDET' | translate }}">{{ 'KAYDET' | translate }}
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </form>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="emarsys-wrapper">
+
+                                <!-- This code will embeded on all pages -->
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{{ widget('datalayer', 'checkout_adress', {layerData: {cart: basket}}) }}

@@ -1,0 +1,28 @@
+<div class="form-group">
+    <span class="open" for="amount">{{ filter.name | translate }}</span>
+    <div class="all">
+        <div class="price-ranges">
+            <input type="text" class="form-control" placeholder="En Az" name="percent_min" value="{{ aggregations.percent_min }}" oninput="this.value=this.value.replace(/(?![0-9])./gmi,'')">
+            <span>-</span>
+            <input type="text" class="form-control" placeholder="En Çok" name="percent_max" value="{{ aggregations.percent_max }}" oninput="this.value=this.value.replace(/(?![0-9])./gmi,'')">
+
+            <button type="button" class="btn btn-percent-filter-submit"><i class="fa fa-angle-right"></i></button>
+        </div>
+        {% set prices = [
+            [0, 20, ((aggregations.percent_min or aggregations.percent_max) and (aggregations.percent_min == 0 or aggregations.percent_max == 20))],
+            [20, 40, (aggregations.percent_min <= 20 and aggregations.percent_max >= 40)],
+            [40, 60, (aggregations.percent_min <= 40 and aggregations.percent_max >= 60)],
+            [60, 80, (aggregations.percent_min <= 60 and aggregations.percent_max >= 80)]
+        ] %}
+         <div class="price-choices min-max  clearfix">
+            {% for price in prices %}
+                <div class="checkbox input {% if price[2] %}  selected{% endif %}" {% if price[2] %}data-is-selected="1"{% endif %}>
+                    <label class="slide-brand checkbox-label">
+                        <div class="icheckbox_square_gold new-checkbox " style="position: relative;"> <input type="checkbox"></div>
+                        <div  class="price_percent" data-min="{{ price[0] }}" data-max="{{ price[1] }}" >     {{ price[0] }} {{ '%' | translate }} - {{ price[1] }} {{ '%' | translate }}</div>
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

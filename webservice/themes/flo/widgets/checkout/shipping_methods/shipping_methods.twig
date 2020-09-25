@@ -1,0 +1,73 @@
+<div class="item ">
+    {#
+        <div class="form-group shipping-method centersGiris" id="shipping-method">
+            <span>{{ 'TESLİMAT SEÇENEKLERİ' | translate }}</span>
+            <div class="checkbox checkbox-radio full delivery">
+                <label>
+                    <div class="new-radio checked">
+                        <input type="radio" name="shipping_method" value="FloShippingMng" checked>
+                        <ins></ins>
+                    </div>
+                    <span class="delivery-method">Standart Teslimat</span>
+                    <span class="delivery-text"> {{ product_cargo['firstDate'] | date("d.m.Y") }} - {{ product_cargo['lastDate'] | date("d.m.Y") }} tarihleri arasında kargoda.</span>
+                </label>
+            </div>
+        </div>
+    #}
+
+    <div class="delivery-choice shipping-method centersGiris" id="shipping-method">
+        <h4>Teslimat Seçenekleri</h4>
+        <div class="row">
+			{% for shipping_method in shipping_methods %}
+			{% set checked = '' %}
+            {% if loop.first %}
+				{% set checked = 'checked' %}
+			{% endif %}
+            <div class="col-sm-6 pr-3">
+                <div class="holder">
+                    <div class="companies full delivery">
+                        <label class="flo-radio {{ checked }}">
+                            <input type="radio" name="shipping_method"  value="{{ shipping_method.carrier_code }}" {{ checked }}>
+                            <i></i>
+                            <img src="{{ shipping_method.resim }}" style="max-height: 20px;">
+                        </label>
+                    </div>
+                    <div class="warning">
+                        {{ product_cargo['firstDate'] | date("d.m.Y") }} - {{ product_cargo['lastDate'] | date("d.m.Y") }} tarihleri arasında kargoda
+                    </div>
+                </div>
+            </div>
+			{% endfor %}
+{#
+            <div class="col-sm-6 pl-3">
+                <div class="holder">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="companies mt-1">
+                                <label class="flo-radio">
+                                    <input type="radio" name="shipping_company" >
+                                    <i></i>
+                                    <img src="/pub/assets/flo/img/flo.png" class="ml-2">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="font-weight-bold text-dark">AYNI GÜN TESLİMAT
+                            </div>
+                            <div class="text-dark"><span
+                                        class="text-warning">9,99 TL’ye</span> İstanbul
+                                seçili semtlerde geçerlidir.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+#}
+        </div>
+    </div>
+
+
+
+
+
+</div>

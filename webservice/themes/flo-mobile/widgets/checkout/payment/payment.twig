@@ -1,0 +1,313 @@
+
+        <ul class="steps">
+            <li class="completed">
+                <a href="{{ basket_base_url() }}/basket">
+                    Sepet
+                </a>
+            </li>
+            <li class="completed">
+                <a href="/checkout/address">                     Adres
+                </a>
+            </li>
+            <li class="active">
+                <a href="/checkout/payment">
+                    Ödeme
+                </a>
+            </li>
+        </ul>
+        <div class="payment-type-tabs">
+            <ul class="nav nav-tabs" role="tablist">
+                {% set i = 0 %}
+                {% for payment in payment_methods %}
+                    {% if payment.code == 'cashondelivery' %}
+                        <li class="nav-item"><input type="hidden" data-name="method" value="{{ payment.code }}">
+                            <a id="pay-home-tab" data-toggle="tab" role="tab" data-method="{{ payment.code }}"class="payment-method-choice nav-link"
+                               aria-controls="{{ payment.code }}"  aria-selected="false" href="#{{ payment.code }}">{{ payment.title | translate }}</a>
+                        </li>
+                    {% else %}
+                        {% set i = i + 1 %}
+                        <li {% if i == 1 %}class="active"{% endif %}><input type="hidden" data-name="method"
+                                                                            value="{{ payment.code }}">
+                            <a class="nav-link active payment-method-choice" id="credit-card-tab" data-toggle="tab"  role="tab"
+                               data-method="{{ payment.code }}" class=""  aria-controls="{{ payment.code }}" aria-selected="true"
+                               href="#{{ payment.code }}"
+                               {% if i == 1 %}aria-expanded="true" {% endif %}>{{ payment.title | translate }}</a>
+                        </li>
+                    {% endif %}
+
+                {% endfor %}
+            </ul>
+            <div class="tab-content">
+                {% for payment in payment_methods %}
+                    {% if payment.code == 'cashondelivery' %}
+                        <div id="{{ payment.code }}" role="tabpanel" aria-labelledby="{{ payment.code }}-tab" class="two tab-pane fade">
+
+                            <div class="basket-container">
+                                {{ widget('basket', 'sidebar', {'next_url': '/checkout/payment', 'coupon_hide':' coupon', 'checkbox':' checkbox' }) }}
+                            </div>
+                            <form id="kapida-odeme" class="payment-form">
+                                <div class="col-sm-7">
+                                    <div class="kapida-ode">
+                                        <div class="brd">
+                                            <div class="text">
+
+                                            </div>
+                                            Alışveriş tutarınıza kargo firması tarafından talep edilen 9,00 TL kapıda ödeme ücreti eklenecektir.<br>
+                                            1- Kapıda ödeme seçeneğinde sadece nakit ödeme kabul edilmektedir.<br>
+                                            2- Kapıda kredi kartı ile ödeme kabul edilmemektedir.<br>
+                                            3- Kapıda ödeme seçeneğiyle alınan ürünlerin iadesi mağazalarımızdan veya iade adresimize gönderilerek yapılabilir.<br>
+                                            4- İade işlemlerinde fatura ibrazı zorunludur, faturasız iade kabul edilmemektedir.<br>
+                                            5- Mağazalardan nakit iade yapılmamaktadır.<br>
+
+                                        </div>
+                                    </div>
+                                </div>
+                               <div class="col-sm-5">
+                                        <div class="banner-area">
+                                            <img src="/pub/assets/flo/img/kapida_odeme.gif" class="w-100">
+                                        </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    {% else %}
+                        <div id="{{ payment.code }}" ole="tabpanel" aria-labelledby="{{ payment.code }}-tab" class="tab-pane fade  show  active">
+                            <div class="tab-pane fade show form online active" id="credit-card" role="tabpanel" aria-labelledby="credit-card-tab">
+
+                                <form action="javascript:void(0);" id="cc_cart_info" class="">
+                                    <div class="">
+                                        <div class="use-saved-cart" {{ saved_card_tokens ? '' : 'hidden' }}>
+                                            {% if not saved_card_tokens is empty %}
+                                                <div class="form-group card-all">
+                                                    <select id="saved-card-list"  class="form-control">
+
+                                                        {% for token in saved_card_tokens %}
+                                                            <option data-platform="{{ token.program_name }}"
+                                                                    data-id="{{ token.saved_card_id }}">{{ token.program_name }}
+                                                                No: {{ token.bin_number }} </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <a class="continue-new-card fl-right"
+                                                   href="javascript:void(0);">{{ 'Yeni Bir Kart İle Devam Et' | translate }}</a>
+                                            {% endif %}
+                                        </div>
+                                        <div class="use-card-number" {{ saved_card_tokens ? 'hidden' : '' }}>
+                                            <div class="form-group card-holder">
+                                                <label>Kredi Kartı Numarası</label>
+                                                <div class="pos-relative">
+													<div class="ssl-text">GÜVENLİ ÖDEME</div>
+                                                    <input type="tel" data-name="cc_number" name="cc_number" class="form-control inputmask validate-cc-number input-text card-numbers validate[required,creditCard]" >
+                                                </div>
+                                            </div>
+                                            <div class=" form-group small-gutter">
+                                                <label>Son Kullanma Tarihi</label>
+                                                <div class="row">
+
+
+                                                            <div class="col cc_date month">
+                                                                <span class="current hidden">{{ 'Ay' | translate }}</span>
+                                                                <select class="form-control list " name="payment[cc_exp_month]" id="card-expiration-month">
+                                                                    <option value="">Ay</option>
+                                                                    <option data-value="1" class="option" value="1">01</option>
+                                                                    <option data-value="2" class="option" value="2">02</option>
+                                                                    <option data-value="3" class="option" value="3">03</option>
+                                                                    <option data-value="4" class="option" value="4">04</option>
+                                                                    <option data-value="5" class="option" value="5">05</option>
+                                                                    <option data-value="6" class="option" value="6">06</option>
+                                                                    <option data-value="7" class="option" value="7">07</option>
+                                                                    <option data-value="8" class="option" value="8">08</option>
+                                                                    <option data-value="9" class="option" value="9">09</option>
+                                                                    <option data-value="10" class="option" value="10">10</option>
+                                                                    <option data-value="11" class="option" value="11">11</option>
+                                                                    <option data-value="12" class="option" value="12">12</option>
+
+
+                                                                </select>
+                                                            </div>
+                                                            <div class="col cc_date  hidden">
+                                                                <span class="current hidden">{{ '/' | translate }}</span>
+
+                                                            </div>
+                                                            <div class="col cc_date year">
+                                                                <span class="current hidden ">{{ 'yıl' | translate }}</span>
+                                                                <select class="form-control cc_date  list" name="payment[cc_exp_year]" id="card-expiration-year">
+                                                                    <option value="" class="option focus">Yıl</option>
+                                                                    {% set label = 19 %}
+																	{% for i in 2019..2040 %}
+																		<option data-value="{{ i }}" class="option">{{ label }}</option>
+																	{% set label = label + 1 %}
+																	{% endfor %}
+
+                                                                </select>
+                                                            </div>
+
+
+                                                </div>
+                                            </div>
+                                            <div class=" form-group">
+                                                <label>Güvenlik Kodu</label>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="cvv required">
+                                                            <div class="input-with-tooltip">
+                                                                <input type="tel" data-name="cc_cvv"  class="inputQuantity validate[required] form-control text-center"   min="0"
+                                                                       max="9999" maxlength="3"name="payment[cc_cid]" id="card-ccv">
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="cvv-warning">
+                                                            CVV Kodu kartınızın
+                                                            arkasındaki son 3 rakamdır.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="d-flex align-items-center mb-3 mt-3">
+
+                                            <div class="form-group ">
+                                                <div class="checkbox">
+                                                    <label class="flo-checkbox  mb-0 mr-4" id="3d-secure">
+                                                        <input type="checkbox"> 3D Secure İle Öde
+                                                        <span><i class="fa fa-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            {% if(isLogged is not empty) %}
+                                                <div class="form-group save-card " {{ saved_card_tokens ? 'hidden' : '' }}>
+                                                    <div class="checkbox input-with-tooltip">
+                                                        <label class="flo-checkbox mb-0 active"  id="save-card-command">
+                                                            <input type="checkbox" checked>
+                                                            Kredi Kartımı Sakla
+                                                            <span><i class="fa fa-check"></i></span>
+                                                        </label>
+
+                                                    </div>
+
+                                                </div>
+                                            {% endif %}
+
+                                        </div></div>
+                                    <div class="checkbox-warning mb-4">
+                                        Kart bilgilerinizin saklanmasına izin vermek ve bundan sonraki
+                                        alışverişlerinizi çok daha hızlı yapabilmek için lütfen yukarıdaki
+                                        kutucuğu işaretleyiniz.
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <div class="credit-card-area">
+
+                                            <div class="form-group taksit required">
+                                                <em>{{ 'Taksit Seçenekleri' | translate }} </em>
+                                                <div class="nice-select cc_installment" tabindex="0">
+                                                    <span data-value="0"
+                                                          class="current">{{ 'Tek Çekim' | translate }}</span>
+                                                    <ul class="list">
+                                                        <li data-id="0"
+                                                            class="option selected focus">{{ 'Tek Çekim' | translate }}</li>
+                                                    </ul>
+                                                </div>
+                                            </div></div>
+                                     </div>
+                                </form>
+<br>
+                                <div class="basket-container">
+                                    {{ widget('basket', 'sidebar', {'next_url': '/checkout/payment', 'coupon_hide':' coupon', 'checkbox':' checkbox' }) }}
+                                </div>
+                            </div>
+
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+
+
+<div class=" basket-container">
+         <div class="basket-side">
+            <div class="basket-button" style="border:0;min-height:59px;">
+                <button type="submit" class="flo-theme linkto  btn btn-success text-white" style="width:100%; height: 100%; font-size:18px;">
+                    ÖDEMEYİ TAMAMLA
+                    <i class="fa fa-angle-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+
+<div class="modal fade" id="order-contract-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Mesafeli Satış Sözleşmesi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ widget('checkout', 'agreement1') }}
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="pre-info-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ön Bilgilendirme Formu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ widget('checkout', 'agreement2') }}
+
+            </div>
+        </div>
+    </div>
+</div>
+<a class="hidden various d-visible" id="clicksmsactivation"   href="javascript:;" data-toggle="modal" data-target="#smsact">SATIN AL</a>
+<div class="modal fade" id="smsact" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">SMS AKTİVASYONU</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="smsaktivasyon"  >
+                    <form onsubmit="return false;">
+                        <div class="detail-bas">
+                            <h4>{{ 'Telefonunuza gönderilen' | translate }}
+                                <br> {{ '4 haneli aktivasyon kodunu giriniz.' | translate }}</h4>
+                            <div class="form-group">
+                                <input type="text" id="activation_code">
+                            </div>
+							<input type="button" style="cursor: pointer;" id="check_activation_sms"
+									value="{{ 'GÖNDER' | translate }}" class=" bottom btn btn-success">
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if alert is defined %}
+    <script>
+        alert("{{ alert }}");
+    </script>
+{% endif %}
+{{ widget('datalayer', 'checkout_payment', {layerData: {cart: basket}}) }}
+

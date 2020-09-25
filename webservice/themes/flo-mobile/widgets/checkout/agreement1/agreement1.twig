@@ -1,0 +1,463 @@
+<p><strong>{{ 'MESAFELİ SATIŞ SÖZLEŞMESİ' | translate }}</strong></p>
+<br>
+({{ "now"|date("d/m/Y") }})
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tbody>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>MADDE 1- TARAFLAR </strong></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ '<p>İşbu sözleşme bir tarafta Taşocağı Caddesi No: 24 Bağcılar 34217 İstanbul / Türkiye adresinde ikamet
+                eden FLO Mağazacılık ve Pazarlama A.Ş. (Bundan böyle SATICI olarak anılacaktır) ile diğer tarafta' | translate | raw }} {{ shipping_address.street }}
+            - {{ shipping_address.region }} / {{ shipping_address.city }}
+            {{ ' adresinde ikamet eden (bundan böyle ALICI olarak anılacaktır) arasında akdedilmiştir. İşbu sözleşmede belirtilen adresler, tarafların yasal tebligat adresleri olup, yazılı olarak bildirilmedikçe işbu adreslere yapılan
+                tebligatlar geçerli olur.</p>' | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ '<p>1.1- SATICI </p>
+            Ünvanı : FLO Mağazacılık ve Pazarlama A.Ş.<br>
+            Adresi : Taşocağı Caddesi No: 24 Bağcılar 34217 İstanbul / Türkiye<br>
+            Mersis No : 0388023942900019<br>
+            Telefon : 0 212 446 22 88<br>
+            Faks :  212 446 22 55  <br>
+            Email : musteriiliskileri@flo.com.tr <br>
+            Şikayetler için İrtibat Bilgisi : 0850 290 3 356' | translate | raw }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>{{ '1.2- ALICI' | translate }}:</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ '<p>Adı / Soyadı / Ünvanı : %s %s <br>Adresi : %s - %s / %s <br>Telefonu
+                : %s</p>' | translate | format(billing_address.firstname,billing_address.lastname,billing_address.street,billing_address.region,billing_address.city,billing_address.telephone) | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>{{ 'MADDE 2- KONU ' | translate }}</strong></p>
+        </td>
+    </tr>
+    <tr>
+        <td>{{ '<p>İş bu sözleşmenin konusu, Alıcının Satıcıya ait www.flo.com.tr web sitesinden elektronik ortamda sipariş verdiği, sözleşmede bahsi geçen nitelikleri haiz ve yine sözleşmede satış fiyatı belirtilen mal/hizmetin satışı ve teslimi ile ilgili olarak 6502 sayılı Tüketicilerin Korunması Hakkındaki Kanun ve Mesafeli Sözleşmeler Yönetmeliği hükümleri gereğince tarafların hak ve yükümlülüklerinin saptanmasıdır. Alıcı, satışa konu mal/hizmetlerin temel nitelikleri, satış fiyatı, ödeme sekli, teslimat koşulları vs. satışa konu mal/hizmet ile ilgili tüm ön bilgiler ve “cayma” hakkı konusunda bilgi sahibi olduğunu, bu ön bilgileri elektronik ortamda teyit ettiğini ve sonrasında mal/hizmeti sipariş verdiğini iş bu sözleşme hükümlerince kabul ve beyan eder.</p>' | translate | raw }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong><br>{{ 'MADDE 3- SÖZLEŞME KONUSU ÜRÜN ' | translate }}<br>&nbsp; </strong></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ '<p>Ürün veya ürünlerin Cinsi ve türü, Miktarı, Marka/Modeli, Rengi, Satış Bedeli www.flo.com.tr adresli site üzerinde aşağıda nitelikleri belirtildiği gibi olup bu bilgiler ALICI tarafından da onaylanmıştır.</p>' | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table align="left" cellpadding="0" border="0" width="100%">
+                <tbody>
+                <tr>
+                    <td>
+                        <p><strong>{{ 'Urun Adi ' | translate }}</strong></p>
+                    </td>
+                    <td width="40">
+                        <p><strong>{{ 'Adet' | translate }}</strong></p>
+                    </td>
+                    <td width="100">
+                        <p>{{ '<strong>Satis Bedeli <br></strong>(KDV dahil toplam)' | translate | raw }}</p>
+                    </td>
+                </tr>
+                {% for item in basket.items %}
+                <tr class="say">
+                    <td>
+                        <p>{{ item.name }}</p>
+                    </td>
+                    <td>{{ item.qty }}</td>
+                    <td>
+                        <p>{{ item.row_total_incl_tax | number_format(2) }} {{ basket.base_currency_code }}</p>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table align="left" cellpadding="0" border="0" width="100%">
+                <tbody>
+                <tr>
+                    <td>
+                        <p>&nbsp;</p>
+                    </td>
+                    <td width="255">
+                        <div class="basket-side">
+                            {{ widget('basket','mini_cart_detail',{ basket : basket, cash_on_delivery_fee: cash_on_delivery_fee}) }}
+                        </div>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+
+            <strong>{{ 'Teslimat Şekli' | translate }} :</strong> {{ config('env.mapping.shipping.' ~ basket.extension_attributes.shipping_assignments.0.shipping.method) }}<br>
+            <strong>{{ 'Teslimat Adresi' | translate }} :</strong> {{ shipping_address.firstname }} {{ shipping_address.lastname }}<br>Adresi : {{ shipping_address.street }} - {{ shipping_address.region }} / {{ shipping_address.city }}<br>Telefonu
+            : {{ shipping_address.telephone }}<br>
+            <strong>Fatura Adresi :</strong> {{ billing_address.firstname }} {{ billing_address.lastname }}<br>Adresi : {{ billing_address.street }} - {{ billing_address.region }} / {{ billing_address.city }}<br>Telefonu
+            : {{ billing_address.telephone }}<br>
+            <strong>{{ 'Alıcı Tarafından Karşılanacak Diğer Masraflar ' | translate }}:</strong><br>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>{{ 'MADDE 4- GENEL HÜKÜMLER ' | translate }}</strong></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p>4.1- ALICI, www.flo.com.tr internet sitesinde satışa arz edilen sözleşme konusu ürün veya
+                ürünlerin www.flo.com.tr adresli site üzerinde belirtilen ve yukarıda yer alan temel
+                nitelikleri, satış fiyatı, fiyatların geçerlilik süresi ve ödeme şekli ile teslimata ilişkin ön
+                bilgileri okuyup bilgi sahibi olduğunu ve elektronik ortamda gerekli teyidi verdiğini beyan eder.
+
+                <br><br>4.2- Sözleşme konusu ürün/ürünler, yasa ve yönetmeliklerle belirlenen siparişin SATICI’ya
+                ulaşmasını takip eden 30 (otuz) günlük süreyi aşmamak koşulu ile her bir ürün için ALICI'nın
+            yerleşim yerinin uzaklığına bağlı olarak internet sitesinde yer alan bilgiler içinde açıklanan süre
+            içerisinde ALICI’nın yukarıda yazılı adresine veya teslimat veya fatura adresindeki kişi / kişiler /
+            kuruluşa teslim edilir.
+
+            <br><br>4.3- Sözleşme konusu ürün, ALICI'dan başka bir kişi(ler)/kuruluşa teslim edilecek ise,
+            teslim edilecek kişi(ler)/kuruluşun teslimatı kabul etmemesinden SATICI sorumlu tutulamaz.
+
+            <br><br>4.4- SATICI, sözleşme konusu ürünün sağlam, eksiksiz, siparişte belirtilen niteliklere uygun
+            teslim edilmesinden sorumludur.
+
+            <br><br>4.5- Sözleşme konusu ürün/ürünlerin teslimatı için işbu sözleşmenin ALICI tarafından
+            elektronik ortamda onaylanmış olması ve bedelinin SATICI tarafından belirlenen ödeme şekli ile tam
+            ve eksiksiz olarak ödenmiş olması şarttır. Herhangi bir nedenle ürün bedeli ödenmez, eksik ödenir
+            veya banka kayıtlarında iptal edilir ise, SATICI ürünün teslimi yükümlülüğünden kurtulmuş kabul
+            edilir.
+
+            <br><br>4.6- ALICI, sözleşme konusu mal/hizmeti teslim almadan önce muayene edecek ezik, kırık,
+            ambalajı yırtılmış vb. hasarlı ve ayıplı mal/hizmeti kargo şirketinden teslim almayacaktır. Teslim
+            alınan mal/hizmetin hasarsız ve sağlam olduğu kabul edilecektir. Teslimden sonra mal/hizmetin özenle
+            korunması borcu, ALICI’ya aittir. Ürünün tesliminden sonra ALICI'ya ait kredi kartının ALICI'nın
+            kusurundan kaynaklanmayan bir şekilde yetkisiz kişilerce haksız veya hukuka aykırı olarak
+            kullanılması nedeni ile ilgili banka veya finans kuruluşunun ürün bedelini SATICI'ya ödememesi
+            halinde, ALICI'ya teslim edilmiş olması kaydıyla ürünün bildirimi takip eden en geç 3 (üç) gün
+            içinde SATICI'ya gönderilmesi zorunludur.
+
+            <br><br>4.7- SATICI mücbir sebepler gibi olağanüstü durumlar ve/veya teknik sebepler nedeni ile
+            sözleşme konusu ürünü süresi içinde teslim edemez ise, durumu ALICI'ya bildirmekle yükümlüdür. Bu
+            takdirde ALICI siparişin iptal edilmesi, sözleşme konusu ürünün varsa emsali ile değiştirilmesi
+            ve/veya teslimat süresinin engelleyici durumun ortadan kalkmasına kadar ertelenmesi hususundaki
+            seçimlik haklarından birini kullanabilir. ALICI'nın siparişi iptal etmesi halinde kredi kartının ait
+            olduğu bankaya gerekli bildirim yapılarak ödediği tutarın iadesi sağlanır.
+
+            <br><br>4.8- Tek bir sipariş kapsamında birlikte satılan ürünlerde kargonun ücretsiz olacağı
+            belirtilmiş ise, ürünlerden birinin iade edilmesi halinde iade edilmeyen ürünün kargo bedeli
+            ALICI’dan tahsil edilir. SATICI’nın ilgili kargo bedelini varsa ALICI’ya yapacağı iade ödemelerinden
+            mahsup hakkı saklıdır.
+
+            <br><br>4.9- Satılan ürünlerden üretimden veya SATICI’dan kaynaklı kusurlu olanlar, garanti şartları
+            ve süreleri içinde gerekli onarımın veya değişimin yapılması için SATICI'ya gönderilebilir, bu
+            takdirde kargo giderleri SATICI tarafından karşılanacaktır.
+
+            <br><br>4.10- ALICI, Türkiye Cumhuriyeti sınırları dışında ikamet etmekte/bulunmakta ve/veya ürünün
+            teslim edileceği adres Türkiye Cumhuriyeti sınırları dışında bulunmakta ise, ikamet ettiği/bulunduğu
+            ve/veya ürünün teslim edileceği ülkenin söz konusu ürünün alımı nedeniyle yasa, yönetmelik ve ilgili
+            yasal düzenlemeleri uyarınca tahakkuk ettireceği gümrük vergisi, harç ve sair her türlü mali
+            yükümlülüğün kendisine ait olacağını, ürünün teslim edilebilmesi için talep olunacak tüm ödemeleri
+            derhal ve aynen yerine getireceğini şimdiden kabul, beyan ve taahhüt eder.
+
+            <br><br>4.11- ALICI, satın aldığı ürün/ürünleri kullanabileceği ekipmanların kendisi tarafından
+            sağlanacağını ve kendi kusuru olsun veya olmasın oluşabilecek eksiklik ve problemlerden SATICI’nın
+            sorumlu olmayacağını kabul, beyan ve taahhüt eder.
+            <br><br>4.12-ALICI, kredi kartı ile yapmış olduğu işlemlerinde temerrüde düşmesi halinde kart sahibi
+            bankanın kendisi ile yapmış olduğu kredi kartı sözleşmesi çerçevesinde faiz ödeyecek ve bankaya
+            karşı sorumlu olacaktır. Bu durumda ilgili banka hukuki yollara başvurabilir; doğacak masrafları ve
+            vekâlet ücretini ALICI’dan talep edebilir ve her koşulda ALICI’nın borcundan dolayı temerrüde
+            düşmesi halinde, ALICI, borcun gecikmeli ifasından dolayı SATICI’nın oluşan zarar ve ziyanını
+            ödemeyi kabul eder.
+
+            <br><br>4.13- ALICI ve SATICI işbu sözleşmenin başında bahsedilen yazışma adreslerinin geçerli
+            tebligat adresi olduğunu ve bu adrese yöneltilecek tüm tebligatların geçerli addolunacağını kabul,
+            beyan ve taahhüt eder.
+            <br><br>4.14- ALICI, sözleşme kapsamındaki her türlü talep ve şikayetlerini SATICI’nın işbu
+            sözleşmede Şikayetler için İrtibat Bilgisi altında iletilen numara ve/veya adreslerine iletebilir,
+            http://www.flo.com.tr/iletisim linki üzerinden destek merkezine mesaj atabilir.
+            </p>" | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>{{ 'MADDE 5- CAYMA HAKKI ' | translate }}</strong></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p>ALICI, işbu sözleşmenin 6. maddesinde belirtilen istisnalar hariç olmak üzere sözleşme konusu ürünün
+                kendisine veya gösterdiği adresteki kişi(ler)/kuruluşa tesliminden itibaren 14 (ondört) gün içinde
+                cayma hakkını kullanabilir. Cayma hakkının kullanılması için bu süre içinde SATICI'ya teyidi alınmak
+                suretiyle işbu sözleşmede belirtilen faks, e-mail veya telefon ile bildirimde bulunulması (ekli
+                cayma formu kullanılarak veya sair şekillerde) şarttır. Bu belgelerin tam ve eksiksiz olarak
+                SATICI’ya ulaşmasını takip eden 14 (ondört) gün içinde ürün bedeli ALICI'ya iade edilir. Cayma hakkı
+                nedeni ile iade edilen ürünün kargo bedeli SATICI tarafından karşılanır. Yurtdışı gönderilerinin
+                iade edilmesi durumunda oluşan gümrük borçlandırmaları alıcı tarafından ödenecektir. ALICI, cayma
+                hakkını kullandığı yönünde bildirim gerçekleştirdiği tarihi takip eden 10 (on) gün içinde ürünü
+                SATICI’ya iade etmelidir.<br></p>" | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>{{ 'MADDE 6- CAYMA HAKKI KULLANILAMAYACAK ÜRÜNLER' | translate }}</strong></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ '<p>ALICI isteğine veya kişisel ihtiyaçlarına istinaden özel hazırlanmış veya ürünün standart
+                niteliklerinde değişiklik yapılmış ürünler, hızlı bozulan veya son kullanım tarihi geçebilecek
+                ürünler ve tesliminden sonra ambalaj, bant, mühür, paket gibi koruyucu unsurları açılmış olan ve
+                iadesi sağlık ve hijyen açısından uygun olmayan ürünler için cayma hakkı kullanılamaz. Ürünlerde
+                cayma hakkının kullanılması, ürünün ambalajının bozulmamış, ürünün kullanılmamış ve yeniden
+                satılabilirlik özelliğini yitirmemiş olması şartına bağlıdır.
+                <br><br>
+                ALICI, Mesafeli Sözleşmeler Yönetmeliği gereği cayma hakkına ilişkin bilgilendirmenin gereği gibi
+                yapıldığını kabul eder.
+            </p>' | translate | raw}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>{{ 'MADDE 7- UYUŞMAZLIK HALİNDE YETKİLİ MAHKEME' | translate }}</strong></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p>İşbu sözleşmenin uygulanmasından doğacak uyuşmazlıklarda Sanayi ve Ticaret Bakanlığı’nca ilan edilen
+                değere kadar Tüketici Hakem Heyetleri ile SATICI'nın yerleşim yerindeki Tüketici Mahkemeleri tek
+                yetkilidir.
+                <br><br>
+                İşbu sözleşme elektronik ortamda taraflarca okunup, kabul edilip, teyit edilmiştir. İşbu sözleşmede
+                düzenlenmemiş hususlarda 6502 sayılı Tüketicinin Korunması Hakkında Kanun hükümleri uygulanır.
+            </p>" | translate |  raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>{{ '<strong>SATICI</strong><br>
+                FLO Mağazacılık ve Pazarlama A.Ş.' | translate | raw }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>{{ 'ALICI ' | translate }}</strong><br> {{ billing_address.firstname }} {{ billing_address.lastname }}<br><br>{{ 'Tarih ' | translate }} : {{ today }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>{{ 'EK-1: Cayma Hakkı Formu Örneği' | translate }}</strong></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <p><strong>{{ 'Cayma Hakkı Formu' | translate }} </strong><br></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p><strong>-Kime: </strong>(SATICI’nın ismi, unvanı, adresi varsa faks numarası ve e-posta adresi yer
+                alacaktır.)</p>" | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p>-Bu formla aşağıdaki malların satışına veya hizmetlerin sunulmasına ilişkin sözleşmeden cayma hakkımı
+                kullandığımı beyan ederim.</p>" | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p><strong>-Sipariş tarihi veya teslim tarihi:</strong></p>" | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p><strong>-Cayma hakkına konu mal veya hizmet:</strong></p>" | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p><strong>-Cayma hakkına konu mal veya hizmetin bedeli:</strong></p>" | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p><strong>-ALICI’nın adı ve soyadı:</strong></p>" | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p><strong>-ALICI’nın adresi:</strong></p>" | translate | raw }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p><strong>-ALICI’nın imzası: </strong>(Sadece kağıt üzerinde gönderilmesi halinde)</p>" | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p><strong>-Tarih:</strong></p>" | translate | raw }}
+        </td>
+    </tr>
+
+
+    </tbody>
+</table>

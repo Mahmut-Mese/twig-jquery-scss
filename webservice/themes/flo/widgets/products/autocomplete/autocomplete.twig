@@ -1,0 +1,53 @@
+<div class="search-quickview" id="enhanced-search-result-form">
+   <div class="message"></div>
+   <!-- START Suggestions -->
+   <div class="suggestions">
+
+		{% for aggregation in aggregation_orders %}
+			{% if aggregations[aggregation.alias] %}
+				<div class="aggregation">
+					<span class="title">{{ aggregation.name | translate}}</span>
+					<ul>
+						{% for agg in aggregations[aggregation.alias] %}
+							<li><a class="input {% if agg.value in filters %}selected{% endif %} ac-{{ aggregation.alias }}" {% if aggregation.alias == 'category' %}data-only-one="1"{% endif %} {% if agg.value in filters %}data-is-selected="1"{% endif %} data-name="filters[]" data-value="{{ agg.value }}" href="">{{ agg.name }} ({{ agg.count }})</a></li>
+						{% endfor %}
+					</ul>
+					</div>
+			{% endif %}
+		{% endfor %}
+   </div>
+   <div class="results">
+      <ul>
+			{% for product in products %}
+				<li>
+					<a href="{{ product.url }}" class="prod-item">
+						<div>
+							<div class="prod-pic">
+								{{ img( product.image|resize('80x80'), { class: 'tiny_img' } ) }}
+							</div>
+							<div class="prod-info">
+								<span class="prod-info-title">{{ product.manufacturer }}</span>
+								<span class="prod-info-description">{{ product.name | translate }}</span>
+								<span class="prices">
+									<span class="old">{{ product.price | price }}</span>
+
+									{% if product.special_price %}
+										<span class="current">{{ product.special_price|price }}</span>
+									{% endif %}
+								</span>
+							</div>
+						</div>
+					</a>
+				</li>
+			{% endfor %}
+
+            <li>
+               <a id="enhanced-search-show-all" class="show-all" href="/search?q={{ query }}{{ query_string }}">
+                  <div>
+                        {{ 'Tümünü Göster' | translate }} ({{ total_count|number_format(0, '.', ',') }})
+                  </div>
+               </a>
+            </li>
+      </ul>
+   </div>
+</div>

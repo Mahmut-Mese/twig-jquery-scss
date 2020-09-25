@@ -1,0 +1,28 @@
+<main role="main">
+    <div class="account-page-wrapper">
+        <div class="page-title-bar">
+            <a href="/" class="go-back-link">
+                <i class="svg-slide-arrow-left svg-slide-arrow-left-dims"></i>
+            </a>
+            <h1>YARDIM</h1>
+        </div>
+        <div class="container">
+            {% for row in ticket.list %}
+                <div class="order-box">
+                    <ul style="list-style: none;">
+                        <li><b>{{ 'Talep No' | translate }} :</b> <a
+                                    href="/ticket/detail?ticket_id={{ row.ticketId }}">{{ row.screenId }}</a></li>
+                        <li><b>{{ 'Departman' | translate }} : </b> {{ row.department }}</li>
+                        <li><b>{{ 'Başlık' | translate }} :</b> {{ row.title }}</li>
+                        <li><b>{{ 'Konu' | translate }} :</b> {{ row.message }}</li>
+                        <li><b>{{ 'Yanıt' | translate }} :</b> <a
+                                    href="/ticket/detail?ticket_id={{ row.ticketId }}">{{ row.yanit_sayisi }}</a></li>
+                        <li><b>{{ 'Durum' | translate }} :</b> {{ row.statusLabel }}</li>
+                    </ul>
+                </div>
+            {% endfor %}
+            <a href="/ticket/new" class="btn orange">Yeni Talep Oluştur <i class="svg-order-detail svg-order-detail-dims"></i></a>
+        </div>
+
+    </div>
+</main>

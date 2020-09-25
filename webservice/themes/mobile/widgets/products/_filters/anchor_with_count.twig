@@ -1,0 +1,21 @@
+<div class="form-group brand-checks">
+    <span class="open">{{ filter.name | translate }}</span>
+    <div class="all">
+        {% for agg in aggregations %}
+            <a href="{{ agg.query_string }}" data-without-query="{{ agg.without_qs }}" class="{% if filter.box %}checkboxs{% else %}
+            checkbox{% endif %} {% if filter.full %} full {% endif %}input {% if ( agg.value in filters or agg.value_star in filters) %}
+            selected{% endif %}" data-value="{{ agg.value }}" data-real-value="{{ agg.name }}" data-name="filters[]" {% if ( agg.value in filters or agg.value_star in filters) %}data-is-selected="1"{% endif %}>
+
+                {% if filter.box %}
+                <label class="slide-brand">
+                    <div class="icbtn" style="position: relative;"></div>
+                {% else %}
+                    <label class="slide-brand checkbox-label">
+                    <div class=" new-checkbox" style="position: relative;">  <input type="checkbox"></div>
+                {% endif %}
+                    {{ agg.name | translate | raw }} ({{ agg.count }})
+                </label>
+            </a>
+        {% endfor %}
+    </div>
+</div>

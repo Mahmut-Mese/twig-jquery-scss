@@ -1,0 +1,17 @@
+<div class="banners pb-3 lazy">
+        <div class="row">
+
+            {% for banner in banners %}
+                <div class="col-sm-4">
+                    <a href="{{ banner.url }}" class="banner-box">
+                        <img src="/pub/media/lazyloading/blank.png" data-src="{{ banner.image }}" class="w-100">
+                        <span class="title">{{ banner.title }}</span>
+                    </a>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+
+{# {{ widget('datalayer', 'spotlight', {layerData: {spotlights: [spotlight], element: '.promotion_image'}}) }} #}

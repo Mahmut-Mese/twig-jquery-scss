@@ -1,0 +1,55 @@
+<section class="our-choices">
+   <h3 class="section-title mb-3">{{ title }}</h3>
+    <div class="container">
+        <div class="products-slider swiper-container swiper-autoinit"
+            data-swiper-slides-per-view="1.7"
+            data-swiper-space-between="0"
+            data-swiper-free-mode="true"
+        >
+		{% set bannerItems = [] %}
+            <div class="swiper-wrapper">
+                {% for product in products.products %}
+					{% set bannerItems = bannerItems|merge([
+					{
+						spotlight_id: product.id,
+						link: product.url,
+						image: product.image|resize('250x250'),
+						title: product.name,
+						sorder: loop.index
+					}]
+					) %}
+                    <div class="swiper-slide">
+
+                    <a href="{{ product.url }}" class="product-box lazy">
+                        <figure>
+                            <span class="badge badge-info">İnternete özel</span>
+                            <img data-src="{{ product.image|resize('250x250') }}" src="/pub/media/lazyloading/blank.png"
+                                alt="">
+                            <span class="add-to-favourites-button" data-favourited="false">
+                                    <i class="svg-favourite svg-favourite-dims"></i>
+                                </span>
+                        </figure>
+
+                        <span class="title">{{ product.manufacturer }}</span>
+                        <span class="description">{{ product.name | raw }}</span>
+                        <span class="prices discounted">
+                                {% if product.special_price %}
+                                    <span class="old-price">{{ product.price|price }}</span>
+                                {% endif %}
+                                <span class="price">{{ product|price }}</span>
+                            </span>
+                        {% if product.special_price %}
+                            {% set indirim_orani = (((product.price - product.filter_price)/ product.price) * 100) | number_format(0, '.', ',') %}
+                            {# <div class="discount">Sepette %{{ '%s İndirim' | translate | format( indirim_orani ) }}<span
+                                        class="text-warning">{{ product|price }}</span></div> #}
+							<span class="discount">%{{ '%s İndirim' | translate | format( indirim_orani ) }}</span>
+                        {% endif %}
+                    </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{# {{ widget('datalayer', 'spotlight', {layerData: {spotlights: bannerItems, element: '.our-your-select'}}) }} #}

@@ -1,0 +1,130 @@
+<script src='https://www.google.com/recaptcha/api.js?hl=tr'></script>
+<main role="main" id="addressRemove">
+<div class="account-page-wrapper mt-3">
+    <div class="container">
+        <div class="row medium-gutter">
+            <div class="col-sm-3">
+                {{ widget('customer', 'account_left_menu') }}
+            </div>
+            <div class="col-sm-9">
+                <div class="breadcrumbs-bar title-only">
+                    <div class="left-nav">
+                        <a href="/" class="go-back-link"><i class="fas fa-angle-left"></i>Geri Dön</a>
+                    </div>
+                    <div class="page-title">
+                        <h1>ADRESLERİM</h1>
+                    </div>
+                </div>
+                <div class="bg-white p-3 mb-3">
+                     {% set close=-1 %}
+                    {% for key, address in addresses %}
+                        {% if key % 2 == 0 %}
+                            {% set close=0 %}
+                            <div class="row medium-gutter mb-4">
+                        {% endif %}
+                        <div class="col-sm-6">
+                            <div class="address-box">
+                                <div class="title"><i
+                                            class="svg-pin svg-pin-dims mr-2"></i>{{ address['title_address'] }}
+                                </div>
+                                <div class="details">
+                                    {{ address['street'] }}<br>{{ address['region'] }} / {{ address['city'] }}
+                                </div>
+                                <div class="actions">
+                                    <a class="deleteAddressModal" href="javascript:;" data-toggle="modal"
+                                       data-target="#deleteAddressModal"
+                                       data-address-id="{{ address['id'] }}">ADRESİ
+                                        SİL</a>
+                                    <a class="editAddressModal" href="javascript:;" data-toggle="modal"
+                                       data-target="#editAddressModal"
+                                       data-address-id="{{ address['id'] }}">ADRESİ DÜZENLE</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% if key % 2 == 1 %}
+                            {% set close=1 %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    {% if close == 0 %}
+                </div>
+                {% endif %}
+                <a href="javascript:;" data-target="#newShippingAddressModal" data-toggle="modal"
+                   class="btn outline-gray addAddressModal">YENİ ADRES EKLE <i class="svg-pin svg-pin-dims"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- New/Edit Address Modal -->
+<div class="modal flomodal fade" id="newShippingAddressModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Adres Bilgileri</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="new-address-form" id="address-add-form" method="POST">
+                    <input type="hidden" name="success_url"
+                           value="/customer/address/index">
+                    {{ widget('address', 'fields',{regions: regions,towns:towns,countries:countries,need_title:true, re_captcha: re_captcha, na_post_time: na_post_time}) }}
+
+                    <div class="text-right mt-3">
+                        <button type="submit"
+                                class="btn btn-warning btn-lg text-white pl-5 pr-5">KAYDET
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Edit Address Modal -->
+<div class="modal flomodal fade" id="editAddressModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Adres Bilgileri</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="edit-address-form no-redirect" id="address-edit-form" method="POST">
+
+                    <input type="hidden" name="success_url"
+                           value="/customer/address/index">
+                    {{ widget('address', 'fields',{regions: regions,towns:towns,countries:countries,need_title:true}) }}
+
+                    <div class="text-right mt-3">
+                        <button type="submit"
+                                class="btn btn-warning btn-lg text-white pl-5 pr-5">KAYDET
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Delete Address Modal -->
+<div class="modal flomodal fade" id="deleteAddressModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm modal-dialog-centered cart-modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">ADRES SİL</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-center pt-5 pb-5">Adresinizi silmek istediğinize emin misiniz?</h4>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-secondary" data-dismiss="modal">Vazgeç</a>
+                <a href="javascript:;" id="btnDeleteAddressModal" data-no_confirm="true" data-success_url="index"
+                   data-address-id="" class="btn btn-danger address-remove">Sil</a>
+            </div>
+        </div>
+    </div>
+</div>
+</main>

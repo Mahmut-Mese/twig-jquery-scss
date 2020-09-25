@@ -1,0 +1,35 @@
+<div class="item hidden">
+    <div class="form-group shipping-method centersGiris" id="shipping-method">
+        <span>{{ 'TESLİMAT SEÇENEKLERİ' | translate }}</span>
+        <div class="checkbox checkbox-radio full">
+            <label>
+                <div class="new-radio  checked style="position: relative;">
+
+                    <input type="radio" name="shipping_method" value="freeshipping"  checked style="display:inline">
+                    <ins></ins>
+                </div>
+            </label>
+        </div>
+        {% for method in shipping_methods %}
+            <div class="checkbox checkbox-radio full">
+                <label>
+                    <div class="new-radio  {% if method.method_code == 'FloShippingMng' %}checked{% endif %}"   style="position: relative;">
+
+                        <input type="radio" name="shipping_method" value="{{ method.method_code }}"  {% if method.method_code == 'FloShippingMng' %}checked{% endif %} style="display:inline">
+                        <ins></ins>
+                    </div>
+                    <div class="img" style="display:inline">
+                        {% if method.resim != '' %}
+                        <img src="{{ method.resim }}" alt="" style="display:inline">
+                        {% else %}
+                            {{ method.carrier_title }}
+                        {% endif %}
+
+                        <span style="display:inline; float:right">{{ '1 İş günü içerisinde kargoya teslim edilir.' | translate }}</span>
+                    </div>
+
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<div id="taksit" class="{{ mode?:'a-modal' }}">
+
+    <div class="modalHeader">
+        <strong>{{ 'TAKSİT TABLOSU' | translate }}</strong>
+    </div>
+    <div class="modalContent">
+        <div class="table">
+            <table>
+                <tbody>
+                {% set i = '' %}
+                {% set end = false %}
+                {% for installment in installments %}
+                    {% if i != installment.platform %}
+
+                        {% if end %}
+                            <tr>
+                                <td colspan="2" class="whitebg">
+                                    <p class="center"></p>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% set i = installment.platform %}
+                        <tr class="credit-card gvp">
+                            <td colspan="2"><img src="/pub/assets/instreet/images/{{ installment.platform|lower }}.png">
+                            </td>
+                        </tr>
+                        <tr class="head">
+                            <td>{{ 'TAKSİT TABLOSU' | translate }}</td>
+                            <td>{{ 'TAKSİT TUTARI' | translate }}</td>
+                        </tr>
+                        {% set end = true %}
+                    {% endif %}
+                    <tr>
+                        <td> {{ '%s Taksit' | translate | format(installment.installment) }}</td>
+                        <td>{{ installment.installment_price }}&nbsp;TL</td>
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

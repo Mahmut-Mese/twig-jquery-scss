@@ -1,0 +1,36 @@
+<div class="mc-md-6 mc-xs-6 pa">
+    <div class="alls">
+        <div class="tp">
+            <div class="fav">
+                <a href="javascript:void(0);" class="add-wishlist" data-product-id="{{ product.id }}" data-sku="{{ product.sku }}"></a>
+            </div>
+           <!-- <div class="water-ico">
+                <img src="/pub/assets/instreet/mobile/images/water.jpg" class="resimatt" alt="">
+            </div> -->
+        </div>
+        <div class="bt">
+            <a href="{{ product.url }}" {% if isSpotlight == true %}class="spotlightItem"
+               data-spotlight-id="{{ product.id }}"{% endif %}>
+                <div class="images lazy">
+                     <img data-src="{{ product.image|resize('135x135') }}" src="/pub/assets/instreet/mobile/images/mobil_sizinicin_images_135x135.jpg" class="resimatt" alt="">
+                </div>
+                <div class="text">
+                    <div class="type-list">
+                        <ul>
+                            <li class="active">{{ 'Yeni' | translate }}</li>
+                            <li>{{ '%20 İndirim' | translate }}</li>
+                        </ul>
+                    </div>
+                    <span>{{ product.manufacturer }}</span>
+                    <p>{{ product.name }}</p>
+                    <div class="money">
+                        {% if product.special_price %}
+                            <i class="prev">{{ product.price|price }}</i>
+                        {% endif %}
+                        <i class="next">{{ product|price }}</i>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

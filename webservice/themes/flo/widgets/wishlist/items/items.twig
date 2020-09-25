@@ -1,0 +1,87 @@
+<div class="favourites-page-wrapper">
+<div class="container">
+    <div class="page-title-bar">
+        <h1>Favorilerim</h1>
+    </div>
+    {% if products is empty %}
+        <div class="bg-white p-4 text-center">
+            <div class="row justify-content-center">
+                <div class="col-xl-4 col-lg-6 col-md-8">
+                    <div>
+                        <img src="/pub/assets/flo/img/empty-favourites.png">
+                    </div>
+                    <div>
+                        <img src="/pub/assets/flo/img/empty-favourites-shadow.png">
+                    </div>
+                    <h4 class="mb-4">Favori Listenizde Henüz Ürün Yok</h4>
+                    <p>Beğendiğiniz ürünlerin üzerinde bulunan kalp işaretine tıklayak ürünleri favori listenize ekleyebilirsiniz.</p>
+                    <p class="mb-4 pb-2">Aşağıdaki butonuna tıklayıp, Alışverişe Başlayabilir  istediğiniz ürünleri favoriye ekleyebilirsiniz.</p>
+                    <a href="/" class="btn btn-lg orange-gradient w-75 ml-auto mr-auto mb-4">ALIŞVERİŞE BAŞLA <i class="fa fa-angle-right"></i></a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if products is not empty %}
+        <div class="row">
+            {% for product in products %}
+            <div class="col-sm-3">
+                <a href="{{ product.url }}" class="product-box" data-product-id="{{ product.id }}"
+           onclick='RG.DataLayer.trigger("category_product_click", {productId: {{ product.id }}});'>
+                    <figure>
+                        <span class="badge badge-info">İnternete özel</span>
+                        <img src="{{ product.image|resize('268x268') }}">
+                        <span class="remove-from-favourites-button" data-product-id="{{ product.id }}" data-sku="{{ product.sku }}"></span>
+                    </figure>
+                    <span class="title">{{ product.manufacturer }}</span>
+                    <span class="description">{{ product.name }}</span>
+                    <span class="prices {% if product.rule_info %} discounted {% endif %}">
+                         {% if product.special_price %}
+                                <span class="old-price">{{ product.price | price }}</span>
+                        {% endif %}
+                            &nbsp;&nbsp;<span class="price">{{ product|price }}</span>
+                    </span>
+                    {% if product.rule_info %}
+                        <span class="discount">
+                        {% for key,info in product.rule_info %}
+                            {% if key == 0 %}
+                                {{ info['label'] }}
+                            {% endif %}
+                        {% endfor %}
+                            {% if product.third_price %}
+                                <span class="third-price"> {{ product.third_price|price }}</span>
+                            {% endif %}
+                    </span>
+                    {% endif %}
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+   <!-- <div class="row justify-content-center">
+        <div class="col-sm-9">
+            <nav class="pagination-wrapper">
+                <ul class="pagination pagination-lg justify-content-center">
+                    <li class="page-item prev">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                    <li class="page-item"><a class="page-link" href="#">5</a></li>
+                    <li class="page-item more"><a class="page-link">...</a></li>
+                    <li class="page-item"><a class="page-link" href="#">10</a></li>
+                    <li class="page-item next">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div> -->
+</div>
+</div>
+{{ widget('datalayer', 'favourite', {layerData: {productList: products}} ) }}

@@ -1,0 +1,59 @@
+<script src='https://www.google.com/recaptcha/api.js?hl=en'></script>
+<div class="page franchise-page" >
+    <div class="container-fluid">
+        <div class="page-content sab">
+            <div class="whitepage">
+                <div class="title">Wholesaler Form</div>
+                <div class="form online">
+                    <div class="centersGiris" style="max-width: 700px">
+                        <div class="form online">
+                            <form id="wholesaler_form" method="POST" enctype="multipart/form-data">
+                                <p>FLO, Turkey's biggest shoe retailer, provides trendy, confortable and quality shoes that suit for every budget in nearly 500 stores all over the world. If you would like to be a wholesale candidate please fill the application form below. We will contact with you as soon as possible.</p>
+                                <h3>Contact Information</h3>
+                                <div class="form-group required">
+                                    <em>{{ 'Name' | translate }}*</em>
+                                    <input name="first_name" type="text" class="validate[required]" placeholder="" value="{{ first_name }}">
+                                </div>
+                                <div class="form-group required">
+                                    <em>{{ 'Surname' | translate }}*</em>
+                                    <input name="last_name" type="text" class="validate[required]" placeholder="" value="{{ last_name }}">
+                                </div>
+                                <div class="form-group required">
+                                    <em>{{ 'Mobile' | translate }}*</em>
+                                    <input name="mob_phone" type="text" class="validate[required]" placeholder="">
+
+                                </div>
+                                <div class="form-group required">
+                                    <em>{{ 'Email' | translate }}*</em>
+                                    <input name="email" type="text"  class="validate[required,custom[email],funcCall[characterTurkish]] customer-email" placeholder="" value="{{ email }}">
+                                </div>
+                                <h3>Location Information</h3>
+                                <div class="form-group required">
+                                    <em>{{ 'Country' | translate }}*</em>
+                                    <input name="country" type="text" class="validate[required]" placeholder="" value="{{ first_name }}">
+                                </div>
+                                <div class="form-group required">
+                                    <em>{{ 'City' | translate }}*</em>
+                                    <input name="city" type="text" class="validate[required]" placeholder="" value="{{ first_name }}">
+                                </div>
+                                <div class="">
+                                    <em>{{ 'Attachment' | translate }}</em>
+                                    <input name="file[]" type="file" multiple class="file" placeholder="">
+                                </div>
+                                <br>
+                                <div class="form-group checkbox">
+                                    <div class="g-recaptcha" data-sitekey="{{ wholesaler_form.site_key }}"></div>
+                                </div>
+                                <div class="submit" style="max-width: 65%">
+                                    <input type="submit" class="wholesaler-submit" value="SEND" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

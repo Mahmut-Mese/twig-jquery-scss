@@ -1,0 +1,22 @@
+<h2 class="section-title">{{ 'KATEGORİLER' | translate }}</h2>
+<div class="categories-bar lazy swiper-container swiper-autoinit"
+     data-swiper-space-between="0",
+     data-swiper-navigation="false"
+     data-swiper-free-mode="true"
+	 data-swiper-slides-per-view="auto"
+>
+    <div class="swiper-wrapper">
+        {% for spotlight in spotlights %}
+			<div class="swiper-slide">
+				<a href="{{ spotlight.link }}" class="category-box" data-spotlight-id="{{ spotlight.spotlight_id }}">
+					<figure>
+						{{ img('lazyloading/blank.png', '', {cdn: 'general' }, spotlight.image_mobil) }}
+					</figure>
+					<h4>{{ spotlight.title }}</h4>
+				</a>
+			</div>
+        {% endfor %}
+    </div>
+</div>
+
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: spotlights}}) }}

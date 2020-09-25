@@ -1,0 +1,92 @@
+<script type="text/javascript">
+    var dataLayer = window.dataLayer || [];
+    var google_tag_params = {
+        site_type: "d",
+        page_type: "product",
+        url: '{{ layerData.product.url }}',
+        breadcrumb: {
+            path: "ANASAYFA{% for breadcrumb in layerData.breadcrumbs %} > {{ breadcrumb.name }}{% endfor %}",
+            last_crumb: "{{ layerData.product.name }}"
+        },
+        product: {
+            currency: "TRY",
+            brand: "{{ layerData.product.manufacturer }}",
+            color: "{{ layerData.product.renk }}",
+            size: "",
+            model: "{{ layerData.product.model }}",
+            group_id: "{{ layerData.product.sku }}",
+            discount_rate: "{{ layerData.product.discount_percent }}",
+            discount_amount: "{{ layerData.product.special_price ? (layerData.product.price - layerData.product.special_price)|number_format(2) : 0 }}",
+            main_category: "{{ layerData.product.categories|first.name }}",
+            sub_category: "{{ layerData.product.categories[1].name }}",
+            category_id: "{{ layerData.product.categories|first.id }}",
+            gender: "{{ layerData.product.gender }}",
+            material: "{{ layerData.product.saya_malzeme }}",
+            tying_type: "Kapamasız",
+            sku: "{{ layerData.product.options[0].sku }}",
+            price: "{{ layerData.product.price }}",
+            special_price: "{{ layerData.product.third_price | default(layerData.product.special_price) | default(layerData.product.price) | number_format(2) }}",
+            name: "{{ layerData.product.name }}",
+            variant: "{{ layerData.product.renk }}",
+            season: "{{ layerData.product.sezon_yil }} - {{ layerData.product.season }}",
+            category_ids: "{{ layerData.product.category_ids|join(',') }}",
+            category: "{{ layerData.product.categories|first.name }} / {{ layerData.product.categories[1].name }}",
+            image: "{{ layerData.product.image }}",
+            url_key: "{{ layerData.product.url_key }}",
+            stock_status: "{{ layerData.product.is_in_stock ? 1 : 0 }}",
+            stock_qty: "{{ layerData.product.qty }}",
+            {% if layerData.product.available_options is empty or layerData.product.options is empty%}
+            percentage_of_available_variant: "0",
+            {% else %}
+            percentage_of_available_variant: "{{ (layerData.product.available_options|length / layerData.product.options|length * 100)|number_format }}",
+            {% endif %}
+
+			{% set rule = layerData.product.rule_info | first %}
+			offer_status: {{ layerData.product.rule_info ? 1 : 0 }},
+			offer: "{{ rule.label }}",
+        }
+    };
+
+    var product = {
+        id: "{{ layerData.product.sku }}",
+        name: "{{ layerData.product.name }}",
+        category: "{{ layerData.product.categories|first.name }} / {{ layerData.product.categories[1].name }}",
+        brand: "{{ layerData.product.manufacturer }}",
+        price: "{{ layerData.product.third_price | default(layerData.product.special_price) | default(layerData.product.price) | number_format(2) }}",
+        variant: "{{ layerData.product.renk }}",
+        dimension3: "{{ layerData.product.gender }}",
+        dimension5: "{{ layerData.product.category_ids[1] }}",
+        dimension6: "{{ layerData.product.model }}",
+        dimension7: "{{ layerData.product.sezon_yil }} - {{ layerData.product.season }}",
+        dimension9: "{{ layerData.product.categories|first.name }}",
+        dimension10: "{{ layerData.product.categories[1].name }}",
+        dimension12: "{{ layerData.product.saya_malzeme }}",
+        dimension21: "{{ layerData.product.id }}",
+        dimension22: "{{ layerData.product.qty }}",
+        dimension23: "{{ layerData.product.price }}",
+        dimension24: "{{ layerData.product.is_in_stock ? 1 : 0 }}",
+        dimension25: "",
+        dimension26: "TRY",		
+
+		{% set rule = layerData.product.rule_info | first %}
+		dimension74: {{ layerData.product.rule_info ? 1 : 0 }},
+		dimension75: "{{ rule.label }}",
+    };
+
+    GtmDataLayer.set('product{{ layerData.product.sku }}', product, true);
+
+    var ecommerce = {
+        detail: {
+            actionField: {
+                action: "detail"
+            },
+            products: [product]
+        }
+    };
+
+    dataLayer.push({
+        'event': 'product_detail_impression',
+        'ecommerce': ecommerce,
+        'google_tag_params': google_tag_params
+    });
+</script>

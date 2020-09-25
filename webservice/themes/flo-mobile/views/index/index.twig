@@ -1,0 +1,44 @@
+<div class="home-page-wrapper">
+     {{ widget('general', 'spotlight') }}
+
+    <div class="container dd mb-3">
+   {#     <div class="slogans-bar">
+            <div class="icons-holder">
+                <div class="icon-box">
+                    <i class="svg-cash svg-cash-dims"></i>
+                    <h4>{{ 'Kapıda Ödeme' | translate }}</h4>
+                </div>
+                <div class="icon-box">
+                    <i class="svg-change svg-change-dims"></i>
+                    <h4>{{ 'Kolay İade' | translate }}</h4>
+                </div>
+                <div class="icon-box">
+                    <i class="svg-installment svg-installment-dims"></i>
+                    <h4>{{ '6 Taksit Seçeneği' | translate }}</h4>
+                </div>
+            </div>
+        </div>#}
+
+        <a href="{{ header_bant.link }}" class="d-block lazy">
+            {{ img('lazyloading/blank.png', '', {   cdn: 'general' }, header_bant.image_mobil) }}
+        </a>
+    </div>
+    <div class="container">
+        {{ widget('general', 'after_spotlight') }}
+
+        {{ widget('brands', 'brands_slider') }}
+
+        {{ widget('general', 'after_brand') }}
+
+        {{ widget('general', 'category_slider') }}
+
+        {{ widget('general', 'banner3') }}
+
+    </div>
+
+    {{ widget('products', 'product_slider', {title: 'Sizin İçin Seçtiklerimiz' | translate, data_source: 'sizin-icin-sectiklerimiz' }) }}
+
+
+    {{ widget('general', 'blogger') }}
+    
+</div>

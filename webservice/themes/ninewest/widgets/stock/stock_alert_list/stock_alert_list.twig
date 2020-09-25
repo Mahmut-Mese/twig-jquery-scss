@@ -1,0 +1,81 @@
+<div class="account-page-wrapper favourites-page-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                {{ widget('customer', 'account_left_menu') }}
+            </div>
+            <div class="col-sm-9" id="stockAlert">
+                <div class="breadcrumbs-bar title-only">
+                    <div class="left-nav"><a href="/" class="go-back-link"><i
+                                    class="fas fa-angle-left"></i>{{ 'Geri Dön' | translate }}</a></div>
+                    <div class="page-title"><h1>{{ 'FAVORİLERİM' | translate }}</h1></div>
+                </div>
+                {% if products is empty %}
+                    <div class="bg-white p-4 text-center">
+                        <div class="row justify-content-center">
+                            <div class="col-xl-4 col-lg-6 col-md-8">
+                                <div>
+                                    <img src="/pub/assets/flo/img/empty-favourites.png">
+                                </div>
+                                <div>
+                                    <img src="/pub/assets/flo/img/empty-favourites-shadow.png">
+                                </div>
+                                <p class="mb-4 pb-2">Aşağıdaki butonuna tıklayıp, Alışverişe Başlayabilir istediğiniz
+                                    ürünleri favoriye ekleyebilirsiniz.</p>
+                                <a href="/" class="btn btn-lg orange-gradient w-75 ml-auto mr-auto mb-4">ALIŞVERİŞE
+                                    BAŞLA <i class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+
+                <div class="itemslist" id="stockAlert">
+                    <div class="row">
+                        {% for product in products %}
+
+                            <div class="col-sm-4">
+                                <div class="row">
+                                    <a href="{{ product.url }}">
+                                        <div class="images">
+                                            <img src="{{ product.image|resize('268x268') }}" alt="">
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-10" style="padding: inherit;">
+                                        <span>{{ product.manufacturer }}</span></div>
+                                    <div class="col-sm-2">
+                                        <a class="remove-from-favourites-button stockAlert-remove"
+                                           data-product-id="{{ product.id }}" data-sku="{{ product.sku }}">
+                                            <i class="fa fa-times" style="padding: 4px; cursor: pointer;"></i><img
+                                                    data-product-id="{{ product.id }}">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row"><a href="{{ product.url }}"><p>{{ product.name }}</p></a></div>
+
+                                <ul>
+                                    <li>{{ 'Beden' | translate }}: <b>{{ product.beden }}</b></li>
+                                    <li>{{ 'Adet' | translate }}: <b>{{ product.qty }}</b></li>
+                                    <li>{{ 'Renk' | translate }}: <b>{{ product.renk }}</b></li>
+                                    <li>{{ 'Durum' | translate }}:
+                                        <b>{% if (product.is_in_stock) %} {{ 'Stokta Mevcut' | translate }} {% else %} {{ 'Stokta Yok' | translate }} {% endif %}</b>
+                                    </li>
+                                </ul>
+
+                            </div>
+
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+
+
+
+
+

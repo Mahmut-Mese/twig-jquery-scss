@@ -1,0 +1,158 @@
+<input name="form_key" type="hidden" value="l4EFzCZObjNl9Kk4">
+<input type="hidden" name="error_url" value="">
+<input type="hidden" name="address_id" value="{{ address.id }}">
+
+<div class="form-group">
+    <em>{{ 'ADRES BAŞLIĞI' | translate }} *</em>
+    <input name="{% if address_key is empty %}title_address{% else %}{{ address_key }}[title_address]{% endif %}"
+           type="text" class="validate[required]"
+           placeholder="{{ 'Ör: Ev Adresim' | translate }}"
+           value="{{ address.title_address }}">
+</div>
+
+<div class="field field-name-firstname required">
+    <div class="control-amir form-group">
+        <em class="required-em">{{ 'ADINIZ' | translate }} </em><em class="required-star">*</em>
+        <input type="text"
+               name="{% if address_key is empty %}firstname{% else %}{{ address_key }}[firstname]{% endif %}"
+               value="{{ address.firstname }}"
+               title="{{ 'First Name' | translate }}"
+               class="validate[required] input-text required-entry"
+               data-validate="{required:true}">
+
+    </div>
+</div>
+<div class="field field-name-lastname required">
+    <div class="control-amir form-group">
+        <em class="required-em">{{ 'SOYADINIZ' | translate }} </em><em class="required-star">*</em>
+        <input type="text" id="lastname"
+               name="{% if address_key is empty %}lastname{% else %}{{ address_key }}[lastname]{% endif %}"
+               value="{{ address.lastname }}" title="{{ 'Last Name' | translate }}"
+               class="validate[required] input-text required-entry"
+               data-validate="{required:true}">
+
+    </div>
+</div>
+{% if address_key == 'shipping_address' %}
+    <div class="field field-name-email required">
+        <div class="control-amir form-group">
+            <em class="required-em" for="guest_email">{{ 'EMAİL' | translate }} </em><em class="required-star">*</em>
+            <input type="email" id="guest_email" name="guest_email"
+                   value="" title="{{ 'Email' | translate }}"
+                   class="validate[required] input-text required-entry"
+                   data-validate="{required:true}">
+
+        </div>
+    </div>
+{% endif %}
+<div class="field required">
+    <div class="form-group">
+        <em class="required-em" >{{ 'TELEFON NUMARASI' | translate }} </em><em class="required-star">*</em>
+        <input class="validate[required]" type="tel"
+               name="{% if address_key is empty %}telephone{% else %}{{ address_key }}[telephone]{% endif %}"
+               value="{{ address.telephone }}" title="{{ 'Phone Number' | translate }}"
+               >
+
+    </div>
+</div>
+<div class="hidden field choice sms-alert">
+    <input type="checkbox"
+           name="{% if address_key is empty %}sms_alert{% else %}{{ address_key }}[sms_alert]{% endif %}"
+           value="{{ address.sms_alert }}"
+           title="{{ 'Send SMS order notifications' | translate }}" id="sms_alert">
+    <label for="sms_alert" class="label">
+        <span>{{ 'Email' | translate }}Send SMS notifications to the telephone number above.</span>
+    </label>
+</div>
+<div class="field required">
+    <div class="form-group">
+        <em class="required-em">{{ 'ÜLKE' | translate }} </em><em class="required-star">*</em>
+        <select id="country_{{ address_key }}" data-key="{{ address_key }}"
+                name="{% if address_key is empty %}country_id{% else %}{{ address_key }}[country_id]{% endif %}">
+            <option value="0"></option>
+            {% for country_id, country_name in countries %}
+                <option
+                        data-country-id="{{ country_id }}"
+                        value="{{ country_id }}"
+                        {% if address.country_id == country_id %}selected{% endif %}>{{ country_name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="field required">
+    <div class="form-group">
+        <em class="required-em">{{ 'ŞEHİR' | translate }} </em><em class="required-star">*</em>
+        <input class="validate[required]" type="text"
+               name="{% if address_key is empty %}region{% else %}{{ address_key }}[region]{% endif %}"
+               value="{{ address.region }}" title="{{ 'ŞEHİR' | translate }}"
+               >
+        <input type="hidden" name="region_id" value="{% if address.region %}{{ address.region_id }}{% else %}0{% endif %}">
+
+    </div>
+</div>
+<div class="field required">
+    <div class="form-group">
+        <em class="required-em">{{ 'İLÇE' | translate }} </em><em class="required-star"></em>
+        <input class="" type="text"
+               name="{% if address_key is empty %}city{% else %}{{ address_key }}[city]{% endif %}"
+               value="{{ address.city }}" title="{{ 'ŞEHİR' | translate }}"
+        >
+
+    </div>
+</div>
+
+<!--
+<div class="field required hidden" style="display: block;">
+    <div class="control">
+        <input name="{% if address_key is empty %}country_id{% else %}{{ address_key }}[country_id]{% endif %}"
+               id="country" class="required-entry"
+               title="{{ 'Country' | translate }}" data-validate="{'validate-select':true}"
+               aria-required="true" value="TR">
+    </div>
+</div> -->
+
+<div class="field required">
+    <div class="form-group">
+        <em class="required-em">{{ 'POSTA KODU' | translate }} </em><em class="required-star">*</em>
+        <input type="text" name="{% if address_key is empty %}postcode{% else %}{{ address_key }}[postcode]{% endif %}"
+               value="{{ address.postcode }}" title="Post Code"
+               class="validate[required]"
+               id="zip">
+    </div>
+</div>
+<div class="field required">
+    <div class="form-group">
+        <em class="required-em">{{ 'ADRES' | translate }} </em><em class="required-star">*</em>
+        <textarea class="validate[required] " placeholder="{{ 'Mahalle, cadde, sokak ve diğer bilgilerinizi giriniz.' | translate }}"
+                  name="{% if address_key is empty %}street{% else %}{{ address_key }}[street]{% endif %}"
+                  value="{{ address.street | join(' ') }}" title="{{ 'Street Address' | translate }}"
+                 >{{ address.street }}</textarea>
+    </div>
+</div>
+{% if address_key is empty %}
+    <div class="field required hidden">
+        <div class="form-group ship-method">
+            <em>{{ 'Varsayılan Teslimat Adresim' | translate }}</em>
+            <div class="icheckbox_square_gold new-checkbox checked"
+                 style="position: relative;">
+                <input type="checkbox" name="default_shipping"
+                       value="1"
+                       title="{{ 'default shipping' | translate }}"
+                       id="default_shipping" checked>
+            </div>
+        </div>
+    </div>
+    <div class="field required hidden">
+        <div class="form-group ship-method">
+            <em>{{ 'Varsayılan Fatura Adresim' | translate }}</em>
+            <div class="icheckbox_square_gold new-checkbox  checked"
+                 style="position: relative;">
+                <input type="checkbox" name="default_billing"
+                       value="1" title="{{ 'billing' | translate }}"
+                       id="default_billing" checked>
+            </div>
+
+        </div>
+    </div>
+{% endif %}

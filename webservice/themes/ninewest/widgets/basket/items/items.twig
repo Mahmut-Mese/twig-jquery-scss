@@ -1,0 +1,200 @@
+{#
+<div class="notes">
+    {{ 'Sepetinizde bulunan ürün/ürünler size rezerve edilmemiştir. Hemen satın almak için acele ediniz.' | translate }}
+</div>
+<div class="basket-detail cart-detail">
+    <table>
+        <tbody>
+        <tr>
+            <td> {{ 'SİL' | translate }}</td>
+            <td> {{ 'ÜRÜN' | translate }}</td>
+            <td> {{ 'ÜRÜN ADI' | translate }}</td>
+            <td> {{ 'RENK' | translate }}</td>
+            <td> {{ 'BEDEN' | translate }}</td>
+            <td> {{ 'ADET' | translate }}</td>
+            <td> {{ 'FİYAT' | translate }}</td>
+        </tr>
+        {% for item in basket.items %}
+            <tr data-id="{{ item.item_id }}" data-sku="{{ item.sku }}" class="basket-item">
+                <td>
+                    <a href="javascript:void(0);">
+                        <i data-id="{{ item.item_id }}" data-sku="{{ item.sku }}" data-update="1" class="close">x</i>
+                    </a>
+                </td>
+                <td>
+                    <div class="images">
+                        <a href="{{ item.data.image }}" data-fancybox="{{ item.item_id }}">
+                            <img src="{{ item.data.image }}" style="width:120px">
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <div class="text">
+                        <a href="{{ item.data.url }}">
+                            <span><i>{{ item.data.brand }}</i> {{ item.data.name }}</span>
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <div class="text">
+                        <span>{{ item.data.renk }}</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="text optn  ">
+                        <div class="qty-select select">
+                            <ul class="list">
+
+                                {% for option in item.data.options %}
+                                    {% if option.is_selected %}
+                                        <li class="option" data-value="{{ option.sku }}">{{ option.option_value }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% for option in item.data.options %}
+                                    {% if option.qty > 0 and  option.is_selected == 0 %}
+                                        <li class="option" data-value="{{ option.sku }}">{{ option.option_value }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="text qty">
+                        <div class="qty-select select">
+                            <ul class="list">
+                                <li class="option" data-value="{{ item.qty }}">{{ item.qty }}</li>
+                                {% for option in item.data.options %}
+                                    {% if option.qty > 1 %}
+                                        {% if option.is_selected %}
+                                            {% for i in 1..option.qty  if i != item.qty and i < 8 %}
+                                                <li class="option" data-value="{{ i }}">{{ i }}</li>       {% endfor %} {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% if item.not_in_stock %}
+                        <span style="display: block; width: 100%; text-align: center; color: #F00; padding-top: 5px; margin-bottom: -36px;">{{ 'Bu ürün tükendi.' | translate }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="text">
+                        <span>{{ (item.base_price_incl_tax) | price }}</span>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="bottom-pro">
+        <a href="/"> {{ 'ALIŞVERİŞE DEVAM ET' | translate }}</a>
+    </div>
+</div>
+{{ widget('datalayer', 'checkout_cart', {layerData: {cart: basket, refresh: isAjax}}) }}#}
+
+<div class="my-basket">
+    <div class="basket-list">
+        <div class="cart-extended basket-detail cart-detail">
+            <div class="buy-alert"><i>!</i> Sepetinizde bulunan ürün/ürünler size rezerve edilmemiştir. 
+				{# Hemen satın almak için acele ediniz. #}
+            </div>
+            <table class="table cart-table">
+                <thead>
+                <tr>
+                    <th>{{ 'ÜRÜN' | translate }}</th>
+                    <th>{{ 'ÜRÜN ADI' | translate }}</th>
+                    <th class="hidden-xs">{{ 'RENK' | translate }}</th>
+                    <th class="hidden-xs">{{ 'BEDEN' | translate }}</th>
+                    <th>{{ 'ADET' | translate }}</th>
+                    <th>{{ 'FİYAT' | translate }}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in basket.items %}
+
+                    <tr data-id="{{ item.item_id }}" data-sku="{{ item.sku }}" class="basket-item">
+                        <td>
+                            <a href="{{ item.data.image }}" data-fancybox="{{ item.item_id }}">
+                                {{ img(item.data.image|resize('120x120'), {}) }}
+                            </a>
+                            {#                    <img class="product-image" src="pub/assets/flo/img/sample/thumb-120x80.jpg">#}
+                        </td>
+                        <td>{{ item.data.manufacturer }}<br>
+                            <a href="{{ item.data.url }}">
+                                {{ item.data.name }}
+                        
+
+								<div class="visible-xs hidden">
+									{{ item.data.renk }}
+									<br>
+									{% for option in item.data.options %}
+										{% if option.is_selected %}
+											{{ option.option_value }}
+										{% endif %}
+									{% endfor %}
+								</div>
+						    </a>
+							
+						</td>
+                        <td class="hidden-xs">{{ item.data.renk }}</td>
+                        <td class="hidden-xs">
+                            <div class="text optn  ">
+
+
+                                {% for option in item.data.options %}
+                                    {% if option.is_selected %}
+                                        {{ option.option_value }}
+                                    {% endif %}
+                                {% endfor %}
+
+
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text qty">
+								<select class="qty-select select" name="qty_select">
+									<option class="option" value="{{ item.qty }}" data-value="{{ item.qty }}" selected>{{ item.qty }}</option>
+
+									{% for option in item.data.options %}
+										{% if option.qty > 1 %}
+											{% if option.is_selected %}
+												{% for i in 1..option.qty  if i != item.qty and i < 8 %}
+													<option class="option" value="{{ i }}" data-value="{{ i }}">{{ i }}</option>
+												{% endfor %}
+											{% endif %}
+										{% endif %}
+									{% endfor %}
+								</select>
+                            </div>
+                            {% if item.not_in_stock %}
+                                <span style="display: block; width: 100%; text-align: center; color: #F00; padding-top: 5px; margin-bottom: -36px;">{{ 'Bu ürün tükendi.' | translate }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if item.data.price > item.base_price_incl_tax %}
+                                <div class="old-price"><span>{{ item.data.price | price }}</span></div>
+                            {% endif %}
+                            <div class="price">{{ (item.base_price_incl_tax) | price }}</div>
+                        </td>
+                        <td>
+                            <a href="javascript:;" class="remove">
+                                <i data-id="{{ item.item_id }}" data-sku="{{ item.sku }}" data-update="1"
+                                   class="close fa fa-times"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+            <a href="/" class="text-gray"><u> {{ 'Alışverişe Devam Et' | translate }}</u></a>
+        </div>
+    </div>
+</div>
+
+{{ widget('datalayer', 'checkout_cart', {layerData: {cart: basket, refresh: isAjax}}) }}

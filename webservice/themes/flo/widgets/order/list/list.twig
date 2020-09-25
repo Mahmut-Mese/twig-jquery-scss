@@ -1,0 +1,67 @@
+<div class="account-page-wrapper mt-3 siparis-cancel">
+    <div class="container">
+        <div class="row medium-gutter">
+            <div class="col-sm-3">
+                {{ widget('customer','account_left_menu') }}
+            </div>
+            <div class="col-sm-9">
+                {% if orders is empty %}
+                    <div class="breadcrumbs-bar title-only">
+                        <div class="empty-cart-alert text-center" style="margin: 0 auto;">
+                            <i class="svg-cart-big svg-cart-big-dims mb-3"></i>
+                            <h1>Henüz siparişiniz bulunmamaktadır</h1>
+                            <p class="mb-5">Binlerce ürün ve model seni bekliyor, göz atmak için <a href="/">tıkla</a></p>
+                            <a href="/"
+                               class="btn btn-warning btn-lg text-white btn-block d-flex align-items-center justify-content-center">ALIŞVERİŞE
+                                BAŞLA <i class="fa fa-angle-right ml-3"></i></a>
+                        </div>
+                    </div>
+                {% else %}
+                    {% for order in orders %}
+                        <div class="order-box">
+                            <div class="infos-holder">
+                                <table>
+                                    <tr>
+                                        <td>Sipariş No: {{ order.increment_id }}</td>
+                                        <td>Sipariş Özeti</td>
+                                        <td>Alıcı</td>
+                                        <td>Toplam</td>
+                                    </tr>
+									{% set totalCount = 0 %}
+									{% for orderItem in order_detail[order.entity_id] %}
+										{% set totalCount = totalCount + (orderItem.qty_ordered | number_format) %}
+									{% endfor %}
+                                    <tr>
+                                        <td>{{ order.created_at | date('d.m.Y H:i') }}</td>
+                                        <td>{{ totalCount }} Ürün</td>
+                                        <td>{{ order.shipping_address_info.firstname }} {{ order.shipping_address_info.lastname }}</td>
+                                        <td>{{ order.base_grand_total | price }}</td>
+                                    </tr>
+                                </table>
+                                <a href="order?id={{ order.entity_id }}" class="btn orange" >SİPARİŞ DETAYI <i class="svg-order-detail svg-order-detail-dims"></i></a>
+                            </div>
+                            <div class="status-holder">
+                                <div class="order-status {{ order.status }}">
+                                    <div class="status-date mr-4 hidden">
+                                        <div class="status d-flex align-items-center {% if order.status == 'order_canceled' or order.status == 'canceled' %} text-danger {% else %} text-success {% endif %}  mb-2">
+                                            <i class="{{ icon_status_list[order.status] }} mr-3"></i> {{ status_list[order.status] }}
+                                        </div>
+                                       <!-- <div class="date">TESLİMAT TARİHİ: {{ order.ekol_order_updates.ekol_date is empty ? "" : order.ekol_order_updates.ekol_date | date('d.m.Y')}}</div>-->
+                                    </div>
+                                    <ul class="products">
+
+                                        {% for product in order_detail[order.entity_id] %}
+                                        <li><a href="{{ product.url_key }}"><img src="{{ product.image }}" alt="" onerror="this.src='/pub/assets/flo/img/placeholders/product.jpg'"></a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <!--<a href="javascript:;" class="btn outline-gray" id="siparis_iptal_{{ order.increment_id }}_{{ order.protect_code }}">KOLAY İADE <i class="svg-order-return svg-order-return-dims"></i></a> -->
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {{ pagination(current_page, total_count, limit, 1, (original_request_url), activeFilters, 'pagination-lg justify-content-center') }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

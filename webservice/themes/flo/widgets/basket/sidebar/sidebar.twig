@@ -1,0 +1,84 @@
+<script>
+    function rgBasketUpdate() {
+        if(RG.Basket.is_cash_on_delivery !== 0){
+            RG.Basket.is_cash_on_delivery = {{ is_method_cash_on_delivery }};
+        }
+        RG.Basket.is_installment_set = 0;
+        RG.Basket.shipping_amount = {{ basket.shipping_amount ?? 0 }};
+        RG.Basket.base_total = {{ basket.subtotal_incl_tax + basket.discount_amount }};
+        RG.Basket.cash_on_delivery_fee = {{ cash_on_delivery_fee ?? 0 }};
+        RG.Basket.prepareSidebar();
+    };
+    if (window.jQuery) {
+        $(rgBasketUpdate);
+    } else {
+        domReadyCallbacks.push(function () {
+            $(function () {
+                rgBasketUpdate();
+            });
+        });
+    }
+</script>
+<div class="cart-summary basket-side">
+    <div class="summary-title">
+        {{ 'Sepetinizde %s adet ürün var' | translate | format(basket.items_qty) }}
+    </div>
+    {{ widget('basket','mini_cart_detail',{ basket : basket, cash_on_delivery_fee: cash_on_delivery_fee}) }}
+
+    {# {% if campaign %} #}
+    {% if not coupon_hide %}
+        <div class="campaign-form campaing">
+            <div class="card new-select">
+                <a href="javascript:;" class="show-campaign-code new-code">
+                    {% if basket.coupon_code %}
+                        {{ 'Kampanya Kodunuz' | translate }}
+                    {% else %}
+                        {{ 'Kampanya Kodunuz Var mı?' | translate }}
+                    {% endif %}<i class="fa fa-angle-down"></i>
+                </a>
+                <div class="collapse">
+                    <div class="card-body">
+                        <div class="cart-coupon {{ basket.coupon_code ? 'show' : '' }}">
+                            {{ widget('basket','coupons',{'basket':basket}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+
+
+    {# {% endif %} #}
+    {% if aggrement %}
+        <div class="checkbox checkboxbbb aggreement-box p-2" >
+            <label class="flo-checkbox with-links  iread iread-payu required">
+                <input type="checkbox" name="cc_check" class="validate[required]" id="sadasd">
+                <span><i class="fa fa-check"></i></span>
+                <a href="javascript:;"  id="mesafeli-satis-sozlesmesi" data-toggle="modal" data-target="#order-contract-modal">Mesafeli Satış
+                    Sözleşmesini</a> ve <br>
+                <a href="javascript:;"  id="on-bilgilendirme-sozlesmesi" data-toggle="modal" data-target="#pre-info-modal">Ön Bilgilendirme
+                    Formu’nu</a> okudum onaylıyorum.
+<em class="note-basket-required d-none">Bu onay kutusu zorunludur! </em>
+            </label>
+        </div>
+    {% endif %}
+
+    <div class="basket-button {{ sepet_onayla == 'hidden' ? ' hidden': '' }} ">
+		<button type="submit" class="flo-theme flo-theme-desktop linkto  btn btn-success text-white  ">
+		
+		{% if button_label %}
+			{{ button_label | translate }}
+		{% else %}
+            {{ 'SEPETİ ONAYLA' | translate }}
+		{% endif %}
+
+            <i class="fa fa-angle-right"></i></button>
+    </div>
+
+	{% if ispayment %}
+	<div class="payment-button-info">
+		{{ 'Sonraki adımda sipariş özetinizi inceleyebilirsiniz.' | translate }}
+	</div>
+	{% endif %}
+</div>

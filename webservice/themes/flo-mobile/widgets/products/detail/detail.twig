@@ -1,0 +1,1353 @@
+
+{{ widget('datalayer', 'product_detail', {layerData: {product: product, breadcrumbs: breadcrumb}} ) }}
+
+<main role="main">
+
+    <div class="product-detail-page-wrapper">
+        <ul class="breadcrumbs with-go-back">
+            <li class="go-back-link">
+                <a href="/">
+					 <i class="svg-home svg-home-dims"></i>
+                    {# <i class="svg-slide-arrow-left svg-slide-arrow-left-dims"></i> #}
+                </a>
+            </li>
+            {% for cat in breadcrumb %}
+                <li>
+                    <a class="text-capital" href="/{{ cat.url }}">{{ cat.name | translate }}</a>
+                </li>
+            {% endfor %}
+            <li>
+                <a class="text-capital" href="javascript:void(0);">{{ product.name | raw | capitalize }}</a>
+            </li>
+        </ul>
+        <div class="title-box">
+            <h1 class="text-capital">{{ product.manufacturer | raw | capitalize }}
+                <span class="description text-capital">{{ product.name | raw | capitalize }}</span>
+            </h1>
+        </div>
+
+
+        <div class="container">
+            <div class="product-detail-slider pos-relative">
+
+				<div class="badges">
+					{% for badge in badges.desktop_image %}
+						{% if loop.index <= 2 %}
+							<img src="{{ badge }}" />
+						{% endif %}
+					{% endfor %}
+				</div>
+
+
+                {% if product.media_gallery %}
+                    <div class="holder">
+                        {% for key, image in product.media_gallery %}
+                            <a href="{{ image.url|resize('1000x1000') }}" class="slide" data-fancybox="gallery">
+                                <img src="{{ image.url|resize('750x750') }}" alt="{{ product.manufacturer }} {{ product.name }}">
+                            </a>
+                        {% endfor %}
+                    </div>
+					{% if product.media_gallery | length > 1 %}
+						<a href="javascript:" class="arrow next"></a>
+						<a href="javascript:" class="arrow prev"></a>
+					{% endif %}
+
+                    <span class="add-to-favourites-button add-wishlist" data-favourited="false"
+                          data-product-id="{{ product.id }}" data-sku="{{ product.sku }}">
+                <i class="svg-favourite svg-favourite-dims"></i>
+                </span>
+                    <div class="prices">
+                        {% if product.special_price %}
+                            <span>{{ product.price|price }}</span>
+						{% endif %}
+
+						<strong class="{% if product.rule_info is empty %} text-highlight {% endif %}">{{ product|price }}</strong>
+					</div>
+
+                    {% if product.rule_info %}
+                        {% set firstItem = product.rule_info[0] %}
+                        {% if firstItem.label or product.third_price %}
+                            <div class="discount ">
+                                {{ firstItem.label }}
+                                {% if product.third_price %}
+                                    <span class="text-warning">{{ product.third_price|price }}</span>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    <div class="div-padding-bold"></div>
+                {% endif %}
+            </div>
+
+            {% if product.color_options %}
+            <div class="choices-box">
+
+                    <div class="color-selection">
+                        {% for key,color_option in product.color_options %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="colorSelection"
+                                       id="colorSelection{{ key }}"
+                                       value="blue" {% if color_option.sku == product.sku %} checked {% endif %}>
+                                <label class="form-check-label" for="colorSelection{{ key }}">
+                                    <a href="{{ color_option.url }}">
+                                        <img width="58px" height="58px" src="{{ color_option.image|resize('58x58') }}">
+                                    </a>
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+            </div>
+            {% endif %}
+            <div class="choices-box pb-1">
+                <div class="size-selection">
+                    <div class="title">
+                        <span>Beden Seçiniz</span>
+                        <a href="javascript:" data-toggle="modal" data-target="#sizeTableModal">Beden Tablosu</a>
+                    </div>
+                    <div class="size-list">
+                        {% for key, option in product.options %}
+
+                            <div class="form-check {% if option.is_in_stock is empty %}disabled{% endif %}">
+                                <input class="form-check-input input-radio{% if product.options|length == 1 %} selected{% endif %}"
+                                       type="radio" name="sizeSelection"
+                                       id="sizeSelection{{ key }}"
+                                       value="{{ option.option_value }}"
+                                        {% if product.options|length == 1 %} checked{% endif %}
+                                        {% if product.options|length == 1 %} data-selected="1" {% endif %}
+                                        {% if option.is_in_stock is empty %} data-soldout="1" {% endif %}
+                                       data-name="option_sku_{{ product.id }}" data-value="{{ option.sku }}"
+                                       data-option-id="{{ option.entity_id }}"
+                                       data-option="{{ option.option_value }}">
+                                <label class="form-check-label"
+                                       for="sizeSelection{{ key }}">{{ option.option_value }}</label>
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+            <div class="basket-button">
+                    <a id="add2cart" data-has-option="{% if product.options %}1{% else %}0{% endif %}"
+                       data-product-id="{{ product.id }}"
+                       data-sku="{{ product.options|length == 1 ? product.options|first.sku : product.sku }}"
+                       class="add-to-cart linkto"
+                       href="">{% if product.qty %}{{ 'SEPETE EKLE' | translate }}{% else %}{{ 'HABER VER' | translate }}{% endif %}</a>
+            </div>
+            <button id="clickSepeteekle" type="button" class="add-to-cart-button hidden">SEPETE EKLE <i
+                        class="fa fa-angle-right"></i></button>
+            {#            <button type="button" class="get-informed-instock-button">HABER VER <i class="fa fa-angle-right"></i></button>#}
+            <div class="bg-white p-2">
+                <div class="shipping-info">
+                    {# {{ product_cargo['firstDate'] | date("d.m.Y") }} - {{ product_cargo['lastDate'] | date("d.m.Y") }}
+                    tarihleri arasında kargoda. #}
+
+					En geç {{ date_format_tr(product_cargo['lastDate'], 'd F l') }} günü kargoda
+                </div>
+                <div class="icons">
+					<div class="icon-box">
+						<div class="title">150 TL ve Üzeri<br>Ücretsiz Kargo</div>
+						<figure>
+							<i class="svg-shopping-bag svg-shopping-bag-dims"></i>
+						</figure>
+					</div>
+					<div class="icon-box">
+						<div class="title">6 Taksit<br>Seçeneği</div>
+						<figure>
+							<i class="svg-installment-orange svg-installment-orange-dims"></i>
+						</figure>
+					</div>
+					<div class="icon-box">
+						<div class="title">Hızlı<br>Teslimat</div>
+						<figure>
+							<i class="svg-same-day svg-same-day-dims"></i>
+						</figure>
+					</div>
+
+					<div class="icon-box">
+						<div class="title">60 Gün İade<br>Avantajı</div>
+						<figure>
+							<i class="svg-easy-return svg-easy-return-dims"></i>
+						</figure>
+					</div>
+					<div class="icon-box">
+						<div class="title">Mağazada<br>Değişim</div>
+						<figure>
+							<i class="svg-change-at-store"></i>
+						</figure>
+					</div>
+				</div>
+            </div>
+            {# <div class="product-infos">
+                <div class="holder">
+                    <table>
+                        {% set key = 0 %}
+                        {% for description_field in description_fields %}
+                            {% if product[description_field] is not empty %}
+                                {% if(key % 3 == 0) %}<tr>{% endif %}
+                                <td class="product-info-{{ description_field }}"><span>{{ attribute_labels[description_field] | translate }} :</span>
+                                    {% if description_field == 'manufacturer' %}
+                                        <a target="_blank"
+                                           href="/{{ "marka" | translate }}/{{ brand_info.url_key |raw }}">{{ product[description_field]|trim('0', 'left') }}</a>
+                                    {% else %}
+                                        {{ product[description_field]|trim('0', 'left') }}
+                                    {% endif %}
+
+                                </td>
+                                {% if(key % 3 == 2) %}</tr>{% endif %}
+                                {% set key = key + 1 %}
+                            {% endif %}
+                        {% endfor %}
+
+                    </table>
+                </div>
+            </div> #}
+            <div class="widget_products_price_alert" data-widget="products/price_alert">
+                <input id="price_alert" type="hidden" data-product="{{ product.id }}" data-sku="{{ product.sku }}" />
+            </div>
+
+			<div class="row small-gutter">
+				<div class="col-12 product-detail-info">
+					<div class="accordion" id="productDetailInfoAccordion">
+						<div class="card">
+							<div class="card-header">
+								<h2 class="mb-0">
+									<button class="btn btn-block btn-link" type="button" data-toggle="collapse" data-target="#product-infos" aria-expanded="true" aria-controls="product-infos">
+										Ürün Özellikleri
+
+										<i class="fa"></i>
+									</button>
+								</h2>
+							</div>
+
+							<div id="product-infos" class="collapse show" aria-labelledby="product-infos" data-parent="#productDetailInfoAccordion">
+								<div class="card-body">
+									<div class="product-detail-info-title">{{ product.name }}</div>
+
+									{% for description_field in description_fields %}
+										{% if product[description_field] is not empty %}
+											<span class="product-detail-info-item"><strong>{{ attribute_labels[description_field] | translate }}</strong> :
+												{% if description_field == 'manufacturer' %}
+													<a target="_blank"
+													href="/{{ "marka" | translate }}/{{ brand_info.url_key |raw }}">{{ product[description_field]|trim('0', 'left') }}</a>
+												{% else %}
+													{{ product[description_field]|trim('0', 'left') }}
+												{% endif %}
+											</span>
+										{% endif %}
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+
+						{% if product.description %}
+						<div class="card">
+							<div class="card-header">
+							<h2 class="mb-0">
+								<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#product-description" aria-expanded="false" aria-controls="product-description">
+									Ürün Açıklaması
+
+									<i class="fa"></i>
+								</button>
+							</h2>
+							</div>
+							<div id="product-description" class="collapse" aria-labelledby="product-description" data-parent="#productDetailInfoAccordion">
+								<div class="card-body">
+									{{ product.description }}
+								</div>
+							</div>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+        </div>
+
+        <section class="our-choices">
+            {{ widget('products', 'product_slider', {title: 'Sizin İçin Seçtiklerimiz' | translate, data_source: 'sizin-icin-sectiklerimiz' }) }}
+        </section>
+
+        <!-- Shipping Info Modal -->
+        <div class="modal flomodal fade" id="shippingInfoModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fs-18 text-warning">Teslimat ve İade</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        </button>
+                    </div>
+                    <div class="modal-body fs-15">
+                        <p>Ürün iadesi ve değişimi için kesinlikle ürünün faturası veya irsaliyesi ile birlikte
+                            başvurulması,
+                            ürünün kullanılmamış olması ve size ulaştığı şekilde, varsa promosyonları ve tüm
+                            aksesuarları
+                            ile
+                            birlikte teslim edilmesi gerekmektedir. 01 Ocak 2016 tarihinden sonra düzenlenen
+                            faturalarınızı
+                            sitemize üye girişi yaptıktan sonra "Hesabım" bölümündeki "Siparişlerim" sayfasından
+                            görüntüleyebilir ve çıktısını alabilirsiniz. Flo.com.tr’den almış olduğunuz ürünleri, <b>FLO
+                                mağazalarına iade edebilir</b> veya mağaza stoklarında mevcut ise değiştirebilirsiniz.
+                            Fatura üzerindeki
+                            iade adresimize ürün gönderimi yaptığınızda sadece iade işlemi yapılmakta, değişim işlemi
+                            yapılamamaktadır. Ürün bedeli iadesi online satış birimi tarafından gerçekleştirilmektedir.
+                            İade
+                            ve
+                            değişim işlemleri ile ilgili detaylı bilgiye ulaşabilirsiniz.</p>
+
+                        <p>İadenizi MNG Kargo ile hiç bir ücret ödemeden bize yollayabilirsiniz.</p>
+
+                        <p><b>İade Adresimiz:</b> EKOL Mimoza tesisleri, Akse Mah. 552 Sk. Reysaş Çayırova 8 Depo
+                            TR-41420
+                            Çayırova /
+                            Kocaeli</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Size Table Modal -->
+        <div class="modal flomodal fade" id="sizeTableModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fs-18">Beden Tablosu</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button>
+                    </div>
+					<div class="modal-body fs-15">
+						<ul class="nav nav-tabs" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link active" data-toggle="tab" href="#woman" role="tab"
+									aria-controls="woman" aria-selected="true">Kadın</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#man" role="tab"
+									aria-controls="man" aria-selected="false">Erkek</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#girl" role="tab"
+									aria-controls="girl" aria-selected="false">Kız Çocuk</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#boy" role="tab"
+									aria-controls="boy" aria-selected="false">Erkek Çocuk</a>
+							</li>
+						</ul>
+
+						<div class="row">
+							<div class="col-12">
+								<div class="tab-content">
+									<div class="tab-pane sc-accordion-wrapper fade show active" id="woman" role="tabpanel">
+										<div class="row">
+											<div class="col-12">
+												<div class="sc-accordion active">
+													<a href="#" class="sc-accordion-title" data-target=".woman-foot">Ayakkabı <i class="fa"></i></a>
+
+													<div class="sc-accordion-content sc-accordion-target woman-foot">
+														<div class="foot-size-list">
+															<ul>
+																<li class="sshead">
+																	<ul>
+																		<li>Cm</li>
+																		<li>Europe</li>
+																		<li>UK</li>
+																		<li>US</li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>22.8</span></a></li>
+																		<li><a href="#"><span>35</span></a></li>
+																		<li><a href="#"><span>2.5</span></a></li>
+																		<li><a href="#"><span>5	</span></a></li>
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>23.5</span></a></li>
+																		<li><a href="#"><span>36</span></a></li>
+																		<li><a href="#"><span>3 / 3.5</span></a></li>
+																		<li><a href="#"><span>5.5 / 6</span></a></li>
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>23.8</span></a></li>
+																		<li><a href="#"><span>37</span></a></li>
+																		<li><a href="#"><span>4</span></a></li>
+																		<li><a href="#"><span>6.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>24.5</span></a></li>
+																		<li><a href="#"><span>38</span></a></li>
+																		<li><a href="#"><span>4.5</span></a></li>
+																		<li><a href="#"><span>7</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>25.1</span></a></li>
+																		<li><a href="#"><span>39</span></a></li>
+																		<li><a href="#"><span>5 / 5.5</span></a></li>
+																		<li><a href="#"><span>7.5 / 8</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>25.4</span></a></li>
+																		<li><a href="#"><span>40</span></a></li>
+																		<li><a href="#"><span>6</span></a></li>
+																		<li><a href="#"><span>8.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>25.7</span></a></li>
+																		<li><a href="#"><span>41</span></a></li>
+																		<li><a href="#"><span>6.5 / 7</span></a></li>
+																		<li><a href="#"><span>9 / 9.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>26</span></a></li>
+																		<li><a href="#"><span>42</span></a></li>
+																		<li><a href="#"><span>7.5</span></a></li>
+																		<li><a href="#"><span>10</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>26.7</span></a></li>
+																		<li><a href="#"><span>43</span></a></li>
+																		<li><a href="#"><span>8 / 8.5</span></a></li>
+																		<li><a href="#"><span>10.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>27.3</span></a></li>
+																		<li><a href="#"><span>44</span></a></li>
+																		<li><a href="#"><span>9.5</span></a></li>
+																		<li><a href="#"><span>11 / 12</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>27.9</span></a></li>
+																		<li><a href="#"><span>45</span></a></li>
+																		<li><a href="#"><span>10 / 10.5</span></a></li>
+																		<li><a href="#"><span>12.5 / 13</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>28.3</span></a></li>
+																		<li><a href="#"><span>46</span></a></li>
+																		<li><a href="#"><span>11 / 11.5</span></a></li>
+																		<li><a href="#"><span>13.5 / 14</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>28.9</span></a></li>
+																		<li><a href="#"><span>47</span></a></li>
+																		<li><a href="#"><span>12</span></a></li>
+																		<li><a href="#"><span>14.5 / 15</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+
+												<div class="sc-accordion">
+													<a href="#" class="sc-accordion-title" data-target=".woman-dress">Giyim <i class="fa"></i></a>
+
+													<div class="sc-accordion-content sc-accordion-target woman-dress" style="display:none;">
+														<div class="foot-size-list">
+															<ul>
+																<li class="sshead">
+																	<ul>
+																		<li>BEDEN</li>
+																		<li>GÖĞÜS CM</li>
+																		<li>BEL CM</li>
+																		<li>KALÇA</li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>XS</span></a></li>
+																		<li><a href="#"><span>76-83</span></a></li>
+																		<li><a href="#"><span>60-67</span></a></li>
+																		<li><a href="#"><span>84-91</span></a></li>
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>S</span></a></li>
+																		<li><a href="#"><span>83-90</span></a></li>
+																		<li><a href="#"><span>67-74</span></a></li>
+																		<li><a href="#"><span>91-98</span></a></li>
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>M</span></a></li>
+																		<li><a href="#"><span>90-97</span></a></li>
+																		<li><a href="#"><span>74-81</span></a></li>
+																		<li><a href="#"><span>98-105</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>L</span></a></li>
+																		<li><a href="#"><span>97-104</span></a></li>
+																		<li><a href="#"><span>81-88</span></a></li>
+																		<li><a href="#"><span>105-112</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>XL</span></a></li>
+																		<li><a href="#"><span>104-114</span></a></li>
+																		<li><a href="#"><span>88-98</span></a></li>
+																		<li><a href="#"><span>112-120</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>XXL</span></a></li>
+																		<li><a href="#"><span>114-124</span></a></li>
+																		<li><a href="#"><span>98-108</span></a></li>
+																		<li><a href="#"><span>120-128</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="row sc-accordion-target woman-foot">
+													<div class="col-12">
+														<h5>Doğru Ayak Ölçüsü Nasıl Alınır?</h5>
+														<p>Eğer ayak numaranızdan emin değilseniz basit bir yöntemlerle ayak numaranızı
+															öğrenebilirsiniz.</p>
+														<ul>
+															<li>Boş bir kağıdı yere koyun, ayağınızı üstüne koyduktan sonra bir kalem
+																yardımı ile şekildeki gibi ayak baş parmağınızın hizasından ve topuk uç
+																hizanızdan düz şekilde çizin.
+															</li>
+															<li>Sonra çizgilerin arasındaki mesafeyi cetvel ile ölçün, çıkan sonuç sizin
+																ayak uzunluğunuzdur.
+															</li>
+															<li>Aşağıdaki tablodan cinsiyetinizi seçtikten sonra, ayak uzunluğunuza
+																uygun CM
+																değerini seçtiğinizde, tablo size ayak uzunluğunuza karşılık gelen beden
+																numaralarını gösterecektir.
+															</li>
+														</ul>
+													</div>
+													<div class="col-12">
+														<img src="/pub/assets/flo/images/sizechart/ayakolcusu-mobil.png"
+															class="w-100 mb-3">
+													</div>
+													
+												</div>
+
+												<div class="row sc-accordion-target woman-dress dress-image woman" style="display: none;">
+													<div class="col-4">
+													</div>
+													<div class="col-8">
+														<h5>Göğüs</h5>
+														<p>Mezurayı kolunuz altından, göğüsünüz en geniş bölgesinden konumlandırarak ölçe bilirsiniz.</p>
+
+														<h5>Bel</h5>
+														<p>Mezurayı belinizin en dar noktasına yerleştirerek ölçe bilirsiniz.</p>
+														
+														<h5>Basen</h5>
+														<p>Mezurayı kalçanızın en geniş noktasını yerleştirerek ölçe bilirsiniz.</p>
+													</div>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+									<div class="tab-pane sc-accordion-wrapper fade" id="man" role="tabpanel">
+										<div class="row">
+											<div class="col-12">
+												<div class="sc-accordion active">
+													<a href="#" class="sc-accordion-title" data-target=".man-foot">Ayakkabı <i class="fa"></i></a>
+													<div class="sc-accordion-content sc-accordion-target man-foot">
+														<div class="foot-size-list">
+															<ul>
+																<li class="sshead">
+																	<ul>
+																		<li>Cm</li>
+																		<li>Europe</li>
+																		<li>UK</li>
+																		<li>US</li>
+
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>22.8</span></a></li>
+																		<li><a href="#"><span>35</span></a></li>
+																		<li><a href="#"><span>3</span></a></li>
+																		<li><a href="#"><span>4</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>23.5</span></a></li>
+																		<li><a href="#"><span>36</span></a></li>
+																		<li><a href="#"><span>3.5</span></a></li>
+																		<li><a href="#"><span>4.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>23.8</span></a></li>
+																		<li><a href="#"><span>37</span></a></li>
+																		<li><a href="#"><span>4 / 4.5</span></a></li>
+																		<li><a href="#"><span>5 / 5.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>24.5</span></a></li>
+																		<li><a href="#"><span>38</span></a></li>
+																		<li><a href="#"><span>5</span></a></li>
+																		<li><a href="#"><span>6</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>25.1</span></a></li>
+																		<li><a href="#"><span>39</span></a></li>
+																		<li><a href="#"><span>5.5 / 6</span></a></li>
+																		<li><a href="#"><span>6.5 / 7</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>25.4</span></a></li>
+																		<li><a href="#"><span>40</span></a></li>
+																		<li><a href="#"><span>6.5</span></a></li>
+																		<li><a href="#"><span>7.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>25.7</span></a></li>
+																		<li><a href="#"><span>41</span></a></li>
+																		<li><a href="#"><span>7 / 7.5</span></a></li>
+																		<li><a href="#"><span>8 / 8.5</span></a></li>
+
+																		<li class="ivline"
+																			style="display: list-item; top: 0px; height: 0px;"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>26</span></a></li>
+																		<li><a href="#"><span>42</span></a></li>
+																		<li><a href="#"><span>8</span></a></li>
+																		<li><a href="#"><span>9</span></a></li>
+
+																		<li class="ivline"
+																			style="display: none; top: 0px; height: 0px;"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>26.7</span></a></li>
+																		<li><a href="#"><span>43</span></a></li>
+																		<li><a href="#"><span>8.5 / 9</span></a></li>
+																		<li><a href="#"><span>9.5 / 10</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>27.3</span></a></li>
+																		<li><a href="#"><span>44</span></a></li>
+																		<li><a href="#"><span>9.5</span></a></li>
+																		<li><a href="#"><span>10.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>27.9</span></a></li>
+																		<li><a href="#"><span>45</span></a></li>
+																		<li><a href="#"><span>10 / 10.5</span></a></li>
+																		<li><a href="#"><span>11</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>28.3</span></a></li>
+																		<li><a href="#"><span>46</span></a></li>
+																		<li><a href="#"><span>11</span></a></li>
+																		<li><a href="#"><span>11.5 / 12</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>28.9</span></a></li>
+																		<li><a href="#"><span>47</span></a></li>
+																		<li><a href="#"><span>12</span></a></li>
+																		<li><a href="#"><span>12.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+												<div class="sc-accordion">
+													<a href="#" class="sc-accordion-title" data-target=".man-dress">Giyim <i class="fa"></i></a>
+
+													<div class="sc-accordion-content sc-accordion-target man-dress"  style="display:none;">
+														<div class="foot-size-list">
+															<ul>
+																<li class="sshead">
+																	<ul>
+																		<li>BEDEN</li>
+																		<li>GÖĞÜS CM</li>
+																		<li>BEL CM</li>
+																		<li>KALÇA</li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>XS</span></a></li>
+																		<li><a href="#"><span>80-88</span></a></li>
+																		<li><a href="#"><span>68-73</span></a></li>
+																		<li><a href="#"><span>82-86</span></a></li>
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>S</span></a></li>
+																		<li><a href="#"><span>88-96</span></a></li>
+																		<li><a href="#"><span>73-81</span></a></li>
+																		<li><a href="#"><span>88-96</span></a></li>
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>M</span></a></li>
+																		<li><a href="#"><span>96-104</span></a></li>
+																		<li><a href="#"><span>81-89</span></a></li>
+																		<li><a href="#"><span>96-104</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>L</span></a></li>
+																		<li><a href="#"><span>104-112</span></a></li>
+																		<li><a href="#"><span>89-97</span></a></li>
+																		<li><a href="#"><span>104-120</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>XL</span></a></li>
+																		<li><a href="#"><span>112-124</span></a></li>
+																		<li><a href="#"><span>97-109</span></a></li>
+																		<li><a href="#"><span>112-120</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>XXL</span></a></li>
+																		<li><a href="#"><span>124-136</span></a></li>
+																		<li><a href="#"><span>109-121</span></a></li>
+																		<li><a href="#"><span>120-128</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="row sc-accordion-target man-foot">
+													<div class="col-12">
+														<h5>Doğru Ayak Ölçüsü Nasıl Alınır?</h5>
+														<p>Eğer ayak numaranızdan emin değilseniz basit bir yöntemlerle ayak numaranızı
+															öğrenebilirsiniz.</p>
+														<ul>
+															<li>Boş bir kağıdı yere koyun, ayağınızı üstüne koyduktan sonra bir kalem
+																yardımı ile şekildeki gibi ayak baş parmağınızın hizasından ve topuk uç
+																hizanızdan düz şekilde çizin.
+															</li>
+															<li>Sonra çizgilerin arasındaki mesafeyi cetvel ile ölçün, çıkan sonuç sizin
+																ayak uzunluğunuzdur.
+															</li>
+															<li>Aşağıdaki tablodan cinsiyetinizi seçtikten sonra, ayak uzunluğunuza
+																uygun CM
+																değerini seçtiğinizde, tablo size ayak uzunluğunuza karşılık gelen beden
+																numaralarını gösterecektir.
+															</li>
+														</ul>
+													</div>
+													<div class="col-12">
+														<img src="/pub/assets/flo/images/sizechart/ayakolcusu-mobil.png"
+															class="w-100 mb-3">
+													</div>
+												</div>
+
+												<div class="row sc-accordion-target man-dress dress-image man" style="display: none;">
+													<div class="col-4">
+													</div>
+
+													<div class="col-8">
+														<h5>Göğüs</h5>
+														<p>Mezurayı kolunuz altından, göğüsünüz en geniş bölgesinden konumlandırarak ölçe bilirsiniz.</p>
+
+														<h5>Bel</h5>
+														<p>Mezurayı belinizin en dar noktasına yerleştirerek ölçe bilirsiniz.</p>
+														
+														<h5>Basen</h5>
+														<p>Mezurayı kalçanızın en geniş noktasını yerleştirerek ölçe bilirsiniz.</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane sc-accordion-wrapper fade" id="girl" role="tabpanel">
+										<div class="row">
+											<div class="col-12">
+												<div class="sc-accordion active">
+													<a href="#" class="sc-accordion-title" data-target=".girl-foot">Ayakkabı <i class="fa"></i></a>
+													<div class="sc-accordion-content sc-accordion-target girl-foot">
+														<div class="foot-size-list">
+															<ul>
+																<li class="sshead">
+																	<ul>
+																		<li>Cm</li>
+																		<li>Europe</li>
+																		<li>UK</li>
+																		<li>US</li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>15.2 / 15.6</span></a></li>
+																		<li><a href="#"><span>25</span></a></li>
+																		<li><a href="#"><span>7.5</span></a></li>
+																		<li><a href="#"><span>8.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>15.9</span></a></li>
+																		<li><a href="#"><span>26</span></a></li>
+																		<li><a href="#"><span>8 / 8.5</span></a></li>
+																		<li><a href="#"><span>9 / 9.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>16.5 / 16.8</span></a></li>
+																		<li><a href="#"><span>27</span></a></li>
+																		<li><a href="#"><span>9 / 9.5</span></a></li>
+																		<li><a href="#"><span>10 / 10.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>17.1</span></a></li>
+																		<li><a href="#"><span>28</span></a></li>
+																		<li><a href="#"><span>10.5</span></a></li>
+																		<li><a href="#"><span>11.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>17.8</span></a></li>
+																		<li><a href="#"><span>29</span></a></li>
+																		<li><a href="#"><span>11</span></a></li>
+																		<li><a href="#"><span>12</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>18.1 / 18.4</span></a></li>
+																		<li><a href="#"><span>30</span></a></li>
+																		<li><a href="#"><span>11.5</span></a></li>
+																		<li><a href="#"><span>12.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>19.1 / 19.4</span></a></li>
+																		<li><a href="#"><span>31</span></a></li>
+																		<li><a href="#"><span>12 / 12.5</span></a></li>
+																		<li><a href="#"><span>13 / 13.5	</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>19.7</span></a></li>
+																		<li><a href="#"><span>32</span></a></li>
+																		<li><a href="#"><span>13 / 13.5</span></a></li>
+																		<li><a href="#"><span>1 / 1.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>20.3 / 20.6</span></a></li>
+																		<li><a href="#"><span>33</span></a></li>
+																		<li><a href="#"><span>1 / 1.5</span></a></li>
+																		<li><a href="#"><span>2 / 2.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>21 / 21.6</span></a></li>
+																		<li><a href="#"><span>34</span></a></li>
+																		<li><a href="#"><span>2 / 2.5</span></a></li>
+																		<li><a href="#"><span>3 / 3.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+												
+											</div>
+											<div class="col-12 sc-accordion-target girl-foot">
+												<div class="row">
+													<div class="col-12">
+														<h5>Doğru Ayak Ölçüsü Nasıl Alınır?</h5>
+														<p>Eğer ayak numaranızdan emin değilseniz basit bir yöntemlerle ayak numaranızı
+															öğrenebilirsiniz.</p>
+														<ul>
+															<li>Boş bir kağıdı yere koyun, ayağınızı üstüne koyduktan sonra bir kalem
+																yardımı ile şekildeki gibi ayak baş parmağınızın hizasından ve topuk uç
+																hizanızdan düz şekilde çizin.
+															</li>
+															<li>Sonra çizgilerin arasındaki mesafeyi cetvel ile ölçün, çıkan sonuç sizin
+																ayak uzunluğunuzdur.
+															</li>
+															<li>Aşağıdaki tablodan cinsiyetinizi seçtikten sonra, ayak uzunluğunuza
+																uygun CM
+																değerini seçtiğinizde, tablo size ayak uzunluğunuza karşılık gelen beden
+																numaralarını gösterecektir.
+															</li>
+														</ul>
+													</div>
+													<div class="col-12">
+														<img src="/pub/assets/flo/images/sizechart/ayakolcusu-mobil.png"
+															class="w-100 mb-3">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane sc-accordion-wrapper fade" id="boy" role="tabpanel">
+										<div class="row">
+											<div class="col-12">
+												<div class="sc-accordion active">
+													<a href="#" class="sc-accordion-title" data-target=".boy-foot">Ayakkabı <i class="fa"></i></a>
+													<div class="sc-accordion-content sc-accordion-target boy-foot">
+														<div class="foot-size-list">
+															<ul>
+																<li class="sshead">
+																	<ul>
+																		<li>Cm</li>
+																		<li>Europe</li>
+																		<li>UK</li>
+																		<li>US</li>
+
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>15.2 / 15.6</span></a></li>
+																		<li><a href="#"><span>25</span></a></li>
+																		<li><a href="#"><span>7.5</span></a></li>
+																		<li><a href="#"><span>8.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>15.9</span></a></li>
+																		<li><a href="#"><span>26</span></a></li>
+																		<li><a href="#"><span>8 / 8.5</span></a></li>
+																		<li><a href="#"><span>9 / 9.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>16.5 / 16.8</span></a></li>
+																		<li><a href="#"><span>27</span></a></li>
+																		<li><a href="#"><span>9 / 9.5</span></a></li>
+																		<li><a href="#"><span>10 / 10.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>17.1</span></a></li>
+																		<li><a href="#"><span>28</span></a></li>
+																		<li><a href="#"><span>10.5</span></a></li>
+																		<li><a href="#"><span>11.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>17.8</span></a></li>
+																		<li><a href="#"><span>29</span></a></li>
+																		<li><a href="#"><span>11</span></a></li>
+																		<li><a href="#"><span>12</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>18.1 / 18.4</span></a></li>
+																		<li><a href="#"><span>30</span></a></li>
+																		<li><a href="#"><span>11.5</span></a></li>
+																		<li><a href="#"><span>12.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>19.1 / 19.4</span></a></li>
+																		<li><a href="#"><span>31</span></a></li>
+																		<li><a href="#"><span>12 / 12.5</span></a></li>
+																		<li><a href="#"><span>13 / 13.5	</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>19.7</span></a></li>
+																		<li><a href="#"><span>32</span></a></li>
+																		<li><a href="#"><span>13 / 13.5</span></a></li>
+																		<li><a href="#"><span>1 / 1.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>20.3 / 20.6</span></a></li>
+																		<li><a href="#"><span>33</span></a></li>
+																		<li><a href="#"><span>1 / 1.5</span></a></li>
+																		<li><a href="#"><span>2 / 2.5</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+																<li class="ss_btns">
+																	<ul>
+																		<li><a href="#"><span>21 / 21.6</span></a></li>
+																		<li><a href="#"><span>34</span></a></li>
+																		<li><a href="#"><span>2</span></a></li>
+																		<li><a href="#"><span>3 / 4</span></a></li>
+
+																		<li class="ivline"></li>
+																	</ul>
+																</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-12 sc-accordion-target boy-foot">
+												<div class="row">
+													<div class="col-12">
+														<h5>Doğru Ayak Ölçüsü Nasıl Alınır?</h5>
+														<p>Eğer ayak numaranızdan emin değilseniz basit bir yöntemlerle ayak numaranızı
+															öğrenebilirsiniz.</p>
+														<ul>
+															<li>Boş bir kağıdı yere koyun, ayağınızı üstüne koyduktan sonra bir kalem
+																yardımı ile şekildeki gibi ayak baş parmağınızın hizasından ve topuk uç
+																hizanızdan düz şekilde çizin.
+															</li>
+															<li>Sonra çizgilerin arasındaki mesafeyi cetvel ile ölçün, çıkan sonuç sizin
+																ayak uzunluğunuzdur.
+															</li>
+															<li>Aşağıdaki tablodan cinsiyetinizi seçtikten sonra, ayak uzunluğunuza
+																uygun CM
+																değerini seçtiğinizde, tablo size ayak uzunluğunuza karşılık gelen beden
+																numaralarını gösterecektir.
+															</li>
+														</ul>
+													</div>
+													<div class="col-12">
+														<img src="/pub/assets/flo/images/sizechart/ayakolcusu-mobil.png"
+															class="w-100 mb-3">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Cart Info Modal -->
+        <div class="modal flomodal fade" id="cartInfoModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content cart-modal">
+                    <div class="modal-header">
+                        <h5 class="modal-title">SEPET</h5>
+                        <button type="button" class="close cart-info-modal-close" data-dismiss="modal" aria-label="Close">
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="total-count">
+                            <i class="svg-cart-big svg-cart-big-dims"></i>
+                            <span class="cart-count"></span>
+                        </div>
+                        <h4>Ürününüz sepete eklenmiştir</h4>
+                        <p>Sepetinizde <span class="cart-count"></span> ürün bulunmaktadır</p>
+                    </div>
+
+					<div class="modal-footer">
+                        <a href="javascript:void(0)" onclick="$('.cart-info-modal-close').click();" class="btn btn-secondary">Alışverişe
+                            Devam Et</a>
+                        <a href="{{ basket_base_url() }}/basket" class="btn btn-success">Sepete Git</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+		<div id="mobile-size-container">
+			<div class="msz-lightbox"></div>
+			<div class="msz-inner">
+				<div class="msz-product">
+					<a href="#" class="msz-close"><i class="fa fa-times"></i></a>
+					<div class="msz-image">
+						<img src="{{ (product.media_gallery[0]).url | resize('84x84') }}" alt="{{ product.name }}" />
+					</div>
+					<div class="msz-content">
+						<div class="msz-product-brand">{{ product.manufacturer | raw | capitalize }}</div>
+						<div class="msz-product-name">{{ product.name }}</div>
+						<div class="msz-product-price">
+							<div class="prices">
+								{% if product.special_price %}
+									<span>{{ product.price|price }}</span>
+								{% endif %} 
+
+								<strong class="{% if product.rule_info is null %}text-highlight{% endif %}">{{ product|price }}</strong>
+							</div>
+						</div>
+
+                        {% if product.rule_info %}
+                            {% set firstItem = product.rule_info[0] %}
+                            {% if firstItem.label or product.third_price %}
+                                <div class="msz-product-price-rule">
+                                    <div class="discount ">
+                                        {{ firstItem.label }}
+                                        {% if product.third_price %}
+                                            <span class="text-warning">{{ product.third_price|price }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+					</div>
+
+					<div class="msz-size">
+						<div class="choices-box pb-1">
+							<div class="size-selection">
+								<div class="title">
+									<span>Beden Seçiniz</span>
+								</div>
+								<div class="size-list">
+									{% for key, option in product.options %}
+										<div class="form-check {% if option.is_in_stock is empty %}disabled{% endif %}">
+											<label class="form-check-label"
+												for="sizeSelection{{ key }}">{{ option.option_value }}</label>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+    </div>
+</main>
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": "{{ product.name }}",
+        "image": [
+        {% for media in product.media_gallery %}
+            "{{ media.url }}"{% if not loop.last %},{% endif %}
+        {% endfor %}
+        ],
+        "description": "{{ product.image_label|default(product.name) }}",
+        "brand": {
+            "@type": "Thing",
+            "name": "{{ product.manufacturer }}"
+        },
+        "offers": {
+            "@type": "Offer",
+            "priceCurrency": "TL",
+            "price": "{{ product.third_price | default(product.special_price) |default(product.price) }}",
+            "priceValidUntil": "{{ product.special_to_date }}",
+            "itemCondition": "https://schema.org/NewCondition",
+            {% if product.qty %}
+            	"availability": "https://schema.org/InStock",
+			{% else %}
+            	"availability": "https://schema.org/OutOfStock",
+			{% endif %}
+            "url": "{{ config('env.webservice.url.web') ~ product.url|trim('/', 'left') }}",
+            "seller": {
+                "@type": "Organization",
+                "name": "FLO"
+            }
+        },
+        "sku": "{{ product.sku }}"
+    }
+</script>
+
+<script type="application/ld+json"> 
+{
+	"@context": "http://schema.org",
+	"@type": "BreadcrumbList",
+	"itemListElement": [
+		{
+			"@type": "ListItem",
+			"position": {{ 1 }},
+			"item": {
+				"@id": "{{ config('env.webservice.url.web') }}", "name ": "Anasayfa"
+			}
+		},
+		{% for item in breadcrumb %}
+		{
+			"@type": "ListItem",
+			"position": {{ loop.index + 1 }},
+			"item": {
+				"@id": "{{ config('env.webservice.url.web') }}{{ item.url }}", "name ": "{{ item.name }}"
+			}
+		},
+		{% endfor %}
+		{
+			"@type": "ListItem",
+			"position": {{ breadcrumb | length + 1 }},
+			"item": {
+				"@id": "{{ config('env.webservice.url.web') }}", "name ": "{{ product.name }}"
+			}
+		}
+	]
+}
+</script>

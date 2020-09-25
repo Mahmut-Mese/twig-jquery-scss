@@ -1,0 +1,78 @@
+{% if config('env.gtm') %}
+{% if layerData.spotlights|length %}
+
+<script>
+	window.spotlightIO = window.spotlightIO || null;
+	window.spotlightList = window.spotlightList || {};
+	var dataLayer = dataLayer || [];
+
+	{% for spotlight in layerData.spotlights %}
+		{% set id = spotlight.spotlight_id | default(spotlight.brand_id) %}
+        window.spotlightList["{{ id }}"] = {
+            id: "{{ id }}",
+            name: "{{ spotlight.image|default(spotlight.image_desktop) }}",
+            creative: "{{ spotlight.title }}",
+            position: "{{ spotlight.sorder | default(loop.index) }}"
+        };
+
+        GtmDataLayer.set('homeSpotlight{{ id }}', window.spotlightList["{{ id }}"], true);
+	{% endfor %}
+
+	var initialize = function () {
+		if (!window.spotlightIO && window.IntersectionObserver) {
+
+			var visitedSpotligts = [];
+			var dataLayerTimer = null;
+			var IOSpotlightCallback = function (entries) {
+				for (var i = 0; i < entries.length; i++) {
+					var entry = entries[i];
+					if (entry.intersectionRatio < 0.2 && !entry.isIntersecting) { continue; }
+
+					
+					var $item = $(entry.target);
+
+					visitedSpotligts.push(window.spotlightList[$item.data('spotlight-id')]);
+					
+					clearTimeout(dataLayerTimer);
+					dataLayerTimer = setTimeout(function () {
+						dataLayer.push({
+							'event': 'promotion_impressions',
+							'ecommerce': {
+								'promoView': {
+									'promotions': visitedSpotligts,
+								}
+							},
+							'google_tag_params': {
+								site_type: "d",
+								page_type: "home",
+								url: "{{ config('env.webservice.url.web') }}",
+								breadcrumb: {
+									path: "Anasayfa",
+									last_crumb: "Anasayfa"
+								}
+							}
+						});
+
+						visitedSpotligts = [];
+					}, 500);
+					
+					spotlightIO.unobserve(entry.target);
+            	}
+			};
+
+			window.spotlightIO = new IntersectionObserver(IOSpotlightCallback, { threshold: [0.2], rootMargin: '0px' });
+		}
+
+		$('[data-spotlight-id]').off('click').on('click', function (e) {
+			RG.DataLayer.trigger('spotlight_click', {spotlightId: $(this).data('spotlight-id')})
+		}).filter(':not(.gtm-spotlight-init)').each(function () {
+			window.spotlightIO.observe(this);
+
+			$(this).addClass('gtm-spotlight-init');
+		});
+	}
+
+	domReadyCallbacks.push(initialize);
+</script>
+{% endif %}
+{% endif %}

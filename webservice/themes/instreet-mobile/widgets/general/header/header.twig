@@ -1,0 +1,75 @@
+<div id="panel">
+    <div class="mobile-menu">
+        <nav id="menu" class="mm-menu mm-menu_offcanvas">
+            {{ menuHtmlMobile|raw }}
+        </nav>
+    </div>
+</div>
+
+
+<header class="site-head detail-header">
+    <div class="wrapper cookie-deeplink hide">
+        <div id="deeplink" style="" data-deep-url="instreet://home"
+             data-android-url="https://play.google.com/store/apps/details?id=tr.com.instreet"
+             data-ios-url="https://app.adjust.com/p2y9sqp?deep_link=instreet://home">
+            <span id="hide"></span>
+            <div id="icon"></div>
+            <div id="description" class="Android"><span id="domain">INSTREET -</span> instreet.com.tr<br>
+                <span id="appname">Mobil</span> Uygulama
+            </div>
+            <div id="open">{{ 'Uygulamada Aç' | translate }}</div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="top">
+            <div class="head-top">
+                <div class="mobile-btn-new">
+
+                    <div class="mh-head first">
+				<span class="mh-btns-left">
+					<a class="mh-hamburger" href="#menu"></a>
+				</span>
+                    </div>
+                </div>
+                <div class="logo">
+                    <a href="/">
+                        <img src="/pub/assets/instreet/mobile/images/logo.png" alt="INstreet">
+                    </a>
+                </div>
+                <div id="commerce-mini-cart-mobile" class="basket">
+                    <ul>
+                        <li>
+                            <a class="mobil-minicart-background" href="javascript:void(0);">
+                                <i class="cart-count" style="display: none;"></i>
+                            </a>
+                            <div class="list" id="mini-cart">
+                                {{ widget('basket', 'mini_cart') }}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% if menubar == 'open' %}
+
+            <div class="menu">
+                <div class=" ">
+                    <div class="mh-head second Sticky">
+                        <ul class="mh-list">
+                            <li><a href="/kadin">{{ 'KADIN' | translate }}</a></li>
+                            <li><a href="/erkek">{{ 'ERKEK' | translate }}</a></li>
+                            <li><a href="/cocuk">{{ 'ÇOCUK' | translate }}</a></li>
+                            <li><a href="/marka">{{ 'MARKALAR' | translate }}</a></li>
+                            <li><a href="/giyim">{{ 'GİYİM' | translate }}</a></li>
+                            <li><a href="/aksesuar">{{ 'AKSESUAR' | translate }}</a></li>
+                            <li><a href="/outdoor">{{ 'OUTDOOR' | translate }} </a></li>
+                            <li><a href="/outlet">{{ 'OUTLET' | translate }} </a></li>
+                            <li><a href="/magaza">{{ 'MAĞAZALAR' | translate }}</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</header>

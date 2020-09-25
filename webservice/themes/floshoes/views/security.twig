@@ -1,0 +1,48 @@
+
+<html>
+<head>
+    <title>Password Protected</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+    <script src="/pub/assets/lib/jquery/jquery.min.js"></script>
+    <style>
+        div.center {
+            width: 300px;
+            height: 200px;
+            position: absolute;
+            top:0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-family: 'Arial, Times New Roman';
+            margin: auto;
+            font-size: 20px;
+        }
+
+        input {
+            padding: 12px;
+            font-size: 15px;
+            margin: 5px;
+            width: 220px;
+            border: 1px solid gray;
+            text-align: center;
+        }
+
+    </style>
+</head>
+
+<body>
+<form action="" method="post">
+    <div class="center">
+        <img src="/pub/assets/floshoes/images/logo.png" width="140px"/><br /><br />
+        Please enter the password<br /><br />
+        <input placeholder="" type="text" name="frontend_password" />
+    </div>
+    <script type="text/javascript">
+        domReadyCallbacks.push(function () {
+            $('input[name="password"]').focus();
+        });
+    </script>
+</body>
+</form>
+</html>

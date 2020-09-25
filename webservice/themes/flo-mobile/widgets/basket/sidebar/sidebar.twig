@@ -1,0 +1,100 @@
+{% if  basket.items_qty > 0 %}
+<script>
+    function rgBasketUpdate(){
+        if(RG.Basket.is_cash_on_delivery !== 0){
+            RG.Basket.is_cash_on_delivery = {{ is_method_cash_on_delivery }};
+        }
+        RG.Basket.is_installment_set = 0;
+        RG.Basket.shipping_amount = {{ basket.shipping_amount ?? 0 }};
+        RG.Basket.base_total = {{ basket.subtotal_incl_tax + basket.discount_amount }};
+        RG.Basket.cash_on_delivery_fee = {{ cash_on_delivery_fee ?? 0}};
+        RG.Basket.prepareSidebar();
+    };
+
+    if (window.jQuery) { $(rgBasketUpdate); }
+    else {
+        domReadyCallbacks.push(function () {
+            $(function () { rgBasketUpdate() });
+        });
+    }
+</script>
+{% if not coupon_hide %}
+
+    {{ widget('basket', 'coupons',{'basket':basket}) }}
+    {% endif %}
+
+    <div class="cart-summary total-box">
+        <table>
+            <tr>
+                <td>{{ 'ARA TOPLAM' | translate }}</td>
+                <td class="cargo">{{ basket.subtotal_incl_tax|price }}</td>
+            </tr>
+            {% set sales_title = '' %}
+            {% for roww in basket.salesrule %}
+                {% set sales_title = sales_title ~ roww['name'] ~ ', '  | raw %}
+            {% endfor %}
+            {% set sales_title = sales_title | slice(0, -2) %}
+            <tr>
+                <td><span class=" align-items-center">{{ 'İNDİRİM' | translate }} <i class="fa fa-info-circle ml-2"
+                                                                                           data-toggle="tooltip"
+                                                                                           data-placement="top"
+                                                                                           title="{{ sales_title }}"></i></span>
+                </td>
+                <td class="indirim">{{ basket.base_discount_amount|price }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'KARGO ÜCRETİ' | translate }}</td>
+                <td><span class="shipping-amount-label"> <span class="cargomoney"></span></span>
+                </td>
+            </tr>
+            <tr style="display: none;">
+                <td class="cashondelivery-label">{{ 'KAPIDA ÖDEME ÜCRETİ' | translate }}</td>
+                <td><i class="cargomoney">{{ cash_on_delivery_fee|price }}</i></td>
+            </tr>
+            <tr class="total">
+                <td>{{ 'GENEL TOPLAM' | translate }}</td>
+                <td >
+                    <span class="text-warning generic-total">{{ (basket.subtotal_incl_tax + basket.discount_amount)|price }}</span></td>
+            </tr>
+        </table>
+
+        {% if continous %}
+
+        <a href="/" class="continue-to-shopping-link">Alışverişe Devam Et</a>
+        {% endif %}
+        <br>
+    </div>
+    {% if  checkbox %}
+        <div class="checkbox checkboxbbb aggreement-box p-2">
+            <label class="flo-checkbox with-links  iread iread-payu required">
+                <input type="checkbox" name="cc_check" class="validate[required]" id="sadasd">
+                <span><i class="fa fa-check"></i></span>
+                <a href="javascript:;" id="mesafeli-satis-sozlesmesi" data-toggle="modal"
+                   data-target="#order-contract-modal">Mesafeli Satış
+                    Sözleşmesini</a> ve <br>
+                <a href="javascript:;" id="on-bilgilendirme-sozlesmesi" data-toggle="modal"
+                   data-target="#pre-info-modal">Ön Bilgilendirme
+                    Formu’nu</a> okudum onaylıyorum.
+                <br>
+                <em class="note-basket-required d-none">Bu onay kutusu zorunludur! </em>
+            </label>
+        </div>
+    {% endif %}
+
+{% else %}
+    <div class="basket-page">
+        <div class="my-basket">
+            <div class="basket-list">
+                <div class="basket-detail">
+                    <div class="bottom-pro no-product">
+                        <b>{{ 'Sepetinizde Ürün Yok' | translate }} </b>
+                        <hr>
+                        <br> <a href="/" style="text-align:center">{{ 'Alışverişe Devam Et' | translate }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+

@@ -1,0 +1,80 @@
+<div id="panel">
+    <div class="mobile-menu">
+        <button type="button" class="navbar-toggle" onclick="javascript: mobileMenuClose(this)"></button>
+        {% if user_logged_in %}
+            <div class="top">
+                <span class="name">{{ full_name }}</span>
+            </div>
+        {% else %}
+            <div class="top">
+                <ul>
+                    <li><a href="/customer/register">{{ 'ÜYE OL' | translate }}</a></li>
+                    <li><a href="/customer/login">{{ 'GİRİŞ YAP' | translate }}</a></li>
+                </ul>
+            </div>
+        {% endif %}
+        <nav>
+            <ul>
+                {% if user_logged_in %}
+                    <li class="other">
+                        <a href="/customer/myaccount">{{ 'HESABIM' | translate }}</a>
+                    </li>
+                {% endif %}
+                <li><a href="/erkek" title="Erkek"> <img
+                                src="/pub/assets/instreet/mobile/images/erkek-ico.png" alt=""> {{ 'ERKEK' | translate }} </a></li>
+                <li><a href="/kadin" title="Kadin"> <img
+                                src="/pub/assets/instreet/mobile/images/kadin-ico.png" alt="">{{ 'KADIN' | translate }}  </a></li>
+                <li><a href="/cocuk" title="Çocuk"> <img
+                                src="/pub/assets/instreet/mobile/images/cocuk-ico.png" alt="">{{ 'ÇOCUK' | translate }}  </a></li>
+                <li><a href="/giyim" title="Giyim"> <img
+                                src="/pub/assets/instreet/mobile/images/giyim-ico.png" alt=""> {{ 'GİYİM' | translate }} </a></li>
+                <li><a href="/aksesuar" title="Aksesuar"> <img
+                                src="/pub/assets/instreet/mobile/images/aksesuar-ico.png" alt=""> {{ 'AKSESUAR' | translate }} </a></li>
+                <li class="other"><a href="/store">{{ 'MAĞAZA BUL' | translate }}</a></li>
+                <li class="other"><a href="/page?url=destek-ve-iletisim-mobile">{{ 'DESTEK İLETİŞİM' | translate }}</a></li>
+                {% if user_logged_in %}
+                    <li class="other">
+                        <a class="customer-logout" href="#">{{ 'ÇIKIŞ' | translate }}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>
+<header class="site-head detail-header">
+    <div class="container-fluid">
+        <div class="top">
+            <div class="head-top">
+                {#<div class="mobile-btn">
+                    <button type="button" class="navbar-toggle" onclick="javascript: mobileMenuOpen(this)">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>#}
+                <div class="logo">
+                    <a href="/">
+                        <img src="/pub/assets/instreet/mobile/images/logo.png" alt="INstreet">
+                    </a>
+                </div>
+                {#<div id="commerce-mini-cart-mobile" class="basket">
+                    <ul>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <i class="cart-count" style="display: none;"></i>
+                            </a>
+                            <div class="list" id="mini-cart">
+
+                                {{ widget('basket', 'mini_cart') }}
+
+                                <div class="more">
+                                    <a href="/basket">SEPETE GİT</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>#}
+            </div>
+        </div>
+    </div>
+</header>

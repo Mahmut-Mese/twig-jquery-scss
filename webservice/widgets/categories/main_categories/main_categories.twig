@@ -1,0 +1,58 @@
+{# Todo: Dinamik hale getirilirken yapı korunmalı #}
+{% set categories = [
+    {
+        spotlight_id: "20002",
+        image: '/pub/assets/instreet/images/kadin-kategori.png',
+        link: '/kadin',
+        title: 'KADIN'|translate,
+        sorder: "2"
+    },
+    {
+        spotlight_id: "20001",
+        image: '/pub/assets/instreet/images/erkek-kategori.png',
+        link: '/erkek',
+        title: 'ERKEK'|translate,
+        sorder: "1"
+    },{
+        spotlight_id: "20003",
+        image: '/pub/assets/instreet/images/cocuk-kategori.png',
+        link: '/cocuk',
+        title: 'ÇOCUK'|translate,
+        sorder: "3"
+    },{
+        spotlight_id: "20004",
+        image: '/pub/assets/instreet/images/kategori_images_giyim.png',
+        link: '/giyim',
+        title: 'GİYİM'|translate,
+        sorder: "4"
+    },{
+        spotlight_id: "20005",
+        image: '/pub/assets/instreet/images/kategori_images_accessories.png',
+        link: '/aksesuar',
+        title: 'AKSESUAR'|translate,
+        sorder: "5"
+    }
+] %}
+
+<div class="categories-home">
+    <div class="container-fluid">
+        <div class="all">
+             <div class="list">
+                {% for spotlight in categories %}
+                    <div class="mc-md-2-5">
+                        <div class="item">
+                            <a href="{{ spotlight.link }}" class="spotlightItem" data-spotlight-id="{{ spotlight.spotlight_id }}">
+                                <div class="images lazy">
+                                    <img data-src="{{ spotlight.image }}" src="/pub/assets/instreet/images/desktop_kategori_images.jpg"  class="resimatt" alt="{{ spotlight.title }}">
+                                </div>
+                                <span>{{ spotlight.title }}</span>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: categories, element: '.categories-home'}}) }}

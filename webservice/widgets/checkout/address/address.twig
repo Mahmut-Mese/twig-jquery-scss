@@ -1,0 +1,148 @@
+<div class="page">
+    <div class="container-fluid">
+        <div class="basket-page">
+            <div class="mc-md-9 pa">
+                <div class="my-basket">
+                    <div class="basket-list">
+                        <div class="step">
+                            <ul>
+                                <li class="okey" onclick="window.location.href='{{ basket_base_url() }}/basket'"><i>{{ 'SEPET' | translate  }}</i></li>
+                                <li class="active"><i>{{ 'ADRES' | translate  }}</i></li>
+                                <li><i>{{ 'ÖDEME' | translate  }}</i></li>
+                            </ul>
+                        </div>
+                        <div class="basket-detail">
+                            <div class="adim3 adim4">
+                                <div class="form">
+                                    <form action="#" id="addresses-form">
+                                        <div class="item" id="formAddress">
+                                            <div class="form-group ship-address" id="ship-address">
+-                                                <span>{{ 'TESLİMAT ADRESİM' | translate  }}</span>
+                                                {% if addresses is empty %}
+                                                    <div class="brd">
+                                                        {{ widget('address','fields',{address_key:'shipping_address',towns:towns,regions:regions,countries:countries}) }}
+                                                        <div class="note">* {{ 'Yıldızlı alanların girişi zorunludur.' | translate  }}</div>
+                                                    </div>
+                                                {% else %}
+                                                    <select id="selected-ship-address">
+
+                                                        {% for  key, address in addresses  %}
+                                                        {% if  cookie_adress.newShip  == 'ship'  %}
+                                                            {% if loop.last %}    {% set selectedAddress = 'selected checked' %}{% endif %}
+                                                        {% elseif  cookie_adress.shipping_address == address.id %}
+                                                            {% set selectedAddress = 'selected checked' %}
+                                                        {% else %}
+                                                            {% set selectedAddress = '' %}
+                                                        {% endif %}
+
+                                                          <option  data-id="{{ address.id }}" data-company="{{ address.company }}"
+                                                                  data-region_id="{{ address.region_id }}"
+                                                                  data-country_id="{{ address.country_id }}" data-region_code="{{ address.region_code }}"
+                                                                  data-prefix="{{ address.prefix }}" data-firstname="{{ address.firstname }}"
+                                                                  data-lastname="{{ address.lastname }}" data-email="{{ address.email }}" data-city="{{ address.city }}"
+                                                                  data-same_as_billing="{{ address.same_as_billing}}" data-telephone="{{ address.telephone }}" data-postcode="{{ address.postcode }}"
+                                                                  data-region="{{ address.region }}"
+                                                                  data-street="{{ address.street }}"
+                                                                  data-tax_office="{{ address.tax_office }}"
+                                                                  data-tax_number="{{ address.tax_number }}"
+                                                               {{ selectedAddress }}
+                                                                  {{ customer.default_billing }}
+                                                          >
+                                                              {{ address.title_address }}, {{ address.firstname }} {{ address.lastname }}, {{ address.street }}, {{ address.region }}, {{ address.city  }}
+
+                                                          </option>
+                                                {% endfor %}
+                                                    </select>
+                                                    <div class="our" id="edit-address">
+                                                        <a href="address/new" class="address-cookie address-cookie-add">{{ 'YENİ ADRES EKLE' | translate  }}</a>
+                                                        <a href="#" id="varsayilan-adres-duzenle" class="address-cookie">{{ 'DÜZENLE' | translate  }}</a>
+                                                    </div>
+                                                {% endif %}
+                                                <div class="checkbox  ">
+                                                    <label class="">
+                                                        <div class="icheckbox_square_gold {{    cookie_adress.checked  ? '' : 'checked' }} new-checkbox"
+                                                             id="ship_same"
+                                                             style="position: relative;">
+                                                            <input type="checkbox" name="billing_choice" {{    cookie_adress.checked  ? '' : 'checked' }}>
+                                                        </div>
+                                                        {{ 'Fatura Adresim, Teslimat adresim ile aynı olsun' | translate }}
+                                                    </label>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="form-group bill-address  {{    cookie_adress.checked  ? '' : 'hidden' }}" id="bill-address">
+                                                <span>{{ 'FATURA ADRESİ' | translate }}</span>
+                                                {% if addresses is empty %}
+                                                    <div class="brd">
+                                                        {{ widget('address','fields',{address_key:'billing_address',regions:regions,towns:towns,countries:countries}) }}
+                                                        <div class="note">
+                                                            * {{ ' Yıldızlı alanların girişi zorunludur.' | translate }}</div>
+
+                                                    </div>
+                                                {% else %}
+                                                    <select id="selected-bill-address">
+
+
+                                                        {% for  key, address in addresses %}
+                                                            {% if  cookie_adress.newShip  == 'ship'  %}
+                                                            {% if loop.last %}    {% set selectedAddress = 'selected checked' %}{% endif %}
+                                                            {%  elseif cookie_adress.billing_address == address.id %}
+                                                                {% set selectedAddress = 'selected checked' %}
+                                                            {% else %}
+                                                                {% set selectedAddress = '' %}
+                                                            {% endif %}
+                                                                <option data-id="{{ address.id }}"
+                                                                        data-company="{{ address.company }}"
+                                                                        data-region_id="{{ address.region_id }}"
+                                                                        data-country_id="{{ address.country_id }}"
+                                                                        data-region_code="{{ address.region_code }}"
+                                                                        data-prefix="{{ address.prefix }}"
+                                                                        data-firstname="{{ address.firstname }}"
+                                                                        data-lastname="{{ address.lastname }}"
+                                                                        data-email="{{ address.email }}"
+                                                                        data-city="{{ address.city }}"
+                                                                        data-same_as_billing="{{ address.same_as_billing }}"
+                                                                        data-telephone="{{ address.telephone }}"
+                                                                        data-postcode="{{ address.postcode }}"
+                                                                        data-region="{{ address.region }}"
+                                                                        data-street="{{ address.street }}"
+                                                                        data-tax_office="{{ address.tax_office }}"
+                                                                        data-tax_number="{{ address.tax_number }}"  {{ selectedAddress }}"
+                                                                >
+                                                                    {{ address.title_address }}
+                                                                    , {{ address.firstname }} {{ address.lastname }}
+                                                                    , {{ address.street }}, {{ address.region }}
+                                                                    , {{ address.city }}
+                                                                </option>
+
+                                                        {% endfor %}
+                                                    </select>
+                                                    <div class="our">
+                                                        <a href="#" id="fatura-adres-duzenle" class="address-cookie">{{ 'DÜZENLE' | translate }}</a>
+                                                    </div>
+                                                {% endif %}
+
+                                            </div>
+
+
+                                        </div>
+                                        {{ widget('checkout', 'shipping_methods') }}
+
+
+
+                                     </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mc-md-3 pa  basket-container">
+                {{ widget('basket', 'sidebar', {'next_url': '/checkout/payment'}) }}
+            </div>
+        </div>
+    </div>
+</div>
+{{ widget('datalayer', 'checkout_adress', {layerData: {cart: basket}}) }}

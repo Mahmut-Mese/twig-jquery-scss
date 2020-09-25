@@ -1,0 +1,10 @@
+{% for spotlight in spotlights %}
+	<div class="banner-box">
+		<a href="{{ spotlight.link }}" data-spotlight-id="{{ spotlight.spotlight_id }}" class="lazy">
+			{{ img('media/lazyloading/blank.png', '', { class: 'hidden-xs', cdn: 'general', src: '/pub/assets/ninewest/img/placeholder/banner_w.jpg' }, spotlight.image_desktop) }}
+			{{ img('media/lazyloading/blank.png', '', { class: 'hide visible-xs', cdn: 'general', src: '/pub/assets/ninewest/img/placeholder/banner_m.jpg' }, spotlight.image_mobil) }}
+		</a>
+	</div>
+{% endfor %}
+
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: spotlights}}) }}

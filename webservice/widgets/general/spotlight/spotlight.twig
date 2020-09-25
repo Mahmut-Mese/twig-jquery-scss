@@ -1,0 +1,17 @@
+<div class="slider-full">
+    <div class="container-fluid">
+        <div class="list">
+            {% for spotlight in spotlights %}
+                <div class="item">
+                    <div class="/images">
+                        <a href="{{ spotlight.link }}" data-spotlight-id="{{ spotlight.spotlight_id }}" class="spotlightItem">
+                             {{ img('wysiwyg/slider2.jpg', '', {  height:'400', cdn: 'general' }, spotlight.image_desktop, 'data-lazy') }}
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: spotlights}}) }}

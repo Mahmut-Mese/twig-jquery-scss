@@ -1,0 +1,45 @@
+<div class="form-group">
+    <span class="open">{{ filter.name | translate }}</span>
+    <div class="all">
+        <ul class="commerce-sub-links">
+        {% for agg in aggregations %}
+            <li class="head" data-href="/{{ agg.url }}{{ agg.query_string }}" >
+                <span class="{{ agg.class }}">
+                    <a href="/{{ agg.url }}{{ agg.query_string }}" title="{{ agg.name | translate }}">{{ agg.name | translate }} </a>
+                    <ins class="slide-brand-ins-list"> ({{ agg.count }})</ins>
+ </span>
+
+
+                {% if agg.sub_categories %}
+                    <ul class="{{ agg.sub_class }}">
+                        {% for sub_agg in agg.sub_categories %}
+                            <li data-selected-list="{{ sub_agg.selected }}" >
+                                <a href="/{{ sub_agg.url }}{{ sub_agg.query_string }}" data-is-selected="{{ sub_agg.selected }}" title="{{ sub_agg.name  | raw }}">{{ sub_agg.name  | raw }}</a>
+                                <ins class="slide-brand-ins-list">({{ sub_agg.count }})</ins>
+                                {% if sub_agg.sub_categories %}
+                                    <ul class="
+                                    {% set break = 0 %}
+{% for sub_agg_agg in sub_agg.sub_categories if break == 0 %}
+{% if sub_agg_agg.selected ==1 %}  {% set break = 1 %} {% endif %}
+
+                                         {% endfor %}
+                                         {% if break == 0 %}
+                                         hidden {% endif %} {{ agg.sub_class }}
+">
+                                        {% for sub_agg_agg in sub_agg.sub_categories %}
+                                            <li>
+                                                 <a href="/{{ sub_agg_agg.url }}{{ sub_agg_agg.query_string }}" data-is-selected="{{ sub_agg_agg.selected }}" {% if sub_agg_agg.selected ==1 %}  class="selected-filter" {% endif %} title="{{ sub_agg_agg.name | raw }}">{{ sub_agg_agg.name | raw }} </a>
+                                                <ins class="slide-brand-ins-list">({{ sub_agg_agg.count }})</ins>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>

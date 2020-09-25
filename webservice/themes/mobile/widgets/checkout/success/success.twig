@@ -1,0 +1,70 @@
+ <div class="top">
+    <img src="/pub/assets/instreet/mobile/images/oke-ch.png" alt="">
+    <div class="text">
+        <span>{{ 'SİPARİŞİNİZ BAŞARI İLE TAMAMLANMIŞTIR' | translate }}</span>
+        <p>{{ 'INSTREET’den alışveriş yaptığınız için teşekkür ederiz.' | translate }}</p>
+        <i>{{ 'Sipariş No' | translate }}: {{ order.info.increment_id }} </i>
+    </div>
+
+     {% if order.sub_orders | length > 1 %}
+         <p class="text-justify btn-orange"  >
+             Siparişiniz birden fazla depodan tedarik edileceği için siparişiniz ayrı kargolar ile gönderilecektir. <br>
+             Hesabım > siparişlerim sayfası altından veya "Sipariş Takibi" ekranından siparişinizin durumunu takip edebilirsiniz.
+         </p>
+     {% endif %}
+    <div class="listes">
+        <table>
+            <tbody>
+            {% for item in order.products %}
+                <tr>
+                    <td>
+                        <div class="images">
+                            <a href="{{ item.url_key }}"><img src="{{ item.image }}" alt=""></a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text">
+                            <a href="{{ item.url_key }}"><span>{{ item.name }}</span></a>
+                            <p>{{ item.name }}</p>
+                                    <ul>
+                                        <li>{{ 'Beden' | translate }}: <b>{{ item.option_value }}</b></li>
+                                        <li>{{ 'Adet' | translate }}: <b>{{ item.qty_ordered | number_format(0) }}</b></li>
+                                        <li>{{ 'Renk' | translate }}: <b>{{ item.renk }}</b></li>
+                                    </ul>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="dts">
+            <ul>
+                <li>
+                    <b>{{ 'Sipariş Tarihi' | translate }}:</b>
+                    {{ order.created_at | date('d.m.Y') }}
+                </li>
+                <li>
+                    <b>{{ 'Ödeme Şekli' | translate }}:</b>
+                    {{ order.payment.method.method_title }}
+                    {% if order.payment.method.odeme_turu == 'payu'  %}
+                        {% if  order.info.installment == 1 %}
+                            ({{ 'Tek Çekim' | translate }})
+                        {% else %}
+                            ( {{ order.info.installment }} {{ 'Taksit' | translate }} )
+                        {% endif %}
+                    {% endif %}
+                </li>
+                <li>
+                    <b>{{ 'Ödeme Tutarı' | translate }}:</b>
+                    {{ order.info.base_grand_total | number_format(2,',',".") }} {{ order.info.base_currency_code }}
+                </li>
+                <li><b style="min-height: 45px;">{{ 'Tahmini Teslim Tarihi' | translate }} </b> {{ 'Siparişinizin %s ile %s tarihleri arasında kargoya verilmesi planlanmıştır'  | translate | format(estimated_first | date('d.m.Y'), estimated_last | date('d.m.Y')) | raw }}</li>
+                <li>
+                    <b> {{ 'Teslimat Adresi' | translate }}:</b>
+                    {{ order.shipping.street }}, {{ order.shipping.city }}, {{ order.shipping.region }}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{{ widget('datalayer', 'checkout_success', {layerData: {order: order, creditcardSaved: creditcard_saved}}) }}

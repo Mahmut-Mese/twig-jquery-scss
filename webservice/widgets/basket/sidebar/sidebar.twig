@@ -1,0 +1,70 @@
+<script>
+    function rgBasketUpdate(){
+        if(RG.Basket.is_cash_on_delivery !== 0){
+            RG.Basket.is_cash_on_delivery = {{ is_method_cash_on_delivery }};
+        }
+        RG.Basket.is_installment_set = 0;
+        RG.Basket.shipping_amount = {{ basket.shipping_amount ?? 0 }};
+        RG.Basket.base_total = {{ basket.subtotal_incl_tax + basket.discount_amount }};
+        RG.Basket.free_shipping_limit = {{ free_shipping_limit ?? 0}};
+        RG.Basket.cash_on_delivery_fee = {{ cash_on_delivery_fee ?? 0}};
+        RG.Basket.prepareSidebar();
+    };
+
+    if (window.jQuery) { $(rgBasketUpdate); } 
+    else { 
+        domReadyCallbacks.push(function () {
+            $(function () { rgBasketUpdate(); });
+        }); 
+    }
+</script>
+<div class="basket-side">
+    <em> {{ 'Sepetinizde %s adet ürün var' | translate | format(basket.items_qty) }} </em>
+
+    {{ widget('basket','mini_cart_detail',{ basket : basket, cash_on_delivery_fee: cash_on_delivery_fee}) }}
+
+    <div class="campaing">
+        <div class="new-select">   <span class="new-code"  value=
+                   {% if basket.coupon_code %}
+                "{{'Kampanya Kodunuz' | translate }}">{{ 'Kampanya Kodunuz' | translate }}
+                   {% else %}
+                "{{ 'Kampanya Kodunuz Var mı?' | translate }}">{{ 'Kampanya Kodunuz Var mı?' | translate }}
+                    {% endif %}
+            </span>
+
+        </div>
+        <div class="cart-coupon {{ basket.coupon_code ? 'show' : '' }}" >
+
+            <form action="" id="cart-coupon">
+                <div class="form-group">
+                    <input type="text" name="code" value="{{ basket.coupon_code ? basket.coupon_code : '' }}" placeholder="{{ 'Kampanya Kodunu Giriniz' | translate }}">
+                    {% if basket.coupon_code is defined %}
+                        <input type="submit" class="cart-coupon-button" value="{{ 'İPTAL' | translate }}" id="cart-coupon-remove">
+                    {% else %}
+                    <input type="submit" class="cart-coupon-button"value="{{ 'UYGULA' | translate }}" id="cart-coupon-input">
+                    {% endif %}
+
+                </div>
+            </form>
+            {{ widget('basket','coupons') }}
+
+        </div>
+    </div>
+
+    <div class="basket-button {{ sepet_onayla == 'hidden' ? ' hidden': '' }} ">
+        <div class="linkto">
+            <a  href="javascript:void(0);"
+            >{{ 'SEPETİ ONAYLA' | translate }}</a>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="note-basket">
+    {{ 'Lütfen satış sözleşmelerinizi onaylayın' | translate }}
+</div>
+<div class="note-basket-required">
+    {{ '<span class="missing-field"> %s </span> alanını <span class="missing-character"> eksiksiz </span> doldurunuz.'  | translate | format('Form') | raw}}
+
+</div>

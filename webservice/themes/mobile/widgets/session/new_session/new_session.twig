@@ -1,0 +1,33 @@
+<div class="product-session">
+    <div class="container-fluid">
+        <div class="all">
+            <div class="list swiper-container">
+                <div class="items  swiper-wrapper">
+                    {% for item in list %}
+                        <div class="mc-md-9 mc-xs-9 pa swiper-slide slide">
+                            <div class="alls">
+                                <div class="bt">
+                                    <a href="{{ item.link }}">
+                                        <div class="images lazy">
+                                            <img data-src="/pub/media/{{ item.image_desktop }}"
+                                                 src="/pub/assets/instreet/mobile/images/mobil_sizinicin_images_135x135.jpg"
+                                                 class="resimatt" alt="">
+                                        </div>
+                                        <div class="text">
+                                            <div class="img-bottom">
+                                                <div class=" start-shop"><span>Alışverişe Başla</span></div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

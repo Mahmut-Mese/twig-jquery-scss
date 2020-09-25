@@ -1,0 +1,86 @@
+<div class="basket-detail cart-detail">
+    <table>
+        <tbody>
+        <tr>
+            <td> {{ 'SİL' | translate }}</td>
+            <td> {{ 'ÜRÜN' | translate }}</td>
+            <td> {{ 'ÜRÜN ADI' | translate }}</td>
+            <td> {{ 'RENK' | translate }}</td>
+            <td> {{ 'BEDEN' | translate }}</td>
+            <td> {{ 'ADET' | translate }}</td>
+            <td> {{ 'FİYAT' | translate }}</td>
+        </tr>
+        {% for item in basket.items %}
+            <tr  data-id="{{ item.item_id }}" >
+                <td>
+                    <a href="javascript:void(0);"><i data-id="{{ item.item_id }}" data-sku="{{ item.sku }}" class="close">x</i></a>
+                </td>
+                <td>
+                    <div class="images">
+                        <a href="{{ item.data.url }}">
+                            <img src="{{ item.data.image}}" style="width:120px">
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <div class="text">
+                        <a href="{{ item.data.url }}">
+                            <span><i>{{ item.data.brand }}</i> {{ item.data.name }}</span>
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <div class="text">
+                        <span>{{ item.data.renk }}</span>
+                    </div>
+                </td>
+                <td>
+                        <div class="text optn  ">
+                            <div class="qty-select select">
+                                <ul  class="list">
+
+                                    {% for option in item.data.options %}
+                                        {% if option.is_selected %}
+                                            <li class="option"  data-value="{{ option.sku }}">{{ option.option_value }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% for option in item.data.options %}
+                                        {% if option.qty > 0 and  option.is_selected == 0 %}
+                                            <li class="option"  data-value="{{ option.sku }}">{{ option.option_value }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+
+                </td>
+                <td>
+                    <div class="text qty">
+                        <div class="qty-select select">
+                            <ul  class="list">
+                                <li class="option"  data-value="{{ item.qty }}">{{ item.qty }}</li>
+                                {% for option in item.data.options %}
+                                    {% if option.qty > 1   %}
+                                    {% if option.is_selected %}
+                                        {% for i in 1..option.qty  if i != item.qty %}
+                                        <li     class="option" data-value="{{ i }}">{{ i}}</li>       {% endfor %} {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="text">
+                        <span>{{ (item.base_price_incl_tax) | price}} </span>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="bottom-pro">
+        <a href="/"> {{ 'ALIŞVERİŞE DEVAM ET' | translate }}</a>
+    </div>
+</div>
+{{ widget('datalayer', 'checkout_cart', {layerData: {cart: basket, refresh: isAjax}}) }}

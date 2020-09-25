@@ -1,0 +1,33 @@
+<div class="filter-section filter-section-{{ filter.alias }}">
+	<div class="filter-title">{{ filter.name | translate }}</div>
+	<ul class="list-inline filter-items 
+		{% if filter.alias == 'renk' %}
+			color
+		{% elseif filter.alias == 'beden' %}
+		size
+		{% endif %}">
+		{% for agg in aggregations %}
+			<li class="{% if ( agg.value in filters or agg.value_star in filters) %}selected active{% endif %}">
+				<a href="{{ agg.query_string }}" data-without-query="{{ agg.without_qs }}"  
+					data-value="{{ agg.value }}" 
+					data-real-value="{{ agg.name }}" 
+					data-name="filters[]" 
+
+					class="input"
+
+					{% if ( agg.value in filters or agg.value_star in filters) %}data-is-selected="1"{% endif %}
+				>					
+					{% if filter.alias == 'renk' %}
+						<div class="filter-color-box"></div>
+					{% endif %}
+
+					{{ agg.name | translate | raw }}
+
+					{% if filter.alias != 'beden' and filter.alias != 'renk' %}				
+						<span>{{ item.count }}</span>
+					{% endif %}
+				</a>
+			</li>
+		{% endfor %}
+	</ul>
+</div>

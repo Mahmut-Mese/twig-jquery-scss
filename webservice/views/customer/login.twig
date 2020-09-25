@@ -1,0 +1,41 @@
+<script src='https://www.google.com/recaptcha/api.js?hl=tr'></script>
+<div class="page searchnone">
+    <div class="container-fluid">
+        <div class="page-content sab">
+            <div class="whitepage">
+                <div class="title">{{ 'GİRİŞ YAP' | translate }}</div>
+                <div class="giris-form">
+                    <form id="customer-login-form" action=""  method="POST">
+                        <div class="all">
+                            <div class="form-group">
+                                <em>{{ 'E-POSTA ADRESİ' | translate }}*</em>
+                                <input name="username" type="text" class="validate[required]">
+                            </div>
+                            <div class="form-group">
+                                <em>{{ 'ŞİFRENİZ' | translate }}*</em>
+                                <input name="password" type="password" class="validate[required]">
+                            </div>
+                            {% if login.failures_num >= login.show_fail_num and login.active == true%}
+                                <div class="form-group checkbox">
+                                    <div class="g-recaptcha" data-sitekey="{{ login.site_key }}"></div>
+                                </div>
+                            {% endif %}
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <a href="/customer/password-forget" class="pull-right">{{ 'ŞİFREMİ UNUTTUM' | translate }}</a>
+                                </div>
+                            </div>
+                            <div class="submit">
+                                <input value="{{ 'GİRİŞ YAP' | translate }}" type="submit" />
+                                <a class="facebook-login" href="#">{{ 'FACEBOOK İLE BAĞLAN' | translate }}</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+			<div class="text-center"><a href="/customer/register" class="btn btn-link" style="color:#ff671b;"><strong>Hesabınız yoksa hemen üye ol</strong></a></div>
+        </div>
+    </div>
+</div>
+{{ widget('social', 'facebook') }}

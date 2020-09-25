@@ -1,0 +1,147 @@
+<div class="page">
+    <div class="container-fluid">
+        <div class="basket-page">
+            <div class="mc-md-9 pa">
+                <div class="my-basket">
+                    <div class="basket-list">
+                        <div class="step">
+                            <ul>
+                                <li class="okey" onclick="window.location.href='{{ basket_base_url() }}/basket'"><i>{{ 'SEPET' | translate  }}</i></li>
+                                <li class="active"><i>{{ 'ADRES' | translate  }}</i></li>
+                                <li><i>{{ 'ÖDEME' | translate  }}</i></li>
+                            </ul>
+                        </div>
+                        <div class="basket-detail">
+                            <div class="adim3 adim4">
+                                <div class="form">
+                                    <form action="#" id="addresses-form">
+                                        <div class="item" id="formAddress">
+                                            <div class="form-group ship-address" id="ship-address">
+                                                {% set updateid = '' %}
+                                                <span>{{ 'TESLİMAT ADRESİM' | translate  }}</span>
+                                                {% if addresses is empty %}
+                                                    <div class="brd">
+                                                        {{ widget('address','fields',{address_key:'shipping_address',towns:towns,regions:regions,countries:countries}) }}
+                                                        <div class="note hidden">
+                                                            * {{ 'Fatura isteyen müşterilerimiz ilgili alanları doldurmak zorunda.' | translate }}</div>
+                                                        <div class="note">* {{ 'Yıldızlı alanların girişi zorunludur.' | translate  }}</div>
+
+
+                                                    </div>
+
+                                                {% else %}
+                                                    <select id="selected-ship-address">
+                                                        {% set ship_update='' %}
+                                                        {% set bill_update='' %}
+                                                        {% for  key, address in addresses  %}
+
+                                                          {% set ship_update=addresses[0].id %}
+                                                          <option checked data-id="{{ address.id }}" data-company="{{ address.company }}"
+                                                                  data-region_id="{{ address.region_id }}"
+                                                                  data-country_id="{{ address.country_id }}" data-region_code="{{ address.region_code }}"
+                                                                  data-prefix="{{ address.prefix }}" data-firstname="{{ address.firstname }}"
+                                                                  data-lastname="{{ address.lastname }}" data-email="{{ address.email }}" data-city="{{ address.city }}"
+                                                                  data-same_as_billing="{{ address.same_as_billing}}" data-telephone="{{ address.telephone }}" data-postcode="{{ address.postcode }}"
+                                                                  data-region="{{ address.region }}"
+                                                                  data-street="{{ address.street }}"
+                                                                  {% if getId == address.id %}selected{% endif %}
+                                                          >
+
+                                                              {{ address.title_address }}, {{ address.firstname }} {{ address.lastname }}, {{ address.street }}, {{ address.region }}, {{ address.city  }}
+
+
+                                                          </option>
+
+                                                {% endfor %}
+                                                    </select>
+                                                    <div class="our" id="edit-address">
+                                                        <a href="address/new">{{ 'YENİ ADRES EKLE' | translate  }}</a>
+                                                        <a href="#" id="varsayilan-adres-duzenle">{{ 'DÜZENLE' | translate  }}</a>
+                                                    </div>
+                                                {% endif %}
+                                                <div class="checkbox hidden" >
+                                                    <label class="">
+                                                        <div class="icheckbox_square_gold checked new-checkbox" id="ship_same"
+                                                             style="position: relative;">
+                                                            <input type="checkbox" checked>
+                                                        </div>
+                                                        {{ 'Fatura Adresim, Teslimat adresim ile aynı olsun' | translate  }}
+                                                    </label>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="form-group bill-address hidden" id="bill-address">
+                                                <span>{{ 'FATURA ADRESİ' | translate  }}</span>
+                                                {% if addresses is empty %}
+                                                    <div class="brd">
+                                                        {{ widget('address','fields',{address_key:'billing_address',regions:regions,towns:towns,countries:countries}) }}
+                                                        <div class="note hidden">
+                                                            * {{ 'Fatura isteyen müşterilerimiz ilgili alanları doldurmak zorunda.' | translate }}</div>
+                                                        <div class="note">*   {{ ' Yıldızlı alanların girişi zorunludur.' | translate  }}</div>
+
+
+                                                    </div>
+                                                {% else %}
+                                                    <select id="selected-bill-address">
+                                                        {% set bill_update='' %}
+                                                        {% for  key, address in addresses  %}
+
+                                                                {% set bill_update=addresses[1].id %}
+                                                            <option data-id="{{ bill_update }}" data-company="{{ address.company }}"  data-region_id="{{ address.region_id }}"
+                                                                    data-country_id="{{ address.country_id }}"  data-region_code="{{ address.region_code }}"
+                                                                    data-prefix="{{ address.prefix }}"  data-firstname="{{ address.firstname }}"
+                                                                    data-lastname="{{ address.lastname }}"  data-email="{{ address.email }}" data-city="{{ address.city }}"
+                                                                    data-same_as_billing="{{ address.same_as_billing}}" data-telephone="{{ address.telephone }}"  data-postcode="{{ address.postcode }}"
+                                                                    data-region="{{ address.region }}" data-street="{{ address.street }}">
+                                                                {{ address.title_address }}, {{ address.firstname }} {{ address.lastname }}, {{ address.street }}, {{ address.region }}, {{ address.city  }}
+                                                            </option>
+
+                                                        {% endfor %}
+                                                    </select>
+                                                    <div class="our">
+                                                        <a href="#" id="fatura-adres-duzenle">{{  'DÜZENLE' | translate  }}</a>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+
+                                        </div>
+                                        {{ widget('checkout', 'shipping_methods') }}
+
+
+
+                                        <div class="item hidden">
+                                            <div class="form-group e-bill">
+                                                <span>{{ 'TİCARİ EK BİLGİ' | translate  }}</span>
+
+
+                                                <div class="checkbox full">
+                                                    <label>
+                                                        <div class="icheckbox_square_gold new-checkbox">
+                                                            <input type="checkbox" name="invoice" id="e_bill"></div>
+                                                        {{ 'Kurumsal Fatura İstiyorum' | translate  }}
+                                                    </label>
+                                                </div>
+                                                <div id="kurumsal-fatura" class="hidden">
+                                                    <p>{{ 'E-fatura mükellefleri bu seçeneği seçmelidir.' | translate  }}</p>
+                                                    <input name="tax_number" id="tax_number" type="text" placeholder="{{ 'VERGİ NUMARASI / TC KİMLİK NUMARASI ' | translate  }}*" class="tax-number required">
+                                                    <input name="tax_office" id="tax_office"  maxlength="20" type="text" placeholder="{{ 'VERGİ DAİRESİ' | translate  }} *" class="required">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mc-md-3 pa  basket-container">
+
+                {{ widget('basket', 'sidebar', {'next_url': '/checkout/payment'}) }}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,687 @@
+<div class="cm lazy">
+	<div class="cm-spotlight">
+		<img src="/pub/assets/flo/coupon_madness/flo-spotlight-mobile.jpg" />
+	</div>
+
+	<ul class="cm-categories">
+		{% if banner_1_tum_kampanyalar | length %}
+		<li class="all">
+			<a href="#">
+				<img src="/pub/assets/flo/coupon_madness/category-all.png">
+				<span>TÜM KAMPANYALAR</span>	
+			</a>
+		</li>
+		{% endif %}
+		{% if banner_1_kadin | length %}
+		<li class="woman">
+			<a href="#">
+				<img src="/pub/assets/flo/coupon_madness/category-woman.png">
+				<span>KADIN</span>	
+			</a>
+		</li>
+		{% endif %}
+		{% if banner_1_erkek | length %}
+		<li class="man">
+			<a href="#">
+				<img src="/pub/assets/flo/coupon_madness/category-man.png">
+				<span>ERKEK</span>	
+			</a>
+		</li>
+		{% endif %}
+		{% if banner_1_cocuk | length %}
+		<li class="child">
+			<a href="#">
+				<img src="/pub/assets/flo/coupon_madness/category-child.png">
+				<span>ÇOCUK</span>	
+			</a>
+		</li>
+		{% endif %}
+		{% if banner_1_spor | length %}
+		<li class="sport">
+			<a href="#">
+				<img src="/pub/assets/flo/coupon_madness/category-sport.png">
+				<span>SPOR</span>	
+			</a>
+		</li>
+		{% endif %}
+		{% if banner_1_aksesuar | length %}
+		<li class="accessory">
+			<a href="#">
+				<img src="/pub/assets/flo/coupon_madness/category-accessory.png">
+				<span>AKSESUAR</span>	
+			</a>
+		</li>
+		{% endif %}	
+		{% if banner_1_giyim | length %}
+		<li class="dress">
+			<a href="#">
+				<img src="/pub/assets/flo/coupon_madness/category-dress.png">
+				<span>GİYİM</span>	
+			</a>
+		</li>
+		{% endif %}
+	</ul>
+
+	<div class="container">
+		<div class="cm-campaigns">
+			{% set aliases = [banner_1_tum_kampanyalar, banner_1_kadin, banner_1_erkek, banner_1_cocuk, banner_1_spor, banner_1_aksesuar, banner_1_giyim] %}
+
+			{% set index = 1 %}
+			{% for campaigns in aliases %}
+				{% if campaigns | length %}
+					<div class="cm-campaign-tabs cm-campaign-tab-{{index}}">
+					{% for banner in campaigns %}
+						{% set surprise = false %}
+						{% if date(banner.start_date) > date() %}
+							{% set surprise = true %}
+						{% endif %}
+
+						<div class="cm-campaign-item {% if surprise %}{% endif %}">
+							<a href="{{ banner.link }}">
+								<div class="cm-campaign-image">
+									{% if surprise %}
+										<img src="/pub/assets/flo/coupon_madness/campaign-surprise.png">
+										<div class="cm-campaign-image-title">SÜRPRİZ FIRSAT</div>
+									{% else %}
+										{{ img(banner.image_mobil | default(banner.image_desktop), '', {  class:'w-100', cdn: 'general' }) }}
+									{% endif %}
+								</div>
+								<div class="cm-campaign-info">
+									<div class="row">
+										<div class="col-8">
+											<span class="cm-campaign-title">
+												{% if surprise %}
+													{{ 'Takipte Kalan Herkes Stoklar Tükenmeden Fırsatı Yakalıyor.' | translate }}
+												{% else %}
+													{{ banner.title }}
+												{% endif %}
+											</span>
+										</div>
+										<div class="col-4 text-right">
+											{% if surprise %}
+												<span class="cm-campaign-timer"><span class="cm-campaign-timer-icon"></span> 03:15:22</span>
+											{% else %}
+												<span class="cm-campaign-link">ALIŞVERİŞE BAŞLA</span>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+							</a>
+						</div>
+					{% endfor %}
+					</div>
+					{% set index = index + 1 %}
+				{% endif %}
+			{% endfor %}
+
+			{# <div class="cm-campaign-item">
+				<a href="#">
+					<div class="cm-campaign-image">
+						<img src="/pub/assets/flo/coupon_madness/campaign-1.png">
+					</div>
+					<div class="cm-campaign-info">
+						<div class="row">
+							<div class="col-8">
+								<span class="cm-campaign-title">ERKEK Günlük Ayakkabılarda Sepette %15 İndirim</span>
+							</div>
+							<div class="col-4 text-right">
+								<span class="cm-campaign-link">ALIŞVERİŞE BAŞLA</span>
+							</div>
+						</div>
+					</div>
+				</a>
+			</div>
+
+			<div class="cm-campaign-item surprise">
+				<a href="#">
+					<div class="cm-campaign-image">
+						<img src="/pub/assets/flo/coupon_madness/campaign-surprise.png">
+						<div class="cm-campaign-image-title">SÜRPRİZ FIRSAT</div>
+					</div>
+
+					<div class="cm-campaign-info">
+						<div class="row">
+							<div class="col-8">
+								<span class="cm-campaign-title">Takipte Kalan Herkes Stoklar Tükenmeden Fırsatı Yakalıyor.</span>
+							</div>
+							<div class="col-4 text-right">
+								<span class="cm-campaign-timer"><span class="cm-campaign-timer-icon"></span> 03:15:22</span>
+							</div>
+						</div>
+					</div>
+				</a>
+			</div>  #}
+		</div>
+	</div>
+
+	<div class="cm-coupons">
+		<div class="cm-coupons-title">
+			<img src="/pub/assets/flo/coupon_madness/coupons-title.jpeg" alt="Kupon Çılgınlığı"/>
+		</div>
+
+		<ul class="cm-coupon-list">
+			{% for campaign in campaigns %}
+				{% if customer_campaigns[campaign.rule_id] %}
+					<li class="cm-coupon-used"></li>
+				{% else %}
+					<li class="cm-coupon-item">
+						<a href="#" data-rule="{{ campaign.rule_id }}" class="cm-set-coupon" 
+							data-price="{% if campaign.yuzde %}%{% endif %}{{ campaign.discount_amount | number_format }}"
+							data-ispercent="{{ campaign.yuzde }}"
+							data-description="{{ campaign.description }}"
+						>
+							<span class="cm-coupon-price">
+								{% if campaign.yuzde %}
+									%{{ campaign.discount_amount | number_format }}
+								{% else %}
+									{{ campaign.discount_amount | number_format }} TL
+								{% endif %}
+							</span>
+							<span class="cm-coupon-description">{{ campaign.name }}</span>
+						</a>
+					</li>
+				{% endif %}
+
+				{% if (loop.index) % 2 == 0 %}
+					<li class="cm-coupon-newline"></li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+
+		<h1 class="cm-coupons-title">Muhteşem İndirim Günleri</h1>
+		<div class="cm-coupons-description">
+Muhteşem İndirim Kuponları 1 - 12 Kasım 2019 kazanılabilir. Kazanılan kuponlar 8-12 Kasım 2019 tarihleri arasında kullanılabilir.		</div>
+	</div>
+
+	<div class="cm-banners">
+		<div class="container">
+			<div class="row">
+				{% for banner in banner_2 %}
+					<div class="col-6">
+						<a href="{{ banner.link }}" class="cm-banner">
+							{{ img('media/lazyloading/blank.png', '', {cdn: 'general', }, banner.image_desktop) }}
+						</a>
+					</div>
+				{% endfor %}
+			</div>
+
+			<div class="row">
+				<div class="col-12">
+					<div class="cm-bottom-banners">
+						{% for banner in banner_3 %}
+							<a href="{{ banner.link }}" class="cm-banner">
+								{{ img('media/lazyloading/blank.png', '', {cdn: 'general', }, banner.image_desktop) }}
+							</a>
+						{% endfor %}
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+	<div class="cm-our-choices">
+        {{ widget('products', 'product_slider', {title: 'Sizin İçin Seçtiklerimiz' | translate, data_source: 'sizin-icin-sectiklerimiz' }) }}
+	</div>
+</div>
+
+<div class="footer-content">
+    <div class="container">
+        <div class="holder text-left">
+			<h2>Flo Muhteşem İndirim Günleri </h2>
+			<p>FLO'da birbirinden avantajlı kasım indirimleri başladı! Zengin ürün seçenekleri ile her yaş grubuna hitap eden FLO, bu yıl kasım ayı kampanyaları ile aklınızı alacak. Bebek, çocuk, genç ve yetişkinler için giyim, ayakkabı ve aksesuar kategorilerinde çok sayıda ürün seçeneği sunan FLO'nun, kasım ayına özel efsane indirimleri ile doyasıya alışveriş yapmaya hazır olun!</p>
+
+			<h2>Flo İndirim Kuponları </h2>
+			<p>Amerikalıların meşhur Black Friday geleneğine alternatif olarak kasım ayı alışveriş festivali, bir süredir dünyanın dört bir yanında çılgın indirimlerle kutlanıyor. Kasım ayının başında başlayacak olan etkinlikte pek çok prestijli marka, satışa sunduğu ürünlerde sürpriz indirimler uyguluyor. FLO’da Kasım ayına özel olarak efsaneleşen alışveriş festivalinde, onlarca ünlü markanın birbirinden şık ve kullanışlı ürünlerini % 50'ye varan indirimlerle sizinle buluşturuyor. İddialı stilettolardan en rahat spor ayakkabılara; spor giyim ürünlerinden güneş gözlüğüne kadar, aklınıza gelebilecek birçok farklı kategoride zengin ürün seçeneğine sahip olan FLO'da muhteşem indirim festivalinin tadı bambaşka!</p>
+
+			<h2>FLO Kasım İndirimleri İle Kapınızı Çalıyor </h2>
+			<p>Erkek, kadın ve çocuk ürünlerinde efsane indirimlerle kapınızı çalan FLO; bu yıl kışa hazırlık sürecinde ihtiyacınız olan ne varsa kasım ayı için yaptığı muhteşem indirimlerle önünüze sunuyor. Sweatshirt, eşofman, mont, yelek gibi giyim ürünlerinin yanı sıra birbirinden şık bot ve çizme modelleri ile kış stilinizi tamamlayan FLO; kasım ayına özel cazip fiyatlarıyla ünlü markaların sevilen ürünlerini sizlerle buluşturuyor. The North Face, U.S Polo ASSN, Lumberjack ve Mavi gibi isimlerin aralarında bulunduğu ünlü markalar; farklı fonksiyonlara sahip bot ve çizme modellerinde geçerli olan muhteşem indirimleri ile FLO'da sizi bekliyor. Klasik bot, işçi botu, kar botu, askeri bot, topuklu bot, bootie gibi farklı başlıklara ayrılan yüzlerce bot seçeneğine uygun fiyatlarla sahip olmak istiyorsanız FLO'nun kasım ayına özel muhteşem indirimini kaçırmayın!</p>
+			<p>Kış aylarında ayakkabı tercihini çizmeden yana kullanan kadınlar içinse birbirinden şık modeller mevcut! Yağmur çizmesi, klasik çizme, topuklu çizme ve diz üstü çizme başlıkları altında aradığınız tüm modeller sürpriz fiyatlarla FLO’da sizi bekliyor olacak. Kasıma özel bu sürprizler sayesinde kışın ayaklarınız sıcak, paranız ise cebinizde kalacak!</p>
+ 
+			<h2>Spor Giyimde Muhteşem Kampanyalar </h2>
+			<p>Hem günlük tarzınızın tamamlayıcısı olarak hem de sportif aktivitelerde kullanabileceğiniz birbirinden şık spor giyim ürünleri muhteşem indirim kampanyaları ile FLO vitrinlerindeki yerini alıyor. Sweatshirtten formaya, spor ayakkabıdan eşofman takımı ve atletik taytlara; spor giyime dair aradığınız ne varsa FLO’da! Üstelik indirim kuponları sayesinde bu ürünlerin hepsi, akıl almaz fiyatlarla karşınıza çıkıyor. Sportif kombinleri tamamlayan en önemli parça olarak spor ayakkabı seçeneklerinde ise; yürüyüş ayakkabısı, fitness ayakkabısı, krampon, halı saha ve basketbol ayakkabısı gibi farklı ayakkabı modelleri FLO’nun zengin ürün seçenekleri arasında sizleri bekliyor. Flo kasım indirimleri sayesinde uygun fiyata satın alacağınız bu ürünlerle spor yapmanın tadını doyasıya yaşayabilir; bu yıl kasım ayında avantajlı alışverişin keyfini FLO’da sürebilirsiniz.</p>
+
+			<h2>Çocuk Ürünlerinde Yüzünüzü Güldürecek Muheşem İndirimler </h2>
+			<p>Çocuk ürünlerinde her mevsime uygun onlarca seçenek bulabileceğiniz FLO’da, on bir on bir indirimi sayesinde mevsimlik veya ileriye yönelik birçok ihtiyacınızı uygun fiyatlarla karşılayabilirsiniz. Kış aylarında çocuklarınızın ayaklarını koruyacak bot ve çizme modellerini kasım indirimleri sayesinde ucuza satın alabilir; ilkbaharda giyebilecekleri cıvıl cıvıl spor ayakkabı modellerini önceden alarak hesaplı alışverişin tadını çıkarabilirsiniz. FLO’nun ürün gamında yer alan çocuk ayakkabı modellerinin yanı sıra bebekler için birbirinden sevimli patik modellerini keşfedebilir; on bir on bir kampanyası ile her yaştaki çocuğun ihtiyacına uygun ayakkabıyı FLO’da bulabilirsiniz. Ayrıca, ayakkabıya uygun çocuk çanta ve aksesuar kategorilerinde de kampanya süresince sürpriz indirimler sizi bekliyor. Çocukların hayal dünyasına hitap eden, özel Disney tasarımlı çanta ve ayakkabı kombinleri ile çocuklarınızı mutlu etmeye hazır olun! Dilerseniz, çocuk giyim kategorisinde yer alan spor giyim ürünleri ile çocuklarınızın tarzını FLO kalitesiyle tamamlayabilirsiniz.</p>
+ 
+			<h2>Ünlü Markaların Ürünlerinde Dev İndirimler</h2>
+			<p>Başta Adidas, Nike, Puma, Reebok, Hummel, Kinetix, Lumberjack ve U.S. Polo ASSN gibi isimler olmak üzere; FLO’da birçok ünlü markaya ait ürün seçeneklerine ulaşabilirsiniz. İlgilendiğiniz kategoriye uygun olarak değişiklik gösteren markaların ürünlerini flo kampanyası sayesinde hayalinizdekinden bile daha uygun fiyatlara FLO’da bulabilirsiniz. Bunun yanında Galatasaray, Fenerbahçe, Beşiktaş ve Trabzon gibi ünlü takımların lisanslı ürünleri de FLO’nun ürün gamında bulunuyor. On bir on bir fırsatları sayesinde tutkulu taraftarlar, takımına ait ürünlere en uygun fiyatlarla sahip olma şansı yakalıyor. Dilerseniz siz de kendiniz veya çocuğunuz için, tuttuğunuz takımın lisanslı ürünlerini kasım ayı indirimleri ile avantajlı fiyatlarla satın alabilirsiniz.</p>
+ 
+
+			<h2>Birbirinden Şık Aksesuarlarda Muhteşem Kasım İndirimleri</h2>
+			<p>Hem şık hem de spor kombinlerinizin tamamlayıcısı olan birbirinden kullanışlı aksesuarlarda kasım ayı indirimlerinden yararlanmayı unutmayın! Soğuk havalarda sizi koruyacak atkı, bere, eldivenlerde ve kullanımına göre farklı sınıflara ayrılan çanta modellerinde FLO’nun muhteşem on bir on bir indirimlerini kaçırmayın. Abiye çantalar, portföyler, omuz, sırt, bel, laptop, plaj, makyaj ve postacı çantalarında en uygun fiyat seçenekleri FLO’da! Çanta ve kışlık aksesuar alışverişlerinizin yanı sıra kemer, cüzdan, güneş gözlüğü, saat gibi ihtiyaçlarınızı da FLO’nun muhteşem kasım kampanyaları arasında bulabilir; dilediğiniz ürünü FLO’nun internet sitesinde sepetinize atarak; kolayca sipariş edebilirsiniz.</p>
+			<p>Siz de FLO farkını yaşatan, birbirinden şık ve kaliteli ürünlere uygun fiyatlarla sahip olmak istiyorsanız, acele edin! Sepete eklediğiniz ürünlerden dilediğinizi kampanya süresince indirimli fiyatlarla satın almanın mutluluğunu yaşayın!</p>
+        </div>
+        <div class="text-center">
+            <a href="javascript:;" class="read-more">
+                <i class="svg-arrow-up svg-arrow-up-dims"></i>
+                <span>DEVAMI</span>
+                <i class="svg-arrow-down svg-arrow-down-dims"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<style>
+	.footer-content h2 {
+		font-size:18px;
+	}
+	.footer-content .holder {
+		height: 100px;
+	}
+</style>
+
+<div class="modal flomodal fade" id="cmSelectCoupon" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-sm modal-dialog-centered cart-modal" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">KUPON ÇILGINLIĞI</h5>
+				<button type="button" class="close cart-info-modal-close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<h2></h2>
+				<h4></h4>
+			</div>
+			<div class="modal-footer">
+				<a href="javascript:;" class="btn btn-success w-100 cm-appyl-coupon-code" data-dismiss="modal" aria-label="Close"> İNDİRİMİ YAKALA </a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal flomodal fade" id="cmErrorModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-sm modal-dialog-centered cart-modal" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">KUPON ÇILGINLIĞI</h5>
+				<button type="button" class="close cart-info-modal-close" data-dismiss="modal" aria-label="Close">
+				</button>
+			</div>
+			<div class="modal-body">
+				<h4></h4>
+			</div>
+			<div class="modal-footer">
+				<a href="javascript:;" class="btn btn-success w-100" data-dismiss="modal" aria-label="Close"> TAMAM </a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.cm {
+		max-width: 100%;
+		overflow:hidden;
+		
+		background: #fcbd39;
+	}
+
+	.cm-spotlight {
+		margin-bottom: 15px;
+	}
+
+	.cm-spotlight img {
+		width: 100%;
+	}
+
+	.cm-categories {
+		padding: 0 0 15px 0;
+		margin: 0 8px 20px;
+		list-style: none;
+		
+		font-size: 0;
+
+		text-align: center;
+
+		display: -ms-flexbox;
+		display: flex;
+		-ms-flex-align: start;
+		align-items: flex-start;
+		-ms-flex-pack: start;
+		justify-content: flex-start;
+		white-space: nowrap;
+		overflow-x: auto;
+	}
+
+	.cm-categories > li {
+		display:inline-block;
+		vertical-align: middle;
+
+		width: 85px;
+		height: 85px;
+
+		margin-right: 5px;
+
+		min-width: 85px;
+
+		position: relative;
+	}
+
+	.cm-categories > li:last-child {
+		margin-right: 0;
+	}
+
+	.cm-categories > li.all{background:#C30000;}
+	.cm-categories > li.woman{background:#d35500;}
+	.cm-categories > li.man{background:#a1292a;}
+	.cm-categories > li.child{background:#6c1975;}
+	.cm-categories > li.sport{background:#30377b;}
+	.cm-categories > li.accessory{background:#03858b;}
+	.cm-categories > li.dress{background:#19772b;}
+
+	.cm-categories > li:before {
+		content: '';
+
+		position: absolute;
+		top: 5px;
+		right: 5px;
+		bottom: 35px;
+		left: 5px;
+		z-index: 0;
+
+		background: #fcbd39;
+		border-radius: 100%;
+
+		-webkit-filter: blur(25px);
+		filter: blur(25px);
+	}
+
+	.cm-categories > li:after {
+		content: '';
+
+		display: none;
+
+		position: absolute;
+		top: 100%;
+		left: 50%;
+
+		margin-left: -7px;
+
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 5px 7px 0 7px;
+		border-color: transparent transparent transparent transparent;
+	}
+
+	.cm-categories > li.all:after{border-top-color:#C30000;}
+	.cm-categories > li.woman:after{border-top-color:#d35500;}
+	.cm-categories > li.man:after{border-top-color:#a1292a;}
+	.cm-categories > li.child:after{border-top-color:#6c1975;}
+	.cm-categories > li.sport:after{border-top-color:#30377b;}
+	.cm-categories > li.accessory:after{border-top-color:#03858b;}
+	.cm-categories > li.dress:after{border-top-color:#19772b;}
+	.cm-categories > li.active:after { display: block; }
+
+	.cm-categories > li span {
+		display: block;
+
+		font-size: 11px;
+		line-height: 1;
+		text-align: center;
+		
+		color: #ffffff;
+
+		position: absolute;
+		bottom: 7px;
+		left:5px;
+		right:5px;
+
+		padding-top: 5px;
+
+		border-top: solid 1px rgba(255, 255, 255, .2);
+	}
+
+	.cm-categories > li img {
+		width: 63px;
+		height: 63px;
+
+		position: relative;
+		z-index: 2;
+	}
+	
+	.cm-campaigns {
+		margin-bottom: 35px;
+	}
+
+	.cm-campaign-tabs {
+		display: none;
+	}
+
+	.cm-campaign-item {
+		margin-bottom: 13px;
+	}
+
+	.cm-campaign-item.surprise .cm-campaign-image:before{
+		content: '';
+
+		position: absolute;
+		top:0;
+		right:0;
+		bottom:0;
+		left: 0;
+
+		z-index: 1;
+
+		opacity: 0.9;
+		background-color: #ff7600;
+	}
+
+	.cm-campaign-image {
+		position: relative;
+	}
+
+	.cm-campaign-image img {
+		width: 100%;
+	}
+
+	.cm-campaign-image-title {
+		font-size: 35px;
+		color: #ffffff;
+
+		position: absolute;
+		top: 50%;
+		left: 50%;
+
+		z-index: 2;
+
+		transform: translate3d(-50%, -50%, 1px);
+
+		white-space: nowrap;
+	}
+
+	.cm-campaign-info {
+		background: #ffffff;
+
+		padding: 5px 10px;
+	}
+
+	.cm-campaign-timer,
+	.cm-campaign-link,
+	.cm-campaign-title{
+		font-size: 10px;
+		line-height: 1;
+		color: #000000;
+	}
+
+	.cm-campaign-link {
+		text-decoration: underline;
+	}
+
+	.cm-campaign-timer-icon {
+		width: 14px;
+		height: 14px;
+
+		background: url(/pub/assets/flo/coupon_madness/timer.png) no-repeat;
+		background-size: cover;
+
+		display: inline-block;
+		vertical-align: middle;
+		
+		margin-top: -3px;
+		margin-right: 7px;
+	}
+
+	.cm-coupons {
+		background: #ffffff;
+		padding: 30px 0;
+	}
+
+	.cm-coupons-title {
+		text-align: center;		
+		font-size: 24px;
+		font-weight: 500;
+	}
+
+	.cm-coupon-list {
+		padding: 0;
+		margin: 0;
+		list-style: none;
+
+		font-size: 0;
+		text-align: center;
+	}
+
+	.cm-coupon-newline {
+		display: block;
+	}
+
+	.cm-coupon-used,
+	.cm-coupon-guest,
+	.cm-coupon-item {
+		position: relative;
+
+		width: 156px;
+		height: 71px;
+
+		display: inline-block;
+		vertical-align: middle;
+
+		margin: 0 14px 14px 0;
+
+		background-repeat: no-repeat;
+		background-size: contain;
+	}
+
+	.cm-coupon-item {
+		background-image: url(/pub/assets/flo/coupon_madness/coupon-available.png);
+	}
+
+	.cm-coupon-guest {
+		background-image: url(/pub/assets/flo/coupon_madness/coupon-guest.png);
+	}
+
+	.cm-coupon-used {
+		background-image: url(/pub/assets/flo/coupon_madness/coupon-used.png);
+	}
+
+	.cm-coupon-guest > a,
+	.cm-coupon-item > a{
+		display: block;
+		height: 100%;
+	}
+
+	.cm-coupon-price {
+		width: 53px;
+		height: 37px;
+		
+		position: absolute;
+
+		top: 13px;
+		right: 14px;
+			
+		font-size: 20px;
+		line-height: 37px;
+		color: #000000;
+
+		white-space: nowrap;
+	}
+
+	.cm-coupon-description {
+		position: absolute;
+		bottom: 9px;
+		right: 13px;
+
+		font-size: 5px;
+		color: #000000;
+	}
+
+	.cm-coupons-description {
+		text-align: center;
+
+		font-size: 12px;
+		line-height: 21px;
+		color: #000000;
+
+		padding: 0 30px;
+	}
+
+	.cm-banners{
+		background: #ffffff;
+	}
+
+	.cm-banner {
+		display: block;
+		margin-bottom: 30px;
+	}
+
+	.cm-banner img {
+		width: 100%;
+	}
+
+	.cm-bottom-banners {
+		text-align: center;
+		display: -ms-flexbox;
+		display: flex;
+		-ms-flex-align: start;
+		align-items: flex-start;
+		-ms-flex-pack: start;
+		justify-content: flex-start;
+		white-space: nowrap;
+		overflow-x: auto;
+	}
+
+	.cm-bottom-banners .cm-banner {
+		min-width: 147px;
+		margin-right: 12px;
+	}
+
+	#cmSelectCoupon h2 {
+		font-size: 20px;
+	}
+
+	#cmSelectCoupon h2 .price {
+		font-size: 40px;
+		line-height: 1;
+		vertical-align: bottom;
+	}
+
+	#cmSelectCoupon h4 {
+		font-size: 16px;
+		text-align: center;
+		color: #707070;
+		font-style: normal;
+	}
+
+	#cmErrorModal h4 {
+		font-style: normal;
+	}
+</style>
+
+
+<script>
+	domReadyCallbacks.push(function() {		
+		$('.cm-categories a').on('click', function (e) {
+			e.preventDefault();
+
+			var $self = $(this);
+			var $parent = $self.parent();
+			var index = $parent.index() + 1;
+
+			$('.cm-campaign-tabs').hide().filter('.cm-campaign-tab-' + index).fadeIn();
+
+			$self.closest('ul').find('li').removeClass('active');
+			$parent.addClass('active');
+		}).first().trigger('click');
+	});
+</script>

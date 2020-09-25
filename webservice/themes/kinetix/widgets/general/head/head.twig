@@ -1,0 +1,86 @@
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+<meta name="robots" content="{% if meta.robots is empty %}INDEX,FOLLOW{% else %}{{ meta.robots }}{% endif %}" />
+<title> {{ registry("page_title")|default(meta.title) }}</title>
+<meta name="description" content="{{ meta.description }}"/>
+<link rel="canonical" href="{{ meta.canonical }}" />
+<link rel="alternate" href="{{ meta.alternate }}" hreflang="tr" />
+
+{% if meta.prev is not empty %}
+<link rel="prev" href="{{ meta.prev }}" />
+{% endif %}
+{% if meta.next is not empty %}
+<link rel="next" href="{{ meta.next }}" />
+{% endif %}
+
+<meta name="google-site-verification" content="lGmP1hJkRX8fxgVOhmTSF2MyeDvvqun-b-A3Up2510o" />
+<meta charset="UTF-8">
+<meta name="apple-itunes-app" content="ap-id=1436146422" />
+<meta name="google-play-app" content="app-id=tr.com.flo" />
+{% if registry("page_type") == "search" %}
+
+    <meta name="robots" content="noindex, follow" />
+{% endif %}
+
+<link rel="alternate" href="ios-app://1436146422/https/www.flo.com" />
+<link rel="alternate" href="android-app://tr.com.flo/https/www.flo.com.tr" />
+
+<meta property="al:android:url" content="flo://" />
+<meta property="al:android:package" content="tr.com.flo" />
+<meta property="al:android:app_name" content="flo" />
+
+<meta property="al:ios:url" content="flo://" />
+<meta property="al:ios:app_store_id" content="1436146422" />
+<meta property="al:ios:app_name" content="flo" />
+
+
+<meta property="og:locale" content="tr_TR" />
+<meta property="og:title" content="{{ registry("page_title")|default(meta.title) }}">
+<meta property="og:site_name" content="www.flo.com.tr">
+<meta property="og:image" content="{{ meta.image }}">
+<meta property="og:url" content="{{ meta.canonical }}">
+<meta property="og:type" content="website">
+<meta property="fb:app_id" content="{{ registry('fb_app_id') }}">
+<meta property="fb:admins" content="">
+<meta property="og:description" content="{{ meta.description }}" />
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@flo">
+<meta name="twitter:creator" content="@flo">
+<meta name="twitter:title" content="{{ registry("page_title")|default(meta.title) }}">
+<meta name="twitter:description" content="{{ meta.description }}">
+<meta name="twitter:image" content="{{ meta.image }}">
+ <link rel="icon" type="image/png" href="https://kinetix01.mncdn.com/wp-content/uploads/2018/06/kinetix-favicon.png">
+
+
+<link rel="preconnect" href="https://gum.criteo.com" crossorigin />
+<link rel="preconnect" href="http://dis.criteo.com" crossorigin />
+<link rel="preconnect" href="http://ib.adnxs.com" crossorigin />
+<link rel="preconnect" href="http://dis.eu.criteo.com" crossorigin />
+<link rel="preconnect" href="http://8520000.fls.doubleclick.net" crossorigin />
+<link rel="preconnect" href="http://visitor.omnitagjs.com" crossorigin />
+<link rel="preconnect" href="http://image2.pubmatic.com" crossorigin />
+<link rel="preconnect" href="http://sync.ligadx.com" crossorigin />
+<link rel="preconnect" href="http://ad.360yield.com" crossorigin />
+
+{# <li1nk rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:300,400,500,600,700&amp;subset=latin-ext&display=block" /> #}
+
+{% if config('env.development') == true %}
+	<link rel="stylesheet" href="/pub/assets/flo/css/app.css?v={{ git_version() }}"/>
+    <link rel="stylesheet" href="/pub/assets/lib/fancybox/jquery.fancybox.min.css?v={{ git_version() }}">
+
+    <link rel="stylesheet" href="/pub/assets/lib/swiper/swiper.min.css?v={{ git_version() }}"/>
+	<link rel="stylesheet" href="/pub/assets/lib/niceselect/jquery.nice-select.min.css?v={{ git_version() }}">
+
+	<link rel="stylesheet" href="/pub/assets/flo/css/flo.css?v={{ git_version() }}" />
+    <link rel="stylesheet" href="/pub/assets/kinetix/css/custom.css?v={{ git_version() }}" />
+
+{% else %}
+    {% set themeName = (config('env.webservice.theme.web')[0]) %}
+
+    <style>
+        {{ loadCSS('pub/assets/dist/'~ themeName ~'/'~ themeName ~'-prod.css') }}
+    </style>
+{% endif %}

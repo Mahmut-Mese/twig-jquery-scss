@@ -1,0 +1,14 @@
+<div class="banners">
+    <div class="row">
+        {% for spotlight in spotlights %}
+            <div class="col-sm-6">
+                <a class="lazy d-block" href="{{ spotlight.link }}" data-spotlight-id="{{ spotlight.spotlight_id }}">
+                    {{ img('lazyloading/blank.png', '', {  class:'w-100', cdn: 'general' }, spotlight.image_desktop) }}
+{#                    <img src="/pub/media/lazyloading/blank.png" data-src="{{ img(spotlight.image_desktop) }}" class="w-100" alt="{{ spotlight.title }}">#}
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: spotlights}}) }}

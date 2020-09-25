@@ -1,0 +1,39 @@
+<ul class="account-menu">
+    <li>
+        <a href="/customer/edit" class="{% if active_class=='customer_edit' %}active{% endif %}"><i class="svg-account svg-account-dims"></i> Hesap Bilgileri</a>
+    </li>
+	<li>
+        <a href="/customer/wishlist" class="{% if active_class=='customer_wishlist' %}active{% endif %}"><i
+                    class="svg-orders-cart svg-orders-cart-dims"></i> Favorilerim</a>
+    </li>
+    <li>
+        <a href="/customer/orders" class="{% if active_class=='customer_orders' %}active{% endif %}"><i
+                    class="svg-orders-cart svg-orders-cart-dims"></i> Siparişlerim</a>
+    </li>
+    <li>
+        <a href="/customer/address/index" class="{% if active_class=='customer_address_index' %}active{% endif %}"><i class="svg-addresses svg-addresses-dims"></i>
+            Adres Defteri</a>
+    </li>
+    <li>
+        <a href="/customer/coupons" class="{% if active_class=='customer_coupons' %}active{% endif %}"><i class="svg-discount svg-discount-dims"></i>
+            İndirim Kuponları</a>
+    </li>
+    <li>
+        <a href="/customer/subscriptions" class="{% if active_class=='customer_subscriptions' %}active{% endif %}"><i class="svg-newsletter svg-newsletter-dims"></i> Haber Bülteni Üyeliği</a>
+    </li>
+    <li>
+        <a href="/stock/index" class="{% if active_class=='stock_index' %}active{% endif %}"><i class="svg-newsletter svg-newsletter-dims"></i> Stok Alarmları</a>
+    </li>
+    <li>
+        <a href="/customer/most-viewed-products" class="{% if active_class=='most_viewed_products' %}active{% endif %}"><i class="svg-newsletter svg-newsletter-dims"></i> Son Görüntülenenler</a>
+    </li>
+    {# <li>
+        <a href="/customer/price-notification" class="{% if active_class=='customer_price' %}active{% endif %}"><i class="svg-price-alert svg-price-alert-dims"></i> Fiyat Habercisi</a>
+    </li> #}
+  {#  <li>
+        <a href="/customer/credit" class="{% if active_class == 'credit' %}active{% endif %}"><i class="svg-credit svg-credit-dims"></i> Mağaza Kredisi</a>
+    </li>#}
+    <li>
+        <a href="/ticket/list" class="{% if active_class=='ticket_list' %}active{% endif %}"><i class="svg-help svg-help-dims"></i> Yardım</a>
+    </li>
+</ul>

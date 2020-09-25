@@ -1,0 +1,51 @@
+{% if config('env.development') == true %}
+<script src="/pub/assets/polyfill/intersection-observer-polyfill.js"></script>
+<script onload="applyCallbacks(domReadyCallbacks)" src="/pub/assets/lib/jquery/jquery.min.js"></script>
+<script src="/pub/assets/lib/bootstrap/bootstrap.min.js"></script>
+<script src="/pub/assets/lib/icheck/jquery.icheck.min.js"></script>
+<script src="/pub/assets/lib/inputmask/jquery.inputmask.min.js"></script>
+<script src="/pub/assets/lib/jquery.cookie/jquery.cookie.js"></script>
+<script src="/pub/assets/lib/jquery.visible/jquery.visible.js?v={{ git_version() }}"></script>
+<script src="/pub/assets/lib/lazy/lazy.min.js?v={{ git_version() }}"></script>
+<script src="/pub/assets/lib/slick/slick.min.js"></script>
+<script src="/pub/assets/lib/niceselect/jquery.nice-select.min.js"></script>
+<script src="/pub/assets/lib/jquery.zoom/jquery.zoom.min.js"></script>
+<script src="/pub/assets/lib/fancybox/jquery.fancybox.min.js"></script>
+<script src="/pub/assets/lib/jquery.validationengine/jquery.validationengine.js"></script>
+<script src="/pub/assets/lib/jquery.validationengine/jquery.validationengine.en.js?v1"></script>
+<script src="/pub/assets/lib/accounting/accounting.js?v={{ git_version() }}"></script>
+
+<script src="/pub/assets/js/datalayer/datalayer.gtm.js?v={{ git_version() }}"></script>
+<script src="/pub/assets/js/rg.commerce.js?v={{ git_version() }}"></script>
+<script type="text/javascript" src="/pub/assets/instreet/js/instreet.js?v=9"></script>
+<script type="text/javascript" src="/pub/assets/js/main.js"></script>
+<script type="text/javascript" src="/pub/assets/js/instreet.custom.js"></script>
+<script type="text/javascript" src="/page/translations"></script>
+{% else %}
+    {% set themeName = (config('env.webservice.theme.web')[0]) %}
+    <script>
+        var jqueryLoadCallback = function () {
+            getScript('/pub/assets/dist/{{ themeName }}/{{ themeName }}-prod.js?v={{ git_version() }}', function () {
+                applyCallbacks(domReadyCallbacks);
+                getScript('/page/translations');   
+            });
+        };
+    </script>
+    <script src="/pub/assets/lib/jquery/jquery.min.js" onload="jqueryLoadCallback()"></script>
+{% endif %}
+
+
+
+<div class="cookie-policy hide"> <div class="cookie-close" onclick="cookieClose()"> I agree </div>
+    <div class="cookie-text">
+      {{ 'İnternet sitemizde çerez kullanılmaktadır. Çerezler hakkında detaylı bilgi için <strong class="" style="cursor: pointer;text-decoration: underline;"><a href="page?url=gizlilik-ve-cerez">Çerez Politikası</a> </strong> nı inceleyiniz. Devam etmeniz halinde çerez kullanımına izin verdiğinizi kabul edeceğiz.' | translate | raw  }}
+
+    </div>
+</div>
+
+<div id="block-box">
+    <img src="/pub/assets/instreet/images/loading.gif" /><br />
+    <div class="text"></div>
+</div>
+
+<script async src="//instreet.api.useinsider.com/ins.js?id=10002739"></script>

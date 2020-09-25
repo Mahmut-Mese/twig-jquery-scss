@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    {{ widget('general', 'head', [], false) }}
+    {{ widget('general', 'head_scripts', [], false) }}
+</head>
+{% spaceless %}
+    <body class="">
+    {{ widget('general', 'body_scripts') }}
+    {{ widget('general', 'header') }}
+
+    <div class="overlay"></div>
+    <div class="overlay2"></div>
+    <div class="overlay3"></div>
+    <div class="overlay4"></div>
+
+    {% include page_tpl %}
+
+    {{ widget('general', 'footer_scripts') }}
+    {{ widget('datalayer', 'all_pages', {layerData: {customer: customer_info, cart: cart}}) }}
+    </body>
+{% endspaceless %}
+</html>

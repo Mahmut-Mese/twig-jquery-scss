@@ -1,0 +1,26 @@
+<div class="alls">
+    <div class="fav">
+        <a href="javascript:void(0);" class="add-wishlist" data-product-id="{{ product.id }}"></a>
+    </div>
+
+    {#<div class="water-ico">#}
+    {#<img src="/pub/assets/instreet/images/water.jpg" class="resimatt" alt="">#}
+    {#</div>#}
+    <div class="images">
+        <a href="{{ product.url }}">
+            <img src="{{ product.image|resize('250x250') }}" class="resimatt" alt="">
+        </a>
+    </div>
+    <div class="text">
+        <a href="{{ product.url }}">
+            <span>{{ product.manufacturer }}</span>
+            <p>{{ product.name }}</p>
+            <div class="money">
+                {% if product.special_price %}
+                    <i class="prev">{{ product.price|price }}</i>
+                {% endif %}
+                <i class="next">{{ product|price }}</i>
+            </div>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+<script src='https://www.google.com/recaptcha/api.js?hl=tr'></script>
+<div class="account-page-wrapper mt-3">
+    <div class="container">
+        <div class="row medium-gutter">
+            <div class="col-sm-3">
+                {{ widget('customer', 'account_left_menu') }}
+            </div>
+            <div class="col-sm-9">
+                <div class="breadcrumbs-bar title-only">
+                    <div class="left-nav">
+                        <a href="/ticket/list" class="go-back-link"><i class="fas fa-angle-left"></i>Geri Dön</a>
+                    </div>
+                    <div class="page-title">
+                        <h1>YARDIM</h1>
+                    </div>
+                </div>
+                <div class="row medium-gutter mb-4">
+                    <div class="col-sm-6">
+                        <div class="bg-white p-3 h-100">
+                            <form action="" id="yeni-ticket-form" method="POST" class="yeni-ticket-form">
+                                <div class="form-group animated">
+                                    <label>Konu</label>
+                                    <input type="text" name="name" class="form-control input_ucfirst">
+                                </div>
+                                <div class="form-group selectbox animated">
+                                    <select name="department_id" id="department" class="form-control custom-select">
+                                        <option value="">Departman Seçiniz</option>
+                                        {% for row in yeni_ticket.departman_list %}
+                                            <option value="{{ row.id }}">{{ row.title }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group selectbox animated">
+                                    <select name="department_parent_id" id="subject" class="form-control custom-select">
+                                        <option value="">Departman Konusu Seçiniz</option>
+                                    </select>
+                                </div>
+                                <div class="form-group selectbox animated">
+                                    <select name="order_id" id="order_id" class="form-control custom-select">
+                                        <option value="">Sipariş</option>
+                                        {% for row in yeni_ticket.siparis_list %}
+                                            <option value="{{ row.increment_id }}">{{ row.increment_id }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group animated">
+        							<textarea name="message" cols="30" rows="8" class="form-control"
+                                              placeholder="İletişime geçmek istediğiniz konuyu buraya yazabilirsiniz."></textarea>
+                                </div>
+                                {% if re_captcha.active == true and tf_post_time >= re_captcha.fail_num %}
+                                    <div class="text-right mb-3">
+                                        <div class="g-recaptcha" data-sitekey="{{ re_captcha.site_key }}"></div>
+                                    </div>
+                                {% endif %}
+                                <input type="submit"  id="btn-ticket"  class="btn btn-success btn-block btn-lg" value="GÖNDER">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="bg-white p-5 h-100">
+                            <div class="text-center">
+                                <i class="svg-contact svg-contact-dims mb-4"></i>
+                                <p class="text-gray">Müşteri hizmetleri telefonlarımız, çağrılarınıza haftanın 7 günü 09:00
+                                    - 19:00 saatleri
+                                    arasında hizmet vermektedir. </p>
+                                <p class="text-gray">Müşteri hizmetleri mesaj servisimize 7 gün 24 saat mesaj
+                                    gönderebilirsiniz. Göndereceğiniz
+                                    mesajlarınız müşteri hizmetleri yetkililerimizce hızlı bir şekilde yanıtlanacaktır.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

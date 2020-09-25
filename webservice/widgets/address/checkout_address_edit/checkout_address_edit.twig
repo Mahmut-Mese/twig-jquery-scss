@@ -1,0 +1,94 @@
+<div id="maincontent" class="page searchnone"><a id="contentarea" tabindex="-1"></a>
+    <div class="container-fluid">
+        <div class="page-content sab">
+            <script async="" src="https://maps.google.com/maps/api/js?key=&amp;libraries=places,geometry"></script>
+            <input name="form_key" type="hidden" value="l4EFzCZObjNl9Kk4">
+            <div id="authenticationPopup" data-bind="scope:'authenticationPopup'" style="display: none;">
+                <script>
+                    window.authenticationPopup = {
+                        "autocomplete": "off",
+                        "customerRegisterUrl": "http:\/\/instreet.mage\/customer\/account\/create\/",
+                        "customerForgotPasswordUrl": "http:\/\/instreet.mage\/customer\/account\/forgotpassword\/",
+                        "baseUrl": "http:\/\/instreet.mage\/"
+                    };
+                </script>
+                <!-- ko template: getTemplate() -->
+
+
+                <!-- /ko -->
+
+            </div>
+
+
+            <div id="monkey_campaign" style="display:none;">
+            </div>
+            <div class="whitepage fields">
+                <div class="basket-page">
+                    <div class="mc-md-9 pa">
+                        <div class="my-basket">
+                            <div class="basket-list">
+                                <div class="step">
+                                    <ul>
+                                        <li class="okey"><i>{{ 'SEPET' | translate }}</i></li>
+                                        <li class="active"><i>{{ 'ADRES' | translate }}</i></li>
+                                        <li><i>{{ 'ÖDEME' | translate }}</i></li>
+                                    </ul>
+                                </div>
+
+                                <div class="basket-detail">
+                                    <div class="adim4 adim3">
+                                        <div class="form">
+
+
+                                            <form class="form-address-edit"
+                                                  method="POST"
+                                                  id="address-edit-form" enctype="multipart/form-data"
+                                                  data-hasrequired="* Required Fields" novalidate="novalidate">
+                                                <div class="brd">
+                                                    <input type="hidden" name="success_url"
+                                                           value="/checkout/address">
+
+                                                    {{ widget('address','fields',{address: address,regions:regions,towns:towns,countries:countries}) }}
+
+                                                    <div class="note">* {{ 'Yıldızlı alanların girişi zorunludur.' | translate }}</div>
+
+
+                                                    <div class="actions-toolbar fixedbottom">
+                                                        <div class="submit">
+                                                            <button id="formAddresSave" type="submit"
+                                                                    class="actionOff saveOff primaryOff"
+                                                                    data-action="save-address" title="{{ 'KAYDET' | translate }}"
+                                                                    value="{{ 'KAYDET' | translate }}">{{ 'KAYDET' | translate }}
+                                                            </button>
+
+                                                        </div>
+                                                        <div class="secondary hidden">
+                                                            <a class="action back"
+                                                               href="http://instreet.mage/customer/address/"><span>VAZGEÇ</span></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mc-md-3 pa  basket-container">
+                        {{ widget('basket', 'sidebar', {'next_url': '/checkout/payment','sepet_onayla':'hidden'}) }}
+                    </div>
+                </div>
+
+            </div>
+            <div class="emarsys-wrapper">
+
+                <!-- This code will embeded on all pages -->
+
+
+            </div>
+        </div>
+    </div>
+</div>

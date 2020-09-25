@@ -1,0 +1,80 @@
+<script src='https://www.google.com/recaptcha/api.js?hl=tr'></script>
+<div id="maincontent" class="page searchnone"><a id="contentarea" tabindex="-1"></a>
+    <div class="container-fluid">
+        <div class="page-content sab">
+            <script async="" src="https://maps.google.com/maps/api/js?key=&amp;libraries=places,geometry"></script>
+            <input name="form_key" type="hidden" value="l4EFzCZObjNl9Kk4">
+            <div id="authenticationPopup" data-bind="scope:'authenticationPopup'" style="display: none;">
+                <script>
+                    window.authenticationPopup = {
+                        "autocomplete": "off",
+                        "customerRegisterUrl": "http:\/\/instreet.mage\/customer\/account\/create\/",
+                        "customerForgotPasswordUrl": "http:\/\/instreet.mage\/customer\/account\/forgotpassword\/",
+                        "baseUrl": "http:\/\/instreet.mage\/"
+                    };
+                </script>
+                <!-- ko template: getTemplate() -->
+
+
+                <!-- /ko -->
+
+            </div>
+
+
+            <div id="monkey_campaign" style="display:none;">
+            </div>
+            <div class="whitepage fields">
+                <div class="title orange">{{ 'HESABIM / YENİ ADRES EKLE' | translate }}</div>
+                <div class="basket-page">
+                    <div class="my-basket">
+                        <div class="basket-list">
+                            <div class="basket-detail">
+                                <div class="adim4 adim3">
+                                    <div class="form">
+                                        <form class="form-address-edit"
+                                              method="POST"
+                                              id="address-add-form" enctype="multipart/form-data"
+                                              data-hasrequired="* Required Fields" novalidate="novalidate">
+                                            <div class="brd">
+                                                <input type="hidden" name="success_url"
+                                                       value="/customer/address/index">
+
+                                                {{ widget('address', 'fields',{regions: regions,towns:towns,countries:countries, re_captcha: re_captcha, na_post_time: na_post_time}) }}
+
+                                                <div class="note">* {{ 'Yıldızlı alanların girişi zorunludur.' | translate }}</div>
+
+
+                                                <div class="actions-toolbar fixedbottom">
+                                                    <div class="submit">
+                                                        <button id="formAddresSave" type="submit"
+                                                                class="actionOff saveOff primaryOff"
+                                                                data-action="save-address" title="{{ 'KAYDET' | translate }}"
+                                                                value="{{ 'KAYDET' | translate }}">{{ 'KAYDET' | translate }}
+                                                        </button>
+
+                                                    </div>
+                                                    <div class="secondary hidden">
+                                                        <a class="action back"
+                                                           href="http://instreet.mage/customer/address/"><span>{{ 'VAZGEÇ' | translate }}</span></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="emarsys-wrapper">
+
+                <!-- This code will embeded on all pages -->
+
+
+            </div>
+        </div>
+    </div>
+</div>

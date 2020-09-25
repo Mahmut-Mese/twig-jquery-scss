@@ -1,0 +1,76 @@
+{% set gridClass = 'col-sm-3' %}
+
+{% if gorunum == '2' %}
+	{% set gridClass = 'col-sm-6' %}
+{% elseif gorunum == '3' %}
+	{% set gridClass = 'col-sm-4' %}
+{% endif %}
+
+<div class="product-vertical {% if is_gallery_item %}col-xs-12{% else %}col-xs-6 {{classes}} {{ gridClass }}{% endif %}" data-gtm-product-id="{{ product.sku }}" id="product-{{ product.sku }}">
+	<div class="product-image-wrapper">
+		<a href="{{ product.url }}">
+			<img src="{{ product.image }}" alt=""/>
+		</a>
+		<a href="#" class="product-quickview product-quick-view-open" data-product-id="{{ product.id }}">{{ 'HIZLI GÖR' | translate }}</a>
+	</div>
+	
+	<a href="{{ product.url }}" data-product-id="{{ product.id }}"
+           onclick='RG.DataLayer.trigger("category_product_click", {productId: {{ product.id }}});'>
+		<div class="product-name">{{ product.name }}</div>
+		<div class="product-rating">
+			<div class="rating"><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span><span class="fas fa-star"></span></div>
+			<div class="product-review-count">25 {{ 'YORUM' | translate }}</div>
+		</div>
+		<div class="product-price {% if product.special_price %}product-price-discounted{% endif %}">
+
+			{% if product.special_price %}
+				<span class="product-price-old ml-0">{{ product.price | price }}</span>
+			{% endif %}
+
+			{{ product.special_price | default(product.price) | price  }}
+		</div>
+	</a>
+
+	{% if product.rule_info %}
+		<div class="product-third-price">
+			{% for key,info in product.rule_info %}
+				{% if key == 0 %}
+					{{ info['label'] }}
+				{% endif %}
+			{% endfor %}
+			
+			{% if product.third_price %}
+				<span class="third-price"> {{ product.third_price|price }}</span>
+			{% endif %}
+		</div>
+	{% endif %}
+
+	<ul class="product-variants list-inline">
+		{% if product.color_options %}
+			{% for item in product.color_options %}
+				<li class="image-wrapper {% if product.sku == item.sku %}active{% endif %}">
+					<a href="{{ item.url }}" data-image-large="{{ item.image }}">
+						<img src="{{ item.image | resize('40x40') }}" alt="{{ item.option_title }}" />
+					</a>
+				</li>
+			{% endfor %}
+		{% else %}
+			<li class="image-wrapper active">
+				<a href="{{ product.url }}" data-image-large="{{ product.image }}">
+					<img src="{{ product.image | resize('40x40') }}" alt="{{ product.name }}" />
+				</a>
+			</li>
+		{% endif %}
+	</ul>
+
+	{% if visibleWishlistButton == 1 %}
+		<a href="javascript:;" class="remove-from-favourites-button" data-product-id="{{ product.id }}" data-sku="{{ product.sku }}">
+			<i class="fa fa-times"></i>
+		</a>
+	{% endif %}
+	{% if visibleMostButton == 1 %}
+		<a href="javascript:;" class="remove-from-most-button" data-product-id="{{ product.id }}" data-sku="{{ product.sku }}">
+			<i class="fa fa-times"></i>
+		</a>
+	{% endif %}
+</div>

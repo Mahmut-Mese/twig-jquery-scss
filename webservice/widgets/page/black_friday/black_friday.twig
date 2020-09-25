@@ -1,0 +1,562 @@
+<div class="cm lazy">
+	<div class="cm-spotlight">
+		{{ img(efsane_head_image[0].image_desktop, '', { class: 'w-100', cdn: 'general' }) }}
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="{% if landing_page.settings.disable_right == '1' %}col-sm-12 col-12{% else %}col-sm-9 col-9{% endif %}">
+				<div class="cm-campaigns">
+					{% set index = 0 %}
+					{% for banner in campaigns %}
+						{% set color = 'red' %}
+
+						{% if index == 1 %}
+							{% set color = 'green' %}
+						{% elseif index == 2 %}
+							{% set color = 'blue' %}
+						{% endif %}
+
+						<div class="cm-campaign-item {{ color }}">
+							<a href="{{ banner.link }}">
+								<div class="cm-campaign-image">
+									{{ img(banner.image_desktop, '', {  class:'w-100', cdn: 'general' }) }}
+								</div>
+								<div class="cm-campaign-info">
+									<div class="row">
+										<div class="col-sm-7">
+											<span class="cm-campaign-title">
+												{{ banner.title }}
+											</span>
+										</div>
+										<div class="col-sm-5 text-right">
+											{% if landing_page.settings.is_instreet != '1' %}
+												<span class="cm-campaign-link">Alışverişe Başla
+													<span class="corner-1"></span><span class="corner-2"></span><span class="corner-3"></span><span class="corner-4"></span>
+												</span>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+							</a>
+						</div>
+						{% if index != 2 %}
+							{% set index = index + 1 %}
+						{% else %}
+							{% set index = 0 %}
+						{% endif %}
+
+					{% endfor %}
+				</div>
+			</div>
+			<div class="{% if landing_page.settings.disable_right == '1' %}hidden {% else %}col-sm-3 col-3{% endif %}">
+				<div class="instant-deals">
+					<div class="instant-deals-head">
+						<span class="instant-deals-head-icon">
+							<img src="/pub/assets/flo/blackfriday/clock.svg" alt="clock">
+						</span>
+						Günlük Fırsatlar
+
+						{# <div class="instant-deals-head-timer">
+							00:19:59
+						</div> #}
+					</div>
+
+					<div class="instant-deals-products">
+						<div class="swiper-container swiper-autoinit">
+							<div class="swiper-wrapper">
+								{% for product in products.products %}
+									<div class="swiper-slide">								
+										<div class="instant-deals-product">
+											<a href="{{ product.url }}">
+												<img src="{{ product.image | resize('536x536') }}" class="instant-deals-product-image" />
+
+												<div class="instant-deals-product-title">{{ product.manufacturer }}</div>
+												<div class="instant-deals-product-price">
+													{% if product.special_price %}
+														<span class="instant-deals-product-price-old">{{ product.price | price }}</span>
+													{% endif %}
+
+													{{ product|price }}												
+												</div>
+											</a>
+										</div>
+									</div>
+								{% endfor %}
+							</div>
+
+							<div class="swiper-button-next"></div>
+							<div class="swiper-button-prev"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="instant-deals vertical">
+					<div class="instant-deals-head">
+						<span class="instant-deals-head-icon">
+							<img src="/pub/assets/flo/blackfriday/star.svg" alt="star">
+						</span>
+						En Popüler Ürünler
+					</div>
+
+					<div class="instant-deals-categories">
+						<div class="swiper-container swiper-autoinit" data-swiper-free-mode="true" data-swiper-slides-per-view="auto" data-swiper-space-between="5">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide"><a href="#" class="active">Nike</a></div>
+								<div class="swiper-slide"><a href="#">Adidas</a></div>
+								<div class="swiper-slide"><a href="#">Kinetix</a></div>
+								<div class="swiper-slide"><a href="#">Lumberjack</a></div>
+								<div class="swiper-slide"><a href="#">Nike</a></div>
+								<div class="swiper-slide"><a href="#">Adidas</a></div>
+								<div class="swiper-slide"><a href="#">Kinetix</a></div>
+								<div class="swiper-slide"><a href="#">Lumberjack</a></div>
+								<div class="swiper-slide"><a href="#">Nike</a></div>
+								<div class="swiper-slide"><a href="#">Adidas</a></div>
+								<div class="swiper-slide"><a href="#">Kinetix</a></div>
+								<div class="swiper-slide"><a href="#">Lumberjack</a></div>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="instant-deals-products clearfix">
+						<div class="instant-deals-product">
+							<img src="https://cdn.zeplin.io/5dd504fd04736444f21909aa/assets/73022A4A-92B5-4766-86CB-273E60257E0F.png" class="instant-deals-product-image" />
+
+							<div class="instant-deals-product-brand">Kinetix</div>
+							<div class="instant-deals-product-title">Siyah Erkek Sneaker Denem Ayakkabısı</div>
+							<div class="instant-deals-product-price">
+								<span class="instant-deals-product-price-old">329,99 TL</span>
+								129,99 TL
+							</div>
+							<a href="#" class="instant-deals-product-button">SATIN AL</a>
+						</div>
+						
+					</div>
+				</div>
+				{% for banner in efsane_bottom_right_banner %}
+					<div>
+						<a href="{{ banner.link }}">
+							{{ img(banner.image_desktop, '', {  class:'w-100', cdn: 'general' }) }}
+						</a>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+	{{ widget('products', 'product_slider', {title: 'Sizin İçin Seçtiklerimiz' | translate, data_source: 'sizin-icin-sectiklerimiz' }) }}
+</div>
+
+{% if landing_page.settings.is_instreet == '1' %}
+<div class="footer-description">
+<h2>Instreet Efsane İndirim Günleri </h2>
+<p>Alışverişin keyifli adresi InStreet'te Efsane İndirim Günleri başlıyor! Konforlu spor giyim ürünleri ve birbirinden rahat ayakkabı modelleri ile gönülleri fetheden InStreet; Efsane İndirim kapsamında muhteşem indirimlerle kapınızı çalıyor. Özel koleksiyonları ile her yaş grubuna hitap eden InStreet'in bu yılki Efsane İndirim günleri ile kaçırılmayacak fırsatlarla karşınızda! Siz de avantajlı alışverişin tadını çıkarmak istiyorsanız; InStreet'in indirimlerini keşfetmeye hazır olun!</p>
+
+<h2>Efsane İndirim Günleri Nedir?</h2>
+<p>İlk olarak Amerikalıların dev indirimlerle kutlamaya başladığı Black Friday, artık dünya çapında düzenlenen bir etkinlik haline geldi. Dünyada birçok ünlü marka ve firmanın dahil olduğu bu etkinlik kapsamında yapılan efsanevi indirimler alışverişseverleri adeta çılgına döndürüyor. Milyarlarca insan, yıl boyu alışveriş yapmak için bugünü bekliyor. Prestijli markaların kaliteli ürünlerini uygun fiyatlarla alma şansını yakalayacağınız bu özel alışveriş festivalinde InStreet sizleri muhteşem kampanyalarla karşılıyor.
+
+<h2>InStreet'in Muhteşem İndirim Günleri Hangi Ürünleri Kapsıyor?</h2>
+<p>Dünyaca ünlü markaların katıldığı efsane cuma alışveriş festivalinde InStreet, sürpriz indirimleriyle her yıl olduğu gibi bu sene de sizleri şaşırtmaya devam ediyor. Kadın spor ayakkabı ve erkek spor ayakkabı modellerinde en popüler markaların birbirinden kullanışlı alternatiflerini satışa sunan InStreet; trend parçalarda uyguladığı büyük indirimlerle modayı yakından takip edenlerin vazgeçilmezi oluyor. Kış hazırlıklarına başlayanlar, kadın bot ve erkek bot alışverişleri için InStreet'in muhteşem indirimlerini gözlüyor. Ayrıca sonbaharda sıklıkla tercih edilen birbirinden şık bootie ve yağmur çizmesi modelleri de InStreet'in Efsane İndirim Günlerinde avantajlı fırsatlar sunduğu ürün seçenekleri arasında yer alıyor.</p>
+
+<h2>Çocuklara Özel Muhteşem Fırsatlar</h2>
+<p>InStreet'in yetişkinlere özel kampanyalı ürünlerine ek olarak çocuk giyim ve çocuk ayakkabı koleksiyonlarında da Black Friday'e özel muhteşem fırsatlar sizi bekliyor. Okul ayakkabısı, spor ayakkabı, kız çocuk bot ve erkek çocuk bot modellerinde sayısız ürün seçeneği sunan InStreet; bu kategorilerde Adidas, Nike, Puma, Kinetix gibi dünya devi isimlerin birbirinden şık modellerine ev sahipliği yapıyor. Black Friday indirimleri sayesinde en uygun fiyatlarla satın alabileceğiniz ayakkabı modellerinin yanı sıra InStreet'in çocuk giyim kategorisinde günlük ve spor kullanıma uygun t-shirt, şort, pantolon, eşofman, sweatshirt modelleri yer alıyor. Ayrıca; ürün gamında mont, yağmurluk ve ceket gibi dış giyim ürünlerine yer veren  InStreet; plaj giyim ve spor giyim ürünlerinde de avantajlı fırsatlarla kampanya etkisini tüm reyonlarında yaşatıyor. Çocuklarınız için yapacağınız alışverişlerde onların hayal dünyasına hitap eden Disney temalı ürünleri değerlendirme şansınız var. Ünlü karakterlere ait desenlerin bulunduğu bu ürünleri Black Friday fırsatları sayesinde uygun fiyata satın alarak çocuklarınızı mutlu edebilir; bütçenizi sarsmadan doya doya alışveriş yapmanın tadını çıkarabilirsiniz.</p>
+
+<h2>İndirimli ve Şık Aksesuarlarla Kombinlerinizi Tamamlayın</h2>
+<p>Efsane İndirim Günlerinden yararlanarak spor şıklıkta zirveye oynamak istiyorsanız; InStreet'te kampanya dönemine özel fiyatlarla satışa sunulan birbirinden şık aksesuarlara göz atmayı unutmayın! Okul hazırlıklarını eksiksiz bir şekilde tamamlamak için InStreet'in en kullanışlı sırt ve omuz çantası modellerini değerlendirebilirsiniz. Güneş gözlüğü, saat, şapka, çorap gibi erkek aksesuarları ile günlük tarzınızı tamamlayabilir; Black Friday indirimlerinden yararlanarak daha az fiyata daha çok aksesuara sahip olabilirsiniz. Böylece yapacağınız kombinlerin sayısını artırabilirsiniz. Kadın ve çocuk aksesuarlarında da beğendiğiniz tüm ürünleri efsane indirim günlerine özel fırsatlar ile daha uygun fiyata satın alabilirsiniz. Kışa yönelik aksesuar alışverişleriniz için InStreet’te indirime giren eldiven, şapka, atkı ve bere modellerini detaylıca inceleyebilirsiniz.</p>
+
+<h2>Outdoor Aktivitelerine Özel Ürünlerde Muhteşem İndirimler</h2>
+<p>InStreet’in zengin ürün seçenekleri arasında yer alan outdoor ürünler de, Black Friday süresince müthiş fiyatlarla satışa sunuluyor. Dağcılıkla ilgilenenlere özel, en ünlü markalar tarafından tasarlanmış trekking ayakkabısı modellerinden mont, yağmurluk, eşofman, sweatshirt vb. ürünleri kapsayan outdoor giyim ürünlerine varıncaya kadar InStreet’in ürün gamında yer alan zengin alternatiflerdeki Black Friday indirimlerini kaçırmayın! Dilerseniz; çadır, uyku tulumu, matara, termos ve mat gibi kamp malzemelerine dair alışverişleriniz için de InStreet’in muhteşem Black Friday indirimlerini yakından takip edebilirsiniz. Böylece daha yüksek kaliteli outdoor ürünlerine daha uygun fiyatlarla sahip olabilir; InStreet’ten satın aldığınız outdoor ürünleri ile açık alan aktivitelerinizde kendinizi daha konforlu ve şık hissedebilirsiniz. </p>
+<p>Efsane indirim günleri ile InStreet’te alışveriş keyfini doyasıya yaşamak istiyorsanız; tarihi şimdiden ajandanıza kaydedin! Bu yıl 29 Kasım Cuma günü, başka hiç kimseye söz vermeyin! InStreet’te hayal bile edemeyeceğiniz şahane fırsatlar sizi bekliyor olacak. Siz de en ünlü spor markaların beğendiğiniz ürünlerine uygun fiyatlarla sahip olmak için, bu yılın en büyük indirimleri ile karşılaşacağınız Black Friday’i sabırsızlıkla bekleyin. InStreet’te yılın indirimi ile hem kendiniz hem de sevdikleriniz için doya doya alışveriş yapmanın tadını çıkarmaya hazır olun!</p>
+</div>
+{% else %}
+<div class="footer-content">
+    <div class="container">
+        <div class="holder text-left">
+			<h2>Flo Efsane İndirim Günleri</h2>
+
+			<p>FLO’nun Muhteşem Cuma İndirimleri sayesinde bu yıl alışveriş listenizdeki eksikleri birer birer silmeye hazır olun! Yılın en büyük indirimlerinin yapıldığı Muhteşem Cuma ne zaman, öğrenmek istiyorsanız; 29 Kasım 2019’u hemen şimdi ajandanıza kaydedin ve birbirinden güzel ayakkabı modellerinde % 50’ye varan indirimlerden yararlanmak için bu muhteşem alışveriş partisine siz de katılın. Konforlu ve şık ayakkabı modellerinin yanı sıra giyim ürünlerinde ve aksesuarlarda da FLO’nun sürpriz indirimleri sizleri bekliyor. Haydi, hemen FLO’nun black friday kampanyasına dahil olan diğer ürünleri keşfetmeye başlayın!</p>
+
+			<h2>Efsane İndirim Günleri Nedir?</h2>
+
+			<p>Efsane indirimlerle doyasıya alışveriş yapmanın tadına varacağınız Black Friday, aslında bir Amerika geleneği olarak biliniyor. Erken saatlerde açılan mağazalar Black Friday’de gecenin geç saatlerine kadar hizmet veriyor. Birçok mağazada yılın en büyük indirimlerinin yapıldığı bu günde Amerikalılar, hem kendileri hem de sevdikleri için alışveriş yapmanın tadını çıkarıyor. Her ne kadar çıkış noktası Amerika olsa da, artık dünyanın dört bir yanında salgın haline gelen bu indirim günleri; Türkiye’de de alışverişseverlere şahane fırsatlar sunuyor. Bu alışveriş partisini coşkuyla kutlayan FLO, siz değerli müşterilerini erkek spor ayakkabı, erkek bot, kadın bot, kadın spor ayakkabı modellerinde, giyim, çocuk ürünlerinde ve aksesuarlarda kaçırılmayacak indirimleri ile karşılıyor.</p>
+			<h2>Efsane İndirim Günleri Ne Zaman Başlıyor?</h2>
+
+			<p>Efsane indirim günleri Kasım ayının son Cuma günü başlıyor. Türkiye’de de her yıl bu tarihe denk gelen cuma gününde yapılan kampanyalar, birbirinden kaliteli ürünleri oldukça uygun fiyatlara satın almanıza imkan tanıyor. Bu tarihe özel hazırladığı muhteşem promosyonlarla FLO, Muhteşem Cuma’da alışverişin en sevilen adresi oluyor.</p>
+			<h2>FLO’nun Muhteşem İndirim Günleri Neleri Kapsıyor?</h2>
+
+			<p>Farklı kategorilerde satışa sunulan ürün çeşitleri ile FLO, her yaş grubuna hitap etmeyi başarıyor. FLO’nun % 50’ye varan özel indirimleri; hem sizin hem de çocuklarınızın ihtiyaçları için en ekonomik alternatifleri sıralıyor. Başta Adidas, Nike, Puma, Kinetix ve Reebok gibi markalara ait farklı ürün seçeneklerinin bulunduğu spor ürünler olmak üzere pek çok ayakkabı, çanta ve aksesuarda akıl almaz indirimler FLO’da sizi bekliyor. Bot ve çizme arayışında olanlar içinse Timberland, Lumberjack, The North Face, Mercedes, US Polo ASSN gibi ünlü isimlerin birbirinden şık ve kullanışlı modelleri, Black Friday’de muhteşem indirimlerle satışa çıkıyor. </p>
+			<h2>FLO’da Çanta Ve Aksesuar Kategorilerinde Dev İndirimler</h2>
+
+			<p>Spor giyim ürünleri ile popüler olan markaların outdoor ve indoor spor aktivitelerine özel tasarımları da FLO’nun efsane indirimleri kapsamında yerini alıyor. Çanta ve aksesuar kategorisinde ise hem erkek hem de kadınlar için birbirinden kullanışlı ürün seçenekleri bulunuyor. Sırt çantası, omuz çantası, bel çantası gibi kullanım şekline göre birbirinden ayrılan ürünlerin yanı sıra daha küçük boyutlardaki clutch tipi çantalar ve cüzdanlar da efsane indirim günleri süresince FLO’da bulabileceğiniz indirimli ürünler arasında! Ayrıca, erkek aksesuarları arasında sayılan kemer, saat, güneş gözlüğü ve çorap gibi ihtiyaçlarınız için de FLO’nun Muhteşem Cuma’ya özel avantajlı teklifleri sizi bekliyor. Kadın aksesuarlarında çeşitlilik artarken; hem çocuklar hem de yetişkinler için kış aylarında ihtiyaç duyulan bere, atkı ve eldivenlere yönelik birbirinden şık tasarımlar FLO vitrinlerindeki yerini alıyor. Muhteşem Cuma indirimi ile her zamankinden daha uygun fiyata satın alabileceğiniz bu ürünler; günlük hayatta tarzınızın en önemli tamamlayıcısı haline geliyor.</p>
+			<h2>Outlet Ürünlerinde Kaçırılmayacak Fırsatlar</h2>
+
+			<p>FLO’nun outlet kategorisinde yer alan, geçmiş sezonlara ait ürünleri de efsane indirim rüzgarının etkisinde kalıyor. Normal zamanda bile sezona göre daha uygun fiyatlarla satışa sunulan pek çok ürün; Black Friday indirimleri sayesinde fiyat avantajını ikiye katlıyor. Siz de bütçeniz için en avantajlı seçimleri yapmak istiyorsanız; Muhteşem Cuma’da mutlaka FLO’nun outlet kategorisinde yer alan ürün seçeneklerine göz atın. Yılın en büyük indiriminden yararlanarak satın alabileceğiniz birbirinden şık ürünleri stoklar tükenmeden hemen satın alın!</p>
+			<h2>En Ünlü Markaların Ürünlerinde Sürpriz İndirimler</h2>
+
+			<p>
+				Dünya çapında başarısını kanıtlamış pek çok markanın farklı tasarımlarını bir arada bulabileceğiniz FLO’da efsane indirim günleri süresince en kaliteli ürünleri bile oldukça uygun fiyatlarla satın alma şansınız var. Dockers, Nine West, Converse, Cacharel, Fred Perry, Hummel, Mustang, Skechers, The North Face ve Timberland; bu ünlü isimlerden yalnızca birkaçı. Daha birçok prestijli markanın ayakkabı ve giyim ürünleri için FLO’nun ürün gamına detaylı bir şekilde göz atmanızda fayda var. Ayrıca, dilerseniz FLO’nun kendi tasarımı olan birbirinden şık ve kullanışlı ürün seçeneklerine de Black Friday’de muhteşem indirimlerle sahip olabilirsiniz.
+				FLO’da düzenlenen efsane indirim günleri ile kaliteden ödün vermeyen, kullanışlı ve estetik farklı ürün seçeneklerini bütçenize uygun hale getirebilir; daha az fiyat karşılığında daha fazla ürün seçeneğine sahip olabilirsiniz. Gardırobunuzu ve portmantonuzu yenilemek için FLO’nun Black Friday indirimleri kaçırılmayacak bir fırsat! Siz de bu fırsatı değerlendirerek; FLO’da satılan birçok farklı ürünü hayal bile edemeyeceğiniz kadar uygun fiyatlarla satın alabilirsiniz. Böylece alışverişin keyfini doyasıya yaşarken; FLO’nun kalitesi ve farkını derinlemesine hissedebilirsiniz. Haydi, siz de Black Friday indirimleri için hazırlanın! O gün geldiğinde, beğendiğiniz ürünleri hızla sepetinize atın ve siparişinizi stoklar kısa sürede tükenmeden önce tamamlamayı sakın unutmayın!
+			</p>	
+        </div>
+        <div class="text-center">
+            <a href="javascript:;" class="read-more">
+                <i class="svg-arrow-up svg-arrow-up-dims"></i>
+                <span>DEVAMI</span>
+                <i class="svg-arrow-down svg-arrow-down-dims"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+<style>
+	header {
+		float: none;
+	}
+
+	.container {
+		width: 100%;
+		max-width: 1230px;
+	}
+
+	.cm {
+		max-width: 100%;
+		overflow:hidden;
+		background: {{ landing_page.settings.background | default('#ebebeb') }};
+	}
+
+	.cm-spotlight {
+		margin-bottom: 15px;
+	}
+
+	.cm-spotlight img {
+		width: 100%;
+	}
+
+	.cm-campaigns {
+		margin-bottom: 45px;
+	}
+
+	.cm-campaign-item {
+		margin-bottom: 20px;
+	}
+
+	.cm-campaign-image {
+		position: relative;
+	}
+
+	.cm-campaign-image img {
+		width: 100%;
+	}
+
+	.cm-campaign-info {
+		background: #ffffff;
+		border-top: solid 6px transparent;
+
+		padding: 0 30px;
+	}
+
+	.cm-campaign-item.red .cm-campaign-info{ border-top-color: #9b2100; }
+	.cm-campaign-item.green .cm-campaign-info{ border-top-color: #1e6f2b; }
+	.cm-campaign-item.blue .cm-campaign-info{ border-top-color: #0f0c62; }
+
+	.cm-campaign-item.red .cm-campaign-link, .cm-campaign-item.red .corner-3, .cm-campaign-item.red .corner-4{ background-color: #9b2100; }
+	.cm-campaign-item.green .cm-campaign-link, .cm-campaign-item.green .corner-3, .cm-campaign-item.green .corner-4{ background-color: #1e6f2b; }
+	.cm-campaign-item.blue .cm-campaign-link, .cm-campaign-item.blue .corner-3, .cm-campaign-item.blue .corner-4{ background-color: #0f0c62; }
+
+	.cm-campaign-link {
+		text-decoration: underline;
+		font-size: 20px;
+		font-weight: 300;
+		line-height: 1;
+		color: #ffffff;
+
+		display: inline-block;
+		position: relative;
+		padding: 9px 30px 10px;
+	}
+
+	.corner-1, .corner-2, .corner-3, .corner-4{
+		content: '';
+
+		display: block;
+
+		width: 10px;
+		height: 39px;
+
+		position: absolute;
+		background:#ffffff;
+	}
+
+	.corner-1, .corner-2 {
+		top: 0;
+	}
+
+	.corner-3, .corner-4 {
+		bottom: -7px;
+		height: 10px;
+		width: 55%;
+	}
+
+	.corner-1 {
+		left: -6px; 
+		border-radius: 0 5px 0 0;
+	}
+	.corner-2 {
+		right: -6px; 
+		border-radius: 5px 0 0 0;
+	}
+
+	.corner-3 {
+		left: 4px;
+		border-radius: 0 0 0 5px;
+	}
+	.corner-4 {
+		right: 4px;
+		border-radius: 0 0 5px 0;
+	}
+
+
+	.cm-campaign-title{
+		display: block;
+		
+		font-size: 25px;
+		line-height: 1;
+		color: #000000;
+
+		padding: 15px 0;
+	}
+
+	.footer-description h2{
+		font-size: 24px;
+	}
+
+	.instant-deals {
+		margin-bottom: 20px;
+	}
+
+	.instant-deals-head {
+		position: relative;
+		height: 40px;
+		line-height: 40px;
+
+		color: #000000;
+	}
+
+	.instant-deals-head-icon {
+		display: inline-block;
+		width: 40px;
+		height: 40px;
+
+		vertical-align: top;
+
+		background: rgba(0,0,0, .3);
+
+		border-radius: 5px 0 0 0;
+
+		margin-right: 14px;
+
+		text-align: center;
+		line-height: 37px;
+	}
+
+	.instant-deals-head-timer{
+		border-left: solid 1px rgba(0,0,0, .3);
+
+		padding: 12px 18px;
+		line-height: 1;
+
+		position: absolute;
+		top:0;
+		right:0;
+	}
+
+	.instant-deals-products {
+		background: #ffffff;
+	}
+
+	.instant-deals-product {
+		text-align: center;
+
+		padding-bottom: 12px;
+	}
+
+	.instant-deals-product-image{
+		max-width: 100%;
+	}
+
+	.instant-deals-product-title {
+		font-size: 25px;
+		line-height: 28px;
+
+		color: #000000;
+
+		margin-bottom: 10px;
+	}
+	.instant-deals-product-price {
+		font-size: 25px;
+		line-height: 28px;
+
+		color: #ff671d;
+	}
+
+	.instant-deals-product-price-old {
+		font-size: 25px;
+		line-height: 28px;
+		text-decoration: line-through;
+		margin-right: 10px;
+
+		color: #959595;
+	}
+
+	.swiper-button-next,
+	.swiper-button-prev {
+		width: 12px;
+		height: 12px;
+
+		background-size: 12px 12px;
+		background-position: center;
+
+		margin-top: -6px;
+	}
+
+	.swiper-button-next {
+		background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'black'%2F%3E%3C%2Fsvg%3E");
+	}
+
+	.swiper-button-prev {
+		background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'black'%2F%3E%3C%2Fsvg%3E");
+	}
+
+	.instant-deals.vertical .instant-deals-products {
+		padding: 0 8px;
+	}
+	.instant-deals.vertical .instant-deals-product {
+		position: relative;
+
+		min-height: 146px;
+		padding-left: 147px;
+		padding-bottom: 10px;
+		margin-top: 10px;
+
+		text-align: left;
+
+		border-bottom: solid 2px #ebebeb;
+	}
+
+	.instant-deals.vertical .instant-deals-product:last-child {
+		border-bottom: 0;
+	}
+	
+
+	.instant-deals.vertical .instant-deals-product-image {
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		width: 136px;
+		height: 136px;
+
+		border:solid 1px #e2e2e2;
+	}
+
+	.instant-deals.vertical .instant-deals-product-brand {
+		font-size: 18px;
+		color: #000000;
+		line-height: 1;
+
+		margin-bottom: 4px;
+	}
+
+	.instant-deals.vertical .instant-deals-product-title {
+		font-size: 15px;
+		line-height: 20px;
+		color: #959595;
+
+		margin-bottom: 7px;
+	}
+
+	.instant-deals.vertical .instant-deals-product-price {
+		font-size: 15px;
+		white-space: nowrap;
+	}
+
+	.instant-deals.vertical .instant-deals-product-price-old {
+		font-size: 15px;
+		margin-right: 5px;
+		color: #959595;
+	}
+
+	.instant-deals.vertical .instant-deals-product-button {
+		display: block;
+		background: #28a745;
+
+		width: 100%;
+		height: 30px;
+
+		margin-top: 8px;
+
+		line-height: 30px;
+
+		text-align: center;
+
+		color: #ffffff;
+	}
+
+	.instant-deals.vertical .instant-deals-product-button:hover {
+		background:#1e7e34;
+	}
+
+	.instant-deals-categories {
+		background: #ffffff;
+		padding: 10px 0 10px 10px;
+	}
+
+	.instant-deals-categories .swiper-slide {
+		display: inline-block;
+		width: auto;
+	}
+
+	.instant-deals-categories .swiper-slide:last-child {
+		margin-right: 10px;
+	}
+
+	.instant-deals-categories a{
+		display: inline-block;
+		padding: 6px 30px;
+
+		height: 31px;
+
+		font-size: 15px;
+		line-height: 1;
+		color: #000000;
+
+		border:solid 1px #707070;
+		border-radius: 16px;
+	}
+
+	.instant-deals-categories a.active{
+		background:#ff671d;
+		border-color: #ff671d;
+		color: #ffffff;
+	}
+</style>
+
+<script>
+	domReadyCallbacks.push(function() {
+		$('.cm-categories a').on('click', function (e) {
+			e.preventDefault();
+
+			var $self = $(this);
+			var $parent = $self.parent();
+			var index = $parent.index() + 1;
+
+			$('.cm-campaign-tabs').hide().filter('.cm-campaign-tab-' + index).fadeIn();
+
+			$self.closest('ul').find('li').removeClass('active');
+			$parent.addClass('active');
+		}).first().trigger('click');
+	});
+</script>

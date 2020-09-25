@@ -1,0 +1,66 @@
+<div class="account-page-wrapper mt-3">
+    <div class="container">
+        <div class="row medium-gutter">
+            <div class="col-sm-3">
+                {{ widget('customer', 'account_left_menu') }}
+            </div>
+            <div class="col-sm-9">
+                <div class="breadcrumbs-bar title-only">
+                    <div class="page-title">
+                        <h1>HABER BÜLTENİ ÜYELİĞİ</h1>
+                    </div>
+                </div>
+
+
+
+                <div class="bg-white p-3 mb-3">
+                    <form action="/" method="POST" id="customer-bulten-form" class="subscribe-form">
+                        <div class="newsletter-choice">
+                            <label class="flo-checkbox mb-0 mr-4">
+                                <input type="checkbox"  name="newsletter_email" value="{{ email }}" {{ email == 1 ? " checked" : "" }}> Email
+                                <span><i class="fa fa-check"></i></span>
+                            </label>
+                            <p>Kampanyalar ve duyurular hakkında e-mail almak istiyorum.</p>
+                        </div>
+                        <div class="newsletter-choice">
+                            <label class="flo-checkbox mb-0 mr-4">
+                                <input type="checkbox" name="newsletter_sms" value="{{ sms }}" {{ sms == 1 ? " checked" : "" }}> SMS
+                                <span><i class="fa fa-check"></i></span>
+                            </label>
+                            <p>Kampanyalar ve duyurular hakkında sms almak istiyorum.</p>
+                        </div>
+                        {% for aggrement in aggrements %}
+                            <div class="newsletter-choice">
+                                <label class="flo-checkbox mb-0 mr-4">
+                                    <input type="checkbox" name="{{ aggrement.alias }}" value="{{ aggrement.aggrement_id }}" class="{{ aggrement.alias }} {% if  aggrement.alias == 'uyelik_sozlesmesi' or aggrement.alias == 'subscribed_kvkk'   %} validate[required] {% endif %}">
+                                    <span><i class="fa fa-check"></i></span>
+                                </label>
+                                <p class="info-text">{{ aggrement.front_text|raw }}</p>
+                            </div>
+                        {% endfor %}
+
+                        <button type="submit" id="btn-bulten-save" class="btn outline-gray">Güncelle <i class="svg-refresh svg-refresh-dims"></i></button>
+                    </form>
+                </div>
+
+
+                <div class="modal fade aydinlatma" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered " role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                 <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {{ static_page.content|raw }}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

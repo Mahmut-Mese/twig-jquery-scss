@@ -1,0 +1,14 @@
+<div class="product-list-filter-container product-list-category-container"><a href="#" class="btn btn-default product-list-filter-toggle">{{ 'KATEGORİ' | translate }}</a>
+	<div class="product-list-filter-inner">
+		<ul class="filter-items">
+
+			{% if aggregations | length == 1 and aggregations[0].sub_categories | length %}
+				{% set aggregations = aggregations[0].sub_categories %}
+			{% endif %}
+
+			{% for item in aggregations %}
+			<li><a href="/{{ item.url }}{{ item.query_string }}">{{ item.name }} {{ item.count }} {{ 'Ürün' | translate }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>

@@ -1,0 +1,35 @@
+<div class="breadcrumbs-bar title-only">
+    <div class="page-title">
+        <h1>{{ 'MAĞAZA KREDİSİ' | translate }}</h1>
+    </div>
+</div>
+<div class="bg-white p-3 mb-3">
+	<p class="text-dark mb-2">{{ 'Kullanılabilir Bakiyeniz' | translate }}</p>
+
+    <div class="d-flex align-items-center text-dark">
+        <i class="svg-credit-small svg-credit-small-dims mr-2"></i>
+        {{ total }} {{ 'TL' | translate }}</div>
+</div>
+<div class="bg-white p-3 mb-5">
+    <p class="text-dark mb-2">{{ 'Bakiye Geçmişi' | translate }}</p>
+    <table class="table table-bordered">
+        <thead class="thead-dark fs-14">
+            <tr>
+                <th class="w-25 text-center" scope="col">{{ 'İŞLEM' | translate }}</th>
+                <th class="w-25 text-center" scope="col">{{ 'DÖNÜŞÜM' | translate }}</th>
+                <th class="w-25 text-center" scope="col">{{ 'BAKİYE' | translate }}</th>
+                <th class="w-25 text-center" scope="col">{{ 'TARİH - SAAT' | translate }}</th>
+            </tr>
+        </thead>
+        <tbody>
+			{% for item in data %}
+            <tr class="text-dark">
+                <td class="text-center">{{ 'Kullanıldı' | translate }}</td>
+                <td class="text-center font-weight-light">{{ item.transformation }} {{ 'TL' | translate }}</td>
+                <td class="text-center font-weight-light">{{ item.credit }} {{ 'TL' | translate }}</td>
+                <td class="text-center font-weight-light">{{ item.date }} - 15:35</td>
+            </tr>
+			{% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,33 @@
+{{ widget('general', 'search_top') }}
+
+{{ widget('general', 'spotlight') }}
+
+
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: header_bant}}) }}
+
+
+<div class="card-banner">
+    <div class="container-fluid">
+        <div class="images lazy">
+            <a href="{{ header_bant.link }}" class="spotlightItem" data-spotlight-id="{{ header_bant.spotlight_id }}">
+                {{ img( header_bant.image_mobil, '', {   cdn: 'general',class:'resimatt' }) }}
+            </a>
+        </div>
+    </div>
+</div>
+{{ widget('session', 'new_session') }}
+
+<div class="chance-pro">
+    <div class="container-fluid">
+        {{ widget('products', 'single_product_slider', {title: 'Günün Fırsatı' | translate, data_source: 'gunun-firsati' }) }}
+    </div>
+</div>
+
+{{ categoryList|raw }}
+
+{{ widget('brands', 'brands_slider') }}
+<div class="product-your">
+    <div class="container-fluid">
+        {{ widget('products', 'product_slider', {title: 'Sizin İçin Seçtiklerimiz' | translate, data_source: 'sizin-icin-sectiklerimiz' }) }}
+    </div>
+</div>

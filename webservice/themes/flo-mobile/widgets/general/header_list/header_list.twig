@@ -1,0 +1,78 @@
+silinecek
+
+{% if config('env.gtm') %}
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id={{ config('env.gtm.accountId') }}"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+{% endif %}
+
+<header class="site-header">
+    <div class="main-menu">
+        <div class="top-menu">
+            <div class="menu-left">
+                <a href="#mobile-menu" class="open-menu-button">
+                    <i class="svg-bars svg-bars-dims"></i>
+                </a>
+                <a href="/" class="logo">
+                    <img src="/pub/assets/flo/img/logo.svg" alt="FLO">
+                </a>
+            </div>
+            <div class="menu-right">
+                <ul class="nav-top">
+                    <li>
+                        <a href="javascript:;" class="open-search-panel">
+                            <i class="svg-search svg-search-dims"></i>
+                        </a>
+                    </li>
+                    <li class="logged-out">
+                        <a href="/customer/login">
+                            <i class="svg-user svg-user-dims"></i>
+                        </a>
+                    </li>
+                    <li class="logged-in hide">
+                        <a href="/customer/myaccount">
+                            <i class="svg-user svg-user-dims"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/customer/wishlist">
+                            <i class="svg-heart svg-heart-dims"></i>
+                        </a>
+                    </li>
+                    <li class="mini-cart">
+                        <a href="{{ basket_base_url() }}/basket">
+                            <span style="position:relative;">
+                                <span class="">
+                                    <span class="number cart-count cart-count-mobile"></span>
+                                </span>
+                                <i class="svg-mini-cart svg-mini-cart-dims"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+      </div>
+    <nav id="mobile-menu" class="mobile-menu">
+        {{ menuHtmlMobile|raw }}
+    </nav>
+</header>
+
+
+<div class="search-panel">
+    <div class="panel-header">
+        <a href="javascript:;" class="close-search-panel"><i class="svg-slide-arrow-left svg-slide-arrow-left-dims"></i></a>
+        
+        <div class="search-form">
+            <input type="text" class="form-control commerce-autocomplete" placeholder="42 Numara Kinetix">
+            <button><i class="svg-search-orange svg-search-orange-dims"></i></button>
+        </div>
+    </div>
+    
+    <div class="panel-body">
+        {{ widget('products', 'autocomplete') }}
+    </div>    
+</div>

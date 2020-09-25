@@ -1,0 +1,105 @@
+<div class="page searchnone" id="customer-coupon">
+    <div class="container-fluid">
+        <div class="page-content sab">
+            <div class="whitepage">
+                <div class="title orange">{{ 'HESABIM / KUPONLARIM' | translate }}</div>
+                <div class="content">
+                    <div class="centerContent">
+                        <div class="account">
+                            <div class="siparis-box">
+                                <div class="item">
+                                    <div class="list">
+                                        <P><strong>{{ 'AKTİF KUPONLARIM' | translate }}</strong></P>
+                                        {% if coupons.activeCoupons is empty %}
+                                            <p style="text-align: center">{{ 'Aktif bir kuponunuz bulunmamaktadır' | translate }}</p>
+                                        {% endif %}
+                                        {% for coupon in coupons.activeCoupons %}
+                                            <div class="content row">
+                                                <div class="col-md-9 col-xs-8 left-box col-8">
+                                                    <h3>{{ coupon.name }}</h3>
+                                                    <ul>
+                                                        <li><b>{{ 'Kazanım Tarihi' | translate }}
+                                                                : </b>{{ coupon.createdDate | date('d.m.Y') }}</li>
+                                                        <li><b>{{ 'Başlangıç Tarihi' | translate }}
+                                                                :</b>{{ coupon.fromDate | date('d.m.Y H:i') }}</li>
+                                                        <li><b>{{ 'Son Kullanım Tarihi' | translate }}
+                                                                :</b>
+                                                            {% if  coupon.toDate  == '' %}
+                                                                ----
+                                                            {% else %}
+                                                                {{ coupon.toDate | date('d.m.Y') }}
+                                                            {% endif %}
+                                                        </li>
+                                                    </ul>
+
+                                                    {% if coupon.url is not empty %}
+                                                        <div class="coupon-campaign">
+                                                            Kupon Kodu <a href="{{ coupon.url }}">
+                                                                {{ coupon.url }}</a>
+                                                            adresindeki ürünlerde geçerlidir.
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="col-md-3 col-xs-4 right-box col-4">
+                                                    <div class="coupon-code-box coupon-box">
+                                                        <div class="code">Kupon Kodu</div>
+                                                        <p><b  > <span
+                                                                        class="coupon-code font-weight-light">{{ coupon.code }}</span> </b></p>
+                                                        <a href="javascript:;" class="btn btn-success copy-code">Kodu
+                                                            Kopyala</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="list">
+                                        <hr>
+                                        <br>
+                                        <P><strong>{{ 'PASİF KUPONLARIM' | translate }}</strong></P>
+                                        {% if coupons.passiveCoupons is empty %}
+                                            <p style="text-align: center">{{ 'Pasif ve/veya kullanılmış bir kuponunuz bulunmamaktadır.' | translate }}</p>
+                                        {% endif %}
+                                        {% for coupon in coupons.passiveCoupons %}
+                                            <div class="content row passive-coupons">
+                                                <div class="col-md-9 col-xs-8 left-box col-8">
+                                                    <h3>{{ coupon.name }}</h3>
+                                                    <ul>
+                                                        <li><b>{{ 'Kazanım Tarihi' | translate }}
+                                                                : </b>{{ coupon.createdDate | date('d.m.Y') }}</li>
+                                                        <li><b>{{ 'Başlangıç Tarihi' | translate }}
+                                                                :</b>{{ coupon.fromDate | date('d.m.Y H:i') }}</li>
+                                                        <li><b>{{ 'Son Kullanım Tarihi' | translate }}
+                                                                :</b>
+                                                            {% if  coupon.toDate  == '' %}
+                                                                ----
+                                                            {% else %}
+                                                                {{ coupon.toDate | date('d.m.Y') }}
+                                                            {% endif %}
+                                                        </li>
+                                                    </ul>
+                                                        <div class="coupon-campaign">
+                                                            Kupon Kodu <a href="">
+                                                                https://www.flo.com.tr/secili-adidas-urunlerinde-20-indirim.html</a>
+                                                            adresindeki ürünlerde geçerlidir.
+                                                        </div>
+                                                </div>
+                                                <div class="col-md-3 col-xs-4 right-box col-4">
+                                                    <div class="coupon-code-box">
+                                                        <div class="code">Kupon Kodu</div>
+                                                        <p><b> {{ coupon.code }}</b></p>
+                                                        <a href="javascript:;" class="btn btn-secondary copy-code">Kodu
+                                                            Kopyala</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

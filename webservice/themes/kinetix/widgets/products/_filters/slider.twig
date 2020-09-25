@@ -1,0 +1,33 @@
+<div class="card {% if collapseHide != true %} active {% endif %}">
+    <a data-target="#collapse-{{ filter.alias }}" class="btn btn-link" data-toggle="collapse">
+        {{ filter.name | translate }} <i class="fas fa-angle-right"></i>
+    </a>
+    <div class="collapse {% if collapseHide != true %}show{% endif %}" id="collapse-{{ filter.alias }}">
+        <div class="card-body">
+            <div class="price-ranges">
+                <input type="text" class="form-control" placeholder="En Az" name="min" value="{{ aggregations.min }}" oninput="this.value=this.value.replace(/(?![0-9])./gmi,'')">
+                <span>-</span>
+                <input type="text" class="form-control" placeholder="En Çok" name="max" value="{{ aggregations.max }}" oninput="this.value=this.value.replace(/(?![0-9])./gmi,'')">
+
+				<button type="button" class="btn btn-price-filter-submit"><i class="fa fa-angle-right"></i></button>
+            </div>
+            {% set prices = [
+                [0, 50, ((aggregations.min or aggregations.max) and (aggregations.min == 0 or aggregations.max == 50))],
+                [50, 100, (aggregations.min <= 50 and aggregations.max >= 100)],
+                [100, 200, (aggregations.min <= 100 and aggregations.max >= 200)],
+                [200, 300, (aggregations.min <= 200 and aggregations.max >= 300)]
+            ] %}
+            <div class="price-choices min-max clearfix">
+                {% for price in prices %}
+                    <div style="cursor:pointer;" class="flo-checkbox price-check-div checkbox input w-100 {% if price[2] %}active selected{% endif %}" {% if price[2] %}data-is-selected="1"{% endif %}>
+                        <input type="checkbox" name="price" class="price price-check" data-min="{{ price[0] }}" data-max="{{ price[1] }}" {% if price[2] %}checked{% endif %} />
+                        {{ price[0] }} {{ 'TL' | translate }} - {{ price[1] }} {{ 'TL' | translate }}
+                        <span>
+                            <i class="fa fa-check"></i>
+                        </span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

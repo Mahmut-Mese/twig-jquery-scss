@@ -1,0 +1,143 @@
+<script src='https://www.google.com/recaptcha/api.js?hl=en'></script>
+<div class="page distributor-page" >
+    <div class="container-fluid">
+        <div class="page-content sab">
+            <div class="whitepage">
+                <div class="title">Distributor Application  Form</div>
+                <div class="form online">
+                    <div class="centersGiris" style="max-width: 700px">
+                        <div class="form online">
+                            <form id="distributor_form" method="POST" enctype="multipart/form-data">
+                                <p>FLO, Turkey's biggest shoe retailer and distributor provides trendy, confortable and quality shoes that suit for every budget , If you would like to be a distributor of Lumberjack , Kinetix , Polaris , Us Polo ( limited countries ) , Dockers ( limited countries ) in your country , please fill the application form below. We will contact with you as soon as possible.</p>
+                                <h3>Contact Information</h3>
+                                <div class="form-group date-select gender">
+                                    <em>Gender</em>
+                                    <div class="checkbox-group fr-checkbox">
+                                        <div class="checkbox checkbox-radio">
+                                            <label>
+                                                <div class="new-radio ">
+                                                    <input type="radio" value="Mrs/Ms" name="gender" class="new-radio validate[required]">{{ 'Mrs/Ms' | translate }}
+                                                    <ins></ins>
+                                                </div>
+
+                                            </label>
+                                        </div>
+                                        <div class="checkbox checkbox-radio ">
+                                            <label>
+                                                <div class="new-radio iradio_square_gold ">
+                                                    <input type="radio" value="Mr" name="gender" class="new-radio validate[required]"
+                                                    >{{ 'Mr' | translate }}
+                                                    <ins></ins>
+                                                </div>
+
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group required">
+                                    <em>{{ 'Name' | translate }}*</em>
+                                    <input name="first_name" type="text" class="validate[required]" placeholder="" value="{{ first_name }}">
+                                </div>
+                                <div class="form-group required">
+                                    <em>{{ 'Surname' | translate }}*</em>
+                                    <input name="last_name" type="text" class="validate[required]" placeholder="" value="{{ last_name }}">
+                                </div>
+                                <div class="form-group required">
+                                    <em>{{ 'Telephone' | translate }}</em>
+                                    <input name="telephone" type="text" class="" placeholder="">
+
+                                </div>
+                                <div class="form-group required">
+                                    <em>{{ 'Mobile' | translate }}*</em>
+                                    <input name="mob_phone" type="text" class="validate[required]" placeholder="">
+
+                                </div>
+                                <div class="form-group required">
+                                    <em>{{ 'Email' | translate }}*</em>
+                                    <input name="email" type="text"  class="validate[required,custom[email],funcCall[characterTurkish]] customer-email" placeholder="" value="{{ email }}">
+                                </div>
+                                <h3>Location Information</h3>
+                                <p>Please  give detail informations that how you will distribute our products , also please give information if you already have your own stores or agreed international franchise models  </p>
+
+                                <div class="form-group date-select gender">
+                                    <em>* Do you already have a location for rental?</em>
+                                    <div class="checkbox-group" style="float:right;padding: 0px 178px 0px 13px">
+                                        <div class="checkbox checkbox-radio">
+                                            <label>
+                                                <div class="new-radio">
+                                                    <input class="new-radio validate[required]" type="radio" value="Yes" name="rental"
+                                                    >{{ 'Yes' | translate }}
+                                                    <ins></ins>
+                                                </div>
+
+                                            </label>
+                                        </div>
+                                        <div class="checkbox checkbox-radio ">
+                                            <label>
+                                                <div class="new-radio iradio_square_gold">
+                                                    <input type="radio" value="No" name="rental" class="validate[required]"
+                                                    >{{ 'No' | translate }}
+                                                    <ins></ins>
+                                                </div>
+
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group date-select gender">
+                                    <em>* If "Yes" please select type of it:</em>
+                                    <div class="checkbox-group" style="float:right;padding: 0px 178px 0px 13px">
+                                        <div class="checkbox checkbox-radio">
+                                            <label>
+                                                <div class="new-radio">
+                                                    <input class="new-radio validate[required]" type="radio" value="Street" name="rental_type"
+                                                    >{{ 'Street' | translate }}
+                                                    <ins></ins>
+                                                </div>
+
+                                            </label>
+                                        </div>
+                                        <div class="checkbox checkbox-radio ">
+                                            <label>
+                                                <div class="new-radio iradio_square_gold">
+                                                    <input type="radio" value="Mall" name="rental_type" class="validate[required]">{{ 'Mall' | translate }}
+                                                    <ins></ins>
+                                                </div>
+
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group required">
+                                    <em>{{ 'Country' | translate }}*</em>
+                                    <input name="country" type="text" class="validate[required]" placeholder="" value="{{ first_name }}">
+                                </div>
+                                <div class="form-group required">
+                                    <em>{{ 'City' | translate }}*</em>
+                                    <input name="city" type="text" class="validate[required]" placeholder="" value="{{ first_name }}">
+                                </div>
+                                <div class="form-group required">
+                                    <em>{{ 'Size of store' | translate }}*</em>
+                                    <input name="m2" type="text" class="validate[required]" placeholder="" value="{{ first_name }}">
+                                </div>
+                                <div class="">
+                                    <em>{{ 'Attachment' | translate }}</em>
+                                    <input name="file[]" multiple type="file" class="fissssle" placeholder="">
+                                </div>
+                                <br>
+                                <div class="form-group checkbox">
+                                    <div class="g-recaptcha" data-sitekey="{{ distributor_form.site_key }}"></div>
+                                </div>
+                                <div class="submit" style="max-width: 65%">
+                                    <input type="submit" class="distributor-submit" value="SEND" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

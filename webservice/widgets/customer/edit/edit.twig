@@ -1,0 +1,75 @@
+<div class="page searchnone">
+    <div class="container-fluid">
+        <div class="page-content sab">
+            <div class="whitepage">
+                <div class="title">{{ 'HESABIM / KİŞİSEL BİLGİLERİM' | translate }}</div>
+                <div class="form online">
+                    <div class="centersGiris">
+                        <div class="form online">
+                            <form method="POST" id="customer-edit-form" class="customer-edit-form">
+                                <div id="success-error"></div>
+                                <div class="form-group required">
+                                    <em>{{ 'ADINIZ' | translate }}*</em>
+                                    <input name="firstname" type="text" value="{{ customer.firstname }}" class="validate[required,custom[onlyLetterSp],minSize[2],funcCall[maskCaracter],funcCall[characterSpace]]">
+                                </div>
+                                <div class="form-group required">
+                                    <em>{{ 'SOYADINIZ' | translate }}*</em>
+                                    <input name="lastname" type="text" value="{{ customer.lastname }}" class="validate[required,custom[onlyLetterSp],minSize[2],funcCall[maskCaracter],funcCall[characterSpace]]">
+                                </div>
+                                <div class="form-group required">
+                                    <em>{{ 'E-POSTA ADRESİ' | translate }}*</em>
+                                    <input name="email" type="text" value="{{ customer.email }}" readonly class="validate[required,custom[email],funcCall[characterTurkish]] customer-email">
+                                </div>
+                                <div class="form-group required">
+                                    <em>{{ 'TELEFON NUMARASI' | translate }}*</em>
+                                    <input name="phone" type="text"
+                                           class="phone-number phones validate[required] inputmask"
+                                           placeholder="{{ 'TELEFON NUMARASI ' | translate }}*"
+                                           data-inputmask-removeMaskOnSubmit="false"
+                                           data-inputmask="'mask': '0(599)-9999999'"
+                                           value="{{ customer.phone }}">
+                                </div>
+                                <div class="form-group">
+                                    <em>{{ 'IBAN' | translate }}</em>
+                                    <input name="iban" type="text" value="{{ customer.iban }}" class="iban-mask validate[funcCall[ibanCheck]]">
+                                </div>
+                                <div class="form-group date-select">
+                                    <em>{{ 'CİNSİYET' | translate }} *</em>
+                                    <div class="checkboxa">
+                                        <label>
+                                            <input type="radio" value="2" class="validate[required]" name="gender" {{ customer.gender == 2 ? "checked" : "" }}>{{ 'KADIN' | translate }}
+                                        </label>
+                                        <label>
+                                            <input type="radio" value="1" class="validate[required]" name="gender" {{ customer.gender == 1 ? "checked" : "" }}>{{ 'ERKEK' | translate }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="note">*{{ 'Yıldızlı alanların girişi zorunludur.' | translate }} </div>
+                                <div class="form-group adim2lastcheck ">
+                                    <div class="checkbox">
+                                        {% for aggrement in aggrements %}
+                                            <label>
+                                                <div class="icheckbox_square_gold new-checkbox ">
+                                                    <input type="checkbox" autocomplete="off" name="{{ aggrement.alias }}" value="{{ aggrement.aggrement_id }}" class="{{ aggrement.alias }} {% if  aggrement.alias == 'uyelik_sozlesmesi' or aggrement.alias == 'subscribed_kvkk'   %} validate[required] {% endif %}">
+                                                </div>
+
+                                                {{ aggrement.front_text|raw }}
+                                            </label>
+
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="form-group date-select">
+                                    <em></em>
+                                    <div class="submit" style="max-width: 65%">
+                                        <input type="submit" id="btn-customer-save" value="{{ 'UYGULA' | translate }}">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

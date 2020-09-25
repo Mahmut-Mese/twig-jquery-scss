@@ -1,0 +1,142 @@
+<div class="container">
+	<h1 class="register-title">{{ 'YENİ HESAP OLUŞTUR' | translate }}</h1>
+	<form action="#" class="register" id="customer-register-form"  method="POST">
+		<div class="register-box">
+			<h2 class="register-box-title">{{ 'KİŞİSEL BİLGİLER' }}</h2>
+			<div class="form-group"> 
+				<div class="row">
+					<div class="col-sm-4">
+						<label> <span>{{ 'Adınız' | translate}} <sup>*</sup></span></label>
+					</div>
+					<div class="col-sm-8">
+						<input type="text" name="first_name" value="{{ first_name }}" class="form-control"/>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"> 
+				<div class="row">
+					<div class="col-sm-4">
+						<label> <span>{{ 'Soyadınız' | translate}}<sup>*</sup></span></label>
+					</div>
+					<div class="col-sm-8">
+						<input type="text" name="last_name" value="{{ last_name }}" class="form-control"/>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"> 
+				<div class="row">
+					<div class="col-sm-4">
+						<label> <span>{{ 'E-posta Adresiniz' | translate}}<sup>*</sup></span></label>
+					</div>
+					<div class="col-sm-8">
+						<input type="email" name="email" value="{{ email }}" class="form-control"/>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"> 
+				<div class="row">
+					<div class="col-sm-4">
+						<label> <span>{{ 'Şifreniz' | translate}}<sup>*</sup></span></label>
+					</div>
+					<div class="col-sm-8">
+						<input type="password" name="password" value="{{ password }}" 
+							class="form-control register-password"
+							data-min-length="6"
+							data-minlength-error="{{ 'Şifreniz en az 6 karakter olmalıdır.' | translate }}" 
+							{# data-character-error="{{ 'Şifreniz küçük harf, büyük harf ve özel karakter içermelidir.' | translate }}" #}
+						/>
+						<div class="register-password-strength">
+							<div class="register-password-strength-label">{{ 'Şifre Zorluğu' | translate }}: <span>{{ 'Şifre Giriniz' | translate }}</span></div>
+						</div>
+						<div class="register-password-error"></div>
+					</div>
+				</div>
+			</div>
+			{# <div class="form-group"> 
+				<div class="row">
+					<div class="col-sm-4">
+						<label> <span>{{ 'Şifrenizi Onaylayın' | translate}}<sup>*</sup></span></label>
+					</div>
+					<div class="col-sm-8">
+						<input type="password" name="confirm_password" value="{{ confirm_password }}" class="form-control"/>
+					</div>
+				</div>
+			</div> #}
+
+			<div class="form-group"> 
+				<div class="row">
+					<div class="col-sm-4">
+						<label> <span>{{ 'Telefon Numaranız' | translate}}<sup>*</sup></span></label>
+					</div>
+					<div class="col-sm-8">
+						<input type="tel" name="phone" class="form-control inputmask" placeholder="0 (5 _ _ ) _ _ _  _ _  _ _" data-inputmask="'mask': '0(599)-9999999'">
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group"> 
+				<div class="row">
+					<div class="col-sm-4">
+						<label> <span>{{ 'Cinsiyetiniz' | translate}}<sup>*</sup></span></label>
+					</div>
+					<div class="col-sm-8">
+
+						<label class="mr-5">
+							<input type="radio" class="new-radio validate[required]" value="2" name="gender" checked="">
+							&nbsp;Kadın
+						</label>
+						
+						<label class="flo-radio">
+							<input type="radio" class="new-radio validate[required]" value="1" name="gender" >
+							&nbsp;Erkek
+						</label>
+
+					</div>
+				</div>
+			</div>
+
+			{% if register.active == true %}
+			<div class="form-group"> 
+				<div class="row">
+					<div class="col-sm-4">
+					</div>
+					<div class="col-sm-8">
+						<script src='https://www.google.com/recaptcha/api.js?hl=tr'></script>
+						<div class="text-right mb-3">
+							<div class="g-recaptcha" data-sitekey="{{ register.site_key }}"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+
+			{% for aggrement in aggrements %}
+				<div class="form-group">
+					<div class="col-xs-12">
+						<div class="checkbox">
+							<label>
+								{{ aggrement.front_text|raw }}
+
+								<input type="checkbox" autocomplete="off" name="{{ aggrement.alias }}"
+										value="{{ aggrement.aggrement_id }}"
+										class="{{ aggrement.alias }} {% if  aggrement.alias == 'uyelik_sozlesmesi' or aggrement.alias == 'subscribed_kvkk' %} validate[required] {% endif %}">
+							</label>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+			
+			<div class="register-actions clearfix">
+				<div class="pull-left"><a href="javascript:window.history.back();" class="btn btn-link register-back"> {{ 'GERİ' | translate }} </a></div>
+				<div class="pull-right">
+					<a href="javascript:;" class="btn btn-facebook facebook-login"> <i class="fab fa-facebook-f"></i> {{ 'Facebook İle Üye Ol' | translate }}</a>
+					<button href="#" class="btn btn-primary">{{ 'ÜYE OL' | translate }}</button>
+				</div>
+			</div>
+		</div>
+		<div class="mt-3 text-center">
+			<a href="/customer/login" class="customer-login-register-link">Nine West Hesabın Varsa Giriş Yap</a>
+		</div>
+	</form>
+</div>
+{{ widget('social', 'facebook') }}

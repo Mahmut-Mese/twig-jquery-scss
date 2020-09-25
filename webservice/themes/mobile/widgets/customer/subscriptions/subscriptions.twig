@@ -1,0 +1,54 @@
+<div class="page searchnone">
+    <div class="container-fluid">
+        <div class="page-content">
+            <div class="whitepage">
+                <div class="title orange">{{ 'HABER BÜLTENİ ÜYELİKLERİM' | translate }}</div>
+                <div class="form adress-ose">
+                    <form method="POST" id="customer-bulten-form">
+                        <div id="success-error"></div>
+                        <div class="items">
+                            <ul>
+                                <li>
+                                    <div class="checkbox">
+                                        <label style="text-align: left">
+                                            <div class="icheckbox_square_gold new-checkbox {{ email == 1 ? " checked" : "" }} ">
+                                                <input type="checkbox" name="newsletter_email" value="{{ email }}" {{ email == 1 ? " checked" : "" }}  >
+                                            </div>
+                                            <div>{{ 'Kampanyalardan e-posta ile haberdar olmak istiyorum.' | translate }}</div>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label style="text-align: left">
+                                            <div class="icheckbox_square_gold new-checkbox {{ sms == 1 ? " checked" : "" }} ">
+                                                <input type="checkbox" name="newsletter_sms" value="{{ sms }}" {{ sms == 1 ? " checked" : "" }}  >
+                                            </div>
+                                            <div>{{ 'Kampanyalardan sms ile haberdar olmak istiyorum.' | translate }}</div>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        {% for aggrement in aggrements %}
+                                            <label style="text-align: left">
+                                                <div class="icheckbox_square_gold new-checkbox ">
+                                                    <input type="checkbox" autocomplete="off" name="{{ aggrement.alias }}" value="{{ aggrement.aggrement_id }}" class="{{ aggrement.alias }} required">
+                                                </div>
+                                                {{ aggrement.front_text|raw }}
+                                            </label>
+
+                                        {% endfor %}
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="fixedbottom">
+                            <div class="linkto">
+                                <input type="submit" id="btn-bulten-save" value="{{ 'UYGULA' | translate }}">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

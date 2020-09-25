@@ -1,0 +1,9 @@
+<div class="mc-md-8 pa mc-sm-12 promotion_image">
+    <div class="our-home lazy">
+        <a href="{{ spotlight.link }}" class="spotlightItem" data-spotlight-id="{{ spotlight.spotlight_id }}">
+            <img data-src="/pub/media/{{ spotlight.image_desktop }}" src="/pub/media/lazyloading/blank.png" class="resimatt" alt="{{ spotlight.title }}">
+        </a>
+    </div>
+</div>
+
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: [spotlight], element: '.promotion_image'}}) }}

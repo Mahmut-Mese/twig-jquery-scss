@@ -1,0 +1,75 @@
+<div class="top-menu">
+    <div class="search-form-wrapper">
+        <form action="/search" class="search-form">
+            <input type="text" class="form-control commerce-autocomplete" placeholder="42 Numara Kinetix"
+                   name="q" value="{{ search_query }}" autocomplete="off" maxlength="50">
+            <button type="submit"><i class="svg-search svg-search-dims"></i></button>
+
+        </form>
+
+        {{ widget('products', 'autocomplete') }}
+    </div>
+    <ul class="nav-top logged-in hide">
+        <li class="dropdown" id="user-menu">
+            <a id="full-name-login" class="username" data-toggle="dropdown">{{ full_name }}</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="/customer/edit"><span><i
+                                class="svg-account svg-account-dims"></i></span> Hesap Bilgileri</a>
+                <a class="dropdown-item" href="/customer/orders"><span><i
+                                class="svg-orders-cart svg-orders-cart-dims"></i></span>
+                    Siparişlerim</a>
+                <a class="dropdown-item" href="/customer/address/index"><span><i
+                                class="svg-addresses svg-addresses-dims"></i></span> Adreslerim</a>
+                <a class="dropdown-item" href="/customer/coupons"><span><i
+                                class="svg-discount svg-discount-dims"></i></span> İndirim Kuponları</a>
+                <a class="dropdown-item" href="/customer/subscriptions"><span><i
+                                class="svg-newsletter svg-newsletter-dims"></i></span> Haber Bülteni
+                    Üyeliği</a>
+                <a class="dropdown-item" href="/customer/price-notification"><span><i
+                                class="svg-price-alert svg-price-alert-dims"></i></span> Fiyat
+                    Habercisi</a>
+           {#     <a class="dropdown-item" href="/customer/credit"><span><i
+                                class="svg-credit svg-credit-dims"></i></span> Mağaza Kredisi</a>#}
+                <a class="dropdown-item" href="/ticket/list"><span><i
+                                class="svg-help svg-help-dims"></i></span> Yardım</a>
+                <a class="dropdown-item customer-logout"><span><i
+                                class="svg-remove svg-remove-dims"></i></span> Çıkış</a>
+            </div>
+        </li>
+        <li><a href="/customer/wishlist" class="d-inline-flex align-items-center">Favorilerim <i
+                        class="svg-heart svg-heart-dims ml-1"></i></a></li>
+        <li class="mini-cart">
+            <a href="{{ basket_base_url() }}/basket">
+                Sepetim&nbsp;
+                <span class="pos-relative">
+					<span class="number cart-count cart-count-desktop"></span>
+					<i class="svg-mini-cart svg-mini-cart-dims"></i>
+				</span>
+            </a>
+        </li>
+
+    </ul>
+    <ul class="nav-top logged-out">
+        {#        <li><a href="/customer/login" rel="nofollow">{{ 'Giriş Yap' | translate }}</a></li>#}
+        <li><a class="customer-login-popup">{{ 'Giriş Yap' | translate }}</a></li>
+        <li><a href="/customer/register" class="text-warning"  rel="nofollow">{{ 'Üye Ol' | translate }}</a></li>
+        <li class="mini-cart">
+            <a href="{{ basket_base_url() }}/basket">
+                Sepetim&nbsp;
+                <span class="pos-relative">
+					<span class="number cart-count"></span>
+					<i class="svg-mini-cart svg-mini-cart-dims"></i>
+				</span>
+            </a>
+        </li>
+    </ul>
+
+	<ul class="top-menu-help-links">
+		<li>
+			<a class="logged-in hide" href="/customer/orders">Sipariş Takibi</a>
+			<a class="logged-out" href="/guest-order-verify">Sipariş Takibi</a>
+		</li>
+		
+		<li><a href="/page?url=sss-desktop">Yardım ve Destek</a></li>
+	<ul>
+</div>

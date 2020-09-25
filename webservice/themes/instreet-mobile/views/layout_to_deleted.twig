@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    {{ widget('general', 'head', {meta: meta}, false) }}
+    {{ widget('general', 'head_scripts', [], false) }}
+</head>
+<body class="animated fadeIn">
+{{ widget('general', 'body_scripts') }}
+{{ widget('general', 'header',{'menubar':'open'}) }}
+
+<div class="overlay"></div>
+<div class="whole-page">
+    {% include page_tpl %}
+
+
+    {{ widget('general', 'footer_scripts') }}
+</div>
+
+<div class="cookie-policy hide"> <div class="cookie-close" onclick="cookieClose()"> X </div>
+    <div class="cookie-text"> {{ 'İnternet sitemizde çerez kullanılmaktadır. Çerezler hakkında detaylı bilgi için
+        <strong class="" style="cursor: pointer;text-decoration: underline;"><a href="page?url=gizlilik-ve-cerez">Çerez Politikası</a>
+        </strong>’nı inceleyiniz. Devam etmeniz halinde çerez kullanımına izin verdiğinizi kabul edeceğiz.' | translate | raw }}
+    </div>
+</div>
+<div id="block-box">
+    <img src="/pub/assets/instreet/images/loading.gif" /><br />
+    <div class="text"></div>
+</div>
+{{ widget('datalayer', 'all_pages', {layerData: {customer: customer_info, cart: cart}}) }}
+</body>
+</html>

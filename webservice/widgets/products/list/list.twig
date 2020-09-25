@@ -1,0 +1,167 @@
+<input type="hidden" class="widget_params" name="widget_params"
+       value="manufacturer_id={{ manufacturer_id }}&category_id={{ category_id }}&gender_general={{ gender_general }}&special_price={{ special_price }}&q={{ q }}&sort={{ active_sorting }}&request_url={{ request_url }}"/>
+{% if load_more %}
+    <div class="products-wrapper clearfix">
+    <a href="#" data-page-no="{{ current_page }}" style="display:block;float:left;"></a>
+
+    {% set products_count = products|length %}
+    {% for product in products %}
+        <div class="product-container pa{% if gorunum == '2' %} mc-md-6 mc-xs-12{% else %} mc-md-4 mc-xs-6{% endif %}">
+            {{ include('widgets/products/_element/list', {product: product,gorunum: gorunum,free_shipping_limit: free_shipping_limit,season_options: season_options,categoryId: category_id,manufacturerId: manufacturer_id,gender: gender_general,query: q}) }}
+        </div>
+
+        {% if loop.index == (products_count * 4 / 5)|round(0, 'ceil') %}
+            <div class="commerce-load-more-button" data-page-no="{{ current_page + 1 }}"
+                 data-params="page={{ current_page + 1 }}"></div>
+        {% endif %}
+    {% endfor %}
+
+    {{ widget('datalayer', q is empty ? 'category_scroll' : 'search_scroll', {layerData: {productList: products, categoryList: breadcrumb, categoryId: category_id, totalCount: total_count, query: q }} ) }}
+    </div>
+{% else %}
+    <div class="page">
+        <div class="top-to">
+            <img src="/pub/assets/instreet/mobile/images/backto.jpg" alt="">
+        </div>
+        <div class="container-fluid">
+            <form id="commerce-product-list">
+                <div class="product-list">
+                    {% if total_count == 0 %}
+                        <div class="whitepage not-found">
+                            <p><strong>{{ q }} </strong>&nbsp;{{ 'ile ilgili sonuç bulunamamıştır.' | translate }}</p>
+                        </div>
+                    {% else %}
+                        <div class="mc-md-3 mc-sm-12 pa">
+                            <div class="h1_silider_container">
+                                <div class="h1_silider">
+                                    <h1 class="h1_label">{{ registry('head_one')|default('INSTREET') }}</h1>
+                                </div>
+                            </div>
+                            <div class="sidebar">
+
+                                <div class="category_filters form" id="filters">
+                                    {% if active_filters %}
+                                        <div class="filtreList">
+                                            <ul>
+                                                {% for filter in active_filters %}
+                                                    <li class="active-filters remove-filter"
+                                                        data-filter-value="{{ filter.value|replace({'&' : '%26'}) }}">
+                                                        <i class="closes"></i> {{ filter.name }}
+                                                    </li>
+                                                {% endfor %}
+                                                <div class="clearfilt">
+                                                    <i class="closes"></i> {{ 'Filtreleri temizle' | translate }}
+                                                </div>
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+
+                                    {% for aggregation in aggregation_orders %}
+                                        {% if aggregations[aggregation.alias] %}
+                                            {{ include("widgets/products/_filters/" ~ aggregation.type, { aggregations: aggregations[aggregation.alias], filter: aggregation, filters: filters}) }}
+                                        {% endif %}
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mc-md-9 mc-sm-12 pa">
+                            <div class="list-all">
+                                <div class="breadcrumb {% if total_count==0 %} hidden {% endif %}">
+                                    <ul>
+                                        {# <li>
+                                             <a href="/">{{ 'ANASAYFA' | translate }}</a>
+                                         </li>#}
+                                        {% for cat in breadcrumb %}
+                                            <li>
+                                                <a href="/{{ cat.url }}{{ cat.query_string }}"
+                                                   class="{% if cat.selected==1 %} active{% endif %}">{{ cat.name | translate | upper_tr }}</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+
+                                    <div class="right">
+                                        <span>{{ total_count }}
+                                            {{ 'Ürün Var' | translate }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="filter-text">
+                                    <ul id="load-more-container">
+                                        {% for sorting in sorting_options %}
+                                            <li>
+                                                <a class="commerce-sort-order{% if sorting.key == active_sorting and  sorting.key != '' %} active{% endif %}"
+                                                   href="#"
+                                                   data-sort="{{ sorting.key }}">{{ sorting.value | translate }}</a>
+                                            </li>
+                                        {% endfor %}
+                                        <li>
+                                            <button value="{{ gorunum }}"
+                                                    class="gorunum">{{ 'GÖRÜNÜM' | translate }}</button>
+                                        </li>
+                                    </ul>
+
+                                </div>
+
+                                <div class="product-lists {{ gorunum == 2 ? 'one' : 'two' }}">
+                                    <div class="lest-as">
+                                        <div class="list one desk-product commerce-load-more">
+                                            <div class="products-wrapper clearfix">
+                                            {% if current_page == 1 %}
+                                                <a href="#" data-page-no="{{ current_page }}"
+                                                   style="display:block;float:left;"></a>
+                                            {% endif %}
+
+                                            {% set products_count = products|length %}
+                                            {% for product in products %}
+                                                {% if loop.index > 9 and loop.index % 9 == 1 %}
+                                                    <a href="#"
+                                                       data-datalayer-scroll-page="{{ (loop.index / 9)|round + 1 }}"
+                                                       style="display:block;float:left;"></a>
+                                                {% endif %}
+
+                                                {% if (products|length > limit) and ((loop.index % limit) == 0) %}
+                                                    <a href="#" data-page-no="{{ (loop.index / limit)|round + 1 }}"
+                                                       style="display:block;float:left;"></a>
+                                                {% endif %}
+                                                <div class="product-container pa{% if gorunum == '2' %} mc-md-6 mc-xs-12{% else %} mc-md-4 mc-xs-6{% endif %}">
+                                                    {{ include('widgets/products/_element/list', {product: product, gorunum: gorunum,free_shipping_limit:free_shipping_limit,season_options:season_options,categoryId: category_id,manufacturerId: manufacturer_id,gender: gender_general,query: q}) }}
+                                                </div>
+
+                                                {% if loop.index == (products_count * 4 / 5)|round(0, 'ceil') %}
+                                                    <a class="commerce-load-more-button"
+                                                       data-page-no="{{ current_page + 1 }}"
+                                                       data-params="page={{ current_page + 1 }}"></a>
+                                                {% endif %}
+                                            {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+    {{ widget('datalayer', q is empty ? 'category' : 'search', {layerData: {productList: products, categoryList: breadcrumb, categoryId: category_id, totalCount: total_count, query: q }} ) }}
+
+	<script type="application/ld+json"> 
+	{
+		"@context": "http://schema.org",
+		"@type": "BreadcrumbList",
+		"itemListElement": [
+			{% for item in breadcrumb %}
+			{
+				"@type": "ListItem",
+				"position": {{ loop.index }},
+				"item": {
+					"@id": "{{ config('env.webservice.url.web') }}{{ item.url }}", "name ": "{{ item.name }}"
+				}
+			}{% if loop.last != true %},{% endif %}
+			{% endfor %}
+		]
+	}
+	</script>
+{% endif %}

@@ -1,0 +1,10 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    {% for brand_category in brand_categories %}
+    {% if brand_category.url starts with 'kampanya' %}
+    {% else %}
+    <url>
+            <loc>{{ config('env.webservice.url.web') }}{{ brand_category.url }}</loc>
+        </url>
+        {% endif %}
+    {% endfor %}
+</urlset>

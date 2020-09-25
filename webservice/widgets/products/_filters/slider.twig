@@ -1,0 +1,29 @@
+<div class="form-group">
+    <span class="open" for="amount">{{ filter.name | translate }}</span>
+    <div class="all collapse"  id="collapse-price">
+        <div class="price-ranges">
+            <input type="text" class="form-control" placeholder="En Az" name="min" value="{{ aggregations.min }}" oninput="this.value=this.value.replace(/(?![0-9])./gmi,'')">
+            <span>-</span>
+            <input type="text" class="form-control" placeholder="En Çok" name="max" value="{{ aggregations.max }}" oninput="this.value=this.value.replace(/(?![0-9])./gmi,'')">
+
+            <button type="button" class="btn btn-price-filter-submit"><i class="fa fa-angle-right"></i></button>
+        </div>
+        {% set prices = [
+            [0, 50, ((aggregations.min or aggregations.max) and (aggregations.min == 0 or aggregations.max == 50))],
+            [50, 100, (aggregations.min <= 50 and aggregations.max >= 100)],
+            [100, 200, (aggregations.min <= 100 and aggregations.max >= 200)],
+            [200, 300, (aggregations.min <= 200 and aggregations.max >= 300)]
+        ] %}
+        <div class="price-choices min-max clearfix">
+                {% for price in prices %}
+            <a class="checkbox input {% if price[2] %}  selected{% endif %}" {% if price[2] %}data-is-selected="1"{% endif %}>
+            <label class="">
+                <div class="icheckbox_square_gold" style="position: relative;"></div>
+                <div class="price" data-min="{{ price[0] }}" data-max="{{ price[1] }}" >   {{ price[0] }} {{ 'TL' | translate }} - {{ price[1] }} {{ 'TL' | translate }}</div>
+
+            </label>
+            </a>
+                {% endfor %}
+</div>
+</div>
+</div>

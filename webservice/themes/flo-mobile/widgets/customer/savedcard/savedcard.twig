@@ -1,0 +1,54 @@
+<div class="container">
+    <h2>KAYITLI KARTLARIM</h2>
+    <div class="card-list saved-card">
+        <div class="row small-gutter">
+            {% if cards is empty %}
+                <p class="text-danger"><i class="fa fa-exclamation-triangle"></i> Kayıtlı kartınız bulunmamaktadır.</p>
+            {% endif %}
+            {% for card in cards %}
+                <div class="col-6">
+                    <div class="card-holder">
+                        <div class="credit-card">
+                            <h5>{{ card.program_name }}</h5>
+                            {% if card.program_name == 'MAXIMUM' %}
+                                <img src="/pub/assets/flo/img/banks/maximum.png">
+                            {% elseif card.program_name == 'BONUS' %}
+                                <img src="/pub/assets/flo/images/bonus.png"  >
+                            {% elseif card.program_name == 'PARAF' %}
+                                <img src="/pub/assets/flo/images/paraf.png">
+                            {% elseif card.program_name == 'AXESS' %}
+                                <img src="/pub/assets/flo/images/axess.png" >
+                            {% elseif card.program_name == 'WORLD' %}
+                                <img src="/pub/assets/flo/images/world.png" >
+                            {% elseif card.program_name == 'CARDFINANS' %}
+                                <img src="/pub/assets/flo/images/cardfinans.png" >
+                            {% endif %}
+                            <div class="card-number">{{ card.bin_number }}</div>
+                            <div class="card-date">{{ card.cc_exp_month }}/{{ card.cc_exp_year }}</div>
+                        </div>
+                        <a href="javascript:;" class="delete-card my-data-click" data-id="{{ card.saved_card_id }}">Kartı Sil</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="modal flomodal fade" id="deleteCardModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm modal-dialog-centered cart-modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">KARTI SİL</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-center pt-5 pb-5">Kredi kartınızı silmek istediğinize emin misiniz?</h4>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-secondary" data-dismiss="modal">Vazgeç</a>
+                <a href="javascript:;" class="btn btn-danger flo-remove-saved-card" data-saved-id="" >Sil</a>
+            </div>
+        </div>
+    </div>
+</div>

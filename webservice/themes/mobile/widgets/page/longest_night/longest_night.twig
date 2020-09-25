@@ -1,0 +1,449 @@
+<div class="cm lazy">
+	<div class="cm-spotlight">
+		{{ img(enuzun_head_image[0].image_mobil, '', { class: 'w-100', cdn: 'general' }) }}
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12 col-12">
+				<div class="cm-campaigns">
+					{% set index = 0 %}
+					{% for banner in campaigns %}
+						{% set color = 'red' %}
+
+						{% if index == 1 %}
+							{% set color = 'green' %}
+						{% elseif index == 2 %}
+							{% set color = 'blue' %}
+						{% endif %}
+
+						<div class="cm-campaign-item {{ color }}">
+							<a href="{{ banner.link }}">
+								<div class="cm-campaign-image">
+									{{ img(banner.image_mobil, '', {  class:'w-100', cdn: 'general' }) }}
+								</div>
+								{% if enuzun_blocks_1.settings.is_instreet != '1' %}
+
+									<div class="cm-campaign-info">
+										<div class="row">
+											<div class="col-7 col-xs-7">
+												<span class="cm-campaign-title">
+													{{ banner.title }}
+												</span>
+											</div>
+											<div class="col-5 col-xs-5 text-right">
+												<span class="cm-campaign-link">Alışverişe Başla
+													<span class="corner-1"></span><span class="corner-2"></span><span class="corner-3"></span><span class="corner-4"></span>
+												</span>
+											</div>
+										</div>
+									</div>
+
+								{% endif %}
+							</a>
+						</div>
+						{% if index != 2 %}
+							{% set index = index + 1 %}
+						{% else %}
+							{% set index = 0 %}
+						{% endif %}
+
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="product-your">
+		{{ widget('products', 'product_slider', {title: 'Sizin İçin Seçtiklerimiz' | translate, data_source: 'sizin-icin-sectiklerimiz' }) }}
+	</div>
+</div>
+
+
+{% if enuzun_blocks_1.settings.is_instreet == '1' %}
+	{% if enuzun_blocks_2 %}
+		<div class="footer-description">
+			{{ enuzun_blocks_2 }}
+		</div>
+	{% endif %}
+{% else %}
+	{% if enuzun_blocks_2 %}
+		<div class="footer-content">
+			<div class="container">
+				<div class="holder text-left">
+					{{ enuzun_blocks_2 }}	
+				</div>
+				<div class="text-center">
+					<a href="javascript:;" class="read-more">
+						<i class="svg-arrow-up svg-arrow-up-dims"></i>
+						<span>DEVAMI</span>
+						<i class="svg-arrow-down svg-arrow-down-dims"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+{% endif %}
+
+<style>
+	header {
+		float: none;
+	}
+
+	.container {
+		width: 100%;
+		max-width: 1230px;
+	}
+
+	.cm {
+		max-width: 100%;
+		overflow:hidden;
+		background: {{ enuzun_blocks_1.settings.background | default('#ebebeb') }};
+	}
+
+	.cm .row {
+		margin-left: -7.5px;
+		margin-right: -7.5px;
+	}
+
+	.cm div[class*="col-"] {
+		padding-left: 7.5px;
+		padding-right: 7.5px;
+	}
+
+	.cm-spotlight {
+		margin-bottom: 10px;
+	}
+
+	.cm-spotlight img {
+		width: 100%;
+	}
+
+	.cm-campaigns {
+		margin-bottom: 25px;
+	}
+
+	.cm-campaign-item {
+		margin-bottom: 15px;
+	}
+
+	.cm-campaign-image {
+		position: relative;
+	}
+
+	.cm-campaign-image img {
+		width: 100%;
+	}
+
+	.cm-campaign-info {
+		background: #ffffff;
+		border-top: solid 4px transparent;
+
+		padding: 0 12px;
+	}
+
+	.cm-campaign-item.red .cm-campaign-info{ border-top-color: #F26725; }
+	.cm-campaign-item.green .cm-campaign-info{ border-top-color: #F26725; }
+	.cm-campaign-item.blue .cm-campaign-info{ border-top-color: #F26725; }
+
+	.cm-campaign-item.red .cm-campaign-link, .cm-campaign-item.red .corner-3, .cm-campaign-item.red .corner-4{ background-color: #F26725; }
+	.cm-campaign-item.green .cm-campaign-link, .cm-campaign-item.green .corner-3, .cm-campaign-item.green .corner-4{ background-color: #F26725; }
+	.cm-campaign-item.blue .cm-campaign-link, .cm-campaign-item.blue .corner-3, .cm-campaign-item.blue .corner-4{ background-color: #F26725; }
+
+	.cm-campaign-link {
+		text-decoration: underline;
+		font-size: 12px;
+		font-weight: 300;
+		line-height: 1;
+		color: #ffffff;
+
+		display: inline-block;
+		position: relative;
+		padding: 7px 10px 4px;
+	}
+
+	.corner-1, .corner-2, .corner-3, .corner-4{
+		content: '';
+
+		display: block;
+
+		width: 10px;
+		height: 30px;
+
+		position: absolute;
+		background:#ffffff;
+	}
+
+	.corner-1, .corner-2 {
+		top: 0;
+	}
+
+	.corner-3, .corner-4 {
+		bottom: -7px;
+		height: 10px;
+		width: 55%;
+	}
+
+	.corner-1 {
+		left: -6px; 
+		border-radius: 0 5px 0 0;
+	}
+	.corner-2 {
+		right: -6px; 
+		border-radius: 5px 0 0 0;
+	}
+
+	.corner-3 {
+		left: 4px;
+		border-radius: 0 0 0 5px;
+	}
+	.corner-4 {
+		right: 4px;
+		border-radius: 0 0 5px 0;
+	}
+
+
+	.cm-campaign-title{
+		display: block;
+		
+		font-size: 12px;
+		line-height: 1;
+		color: #000000;
+
+		padding: 10px 0;
+
+		white-space: nowrap;
+	}
+
+	.footer-description h2{
+		font-size: 24px;
+	}
+
+	.instant-deals {
+		margin-bottom: 20px;
+	}
+
+	.instant-deals-head {
+		position: relative;
+		height: 40px;
+		line-height: 40px;
+
+		color: #000000;
+	}
+
+	.instant-deals-head-icon {
+		display: inline-block;
+		width: 40px;
+		height: 40px;
+
+		vertical-align: top;
+
+		background: rgba(0,0,0, .3);
+
+		border-radius: 5px 0 0 0;
+
+		margin-right: 14px;
+
+		text-align: center;
+		line-height: 37px;
+	}
+
+	.instant-deals-head-timer{
+		border-left: solid 1px rgba(0,0,0, .3);
+
+		padding: 12px 18px;
+		line-height: 1;
+
+		position: absolute;
+		top:0;
+		right:0;
+	}
+
+	.instant-deals-products {
+		background: #ffffff;
+	}
+
+	.instant-deals-product {
+		text-align: center;
+
+		padding-bottom: 12px;
+	}
+
+	.instant-deals-product-image{
+		max-width: 100%;
+	}
+
+	.instant-deals-product-title {
+		font-size: 16px;
+		font-weight: 400;
+
+		line-height: 28px;
+		color: #000000;
+
+		margin-bottom: 10px;
+	}
+	.instant-deals-product-price {
+		font-size: 14px;
+		font-weight: 400;
+		line-height: 28px;
+
+		color: #ff671d;
+	}
+
+	.instant-deals-product-price-old {
+		font-size: 14px;
+		font-weight: 400;
+		line-height: 28px;
+		text-decoration: line-through;
+		margin-right: 10px;
+
+		color: #959595;
+	}
+
+	.swiper-button-next,
+	.swiper-button-prev {
+		width: 12px;
+		height: 12px;
+
+		background-size: 12px 12px;
+		background-position: center;
+
+		margin-top: -6px;
+	}
+
+	.swiper-button-next {
+		background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'black'%2F%3E%3C%2Fsvg%3E");
+	}
+
+	.swiper-button-prev {
+		background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'black'%2F%3E%3C%2Fsvg%3E");
+	}
+
+	.instant-deals.vertical .instant-deals-products {
+		padding: 10px 8px 0;
+		margin-top: -10px;
+	}
+
+	.instant-deals.vertical .instant-deals-product {
+		position: relative;
+
+		min-height: 146px;
+		padding-left: 147px;
+		padding-bottom: 10px;
+		margin-top: 10px;
+
+		text-align: left;
+
+		border-bottom: solid 1px #ebebeb;
+	}
+
+	.instant-deals.vertical .instant-deals-product:last-child {
+		border-bottom: 0;
+	}
+	
+
+	.instant-deals.vertical .instant-deals-product-image {
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		width: 136px;
+		height: 136px;
+
+		border:solid 1px #e2e2e2;
+	}
+
+	.instant-deals.vertical .instant-deals-product-brand {
+		font-size: 18px;
+		color: #000000;
+		line-height: 1;
+
+		margin-bottom: 4px;
+	}
+
+	.instant-deals.vertical .instant-deals-product-title {
+		font-size: 15px;
+		line-height: 20px;
+		color: #959595;
+
+		margin-bottom: 7px;
+	}
+
+	.instant-deals.vertical .instant-deals-product-price {
+		font-size: 15px;
+		white-space: nowrap;
+	}
+
+	.instant-deals.vertical .instant-deals-product-price-old {
+		font-size: 15px;
+		margin-right: 5px;
+		color: #959595;
+	}
+
+	.instant-deals.vertical .instant-deals-product-button {
+		display: block;
+		background: #28a745;
+
+		width: 100%;
+		height: 30px;
+
+		margin-top: 8px;
+
+		line-height: 30px;
+
+		text-align: center;
+
+		color: #ffffff;
+	}
+
+	.instant-deals-categories {
+		background: #ffffff;
+		padding: 10px 0 10px 10px;
+	}
+
+	.instant-deals-categories .swiper-slide {
+		display: inline-block;
+		width: auto;
+	}
+
+	.instant-deals-categories .swiper-slide:last-child {
+		margin-right: 10px;
+	}
+
+	.instant-deals-categories a{
+		display: inline-block;
+		padding: 6px 30px;
+
+		height: 31px;
+
+		font-size: 15px;
+		line-height: 1;
+		color: #000000;
+
+		border:solid 1px #707070;
+		border-radius: 16px;
+	}
+
+	.instant-deals-categories a.active{
+		background:#ff671d;
+		border-color: #ff671d;
+		color: #ffffff;
+	}
+</style>
+
+<script>
+	domReadyCallbacks.push(function() {
+		$('.cm-categories a').on('click', function (e) {
+			e.preventDefault();
+
+			var $self = $(this);
+			var $parent = $self.parent();
+			var index = $parent.index() + 1;
+
+			$('.cm-campaign-tabs').hide().filter('.cm-campaign-tab-' + index).fadeIn();
+
+			$self.closest('ul').find('li').removeClass('active');
+			$parent.addClass('active');
+		}).first().trigger('click');
+	});
+</script>

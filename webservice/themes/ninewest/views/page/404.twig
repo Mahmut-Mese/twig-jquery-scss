@@ -1,0 +1,29 @@
+<div class="error-page-wrapper">
+<div class="container">
+    <div class="row justify-content-center pt-5 pb-5">
+        <div class="col-lg-10 col-sm-12">
+            <div class="row pt-4">
+				<div class="col-sm-4">
+                    <figure class="page-animation">
+                        <img src="/pub/assets/ninewest/img/404.jpg" style="width: 100%;" alt="NINE WEST">
+                    </figure>
+                </div>
+                <div class="col-sm-8">
+                    <h1>Üzgünüz, aradığınız sayfayı bulamadık</h1>
+                    <p>Sayfa kaldırılmış ya da taşınmış olabilir.</p>
+                    <p><a href="/"><u>Ana Sayfamızı</u></a> ziyaret edin.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="suggested-products">
+    <div class="container">
+        {{ widget('products', 'product_slider', {title: 'Sizin İçin Seçtiklerimiz' | translate, data_source: 'sizin-icin-sectiklerimiz' }) }}
+    </div>
+</section>
+</div>
+
+{{ widget('datalayer', 'page_404', {}) }}

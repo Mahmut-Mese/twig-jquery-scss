@@ -1,0 +1,59 @@
+{# <div class="form-group">
+    <span class="open">{{ filter.name | translate }}</span>
+    <div class="all">
+        {% for agg in aggregations %}
+            <a href="{{ agg.query_string }}" data-without-query="{{ agg.without_qs }}" class="{% if filter.box %}checkboxs{% else %}
+            checkbox{% endif %} {% if filter.full %} full {% endif %}input {% if ( agg.value in filters or agg.value_star in filters) %}
+            selected{% endif %}" data-value="{{ agg.value }}" data-real-value="{{ agg.name }}" data-name="filters[]" {% if ( agg.value in filters or agg.value_star in filters) %}data-is-selected="1"{% endif %}>
+                <label class="slide-brand">
+                {% if filter.box %}
+                    <div class="icbtn" style="position: relative;"></div>
+                {% else %}
+                    <div class="icheckbox_square_gold" style="position: relative;"></div>
+                {% endif %}
+                    {% if filter.name == 'Marka' and agg.name == 'Adidas' %}
+                        {{ agg.name | translate | raw |lower }}
+                    {% else %}
+                        {{ agg.name | translate | raw }}
+                    {% endif %}
+
+                </label>
+                <ins class="slide-brand-ins">({{ agg.count }})</ins>
+            </a>
+        {% endfor %}
+    </div>
+</div> #}
+
+<div class="card brand {% if collapseHide != true %} active {% endif %}">
+    <a data-target="#collapse-{{ filter.alias }}" class="btn btn-link" data-toggle="collapse">
+        {{ filter.name | translate }} <i class="fa fa-angle-right"></i>
+    </a>
+    <div class="collapse {% if collapseHide != true %}show{% endif %}" id="collapse-{{ filter.alias }}">
+        <div class="card-body">
+            <div class="search-holder">
+                <input type="text" class="form-control brand-search">
+                <i class="fa fa-search"></i>
+            </div>
+            <div class="brand-list clearfix">
+            {% for agg in aggregations %}
+                <label class="flo-checkbox input {% if ( agg.value in filters or agg.value_star in filters) %}selected active{% endif %}" 
+                    data-value="{{ agg.value }}" 
+                    data-real-value="{{ agg.name }}" 
+                    data-name="filters[]" 
+                    href="{{ agg.query_string }}" data-without-query="{{ agg.without_qs }}"  
+                    {% if ( agg.value in filters or agg.value_star in filters) %}data-is-selected="1"{% endif %}
+                >
+					<a href="{{ original_request_url ~ agg.query_string }}" class="filter-link">{{ agg.name | translate | raw }}</a>
+                    <input type="checkbox" {% if ( agg.value in filters or agg.value_star in filters) %}checked{% endif %}> 
+                    {% if filter.name == 'Marka' and agg.name == 'Adidas' %}
+                        {{ agg.name | translate | raw |lower }}
+                    {% else %}
+                        {{ agg.name | translate | raw }}
+                    {% endif %} ({{ agg.count }})
+                    <span><i class="fa fa-check"></i></span>
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

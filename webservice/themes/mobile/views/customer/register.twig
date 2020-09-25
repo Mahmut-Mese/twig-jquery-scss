@@ -1,0 +1,118 @@
+<div class="page searchnone">
+    <div class="container-fluid">
+        <div class="page-content">
+            <div class="whitepage centersGiris">
+                <div class="title">{{ 'ÜYE OL' | translate }}</div>
+                <div class="form online uyeol">
+                    <form id="customer-register-form" class="customer-register-form"  method="POST">
+                        <div class="form-group required">
+                            <input name="first_name" type="text"
+                                   class="validate[required,onlyLetterSp,minSize[2]] input_ucfirst"
+                                   placeholder="{{ 'ADINIZ' | translate }}" value="{{ first_name }}">
+
+                        </div>
+                        <div class="form-group required">
+                            <input name="last_name" type="text"
+                                   class="validate[required,onlyLetterSp,minSize[2]] input_ucfirst"
+                                   placeholder="{{ 'SOYADINIZ' | translate }}" value="{{ last_name }}">
+
+                        </div>
+                        <div class="form-group required">
+                            <input name="email" type="text" class="validate[required,custom[email],funcCall[characterTurkish]] customer-email"
+                                   placeholder="{{ 'E-POSTA ADRESİ' | translate }}" value="{{ email }}">
+
+                        </div>
+                        <div class="form-group required">
+
+
+                            <div class="form-group required">
+                                <em>{{ 'Telefon Numarası' | translate }}*</em>
+                                <input type="text" name="phone" class=" phones  validate[required] inputmask" placeholder="0 (5 _ _ ) _ _ _  _ _  _ _" data-inputmask="'mask': '0(599)-9999999'">
+                            </div>
+                        <div class="form-group pass required">
+                            <input name="password" type="password" class="validate[required,minSize[5]]"
+                                   placeholder="{{ 'ŞİFRENİZ' | translate }}">
+
+                            <i class="pas">{{ 'GÖSTER' | translate }}</i>
+                        </div>
+                        <div class="form-group date-select hidden">
+                            <label>{{ 'DOĞUM TARİHİNİZ' | translate }} *</label>
+                            <select name="dob_day">
+                                <option value="day">{{ 'GÜN' | translate }}</option>
+                                {% for i in 1..31 %}
+                                    <option value="{{ "%02d"|format(i) }}">{{ "%02d"|format(i) }}</option>
+                                {% endfor %}
+                            </select>
+                            <select name="dob_month">
+                                <option value="month">{{ 'AY' | translate }}</option>
+                                {% for i in 1..12 %}
+                                    <option value="{{ "%02d"|format(i) }}">{{ "%02d"|format(i) }}</option>
+                                {% endfor %}
+                            </select>
+                            <select name="dob_year">
+                                <option value="year">{{ 'YIL' | translate }}</option>
+                                {% for i in 'now'|date('Y')..1900 %}
+                                    <option value="{{ i }}">{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group date-select gender">
+                            <label>{{ 'CİNSİYETİNİZ' | translate }} *</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox checkbox-radio ">
+                                    <label>
+                                        <div class="new-radio iradio_square_gold">
+                                            <input type="radio" value="2" name="gender" class="validate[required]"
+                                            >{{ 'Kadın' | translate }}
+                                            <ins></ins>
+                                        </div>
+
+                                    </label>
+                                </div>
+                                <div class="checkbox checkbox-radio ">
+                                    <label>
+                                        <div class="new-radio iradio_square_gold">
+                                            <input type="radio" value="1" name="gender" class="validate[required]"
+                                            >{{ 'Erkek' | translate }}
+                                            <ins></ins>
+                                        </div>
+
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="note">* {{ 'Yıldızlı alanların girişi zorunludur.' | translate }}</div>
+
+                        <div class="form-group adim2lastcheck">
+                            <div class="checkbox">
+                                {% for aggrement in aggrements %}
+                                    <label>
+                                        <div class=" new-checkbox iread ">
+                                            <input type="checkbox" autocomplete="off" name="{{ aggrement.alias }}"
+                                                   value="{{ aggrement.aggrement_id }}" class="{{ aggrement.alias }} {% if  aggrement.alias == 'uyelik_sozlesmesi' or aggrement.alias == 'subscribed_kvkk'   %} validate[required] {% endif %}">
+                                        </div>
+
+                                        {{ aggrement.front_text|raw }}
+                                    </label>
+
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="submit ">
+                            <input type="submit" class="register-submit" value="{{ 'ÜYE OL' | translate }}">
+                            <br><br>
+
+                            <a class="facebook-login" href="#">
+                                <i>{{ 'FACEBOOK İLE ÜYE OL' | translate }}</i>
+                            </a>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{ widget('social', 'facebook') }}

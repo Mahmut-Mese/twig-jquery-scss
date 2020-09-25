@@ -1,0 +1,15 @@
+<div data-swiper-loop="true" data-swiper-auto-height="true" class="swiper-container swiper-autoinit carousel lazy">
+    <div class="swiper-wrapper">
+
+		{% for spotlight in spotlights %}
+			<div class="swiper-slide">
+				<a href="{{ spotlight.link }}" data-spotlight-id="{{ spotlight.spotlight_id }}">
+					{{ img('media/lazyloading/blank.png', '', { class: 'hidden-xs', cdn: 'general', src: '/pub/assets/ninewest/img/placeholder/banner_w.jpg' }, spotlight.image_desktop) }}
+					{{ img('media/lazyloading/blank.png', '', { class: 'hide visible-xs', cdn: 'general', src: '/pub/assets/ninewest/img/placeholder/banner_m.jpg' }, spotlight.image_mobil) }}
+				</a>
+			</div>
+		{% endfor %}
+    </div>
+</div>
+
+{{ widget('datalayer', 'spotlight', {layerData: {spotlights: spotlights}}) }}

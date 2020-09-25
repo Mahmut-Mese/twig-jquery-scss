@@ -1,0 +1,133 @@
+<script src='https://www.google.com/recaptcha/api.js?hl=tr'></script>
+<main>
+    <div class="login-page-wrapper">
+        <div class="container">
+            <div class="breadcrumbs-bar title-only mt-3">
+                <div class="page-title">
+                    <h1>ÜYE OL / HESAP OLUŞTUR</h1>
+                </div>
+            </div>
+            <div class="row medium-gutter mb-4">
+                <div class="col-sm-6">
+                    <div class="bg-white p-4 h-100">
+                        <form id="customer-register-form" action="#" class="register-form"  method="POST">
+                            <div class="form-group animated">
+                                <label>Adınız</label>
+                                <input type="text" name="first_name" class="form-control input_ucfirst"
+                                       value="{{ first_name }}">
+                            </div>
+                            <div class="form-group animated">
+                                <label>Soyadınız</label>
+                                <input type="text" name="last_name" class="form-control input_ucfirst"
+                                       value="{{ last_name }}">
+                            </div>
+                            <div class="form-group animated">
+                                <label>Eposta Adresiniz</label>
+                                <input type="text" name="email" class="form-control  input_lowercase" value="{{ email }}">
+                            </div>
+                            <div class="form-group phone-input">
+                                <label>Telefon Numaranız</label>
+                                <input type="tel" name="phone" class="form-control phones  inputmask"
+                                       placeholder="0 (5 _ _ ) _ _ _  _ _  _ _"
+                                       data-inputmask="'mask': '0(599)-9999999'">
+                            </div>
+                            <div class="form-group password-input animated">
+                                <label>Şifreniz</label>
+                                <input type="password" name="password" class="form-control">
+                                <a href="javascript:;" class="change-pass" onclick="changePasType()">Göster</a>
+                            </div>
+                            <div class="gender-choice mb-3">
+                                <div class="title">Cinsiyetinizi seçiniz</div>
+                                <label class="flo-radio">
+                                    <input type="radio" class="new-radio validate[required]" value="2" name="gender"
+                                           checked>
+                                    <i></i>
+                                    <span>Kadın</span>
+                                </label>
+                                <label class="flo-radio">
+                                    <input type="radio" class="new-radio validate[required]" value="1" name="gender"
+                                           checked>
+                                    <i></i>
+                                    <span>Erkek</span>
+                                </label>
+                            </div>
+                            <div class="checkboxes">
+
+                                {% for aggrement in aggrements %}
+                                    <label class="flo-checkbox">
+                                        <input type="checkbox" autocomplete="off" name="{{ aggrement.alias }}"
+                                               value="{{ aggrement.aggrement_id }}"
+                                               class="{{ aggrement.alias }} {% if  aggrement.alias == 'uyelik_sozlesmesi' or aggrement.alias == 'subscribed_kvkk' %} validate[required] {% endif %}">
+                                        <span><i class="fa fa-check"></i></span>
+                                        <div class="text-holder">
+                                            {{ aggrement.front_text|raw }}
+                                        </div>
+
+                                    </label>
+                                {% endfor %}
+
+                            </div>
+                            {% if re_captcha.active == true and rf_post_time >= re_captcha.fail_num %}
+                                <div class="field">
+                                    <div class="form-group">
+                                        <div class="g-recaptcha" data-sitekey="{{ re_captcha.site_key }}"></div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <button type="submit" class="btn btn-warning btn-lg btn-block text-uppercase">Üye Ol <i
+                                        class="fa fa-angle-right font-weight-bold ml-2"></i></button>
+                            <button type="button"
+                                    class="btn btn-info btn-lg btn-block facebook-login-button  facebook-login text-uppercase"><i
+                                        class="fab fa-facebook-f"></i> Facebook ile Üye Ol <i
+                                        class="fa fa-angle-right font-weight-bold ml-2"></i></button>
+
+							{{ widget('social', 'facebook') }}
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="bg-white h-100 p-4">
+                        <h2>ÜYELİK AVANTAJLARI</h2>
+                        <div class="icon-box">
+                            <i class="svg-login-advantage-1 svg-login-advantage-1-dims"></i>
+                            <div>
+                                <h4>Kampanya</h4>
+                                <p>Kampanya dönemlerinde yapılan sürpriz indirimlerden,
+                                    stoklar ve bedenler tükenmeden ilk sizin haberiniz olsun.</p>
+                            </div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="svg-login-advantage-2 svg-login-advantage-2-dims"></i>
+                            <div>
+                                <h4>Size Özel Kupon Fırsatları</h4>
+                                <p>Üyelerimize özel yaptığımız kupon etkinliklerinden faydalanın</p>
+                            </div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="svg-login-advantage-3 svg-login-advantage-3-dims"></i>
+                            <div>
+                                <h4>Kolay İade Seçeneği</h4>
+                                <p>Flo Üyeleri, hiç kullanmadığı ürünleri 60 gün içerisinde hızlı ve kolay
+                                    bir işlemle iade edebilme avantajından yararlanırlar.</p>
+                            </div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="svg-login-advantage-4 svg-login-advantage-4-dims"></i>
+                            <div>
+                                <h4>Kapıda Nakit Ödeme</h4>
+                                <p>Flo üyeleri kapıda nakit ödeme avantajından yararlanabilirler.</p>
+                            </div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="svg-login-advantage-5 svg-login-advantage-5-dims"></i>
+                            <div>
+                                <h4>FLO Mobil Uygulamamız ile Sürpriz Avantajlar</h4>
+                                <p>Flo Mobil Uygulamasına özel yaptığımız etkinliklerden ilk
+                                    sizin haberiniz olsun.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

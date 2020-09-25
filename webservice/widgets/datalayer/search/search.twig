@@ -1,0 +1,180 @@
+<script type="text/javascript">
+    var dataLayer = window.dataLayer || [];
+    var pageItems = [];
+    var pageItemsIds = [];
+    window.showedProductIds = [];
+    window.productList = [];
+
+    window.productsWithId = window.productsWithId || {};
+    window.google_tag_params_pushed = false;
+    var categoryIOEventType = 'product_impressions';
+
+    var dataLayerPushTimer = null;
+    var dataLayerPushItems = [];
+    var dataLayerPush = function (item) {
+        dataLayerPushItems.push(item);
+
+        clearTimeout(dataLayerPushTimer);
+        dataLayerPushTimer = setTimeout(function () {
+
+            var mergedItem = {};
+            for (var i in dataLayerPushItems) {
+                var pushedItem = dataLayerPushItems[i];
+
+                if (String(i) === '0') {
+                    mergedItem = pushedItem;
+                    continue;
+                }
+
+                mergedItem.ecommerce.impressions = mergedItem.ecommerce.impressions.concat(pushedItem.ecommerce.impressions);
+            }
+
+            if (!window.google_tag_params_pushed) {
+                mergedItem.google_tag_params = google_tag_params;
+                window.google_tag_params_pushed = true;
+            }
+
+            dataLayer.push(mergedItem);
+            dataLayerPushItems = [];
+        }, 250);
+    };
+
+    var categoryIO = (function () {
+        var IO;
+        var IOCallback = function (entries) {
+            for (var i = 0; i < entries.length; i++) {
+                var entry = entries[i];
+                if (entry.intersectionRatio < 0.2 && !entry.isIntersecting) { continue; }
+
+                var productId = entry.target.getAttribute('data-gtm-product-id');
+                var product = window.productsWithId[productId];
+
+                dataLayerPush({
+                    'event': categoryIOEventType,
+                    'ecommerce': {
+                        currencyCode: "TRY",
+                        impressions: [product]
+                    },
+                });
+
+                IO.unobserve(entry.target);
+            }
+        };
+
+        var observeItems = function (itemIds) {
+            for (var i in itemIds) {
+                var item = document.getElementById('product-' + itemIds[i]);
+
+                (item ? IO.observe(item) : null);
+            }      
+        };  
+
+        IO = new IntersectionObserver(IOCallback, { threshold: [0.2], rootMargin: '0px' });
+
+        return {
+            IOCallback: IOCallback,
+            observeItems: observeItems,
+        }
+    })();
+
+    {% set mainCategoryName = '' %}
+    {% set subCategoryName = '' %}
+
+    {% for product in layerData.productList %}
+    {% set mainCategoryName = (product.categories|first).name %}
+    {% set subCategoryName = (product.categories|last).name %}
+
+    var item = {
+        id: "{{ product.sku }}",
+        name: "{{ product.name }}",
+        position: "{{ loop.index }}",
+        entity_id: "{{ product.id }}",
+        brand: "{{ product.manufacturer }}",
+        price: "{{ product.third_price | default(product.special_price) | default(product.price) | number_format(2) }}",
+        category: "{{ product.categories|first.name }} / {{ product.categories|last.name }}",
+        variant: "{{ product.renk }}",
+        list: "Search",
+        dimension3: "{{ product.gender }}",
+        dimension5: "{{ product.category_ids|last }}",
+        dimension6: "{{ product.model }}",
+        dimension7: "{{ product.sezon_yil }} - {{ product.season }}",
+        dimension9: "{{ product.categories|first.name }}",
+        dimension10: "{{ product.categories|last.name }}",
+        dimension12: "{{ product.saya_malzeme }}",
+        dimension21: "{{ product.id }}",
+        dimension22: "{{ product.qty }}",
+        dimension23: "{{ product.price }}",
+        dimension24: "{{ product.is_in_stock ? 1 : 0 }}",
+        dimension25: "",
+        dimension26: "TRY",		
+
+		{% set rule = product.rule_info | first %}
+		dimension74: {{ product.rule_info ? 1 : 0 }},
+		dimension75: "{{ rule.label }}",
+
+    };
+
+    pageItems.push(item);
+    pageItemsIds.push(item.id);
+    window.productList.push(item);
+    window.showedProductIds.push({{ product.id }});
+    GtmDataLayer.set('product{{ product.sku }}', item, true);
+
+    window.productsWithId[item.id] = item;
+
+    {% endfor %}
+
+    var google_tag_params = {
+        site_type: "d",
+        page_type: "search_results",
+        url: window.location.href,
+        breadcrumb: {
+            path: "ANASAYFA > {{ layerData.query }} için arama sonuçları",
+            last_crumb: "{{ layerData.query }} için arama sonuçları"
+        },
+        search: {
+            suggested_from: document.referrer,
+            search_term: "{{ layerData.query }}",
+            search_result_count: "{{ layerData.totalCount }}",
+            all_listed_products_ids: pageItemsIds,
+            top_3_product_brand: [],
+            top_3_product_name: [],
+            top_3_product_id: [],
+            top_3_product_price: [],
+            top_3_product_gender: [],
+            top_3_product_main_category: [],
+            top_3_product_subcategory: []
+        }
+    };
+
+    {% for product in layerData.productList %}
+    {% if loop.index0 > 2 %}
+    {{ break }}
+    {% endif %}
+    google_tag_params.search.top_3_product_brand.push(window.productList[{{ loop.index0 }}].brand);
+    google_tag_params.search.top_3_product_name.push(window.productList[{{ loop.index0 }}].name);
+    google_tag_params.search.top_3_product_id.push(window.productList[{{ loop.index0 }}].id);
+    google_tag_params.search.top_3_product_price.push(window.productList[{{ loop.index0 }}].third_price || window.productList[{{ loop.index0 }}].price);
+    google_tag_params.search.top_3_product_gender.push(window.productList[{{ loop.index0 }}].dimension3);
+    google_tag_params.search.top_3_product_main_category.push(window.productList[{{ loop.index0 }}].dimension9);
+    google_tag_params.search.top_3_product_subcategory.push(window.productList[{{ loop.index0 }}].dimension10);
+    {% endfor %}
+
+    try {
+        categoryIO.observeItems(pageItemsIds);
+        // dataLayer.push({
+        //     'google_tag_params': google_tag_params,
+        // });
+    } catch (e) {
+        var ecommerce = {
+            currencyCode: "TRY",
+            impressions: pageItems
+        };
+
+        dataLayer.push({
+            'event': 'product_impressions',
+            'ecommerce': ecommerce,
+            'google_tag_params': google_tag_params
+        });
+    }
+</script>

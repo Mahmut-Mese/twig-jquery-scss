@@ -1,0 +1,429 @@
+<p><strong>{{ 'MESAFELİ SATIŞ SÖZLEŞMESİ' | translate }}</strong></p>
+<br>
+({{ "now"|date("d/m/Y") }})
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tbody>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>MADDE 1- TARAFLAR </strong></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ '<p>İşbu sözleşme bir tarafta Taşocağı Caddesi No: 24 Bağcılar 34217 İstanbul /
+            Türkiye adresinde ikamet eden FLO Mağazacılık ve Pazarlama A.Ş. (Bundan böyle SATICI olarak anılacaktır) ile diğer tarafta' | translate | raw }} {{ shipping_address.street }}
+            - {{ shipping_address.region }} / {{ shipping_address.city }}
+            {{ ' adresinde ikamet eden (bundan böyle ALICI olarak anılacaktır) arasında akdedilmiştir.
+            İşbu sözleşmede belirtilen adresler, tarafların yasal tebligat adresleri olup, yazılı olarak bildirilmedikçe işbu adreslere yapılan tebligatlar geçerli olur.</p>' | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ '<p>1.1- SATICI </p>
+            Ünvanı : FLO Mağazacılık ve Pazarlama A.Ş.<br>
+            Adresi : Taşocağı Caddesi No: 24 Bağcılar 34217 İstanbul / Türkiye<br>
+            Mersis No : 0388023942900019<br>
+            Telefon : 0 212 446 22 88<br>
+            Faks :  212 446 22 55  <br>
+            Email: mh@ninewest.com.tr <br>
+            Şikayetler için İrtibat Bilgisi : 0 850 460 69 78' | translate | raw }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>{{ '1.2- ALICI' | translate }}:</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ '<p>Adı / Soyadı / Ünvanı : %s %s <br>Adresi : %s - %s / %s <br>Telefonu
+                : %s</p>' | translate | format(billing_address.firstname,billing_address.lastname,billing_address.street,billing_address.region,billing_address.city,billing_address.telephone) | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>{{ 'MADDE 2- KONU ' | translate }}</strong></p>
+        </td>
+    </tr>
+    <tr>
+        <td>{{ '<p>iş bu sözleşmenin konusu, Alıcının Satıcıya ait <a href="https://www.ninewest.com.tr/">www.ninewest.com.tr </a> web sitesinden elektronik ortamda sipariş verdiği,
+        sözleşmede bahsi geçen nitelikleri haiz ve yine sözleşmede satış fiyatı belirtilen ürün/hizmetin satışı ve teslimi ile ilgili olarak
+        <b> 6502 sayılı Tüketicilerin Korunması Hakkındaki Kanun ve Mesafeli Sözleşmeler Yönetmeliği</b>
+          hükümleri gereğince tarafların hak ve yükümlülüklerinin saptanmasıdır. Alıcı, satışa konu ürün/hizmetlerin temel nitelikleri,
+           satış fiyatı, ödeme sekli, teslimat koşulları vs. satışa konu ürün/hizmet ile ilgili tüm ön bilgiler ve “cayma” hakkı konusunda bilgi sahibi olduğunu,
+         bu ön bilgileri elektronik ortamda teyit ettiğini ve sonrasında ürün/hizmeti sipariş verdiğini iş bu sözleşme hükümlerince kabul ve beyan eder.</p>' | translate | raw }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong><br>{{ 'MADDE 3- SÖZLEŞME KONUSU ÜRÜN ' | translate }}<br>&nbsp; </strong></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ '<p>Ürün veya ürünlerin Cinsi ve türü, Miktarı, Marka/Modeli,
+             Rengi, Satış Bedeli <a href="https://www.ninewest.com.tr/">www.ninewest.com.tr </a> adresli site üzerinde aşağıda nitelikleri belirtildiği gibi olup bu bilgiler ALICI tarafından da onaylanmıştır..</p>' | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table align="left" cellpadding="0" border="0" width="100%">
+                <tbody>
+                <tr>
+                    <td>
+                        <p><strong>{{ 'Urun Adi ' | translate }}</strong></p>
+                    </td>
+                    <td width="40">
+                        <p><strong>{{ 'Adet' | translate }}</strong></p>
+                    </td>
+                    <td width="100">
+                        <p>{{ '<strong>Satis Bedeli <br></strong>(KDV dahil toplam)' | translate | raw }}</p>
+                    </td>
+                </tr>
+                {% for item in basket.items %}
+                    <tr class="say">
+                        <td>
+                            <p>{{ item.name }}</p>
+                        </td>
+                        <td>{{ item.qty }}</td>
+                        <td>
+                            <p>{{ item.row_total_incl_tax | number_format(2) }} {{ basket.base_currency_code }}</p>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table align="left" cellpadding="0" border="0" width="100%">
+                <tbody>
+                <tr>
+                    <td>
+                        <p>&nbsp;</p>
+                    </td>
+                    <td width="255">
+                        <div class="basket-side">
+                            {{ widget('basket','mini_cart_detail',{ basket : basket, cash_on_delivery_fee: cash_on_delivery_fee}) }}
+                        </div>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+
+            <strong>{{ 'Teslimat Şekli' | translate }}
+                :</strong> {{ config('env.mapping.shipping.' ~ basket.extension_attributes.shipping_assignments.0.shipping.method) }}
+            <br>
+            <strong>{{ 'Teslimat Adresi' | translate }}
+                :</strong> {{ shipping_address.firstname }} {{ shipping_address.lastname }}<br>Adresi
+            : {{ shipping_address.street }} - {{ shipping_address.region }} / {{ shipping_address.city }}<br>Telefonu
+            : {{ shipping_address.telephone }}<br>
+            <strong>Fatura Adresi :</strong> {{ billing_address.firstname }} {{ billing_address.lastname }}<br>Adresi
+            : {{ billing_address.street }} - {{ billing_address.region }} / {{ billing_address.city }}<br>Telefonu
+            : {{ billing_address.telephone }}<br>
+            <strong>{{ 'Alıcı Tarafından Karşılanacak Diğer Masraflar ' | translate }}:</strong><br>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>{{ 'MADDE 4- GENEL HÜKÜMLER ' | translate }}</strong></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p>4.1- ALICI,   <a href='https://www.ninewest.com.tr/'>www.ninewest.com.tr </a> internet sitesinde satışa arz edilen sözleşme konusu ürün veya
+            ürünlerin;  <a href='https://www.ninewest.com.tr/'>www.ninewest.com.tr </a> adresli sitede belirtilen ve yukarıda yer alan temel nitelikleri,
+            satış fiyatı, fiyatların geçerlilik süresi ve ödeme şekli ile teslimata ilişkin ön bilgileri okuyup
+            bilgi sahibi olduğunu ve elektronik ortamda gerekli teyidi verdiğini beyan eder.
+
+                <br><br>4.2- Sözleşme konusu ürün/ürünler, siparişin SATICI’ya ulaştığı tarihten itibaren en geç 30 (otuz)
+                gün içerisinde ALICI’nın yukarıda yazılı adresine veya teslimat veya fatura adresindeki kişiye / kişilere / kuruluşa teslim edilir.
+
+            <br><br>4.3- Sözleşme konusu ürün, ALICI'dan başka bir kişiye(ler) ve/veya kuruluşa teslim edilecek ise, teslim edilecek kişi(ler) ve/veya kuruluşun teslimatı kabul etmemesinden SATICI hiçbir şekilde sorumlu tutulamaz.
+
+            <br><br>4.4- SATICI, sözleşme konusu ürünün sağlam, eksiksiz, siparişte belirtilen niteliklere uygun teslim edilmesinden sorumludur.
+
+            <br><br>4.5- Sözleşme konusu ürün ve/veya ürünlerin teslimatının yapılabilmesi için işbu sözleşmenin ALICI tarafından elektronik ortamda onaylanmış olması ve bedelinin SATICI tarafından belirlenen ödeme şekli ile tam ve eksiksiz olarak ödenmiş olması şarttır. Herhangi bir nedenle ürün bedeli ödenmez, eksik ödenir veya banka kayıtlarında iptal edilir ise, SATICI ürünün teslimi yükümlülüğünden kurtulmuş kabul edilir.
+
+            <br><br>4.6- ALICI, sözleşme konusu ürün/hizmeti teslim almadan önce muayene etmek; ezik, kırık, ambalajı yırtılmış vb. hasarlı ve ayıplı ürün/hizmeti kargo şirketinden teslim almamakla yükümlüdür. Teslim alınan ürün/hizmetin hasarsız ve sağlam olduğu kabul edilecektir. Teslimden sonra ürün/hizmetin özenle korunması borcu, ALICI’ya aittir. Ürünün tesliminden sonra ALICI'ya ait kredi kartının ALICI'nın kusurundan kaynaklanmayan bir şekilde yetkisiz kişilerce haksız veya hukuka aykırı olarak kullanılması nedeni ile ilgili banka veya finans kuruluşunun ürün bedelini SATICI'ya ödememesi halinde, ürünün ALICI'ya teslim edilmiş olması kaydıyla, ürünün bildirimi takip eden en geç 3 (üç) gün içinde ALICI tarafından SATICI'ya gönderilmesi zorunludur.
+
+            <br><br>4.7- SATICI’nın sipariş edilen ürünın teslim yükümlülüğünü en fazla 30 (otuz) gün içerisinde yerine getirmemesi durumunda, ALICI sözleşmeyi feshedebilir. Sözleşmenin feshi durumunda ise SATICI, varsa teslimat masrafları da dâhil olmak üzere tahsil edilen tüm ödemeleri fesih bildiriminin kendisine ulaştığı tarihten itibaren 14 (on dört) gün içinde yasal mevzuata uygun şekilde geri ödemek ve varsa ALICI’yı borç altına sokan tüm kıymetli evrak ve benzeri belgeleri iade etmek yükümlülüğü altındadır.
+<br>
+İşbu Sözleşme’deki sipariş konusu ürün teslimi ediminin ifasının yerine getirilmesinin imkansızlaştığı hallerde, SATICI ‘nın bu durumu öğrendiği tarihten itibaren 3 (üç) gün içinde ALICI’YA yazılı olarak veya kalıcı veri saklayıcısı ile bildirmesi gerekmektedir. Bu bildirime ek olarak varsa teslimat masrafları da dâhil olmak üzere tahsil edilen tüm ödemeleri bildirim tarihinden itibaren en geç 14 (on dört) gün içinde iade etmesi zorunludur.
+
+SATICI mücbir sebepler gibi olağanüstü durumlar ve/veya teknik sebepler nedeni ile sözleşme konusu ürünü süresi içinde teslim edemez ise, durumu ALICI'ya derhal yazılı olarak bildirmekle yükümlüdür. Bu takdirde ALICI siparişin kendi iradesiyle iptal edilmesi, sözleşme konusu ürünün varsa emsali ile değiştirilmesi ve/veya teslimat süresini engelleyici durumun ortadan kalkmasına kadar ertelenmesi hususundaki seçimlik haklarından birini kullanabilir. ALICI'nın siparişi iptal etmesi halinde kredi kartının ait olduğu bankaya gerekli bildirim yapılarak ödediği tutarın iadesi sağlanır.
+            <br><br>4.8- Tek bir sipariş kapsamında birlikte satılan ürünlerde kargonun ücretsiz olacağı belirtilmiş ise, ürünlerden birinin iade edilmesi halinde iade edilmeyen ürünün kargo bedeli ALICI’dan tahsil edilir. SATICI’nın ilgili kargo bedelini varsa ALICI’ya yapacağı iade ödemelerden mahsup etme hakkı saklıdır.
+
+            <br><br>4.9- Satılan ürünlerden üretimden veya SATICI’dan kaynaklı kusurlu olanlar, garanti şartları ve süreleri içinde gerekli onarımın veya değişimin yapılması için SATICI'ya gönderilebilir, bu takdirde kargo giderleri SATICI tarafından karşılanacaktır.
+
+            <br><br>4.10-ALICI, satın aldığı ürün/ürünleri kullanabileceği ekipmanların kendisi tarafından sağlanacağını ve kendi kusuru olsun veya olmasın oluşabilecek eksiklik ve problemlerden SATICI’nın sorumlu olmayacağını kabul, beyan ve taahhüt eder.
+
+            <br><br>4.11- ALICI, kredi kartı ile yapmış olduğu işlemlerinde temerrüde düşmesi halinde kart sahibi bankanın kendisi ile yapmış olduğu kredi kartı sözleşmesi çerçevesinde faiz ödeyecek ve bankaya karşı sorumlu olacaktır. Bu durumda ilgili banka hukuki yollara başvurabilir; doğacak masrafları ve vekâlet ücretini ALICI’dan talep edebilir ve her koşulda ALICI’nın borcundan dolayı temerrüde düşmesi halinde, ALICI, borcun gecikmeli ifasından dolayı SATICI’nın oluşan zarar ve ziyanını ödemeyi kabul eder.
+
+            <br><br>4.12- ALICI ve SATICI işbu sözleşmenin başında bahsedilen yazışma adreslerinin geçerli tebligat adresi olduğunu ve bu adrese yöneltilecek tüm tebligatların geçerli addolunacağını kabul, beyan ve taahhüt eder.
+
+            <br><br>4.13- ALICI, sözleşme kapsamındaki her türlü talep ve şikayetlerini SATICI’nın işbu sözleşmede Şikayetler için İrtibat Bilgisi altında iletilen numara ve/veya adreslerine iletebilir,   <a href='https://www.ninewest.com.tr/iletisim'>www.ninewest.com.tr/iletisim </a> linki üzerinden destek merkezine mesaj atabilir.
+            </p> "| translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>{{ 'MADDE 5- CAYMA HAKKI ' | translate }}</strong></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p>5.1. Alıcı, işbu sözleşmenin 6. maddesinde belirtilen istisnalar hariç olmak üzere sözleşme konusu ürünün kendisine veya alıcının gösterdiği adresteki kişi tarafından teslim alınmasından itibaren 14 (on dört) gün içinde sebep belirtmeksizin cayma hakkını kullanabilir.
+                <br><br>5.2- Cayma hakkının kullanılması için anılan bu 14 (on dört) günlük süre içinde Alıcı tarafından işbu Sözleşme’de belirtilen iletişim kanallarından herhangi birisi ile SATICI ’ya cayma bildiriminde bulunulması gerekmektedir. Cayma bildiriminin SATICI ’ya ulaşmasını takip eden 14 (on dört) gün içinde ürün bedeli Alıcı’ya iade edilir.
+                <br><br>5.3- Alıcının cayma hakkı kapsamında ürün ya da ürünleri SATICI ’ya geri göndermekte kullanacağı taşıyıcı sipariş edilen ürünün Alıcı’ya teslim edildiği kargo şirketidir. Cayma hakkı nedeni ile iade edilen ürünün başkaca bir kargo şirketi ile SATICI ’ya gönderilmesi halinde kargo bedeli Satıcı tarafından karşılanmayacaktır.
+                <br><br>5.4- Alıcı, cayma hakkını kullandığı yönünde bildirimi gerçekleştirdiği tarihten itibaren 10 (on) gün içinde ürünü SATICI ’ya göndermekle yükümlüdür..
+                <br><br>5.5. Alıcı, cayma süresi içinde ürünü, işleyişine, teknik özelliklerine ve kullanım talimatlarına uygun bir şekilde kullandığı takdirde meydana gelen değişiklikten ve bozulan üründen sorumlu değildir.<br>
+                Ürün ile beraber satış faturasının, ürünün kutusunun, ambalajının, varsa standart aksesuarlarının ve varsa ürün ile birlikte hediye edilen diğer ürünlerin de eksiksiz ve hasarsız olarak SATICI’ya iade edilmesi gerekmektedir.
+                <br><br>5.6. SATICI, Alıcı’nın cayma hakkını kullandığına ilişkin bildiriminin kendisine ulaştığı tarihten itibaren 14 (on dört) gün içinde varsa ürünün Alıcı’ya teslim masrafları da dahil olmak üzere tahsil edilen tüm ödemeleri iade etmekle yükümlüdür.
+                <br><br>5.7. Alıcı, Mesafeli Sözleşmeler Yönetmeliği gereği cayma hakkına ve bu hakkın kullanımına ilişkin bilgilendirmenin gereği gibi yapıldığını kabul eder.
+
+
+                </p>" | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>{{ 'MADDE 6- CAYMA HAKKININ KULLANILAMAYACAĞI DURUMLAR' | translate }}</strong></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ '<p>6.1. Alıcı’nın istekleri veya kişisel ihtiyaçları doğrultusunda hazırlanan ürünler veya standart niteliklerinde değişiklik yapılmış ürünler ve ayrıca tesliminden sonra ambalaj, bant, mühür, paket gibi koruyucu unsurları açılmış olan, iadesi sağlık ve hijyen açısından uygun olmayan ürünler için cayma hakkı kullanılamaz.
+                <br><br>
+               6.2. Alıcı, Mesafeli Sözleşmeler Yönetmeliği gereği cayma hakkının kullanılamayacağı ürünlere ilişkin bilgilendirmenin gereği gibi yapıldığını kabul eder.
+            </p>' | translate | raw }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>{{ 'MADDE 7- UYUŞMAZLIK HALİNDE YETKİLİ MAHKEME' | translate }}</strong></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p>İşbu sözleşmenin uygulanmasından doğacak uyuşmazlıklarda T.C. Ticaret Bakanlığı tarafından her yıl ilan edilen parasal sınırlar dâhilinde; ALICI’nın ürün ve/veya hizmeti satın aldığı veya ikametgâhının bulunduğu yerdeki Tüketici Hakem Heyetleri ile Tüketici Mahkemeleri tek yetkilidir.
+                <br><br>
+               İşbu sözleşme elektronik ortamda taraflarca okunup, kabul edilip, teyit edilmiştir. İşbu sözleşmede düzenlenmemiş hususlarda 6502 sayılı Tüketicinin Korunması Hakkında Kanun hükümleri uygulanır.
+            </p>" | translate |  raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>{{ '<strong>SATICI</strong><br>
+                FLO Mağazacılık ve Pazarlama A.Ş.' | translate | raw }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>
+                <strong>{{ 'ALICI ' | translate }}</strong><br> {{ billing_address.firstname }} {{ billing_address.lastname }}
+                <br><br>{{ 'Tarih ' | translate }} : {{ today }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>{{ 'EK-1: Cayma Hakkı Formu Örneği' | translate }}</strong></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <p><strong>{{ 'Cayma Hakkı Formu' | translate }} </strong><br></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p><strong>-Kime: </strong>(SATICI’nın ismi, unvanı, adresi varsa faks numarası ve e-posta adresi yer
+                alacaktır.)</p>" | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p>-Bu formla aşağıdaki malların satışına veya hizmetlerin sunulmasına ilişkin sözleşmeden cayma hakkımı
+                kullandığımı beyan ederim.</p>" | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p><strong>-Sipariş tarihi veya teslim tarihi:</strong></p>" | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p><strong>-Cayma hakkına konu ürün veya hizmet:</strong></p>" | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p><strong>-Cayma hakkına konu ürün veya hizmetin bedeli:</strong></p>" | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p><strong>-ALICI’nın adı ve soyadı:</strong></p>" | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p><strong>-ALICI’nın adresi:</strong></p>" | translate | raw }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p><strong>-ALICI’nın imzası: </strong>(Sadece kağıt üzerinde gönderilmesi halinde)</p>" | translate | raw }}
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ "<p><strong>-Tarih:</strong></p>" | translate | raw }}
+        </td>
+    </tr>
+
+
+    </tbody>
+</table>

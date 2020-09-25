@@ -1,0 +1,40 @@
+
+<div id="enhanced-search-result-form" class="dropdown-menu input-dropdown mobile visible-xs">
+    <span>
+       <div class="search-quickview">
+          <div class="results">
+             <ul>
+                    {% for product in products %}
+                   <li>
+                      <a href="{{ product.url }}" class="prod-item">
+                         <div>
+                            <div class="prod-pic">
+                               <img src="{{ product.image|resize('50x50') }}" alt="" class="tiny_img">
+                            </div>
+                            <div class="prod-info">
+                               <span class="prod-info-title">{{ product.manufacturer }} {{ product.name }}</span>
+                               <span class="pull-right prod-info-price red">{{ product|price }}</span>
+                               <br>
+
+                               <span class="prod-info-color">{{ product.renk }}</span>
+                               {% if product.special_price %}
+                                 <span class="pull-right prod-info-before">{{ product.price|price }}</span>
+                               {% endif %}
+
+                            </div>
+                         </div>
+                      </a>
+                   </li>
+                 {% endfor %}
+                <li>
+                   <a id="enhanced-search-show-all" class="show-all" href="/search?q={{ query }}">
+                      <div>
+                         {{ 'Tümünü Göster' | translate }} ({{ total_count|number_format(0, '.', ',') }})
+                      </div>
+                   </a>
+                </li>
+             </ul>
+          </div>
+       </div>
+    </span>
+</div>

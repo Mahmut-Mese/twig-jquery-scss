@@ -1,0 +1,91 @@
+<footer>
+	{% if(footer_desc is not empty) %}
+		<div class="footer-content-flo">
+			<div class="container-fluid">
+				<div class="holder">
+					{{ footer_desc | raw }}
+				</div>
+				<div class="text-center">
+					<a href="javascript:;" class="read-more">
+						<i class="svg-arrow-up svg-arrow-up-dims"></i>
+						<span>DEVAMI</span>
+						<i class="svg-arrow-down svg-arrow-down-dims"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+
+    <div class="container-fluid">
+        <div class="footer-menu">
+            <div class="mc-md-8 mc-sm-12  pa">
+                <div class="list">
+                    <ul>
+                        <li class="head">{{ 'MÜŞTERİ HİZMETLERİ' | translate }}</li>
+                        <li><a href="/kampanyalar">{{ 'Kampanyalar' | translate }}</a></li>
+                        <li><a href="/page?url=destek-ve-iletisim">{{ 'İletişim' | translate }}</a></li>
+                        <li><a href="/page?url=teslimat-iade">{{ 'Teslimat ve İade' | translate }}</a></li>
+                        <li><a href="/page?url=sss">{{ 'Sıkça Sorulan Sorular' | translate }}</a></li>
+                        <li><a href="/page?url=kullanici-sozlesmesi">{{ 'Kullanıcı Sözleşmesi' | translate }}</a></li>
+                        <li><a href="/page?url=gizlilik-ve-cerez">{{ 'Gizlilik ve Çerez Politikası' | translate }}</a></li>
+                        <li><a href="/page?url=kisisel-verilerin-korunmasi">{{ 'Kişisel Verilerin Korunması' | translate }}</a></li>
+                        <li><a href="/sevdiklerinize-hediyeler">{{ 'Hediye' | translate }}</a></li>
+                    </ul>
+                    <ul>
+                        <li class="head">{{ 'INSTREET HAKKINDA' | translate }}</li>
+                        <li><a href="/page?url=hakkimizda-ve-iletisim">{{ 'Hakkımızda' | translate }}</a></li>
+                        <li><a href="/marka">{{ 'Tüm Markalar' | translate }}</a></li>
+                        <li><a href="/magaza">{{ 'Mağazalarımız' | translate }}</a></li>
+                        <li><a href="http://blog.instreet.com.tr" target="_blank">{{ 'Blog' | translate }}</a></li>
+                        <li><a href="https://www.yumpu.com/tr/document/fullscreen/59411604/sport-in-street-lookbook" rel="nofollow" target="_blank">{{ 'Lookbook' | translate }}</a></li>
+                        <li><a href="/mobil-uygulamalar">{{ 'Mobil Uygulamalarımız' | translate }}</a></li>
+                        <li class="logged-out"><a href="/guest-order-verify">{{ 'Sipariş Takibi' | translate }}</a></li>
+
+                    </ul>
+                    <ul>
+                        <li class="head">{{ 'TAKİP EDİN' | translate }}</li>
+                        <li><a target="_blank" href="https://www.facebook.com/sportinstreet/"><i
+                                        class="fa fa-facebook"></i><em>/sportinstreet</em></a></li>
+                        <li><a target="_blank" href="https://twitter.com/instreet"><i class="fa fa-twitter"></i><em>/instreet</em></a>
+                        </li>
+                        <li><a target="_blank" href="https://www.youtube.com/user/sportinstreet"><i
+                                        class="fa fa-youtube"></i><em>/sportinstreet</em></a></li>
+                        <li><a target="_blank" href="https://www.instagram.com/instreet/?hl=tr"><i
+                                        class="fa fa-instagram"></i><em>/instreet</em></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mc-md-4 mc-sm-12 pa">
+                <div class="bulten">
+                    <b>{{ 'E-BÜLTENİMİZE ÜYE OLUN <i>%s TL KAZANIN</i>' | translate  | format('25') | raw }}</b>
+                    <form id="newsletter-subscription">
+                        <div class="form-group">
+                            <input type="email" name="email" class="validate[required,custom[email],funcCall[characterTurkish]] " pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                                   oninvalid="setCustomValidity('Lütfen geçerli bir e-posta adresi giriniz')" >
+                        </div>
+                        <div class="submitButton">
+                            <input type="submit" value="{{ 'GÖNDER' | translate }}">
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <div class="icheckbox_square_gold new-checkbox">
+                                <input type="checkbox" name="{{ aggrement.alias }}" value="{{ aggrement.aggrement_id }}" class="{{ aggrement.alias }} validate[required]">
+                                </div>
+                                <em>{{ aggrement.front_text|raw }}
+                                </em>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-logo">
+                <div class="copy">
+                   {{ 'InStreet 2019 I Tüm hakları saklıdır.' | translate }}
+                </div>
+                <div class="logos lazy">
+                    <img src="/pub/media/lazyloading/blank.png" data-src="/pub/assets/instreet/images/logos.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

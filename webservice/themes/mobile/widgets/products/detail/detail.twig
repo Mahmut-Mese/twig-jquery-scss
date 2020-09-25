@@ -1,0 +1,457 @@
+
+{{ widget('general', 'search_top') }}
+
+
+{{ widget('datalayer', 'product_detail', {layerData: {product: product, breadcrumbs: breadcrumb}} ) }}
+
+<div class="page-content">
+    <div class="product-detail">
+        <div class="breadcrumb">
+            <ul>
+                <li>
+                    <a href="/" >
+                        <img src="/pub/assets/instreet/images/home.png">
+                        </a>
+                </li>
+                {% for cat in mob_crumb %}
+                    <li>
+                        <a href="/{{ cat.url }}">{{ cat.name | translate | upper }}</a>
+                    </li>
+                {% endfor %}
+                {% if productMob.name is not empty %}
+                <li>
+                    <a href="javascript:void(0);" >{{ productMob.name | raw }}</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="big-pro detail-text ">
+            <div class="tp">
+                <div class="fav">
+                    <a href="javascript:void(0);" class="add-wishlist" data-product-id="{{ product.id }}" data-sku="{{ product.sku }}"></a>                </div>
+                {#<div class="water-ico">#}
+                {#<img src="images/water-big.png" class="resimatt" alt="">#}
+                {#</div>#}
+            </div>
+
+
+            {% if product.media_gallery %}
+            <div class="top-image">                {% for image in product.media_gallery %}
+                    <div class="item">
+                        <a href="{{ image.url|resize('600x600') }}" data-fancybox="images" tabindex="0">
+                            <img src="{{ image.url|resize('300x300') }}" class="resimatt" alt="">
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            {% else %}
+                <img src="https://d2051664q0o44f.cloudfront.net/placeholder/268x268.jpg " alt="" class="image-att">
+            {% endif %}
+            <div class="pro-text text {% if product.rule_info %} basket-discount-price {% if product.third_price %} only-cart-rule{% endif %} {% endif %}">
+                <div class="type-list">
+                    <ul>
+                        {% if product.season in season_options %}
+                            <li class="active">{{ 'Yeni' | translate }}</li>
+                        {% endif %}
+                        {% if product.special_price %}
+                            {% set indirim_orani = (((product.price - product.filter_price)/ product.price) * 100) | number_format(0, '.', ',') %}
+                            <li  class="{% if product.third_price  %} discount-label {% endif %}">%{{ '%s İndirim' | translate | format( indirim_orani ) }} </li>
+                        {% endif %}
+
+                        {% if  product.third_price is not empty and  product.third_price > free_shipping_limit %}
+                            <li class="active">{{ 'Kargo Bedava' | translate }}</li>
+                        {% elseif product.third_price is empty and product.filter_price > free_shipping_limit %}
+                            <li class="active">{{ 'Kargo Bedava' | translate }}</li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <h1>
+                <span>{{ product.manufacturer | raw }}</span>
+                    <p>{{ product.name }}</p>
+                </h1>
+                <div class="money">
+                    {% if product.special_price %}
+                        <i class="prev">{{ product.price|price }}</i>
+                    {% endif %}
+                    <i class="next">{{ product|price }}</i>
+                    {% if product.rule_info %}
+                        {% set firstItem = product.rule_info[0] %}
+                        {% if firstItem.label or product.third_price %}
+                            <div class="basket-discount">
+                                <div class="discount-rate">
+                                {{ firstItem.label }}
+                                </div>
+                                {% if product.third_price %}
+                                <i class="next">{{ product.third_price|price }}</i>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+        <div class="beden-box">
+            <div class="title">{{ 'BEDEN SEÇ' | translate }}
+                <a class="various d-visible" href="#bedentablosu">{{ 'Beden Tablosu' | translate }}</a>
+            </div>
+            <div class="list">
+                <div class="form-group">
+                    <div class="checkbox">
+                        {% for option in product.options %}
+                            <label class="input-radio{% if option.is_in_stock is empty %} nostok {% endif %} {% if product.options|length == 1 %} selected{% endif %}" {% if option.is_in_stock is empty %} data-disabled="1" {% endif %} {% if product.options|length == 1 %} data-selected="1" {% endif %}data-name="option_sku_{{ product.id }}" data-value="{{ option.sku }}" data-option="{{ option.option_value }}" style="position: relative;">
+                                {{ option.option_value }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if product.color_options %}
+            <div class="other-color">
+                <div class="title">{{ 'DİĞER RENKLER' | translate }}</div>
+                <div class="list">
+                    <div class="renk-grup">
+                        <ul>
+                            {% for color_option in product.color_options %}
+                                <li>
+                                    <a href="{{ color_option.url }}">
+                                        <img src="{{ color_option.image|resize('66x66') }}"
+                                             class="resimatt" alt="">
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="kargo-info ">
+            <div class="kargo-container">
+                        <span >
+                        <img src="/pub/assets/instreet/mobile/images/truck.png" alt="INstreet"></span> <span class="kargo-text">
+                        {{ product_cargo['firstDate'] | date("d.m.Y") }} - {{ product_cargo['lastDate'] | date("d.m.Y") }} tarihleri arasında kargoda.</span>
+            </div>
+        </div>
+        <div class="pro-feature acik">
+            <span>{{ 'ÜRÜN ÖZELLİKLERİ' | translate }}</span>
+            <ul>
+                {% for description_field in description_fields %}
+                    {% if product[description_field] is not empty %}
+                        <li>
+                            <b>{{ attribute_labels[description_field] }} :</b>
+                            {{ product[description_field]|trim('0', 'left') }}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            {# <div class="detail">
+                <a href="javascript:void(0);">{{ 'DEVAMI' | translate }}</a>
+            </div> #}
+
+			{% if product.description %}
+				<div class="product-description">
+					<div class="product-description-title">{{ 'Ürün Açıklaması' | translate }}</div>
+					<div>
+						{{ product.description }}
+					</div>
+				</div>
+				<style>
+					.product-description {
+						float: left;
+						margin-top: 17px;
+						font-size: 12px;
+						line-height: 16px;
+						color: #000000;
+					}
+					
+					.product-description-title {
+						border-bottom: solid 1px #ff671b;
+						margin-bottom: 11px;
+						font-size: 10px;
+						display: inline-block;
+					}
+				</style>
+			{% endif %}
+        </div>
+
+        <div class="basket-button">
+            <div class="linkto">
+                <a id="clickSepeteekle" class="hidden various d-visible" href="#sepeteekle">{{ 'SEPETE EKLE' | translate }}</a>
+                <a id="add2cart" data-has-option="{% if product.options %}1{% else %}0{% endif %}"
+                   data-product-id="{{ product.id }}"
+                   data-sku="{{ product.options|length == 1 ? product.options|first.sku : product.sku }}"
+                   class="add-to-cart"
+                   href="">{% if product.qty %}{{ 'SEPETE EKLE' | translate }}{% else %}{{ 'HABER VER' | translate }}{% endif %}</a>
+            </div>
+        </div>
+
+        <div id="bedentablosu" style="display: none;">
+            <div class="content-beden">
+                <h3{{ 'BEDEN TABLOSU' | translate }}></h3>
+                <table class="bedenTablosu">
+                    <tbody>
+                    <tr class="t-head">
+                        <td>CM</td>
+                        <td>EUROPE</td>
+                        <td>UK/AUSTRALIA</td>
+                        <td>US/CANADA</td>
+                    </tr>
+                    <tr>
+                        <td>22.8</td>
+                        <td>35</td>
+                        <td>2.5</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>23.5</td>
+                        <td>36</td>
+                        <td>3 / 3.5</td>
+                        <td>5.5 / 6</td>
+                    </tr>
+                    <tr>
+                        <td>23.8</td>
+                        <td>37</td>
+                        <td>4</td>
+                        <td>6.5</td>
+                    </tr>
+                    <tr>
+                        <td>24.5</td>
+                        <td>38</td>
+                        <td>4.5</td>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        <td>25.1</td>
+                        <td>39</td>
+                        <td>5 / 5.5</td>
+                        <td>7.5 / 8</td>
+                    </tr>
+                    <tr>
+                        <td>25.4</td>
+                        <td>40</td>
+                        <td>6</td>
+                        <td>8.5</td>
+                    </tr>
+                    <tr>
+                        <td>25.7</td>
+                        <td>41</td>
+                        <td>6.5 / 7</td>
+                        <td>9 / 9.5</td>
+                    </tr>
+                    <tr>
+                        <td>26</td>
+                        <td>42</td>
+                        <td>7.5</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>26.7</td>
+                        <td>43</td>
+                        <td>8 / 8.5</td>
+                        <td>10.5</td>
+                    </tr>
+                    <tr>
+                        <td>27.3</td>
+                        <td>44</td>
+                        <td>9.5</td>
+                        <td>11 / 12</td>
+                    </tr>
+                    <tr>
+                        <td>27.9</td>
+                        <td>45</td>
+                        <td>10 / 10.5</td>
+                        <td>12.5 / 13</td>
+                    </tr>
+                    <tr>
+                        <td>28.3</td>
+                        <td>46</td>
+                        <td>11 / 11.5</td>
+                        <td>13.5 / 14</td>
+                    </tr>
+                    <tr>
+                        <td>28.9</td>
+                        <td>47</td>
+                        <td>12</td>
+                        <td>14.5 / 15</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="ayakOlcusu">
+                    <span class="h2">{{ 'DOĞRU AYAK ÖLÇÜSÜ ALMA' | translate }}</span>
+                    <img src="/pub/assets/instreet/images/ayak.png">
+                    {{ '<p>Eğer ayak numaranızdan emin değilseniz basit yöntemlerle ayak numaranızı
+                öğrenebilirsiniz.</p>
+            <p>Boş bir kağıdı yere koyun, ayağınızı üstüne koyduktan sonra bir kalem yardımı
+                ile şekildeki gibi ayak baş parmağınızın hizasından ve topuk uç hizanızdan
+                düz şekilde çizin.</p>
+            <p>Sonra çizgilerin arasındaki mesafeyi cetvel ile ölçün, çıkan sonuç sizin ayak
+                uzunluğunuzdur.</p>
+            <p>Yukarıdaki tablodan cinsiyetinizi seçtikten sonra, ayak uzunluğunuza uygun CM
+                değerini seçtiğinizde, tablo size ayak uzunluğunuza karşılık gelen beden
+                numaralarını gösterecektir.</p>' | translate | raw }}
+
+                </div>
+            </div>
+        </div>
+
+        <div id="sepeteekle" style="display: none;">
+            <div class="title">{{ 'SEPET' | translate }}</div>
+            <div class="detail-bas">
+                <div class="ico">
+                    <img src="/pub/assets/instreet/images/big-basket.png" alt="">
+                    <i class="cart-count"></i>
+                </div>
+                <p>{{ 'Ürün sepetiniz eklenmiştir.' | translate }}</p>
+                <span>{{ 'Sepetinizde <i class="cart-count"></i> ürün bulunmaktadır.' | translate | raw}}</span>
+                <div class="bottom">
+                    <a href="/">{{ 'Alışverişe Devam Et' | translate }}</a>
+                    <a href="{{ basket_base_url() }}/basket">{{ 'Sepete Git' | translate }}</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="stok-alarmi" style="display: none;">
+            <div class="title">{{ 'STOK ALARMI' | translate }}</div>
+            <div class="detail-bas">
+                <div class="ico">
+                    <img src="/pub/assets/instreet/mobile/images/stok-img.jpg" class="resimatt" alt="">
+                </div>
+                <p>{{ 'Nike Air Max Nostalgic Gri Beyaz Siyah Erkek Sneaker' | translate }}</p>
+                <span>{{ 'Beden: %s Renk Gri' | translate | format('42.5') }}</span>
+                <div class="bottom">
+                    <a href="javascript:void(0);">{{ 'Stoğa Gelince Haber Ver' | translate }}</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": "{{ product.name }}",
+        "image": [
+        {% for media in product.media_gallery %}
+            "{{ media.url }}"{% if not loop.last %},{% endif %}
+        {% endfor %}
+        ],
+        "description": "{{ product.image_label|default(product.name) }}",
+        "brand": {
+            "@type": "Thing",
+            "name": "{{ product.manufacturer }}"
+        },
+        "offers": {
+            "@type": "Offer",
+            "priceCurrency": "TL",
+            "price": "{{ product.third_price | default(product.special_price) |default(product.price) }}",
+            "priceValidUntil": "{{ product.special_to_date }}",
+            "itemCondition": "https://schema.org/NewCondition",
+            {% if product.qty %}
+            	"availability": "https://schema.org/InStock",
+			{% else %}
+            	"availability": "https://schema.org/OutOfStock",
+			{% endif %}
+            "url": "{{ config('env.webservice.url.web') ~ product.url|trim('/', 'left') }}",
+            "seller": {
+                "@type": "Organization",
+                "name": "Instreet"
+            }
+        },
+        "sku": "{{ product.sku }}"
+    }
+</script>
+
+<script type="application/ld+json"> 
+{
+	"@context": "http://schema.org",
+	"@type": "BreadcrumbList",
+	"itemListElement": [
+		{
+			"@type": "ListItem",
+			"position": {{ 1 }},
+			"item": {
+				"@id": "{{ config('env.webservice.url.web') }}", "name ": "Anasayfa"
+			}
+		},
+		{% for item in breadcrumb %}
+		{
+			"@type": "ListItem",
+			"position": {{ loop.index + 1 }},
+			"item": {
+				"@id": "{{ config('env.webservice.url.web') }}{{ item.url }}", "name ": "{{ item.name }}"
+			}
+		},
+		{% endfor %}
+		{
+			"@type": "ListItem",
+			"position": {{ breadcrumb | length + 1 }},
+			"item": {
+				"@id": "{{ config('env.webservice.url.web') }}", "name ": "{{ product.name }}"
+			}
+		}
+	]
+}
+</script>
+
+<div id="mobile-size-container">
+	<div class="msz-lightbox"></div>
+	<div class="msz-inner">
+		<div class="msz-product">
+			<a href="#" class="msz-close"><i class="fa fa-times"></i></a>
+			<div class="msz-image">
+				<img src="{{ (product.media_gallery[0]).url | resize('84x84') }}" alt="{{ product.name }}" />
+			</div>
+			<div class="msz-content">
+				<div class="msz-product-brand">{{ product.manufacturer | raw | capitalize }}</div>
+				<div class="msz-product-name">{{ product.name }}</div>
+				<div class="msz-product-price">
+					<div class="prices">
+						{% if product.special_price %}
+							<span>{{ product.price|price }}</span>
+						{% endif %} 
+						<strong class="{% if product.rule_info is null %}text-highlight{% endif %}">{{ product|price }}</strong>
+					</div>
+				</div>
+
+                {% if product.rule_info %}
+                    {% set firstItem = product.rule_info[0] %}
+                    {% if firstItem.label or product.third_price %}
+                        <div class="msz-product-price-rule">
+                            <div class="discount ">
+                                {{ firstItem.label }}
+                                {% if product.third_price %}
+                                    <span class="text-warning">{{ product.third_price|price }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+			</div>
+
+			<div class="msz-size">
+				<div class="choices-box product-detail pb-1">
+					<div class="beden-box">
+						<div class="title">{{ 'Beden Seçiniz' | translate }}</div>
+						<div class="list">
+							<div class="form-group">
+								<div class="checkbox">
+									{% for option in product.options %}
+										<label class="input-radio {% if option.is_in_stock is empty %} nostok {% endif %} {% if product.options|length == 1 %} selected{% endif %}" {% if option.is_in_stock is empty %} data-disabled="1" {% endif %} {% if product.options|length == 1 %} data-selected="1" {% endif %}data-name="option_sku_{{ product.id }}" data-value="{{ option.sku }}" data-option="{{ option.option_value }}" style="position: relative;">
+											{{ option.option_value }}
+										</label>
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

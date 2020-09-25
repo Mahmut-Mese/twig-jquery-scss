@@ -1,0 +1,580 @@
+<div id="panel">
+    <div class="mobile-menu">
+        <nav id="menu" class="mm-menu mm-menu_offcanvas">
+            <ul>
+                <li class="top logged-out">
+                    <span><a href="/customer/register">{{ 'ÜYE OL' | translate }}</a></span>
+                    <span><a href="/customer/login">{{ 'GİRİŞ YAP' | translate }}</a></span>
+                </li>
+                <li class="top logged-in">
+                    <span class="name"></span>
+                </li>
+
+                <li class="other my-account logged-in">
+                    <a href="/customer/myaccount">{{ 'HESABIM' | translate }}</a>
+                </li>
+                <li><span> <a href="/erkek"><img src="/pub/assets/instreet/mobile/images/erkek-ico.png"
+                                                 alt="{{ 'ERKEK' | translate }} "
+                                                 title="{{ 'ERKEK' | translate }} ">{{ 'ERKEK' | translate }}</a> </span>
+                    <ul>
+                        <li class="head"><span><a href="/ayakkabi">Ayakkabı</a></span>
+                            <ul>
+                                <li><a href="/spor-ayakkabi?cinsiyet=erkek">Spor Ayakkabı</a></li>
+                                <li><a href="/sneaker?cinsiyet=erkek">Sneaker</a></li>
+                                <li><a href="/yuruyus-ayakkabisi?cinsiyet=erkek">Yürüyüş Ayakkabısı</a></li>
+                                <li><a href="/kosu-ayakkabisi?cinsiyet=erkek">Koşu Ayakkabısı</a></li>
+                                <li><a href="/futbol-ayakkabisi?cinsiyet=erkek">Halı Saha Ayakkabısı</a></li>
+                                <li><a href="/gunluk-ayakkabi?cinsiyet=erkek">Günlük Ayakkabı</a></li>
+                                <li><a href="/outdoor-ayakkabi?cinsiyet=erkek">Outdoor Ayakkabı</a></li>
+                                <li><a href="/bot?cinsiyet=erkek">Bot</a></li>
+                                <li><a href="/sandalet?cinsiyet=erkek">Sandalet</a></li>
+                                <li><a href="/terlik?cinsiyet=erkek">Terlik</a></li>
+                                <li><a href="/ayakkabi?cinsiyet=erkek">Tüm Erkek Ayakkabı</a></li>
+                            </ul>
+
+                        </li>
+                        <li class="head">
+                            <span><a href="/giyim">Giyim</a></span>
+                            <ul>
+                                <li><a href="/t-shirt?cinsiyet=erkek">T-shirt</a></li>
+                                <li><a href="/sweatshirt?cinsiyet=erkek">Sweatshirt</a></li>
+                                <li><a href="/gomlek?cinsiyet=erkek">Gömlek</a></li>
+                                <li><a href="/pantolon?cinsiyet=erkek">Pantolon</a></li>
+                                <li><a href="/esofman?cinsiyet=erkek">Eşofman</a></li>
+                                <li><a href="/sort?cinsiyet=erkek">Şort</a></li>
+                                <li><a href="/mont?cinsiyet=erkek">Mont</a></li>
+                                <li><a href="/ceket?cinsiyet=erkek">Ceket</a></li>
+                                <li><a href="/yagmurluk?cinsiyet=erkek">Yağmurluk</a></li>
+                                <li><a href="/giyim?cinsiyet=erkek">Tüm Erkek Giyim</a></li>
+                            </ul>
+                        </li>
+                        <li class="head">
+                            <span><a href="/aksesuar">aksesuar</a></span>
+
+                            <ul>
+                                <li><a href="/sapka?cinsiyet=erkek">Şapka</a></li>
+                                <li><a href="/corap?cinsiyet=erkek">Çorap</a></li>
+                                <li><a href="/atki?cinsiyet=erkek">Atkı</a></li>
+                                <li><a href="/bere?cinsiyet=erkek">Bere</a></li>
+                                <li><a href="/eldiven?cinsiyet=erkek">Eldiven</a></li>
+                                <li><a href="/aksesuar?cinsiyet=erkek">Tüm Erkek Aksesuar</a></li>
+                                <li class="head">
+                                    <ul>
+                                        <li><a href="/sirt-cantasi?cinsiyet=erkek">Sırt Çantası</a></li>
+                                        <li><a href="/spor-cantasi?cinsiyet=erkek">Spor Çantası</a></li>
+                                        <li><a href="/valiz">Valiz</a></li>
+                                        <li><a href="/canta?cinsiyet=erkek">Tüm Erkek Çanta</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="head">
+                            <span><a href="/outdoor">outdoor</a></span>
+
+                            <ul>
+                                <li><a href="/cadir">Çadır</a></li>
+                                <li><a href="/uyku-tulumu">Uyku Tulumu</a></li>
+                                <li><a href="/mat">Mat</a></li>
+                                <li><a href="/termos">Termos</a></li>
+                                <li><a href="/matara">Matara</a></li>
+                                <li><a href="/outdoor?cinsiyet=erkek">Tüm Erkek Outdoor</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="head">
+                            <span><a href="/firsatlar">Fırsatlar</a></span>
+
+                            <ul>
+                                <li><a href="/sezon/2019-ilkbahar-yaz-sezonu?cinsiyet=erkek">Yeni
+                                        Eklenenler</a></li>
+                                <li><a href="/indirim?cinsiyet=erkek">Tüm İndirimli Ürünler</a></li>
+                            </ul>
+
+
+                        </li>
+                        <li class="head">
+                            <span><a href="/marka">marka</a></span>
+
+                            <ul>
+                                <li><a href="/marka/nike?cinsiyet=erkek">Nike</a></li>
+                                <li><a href="/marka/adidas?cinsiyet=erkek">Adidas</a></li>
+                                <li><a href="/marka/kinetix?cinsiyet=erkek">Kinetix</a></li>
+                                <li><a href="/marka/lumberjack?cinsiyet=erkek">Lumberjack</a></li>
+                                <li><a href="/marka/new-balance?cinsiyet=erkek">New Balance</a></li>
+                                <li><a href="/marka/dockers-by-gerli?cinsiyet=erkek">Dockers</a></li>
+                                <li><a href="/marka/skechers?cinsiyet=erkek">Skechers</a></li>
+                                <li><a href="/marka/puma?cinsiyet=erkek">Puma</a></li>
+                                <li><a href="/marka/reebok?cinsiyet=erkek">Reebok</a></li>
+                                <li><a href="/marka/vans?cinsiyet=erkek">Vans</a></li>
+                                <li><a href="/marka/the-north-face?cinsiyet=erkek">The North Face</a></li>
+                                <li><a href="/marka/u-s--polo-assn-?cinsiyet=erkek">U.S. Polo Assn.</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+                <li><span><a href="/kadin"> <img src="/pub/assets/instreet/mobile/images/kadin-ico.png"
+                                                 alt="{{ 'KADIN' | translate }} "
+                                                 title="{{ 'KADIN' | translate }} "> {{ 'KADIN' | translate }} </a></span>
+                    <ul>
+                        <li class="head"><span><a href="/ayakkabi">Ayakkabı</a></span>
+                            <ul>
+                                <li><a href="/spor-ayakkabi?cinsiyet=kadin">Spor Ayakkabı</a></li>
+                                <li><a href="/sneaker?cinsiyet=kadin">Sneaker</a></li>
+                                <li><a href="/yuruyus-ayakkabisi?cinsiyet=kadin">Yürüyüş Ayakkabısı</a></li>
+                                <li><a href="/kosu-ayakkabisi?cinsiyet=kadin">Koşu Ayakkabısı</a></li>
+                                <li><a href="/gunluk-ayakkabi?cinsiyet=kadin">Günlük Ayakkabı</a></li>
+                                <li><a href="/outdoor-ayakkabi?cinsiyet=kadin">Outdoor Ayakkabı</a></li>
+                                <li><a href="/bot?cinsiyet=kadin">Bot</a></li>
+                                <li><a href="/sandalet?cinsiyet=kadin">Sandalet</a></li>
+                                <li><a href="/terlik?cinsiyet=kadin">Terlik</a></li>
+                                <li><a href="/babet?cinsiyet=kadin">Babet</a></li>
+                                <li><a href="/ayakkabi?cinsiyet=kadin">Tüm Kadın Ayakkabı</a></li>
+                            </ul>
+
+                        </li>
+                        <li class="head">
+                            <span><a href="/giyim">Giyim</a></span>
+                            <ul>
+                                <li><a href="/t-shirt?cinsiyet=kadin">T-shirt</a></li>
+                                <li><a href="/sweatshirt?cinsiyet=kadin">Sweatshirt</a></li>
+                                <li><a href="/gomlek?cinsiyet=kadin">Gömlek</a></li>
+                                <li><a href="/pantolon?cinsiyet=kadin">Pantolon</a></li>
+                                <li><a href="/esofman?cinsiyet=kadin">Eşofman</a></li>
+                                <li><a href="/sort?cinsiyet=kadin">Şort</a></li>
+                                <li><a href="/tayt?cinsiyet=kadin">Tayt</a></li>
+                                <li><a href="/mont?cinsiyet=kadin">Mont</a></li>
+                                <li><a href="/ceket?cinsiyet=kadin">Ceket</a></li>
+                                <li><a href="/yagmurluk?cinsiyet=kadin">Yağmurluk</a></li>
+                                <li><a href="/giyim?cinsiyet=kadin">Tüm Kadın Giyim</a></li>
+                            </ul>
+                        </li>
+                        <li class="head">
+                            <span><a href="/aksesuar">aksesuar</a></span>
+
+                            <ul>
+                                <li><a href="/sapka?cinsiyet=kadin">Şapka</a></li>
+                                <li><a href="/corap?cinsiyet=kasin">Çorap</a></li>
+                                <li><a href="/atki?cinsiyet=kadin">Atkı</a></li>
+                                <li><a href="/bere?cinsiyet=kadin">Bere</a></li>
+                                <li><a href="/eldiven?cinsiyet=kadin">Eldiven</a></li>
+                                <li><a href="/aksesuar?cinsiyet=kadin">Tüm Kadın Aksesuar</a></li>
+                                <li class="head">
+                                    <ul>
+                                        <li><a href="/sirt-cantasi?cinsiyet=kadin">Sırt Çantası</a></li>
+                                        <li><a href="/valiz">Valiz</a></li>
+                                        <li><a href="/canta?cinsiyet=kadin">Tüm Kadın Çanta</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="head">
+                            <span><a href="/outdoor">outdoor</a></span>
+
+                            <ul>
+                                <li><a href="/cadir">Çadır</a></li>
+                                <li><a href="/uyku-tulumu">Uyku Tulumu</a></li>
+                                <li><a href="/mat">Mat</a></li>
+                                <li><a href="/termos">Termos</a></li>
+                                <li><a href="/matara">Matara</a></li>
+                                <li><a href="/outdoor?cinsiyet=kadin">Tüm Kadın Outdoor</a></li>
+                            </ul>
+                        </li>
+                        <li class="head">
+                            <span><a href="/marka">Popüler Markalar</a></span>
+
+                            <ul>
+                                <li><a href="/marka/nike?cinsiyet=kadin">Nike</a></li>
+                                <li><a href="/marka/adidas?cinsiyet=kadin">Adidas</a></li>
+                                <li><a href="/marka/kinetix?cinsiyet=kadin">Kinetix</a></li>
+                                <li><a href="/marka/lumberjack?cinsiyet=kadin">Lumberjack</a></li>
+                                <li><a href="/marka/new-balance?cinsiyet=kadin">New Balance</a></li>
+                                <li><a href="/marka/dockers-by-gerli?cinsiyet=kadin">Dockers</a></li>
+                                <li><a href="/marka/skechers?cinsiyet=kadin">Skechers</a></li>
+                                <li><a href="/marka/puma?cinsiyet=kadin">Puma</a></li>
+                                <li><a href="/marka/reebok?cinsiyet=kadin">Reebok</a></li>
+                                <li><a href="/marka/vans?cinsiyet=kadin">Vans</a></li>
+                                <li><a href="/marka/the-north-face?cinsiyet=kadin">The North Face</a></li>
+                                <li><a href="/marka/u-s--polo-assn-?cinsiyet=kadin">U.S. Polo Assn.</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+                <li><span> <a href="/cocuk"> <img src="/pub/assets/instreet/mobile/images/cocuk-ico.png"
+                                                  alt="{{ 'ÇOCUK' | translate }} "
+                                                  title="{{ 'ÇOCUK' | translate }} "> {{ 'ÇOCUK' | translate }} </a></span>
+                    <ul>
+                        <li class="head"><span><a href="/ayakkabi">Ayakkabı</a></span>
+                            <ul>
+                                <li><a href="/spor-ayakkabi?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Spor
+                                        Ayakkabı</a>
+                                </li>
+                                <li><a href="/sneaker?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Sneaker</a></li>
+                                <li><a href="/yuruyus-ayakkabisi?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocukk">Yürüyüş
+                                        Ayakkabısı</a></li>
+                                <li><a href="/kosu-ayakkabisi?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Koşu
+                                        Ayakkabısı</a></li>
+                                <li><a href="/futbol-ayakkabisi?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Halı Saha
+                                        Ayakkabısı</a></li>
+                                <li><a href="/gunluk-ayakkabi?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Günlük
+                                        Ayakkabı</a></li>
+                                <li><a href="/outdoor-ayakkabi?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Outdoor
+                                        Ayakkabı</a></li>
+                                <li><a href="/bot?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Bot</a></li>
+                                <li><a href="/sandalet?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Sandalet</a></li>
+                                <li><a href="/terlik?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Terlik</a></li>
+                                <li><a href="/ayakkabi?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Tüm Çocuk
+                                        Ayakkabı</a>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li class="head">
+                            <span><a href="/giyim">Giyim</a></span>
+                            <ul>
+                                <li><a href="/t-shirt?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">T-shirt</a></li>
+                                <li><a href="/mont?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Mont</a></li>
+                                <li><a href="/sort?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Şort</a></li>
+                                <li><a href="/tayt?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Tayt</a></li>
+                                <li><a href="/giyim?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Tüm Çocuk Giyim</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="head">
+                            <span><a href="/aksesuar">aksesuar</a></span>
+
+                            <ul>
+                                <li><a href="/sapka?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Şapka</a></li>
+                                <li><a href="/corap?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Çorap</a></li>
+                                <li><a href="/atki?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Atkı</a></li>
+                                <li><a href="/bere?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Bere</a></li>
+                                <li><a href="/eldiven?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Eldiven</a></li>
+                                <li><a href="/valiz">Valiz</a></li>
+                                <li><a href="/aksesuar?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Tüm Çocuk
+                                        Aksesuar</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="head">
+                            <span><a href="/cocuk-beden">Çocuk Beden</a></span>
+
+                            <ul>
+                                <li><a href="/sapka?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Şapka</a></li>
+                                <li><a href="/corap?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Çorap</a></li>
+                                <li><a href="/atki?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Atkı</a></li>
+                                <li><a href="/bere?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Bere</a></li>
+                                <li><a href="/eldiven?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Eldiven</a></li>
+                                <li><a href="/valiz">Valiz</a></li>
+                                <li><a href="/aksesuar?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Tüm Çocuk
+                                        Aksesuar</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="head">
+                            <span><a href="/marka">Popüler Markalar</a></span>
+
+                            <ul>
+                                <li><a href="/marka/nike?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Nike</a></li>
+                                <li><a href="/marka/adidas?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Adidas</a></li>
+                                <li><a href="/marka/kinetix?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Kinetix</a>
+                                </li>
+                                <li>
+                                    <a href="/marka/lumberjack?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Lumberjack</a>
+                                </li>
+                                <li><a href="/marka/crocs?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Crocs</a></li>
+                                <li>
+                                    <a href="/marka/dockers-by-gerli?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Dockers</a>
+                                </li>
+                                <li><a href="/marka/spiderman?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Spiderman</a>
+                                </li>
+                                <li><a href="/marka/puma?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Puma</a></li>
+                                <li><a href="/marka/seventeen?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Seventeen</a>
+                                </li>
+                                <li><a href="/marka/frozen?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Frozen</a></li>
+                                <li><a href="/marka/u-s--polo-assn-?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">U.S.
+                                        Polo
+                                        Assn.</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+                <li><span> <a href="/giyim"> <img src="/pub/assets/instreet/mobile/images/giyim-ico.png"
+                                                  alt="{{ 'GİYİM' | translate }} "
+                                                  title="{{ 'GİYİM' | translate }} ">{{ 'GİYİM' | translate }}  </a> </span>
+                    <ul>
+                        <li class="head"><span><a href="/erkek-giyim">Erkek Giyim</a></span>
+                            <ul>
+                                <li><a href="/t-shirt?cinsiyet=erkek">T-shirt</a></li>
+                                <li><a href="/sweatshirt?cinsiyet=erkek">Sweatshirt</a></li>
+                                <li><a href="/esofman?cinsiyet=erkek">Eşofman</a></li>
+                                <li><a href="/mont?cinsiyet=erkek">Mont</a></li>
+                                <li><a href="/ceket?cinsiyet=erkek">Ceket</a></li>
+                                <li><a href="/yagmurluk?cinsiyet=erkek">Yağmurluk</a></li>
+                                <li><a href="/sort?cinsiyet=erkek">Şort</a></li>
+                                <li><a href="/tayt?cinsiyet=erkek">Tayt</a></li>
+                                <li><a href="/giyim?cinsiyet=erkek">Tüm Erkek Giyim</a></li>
+                            </ul>
+
+                        </li>
+                        <li class="head">
+                            <span><a href="/kadin-giyim">Kadın Giyim</a></span>
+                            <ul>
+                                <li><a href="/t-shirt?cinsiyet=kadin">T-shirt</a></li>
+                                <li><a href="/sweatshirt?cinsiyet=kadin">Sweatshirt</a></li>
+                                <li><a href="/esofman?cinsiyet=kadin">Eşofman</a></li>
+                                <li><a href="/mont?cinsiyet=kadin">Mont</a></li>
+                                <li><a href="/ceket?cinsiyet=kadin">Ceket</a></li>
+                                <li><a href="/yagmurluk?cinsiyet=kadin">Yağmurluk</a></li>
+                                <li><a href="/sort?cinsiyet=kadin">Şort</a></li>
+                                <li><a href="/tayt?cinsiyet=kadin">Tayt</a></li>
+                                <li><a href="/giyim?cinsiyet=kadin">Tüm Kadın Giyim</a></li>
+                            </ul>
+                        </li>
+                        <li class="head">
+                            <span><a href="/cocuk-giyim">Çocuk Giyim</a></span>
+
+                            <ul>
+                                <li><a href="/t-shirt?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk”">T-shirt</a></li>
+                                <li><a href="/mont?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk”">Mont</a></li>
+                                <li><a href="/sort?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk”">Şort</a></li>
+                                <li><a href="/tayt?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk”">Tayt</a></li>
+                                <li><a href="/giyim?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Tüm Çocuk Giyim</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="head">
+                            <span><a href="/marka">Popüler Markalar</a></span>
+
+                            <ul>
+                                <li><a href="/giyim?marka=nike">Nike</a></li>
+                                <li><a href="/giyim?marka=adidas">Adidas</a></li>
+                                <li><a href="/giyim?marka=kinetix">Kinetix</a></li>
+                                <li><a href="/giyim?marka=lumberjack">Lumberjack</a></li>
+                                <li><a href="/giyim?marka=the-north-face">The North Face</a></li>
+                                <li><a href="/giyim?marka=marmot">Marmot</a></li>
+                                <li><a href="/giyim?marka=puma">Puma</a></li>
+                                <li><a href="/giyim?marka=reebok">Reebok</a></li>
+                                <li><a href="/giyim?marka=exuma">Exuma</a></li>
+                                <li><a href="/giyim?marka=new-balance">New Balance</a></li>
+                                <li><a href="/giyim?marka=rab">RAB</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+                <li><span></n><a href="/aksesuar"> <img src="/pub/assets/instreet/mobile/images/aksesuar-ico.png"
+                                                        alt="{{ 'AKSESUAR' | translate }} "
+                                                        title="{{ 'AKSESUAR' | translate }} ">{{ 'AKSESUAR' | translate }}  </a></span>
+                    <ul>
+                        <li class="head"><span><a href="/erkek-aksesuar">Erkek Aksesuar</a></span>
+                            <ul>
+                                <li><a href="/canta?cinsiyet=erkek">Çanta</a></li>
+                                <li><a href="/sapka?cinsiyet=erkek">Şapka</a></li>
+                                <li><a href="/corap?cinsiyet=erkek">Çorap</a></li>
+                                <li><a href="/atki?cinsiyet=erkek">Atkı</a></li>
+                                <li><a href="/bere?cinsiyet=erkek">Bere</a></li>
+                                <li><a href="/eldiven?cinsiyet=erkek">Eldiven</a></li>
+                                <li><a href="/valiz">Valiz</a></li>
+                                <li><a href="/aksesuar?cinsiyet=erkek">Tüm Erkek Aksesuar</a></li>
+                            </ul>
+
+                        </li>
+                        <li class="head">
+                            <span><a href="/kadin-aksesuar">Kadın Aksesuar</a></span>
+                            <ul>
+                                <li><a href="/canta?cinsiyet=kadin">Çanta</a></li>
+                                <li><a href="/sapka?cinsiyet=kadin">Şapka</a></li>
+                                <li><a href="/corap?cinsiyet=kadin">Çorap</a></li>
+                                <li><a href="/atki?cinsiyet=kadin">Atkı</a></li>
+                                <li><a href="/bere?cinsiyet=kadin">Bere</a></li>
+                                <li><a href="/eldiven?cinsiyet=kadin">Eldiven</a></li>
+                                <li><a href="/valiz">Valiz</a></li>
+                                <li><a href="/aksesuar?cinsiyet=kadin">Tüm Kadın Aksesuar</a></li>
+                            </ul>
+                        </li>
+                        <li class="head">
+                            <span><a href="/cocuk-aksesuar">Çocuk Aksesuar</a></span>
+
+                            <ul>
+                                <li><a href="/sapka?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Şapka</a></li>
+                                <li><a href="/corap?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Çorap</a></li>
+                                <li><a href="/atki?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Atkı</a></li>
+                                <li><a href="/bere?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Bere</a></li>
+                                <li><a href="/eldiven?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Eldiven</a></li>
+                                <li><a href="/valiz">Valiz</a></li>
+                                <li><a href="/aksesuar?cinsiyet=erkek-cocuk,kiz-cocuk,unisex-cocuk">Tüm Çocuk
+                                        Aksesuar</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="head">
+                            <span><a href="/aksesuar-markaları">Aksesuar Markaları</a></span>
+
+                            <ul>
+                                <li><a href="/aksesuar?marka=nike">Nike</a></li>
+                                <li><a href="/aksesuar?marka=adidas">Adidas</a></li>
+                                <li><a href="/aksesuar?marka=kinetix">Kinetix</a></li>
+                                <li><a href="/aksesuar?marka=the-north-face">The North Face</a></li>
+                                <li><a href="/aksesuar?marka=loap">Loap</a></li>
+                                <li><a href="/aksesuar?marka=skechers">Skechers</a></li>
+                                <li><a href="/aksesuar?marka=puma">Puma</a></li>
+                                <li><a href="/aksesuar?marka=reebok">Reebok</a></li>
+                                <li><a href="/aksesuar?marka=vans">Vans</a></li>
+                                <li><a href="/aksesuar?marka=marmot">Marmot</a></li>
+                                <li><a href="/aksesuar?marka=high-peak">High Peak</a></li>
+                                <li><a href="/aksesuar?marka=buff">Buff</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+                <li><span><a href="/outdoor" class="lazy"> <img src="/pub/media/lazyloading/blank.png" data-src="/pub/assets/instreet/mobile/images/outdoor-ico.jpg"
+                                                   alt="{{ 'OUTDOOR' | translate }} "
+                                                   title="{{ 'OUTDOOR' | translate }} ">{{ 'OUTDOOR' | translate }}  </a></span>
+
+                    <ul>
+                        <li class="head"><span><a href="/ayakkabi">Ayakkabı</a></span>
+                            <ul>
+                                <li><a href="/trekking-ayakkabisi">Trekking Ayakkabısı</a></li>
+                                <li><a href="/outdoor-ayakkabi">Tüm Outdoor Ayakkabı</a></li>
+                            </ul>
+
+                        </li>
+                        <li class="head">
+                            <span><a href="/giyim">Giyim</a></span>
+                            <ul>
+                                <li><a href="/t-shirt">T-shirt</a></li>
+                                <li><a href="/sweatshirt">Sweatshirt</a></li>
+                                <li><a href="/esofman">Eşofman</a></li>
+                                <li><a href="/mont">Mont</a></li>
+                                <li><a href="/yagmurluk">Yağmurluk</a></li>
+                                <li><a href="/ceket">Ceket</a></li>
+                                <li><a href="/sort">Şort</a></li>
+                                <li><a href="/tayt">Tayt</a></li>
+                                <li><a href="/giyim">Tüm Outdoor Giyim</a></li>
+                            </ul>
+                        </li>
+                        <li class="head">
+                            <span><a href="/kamp-malzemeleri">Kamp Malzemeleri</a></span>
+
+                            <ul>
+                                <li><a href="/cadir">Çadır</a></li>
+                                <li><a href="/uyku-tulumu">Uyku Tulumu</a></li>
+                                <li><a href="/mat">Mat</a></li>
+                                <li><a href="/matara">Matara</a></li>
+                                <li><a href="/termos">Termos</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="head">
+                            <span><a href="/outdoor-markalar">Outdoor Markalar</a></span>
+
+                            <ul>
+                                <li><a href="/marka/salomon">Salomon</a></li>
+                                <li><a href="/marka/merrell">Merrell</a></li>
+                                <li><a href="/marka/asolo">Asolo</a></li>
+                                <li><a href="/marka/marmot">Marmot</a></li>
+                                <li><a href="/marka/the-north-face">The North Face</a></li>
+                                <li><a href="/marka/stanley">Stanley</a></li>
+                                <li><a href="/marka/keen">Keen</a></li>
+                                <li><a href="/marka/timberland">Timberland</a></li>
+                                <li><a href="/marka/lumberjack">Lumberjack</a></li>
+                                <li><a href="/outdoor?marka=aladdin">Aladdin</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+                <li class="other"><a href="/magaza" alt="{{ 'MAĞAZA BUL' | translate }} "
+                                     title="{{ 'MAĞAZA BUL' | translate }} ">{{ 'MAĞAZA BUL' | translate }}</a></li>
+                <li class="other"><a href="/page?url=destek-ve-iletisim-mobile"
+                                     alt="{{ 'DESTEK İLETİŞİM' | translate }} "
+                                     title="{{ 'DESTEK İLETİŞİM' | translate }} ">{{ 'DESTEK İLETİŞİM' | translate }}</a>
+                </li>
+                <li class="other logged-in">
+                    <a class="customer-logout" href="#">{{ 'ÇIKIŞ' | translate }}</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<header class="site-head detail-header">
+    <div class="wrapper cookie-deeplink hide">
+        <div id="deeplink" style="" data-deep-url="instreet://home"
+             data-android-url="https://play.google.com/store/apps/details?id=tr.com.instreet"
+             data-ios-url="https://app.adjust.com/p2y9sqp?deep_link=instreet://home">
+            <span id="hide"></span>
+            <div id="icon"></div>
+            <div id="description" class="Android"><span id="domain">INSTREET -</span> instreet.com.tr<br>
+                <span id="appname">Mobil</span> Uygulama
+            </div>
+            <div id="open">{{ 'Uygulamada Aç' | translate }}</div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="top">
+            <div class="head-top">
+                <div class="mobile-btn-new">
+
+                    <div class="mh-head first">
+				<span class="mh-btns-left">
+					<a class="mh-hamburger" href="#menu"></a>
+				</span>
+                    </div>
+                </div>
+                <div class="logo">
+                    <a href="/">
+                        <img src="/pub/media/lazyloading/blank.png" data-src="/pub/assets/instreet/mobile/images/logo.png" alt="INstreet">
+                    </a>
+                </div>
+                <div id="commerce-mini-cart-mobile" class="basket">
+                    <ul>
+                        <li>
+                            <a class="mobil-minicart-background" href="javascript:void(0);">
+                                <i class="cart-count" style="display: none;"></i>
+                            </a>
+                            <div class="list" id="mini-cart">
+
+                                {{ widget('basket', 'mini_cart') }}
+
+                                <div class="more">
+                                    <a href="{{ basket_base_url() }}/basket">{{ 'SEPETE GİT' | translate }}</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% if menubar == 'open' %}
+
+            <div class="menu">
+                <div class=" ">
+                    <div class="mh-head second Sticky">
+                        <ul class="mh-list">
+                            <li><a href="/marka">{{ 'MARKALAR' | translate }}</a></li>
+                            <li><a href="/erkek">{{ 'ERKEK' | translate }}</a></li>
+                            <li><a href="/kadin">{{ 'KADIN' | translate }}</a></li>
+                            <li><a href="/cocuk">{{ 'ÇOCUK' | translate }}</a></li>
+                            <li><a href="/giyim">{{ 'GİYİM' | translate }}</a></li>
+                            <li><a href="/aksesuar">{{ 'AKSESUAR' | translate }}</a></li>
+                            <li><a href="/outdoor">{{ 'OUTDOOR' | translate }} </a></li>
+                            <li><a href="/indirim">{{ 'İNDİRİM' | translate }} </a></li>
+                            <li><a href="/magaza">{{ 'MAĞAZALAR' | translate }}</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</header>
+

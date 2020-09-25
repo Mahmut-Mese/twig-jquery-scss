@@ -1,0 +1,74 @@
+{% if layerData.productList is not empty %}
+<script type="text/javascript">
+    var dataLayer = window.dataLayer || [];
+    var scrollCategoryProductList = [];
+
+    window.productList = window.productList || [];
+    window.showedProductIds = window.showedProductIds || [];
+
+    window.productsWithId = window.productsWithId || {};
+    var productIds = [];
+
+    {% set mainCategoryName = '' %}
+    {% set subCategoryName = '' %}
+
+    {% for product in layerData.productList %}
+    {% set mainCategoryName = (product.categories|first).name %}
+    {% set subCategoryName = (product.categories|last).name %}
+
+    var item = {
+        id: "{{ product.sku }}",
+        name: "{{ product.name }}",
+        position: window.showedProductIds.length + 1,
+        entity_id: "{{ product.id }}",
+        brand: "{{ product.manufacturer }}",
+        price: "{{ product.third_price | default(product.special_price) | default(product.price) | number_format(2) }}",
+        category: "{{ product.categories|first.name }} / {{ product.categories|last.name }}",
+        variant: "{{ product.renk }}",
+        list: window.location.pathname.substr(1,1).toUpperCase() + window.location.pathname.substr(2),
+        dimension3: "{{ product.gender }}",
+        dimension5: "{{ product.category_ids|last }}",
+        dimension6: "{{ product.model }}",
+        dimension7: "{{ product.sezon_yil }} - {{ product.season }}",
+        dimension9: "{{ product.categories|first.name }}",
+        dimension10: "{{ product.categories|last.name }}",
+        dimension12: "{{ product.saya_malzeme }}",
+        dimension21: "{{ product.id }}",
+        dimension22: "{{ product.qty }}",
+        dimension23: "{{ product.price }}",
+        dimension24: "{{ product.is_in_stock ? 1 : 0 }}",
+        dimension25: "",
+        dimension26: "TRY",		
+
+		{% set rule = product.rule_info | first %}
+		dimension74: {{ product.rule_info ? 1 : 0 }},
+		dimension75: "{{ rule.label }}",
+
+    };
+
+    scrollCategoryProductList.push(item);
+    window.productList.push(item);
+    window.showedProductIds.push({{ product.id }});
+    GtmDataLayer.set('product{{ product.sku }}', item, true);
+
+    productIds.push(item.id);
+    window.productsWithId[item.id] = item;
+    {% endfor %}
+
+    try {
+        categoryIOEventType = 'product_impressions_scroll';
+        categoryIO.observeItems(productIds);
+    } catch (e) {
+        var ecommerce = {
+            currencyCode: "TRY",
+            impressions: scrollCategoryProductList
+        };
+        dataLayer.push({
+            'event': 'product_impressions_scroll',
+            'ecommerce': ecommerce
+        });
+    }
+
+    
+</script>
+{% endif %}

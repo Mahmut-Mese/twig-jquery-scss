@@ -1,0 +1,35 @@
+<div class="item ">
+    <div class="form-group shipping-method centersGiris" id="shipping-method">
+        <span>{{ 'TESLİMAT SEÇENEKLERİ' | translate }}</span>
+
+		{% for shipping_method in shipping_methods %}
+			{% set checked = '' %}
+			{% if loop.first %}
+				{% set checked = 'checked' %}
+			{% endif %}
+
+		<div class="checkbox checkbox-radio full delivery">
+            <label>
+                <div class="new-radio {{ checked }}">
+                    <input type="radio" name="shipping_method" value="{{ shipping_method.carrier_code }}" {{ checked }}>
+                    <ins></ins>
+                </div>
+                <span class="delivery-method">{{ shipping_method.carrier_title }}</span>
+                <span class="delivery-text"> {{ product_cargo['firstDate'] | date("d.m.Y") }} - {{ product_cargo['lastDate'] | date("d.m.Y") }} tarihleri arasında kargoda.</span>
+            </label>
+        </div>
+
+		{% endfor %}
+
+    </div>
+</div>
+
+<script>
+	domReadyCallbacks.push(function () {
+		$('input[name="shipping_method"]').on('change', function () {
+			$('input[name="shipping_method"]').parent().removeClass('checked');
+
+			$(this).parent().addClass('checked');
+		});
+	});
+</script>

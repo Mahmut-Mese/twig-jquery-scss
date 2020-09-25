@@ -1,0 +1,51 @@
+<div class="order-status">
+    {% if level == 1 %}
+        <div class="status-box active">
+            <figure>
+                <i class="svg-order-cancelled svg-order-cancelled-dims"></i>
+            </figure>
+        </div>
+    {% elseif level == 2 %}
+        <div class="status-box">
+            <figure>
+                <i class="svg-order-returned svg-order-returned-dims"></i>
+            </figure>
+			<div style="margin-left: 10px">
+				<div class="status">{{ status_list[status] }}</div>
+			</div>
+        </div>
+    {% else %}
+        <div class="status-box active">
+            <figure>
+                <i class="svg-order-received-small svg-order-received-small-dims"></i>
+            </figure>
+        </div>
+
+    {% endif %}
+    {% if level != 1 and level != 2 %}
+        <div class="status-box  {% if level >=4 %}active{% endif %}">
+            <figure>
+                <i class="{% if level >=4 %}svg-order-preparing-green svg-order-preparing-gray-dims{% else %}svg-order-preparing-gray svg-order-preparing-gray-dims{% endif %}"></i>
+            </figure>
+        </div>
+
+        <div class="status-box {% if level >=5 %}active{% endif %}">
+            <figure>
+                <i class="{% if level >=5 %}svg-order-shipping-green svg-order-shipping-green-dims{% else %}svg-order-shipping-gray svg-order-shipping-gray-dims{% endif %}"></i>
+            </figure>
+        </div>
+        <div class="status-box {% if level >=6 %}active{% endif %}">
+            <figure>
+                <i class="{% if level >=6 %}svg-order-delivered-green svg-order-delivered-green-dims{% else %}svg-order-delivered-gray svg-order-delivered-gray-dims{% endif %}"></i>
+            </figure>
+        </div>
+    {% endif %}
+</div>
+{% if level == 1 %}
+    <div class="font-weight-normal pb-2">Sipariş İptal Edildi <span
+                class="text-warning mr-3">{{ ekol_order_updates[status] is not empty ? ekol_order_updates[status] | date('d.m.Y H:i') }}</span>
+    </div>
+{% else %}
+    <div class="font-weight-normal pb-2">Sipariş Alındı <span
+                class="text-warning mr-3">{{ siparis_tarihi | date('d.m.Y H:i') }}</span></div>
+{% endif %}

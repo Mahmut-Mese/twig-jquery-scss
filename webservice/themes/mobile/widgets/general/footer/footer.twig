@@ -1,0 +1,97 @@
+{% if(footer_desc is not empty) %}
+    <div class="footer-content-flo">
+        <div class="container-fluid">
+            <div class="holder">
+                {{ footer_desc | raw }}
+            </div>
+            <div class="text-center">
+                <a href="javascript:;" class="read-more">
+                    <i class="svg-arrow-up svg-arrow-up-dims"></i>
+                    <span>DEVAMI</span>
+                    <i class="svg-arrow-down svg-arrow-down-dims"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<footer>
+    <div class="container-fluid">
+        <div class="footer-menu">
+            <!--<div class="mc-xs-12 pa">
+                <div class="bulten">
+                    <b>HABER BÜLTENİ ABONELİĞİ</b>
+                    <form action="javascript:void(0);">
+                        <div class="form-group">
+                            <input type="text" class="validate[required,custom[email]]">
+                        </div>
+                        <div class="submitButton">
+                            <input type="submit" value="GÖNDER">
+                        </div>
+                    </form>
+                </div>
+            </div>-->
+            <div class="mc-md-4 mc-sm-12 pa">
+                <div class="bulten">
+                    <b>{{ 'E-BÜLTENİMİZE ÜYE OLUN <i>%s TL KAZANIN</i>' | translate  | format('25') | raw }}</b>
+                    <form id="newsletter-subscription" class="not-focus">
+                        <div class="form-group">
+                            <input type="email" name="email" class="validate[required]">
+                        </div>
+                        <div class="submitButton">
+                            <input type="submit" value="{{ 'GÖNDER' | translate }}">
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <div class="icheckbox_square_gold new-checkbox">
+                                    <input type="checkbox" name="{{ aggrement.alias }}" value="{{ aggrement.aggrement_id }}" class="{{ aggrement.alias }} validate[required]">
+                                </div>
+                                <em>{{ aggrement.front_text|raw }}
+                                </em>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="mc-xs-12 pa">
+                <div class="m-menu">
+                    <ul>
+                        <li><a href="/kampanyalar">{{ 'Kampanyalar' | translate }}</a></li>
+                        <li><a href="/page?url=destek-ve-iletisim-mobile">{{ 'İletişim' | translate }}</a></li>
+                        <li><a href="/page?url=teslimat-iade-mobile">{{ 'Teslimat ve İade' | translate }}</a></li>
+                        <li><a href="/page?url=sss-mobile">{{ 'Sıkça Sorulan Sorula' | translate }}r</a></li>
+                        <li><a href="/page?url=kullanici-sozlesmesi-mobile">{{ 'Kullanıcı Sözleşmesi' | translate }}</a></li>
+                        <li><a href="/page?url=gizlilik-ve-cerez-mobile">{{ 'Gizlilik ve Çerez Politikası' | translate }}</a></li>
+                        <li><a href="/sevdiklerinize-hediyeler">{{ 'Hediye' | translate }}</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="/page?url=kisisel-verilerin-korunmasi-mobile">{{ 'Kişisel Verilerin Korunması' | translate }}</a></li>
+                        <li><a href="http://blog.instreet.com.tr" target="_blank">Blog</a></li>
+                        <li><a href="https://www.yumpu.com/tr/document/fullscreen/59411604/sport-in-street-lookbook" rel="nofollow" target="_blank">Lookbook</a></li>
+                        <li><a href="/store">{{ 'Mağazalar' | translate }}</a></li>
+                        <li><a href="/mobil-uygulamalar">{{ 'Mobil Uygulamalarımız' | translate }}</a></li>
+                        <li class="logged-out"><a href="/guest-order-verify">{{ 'Sipariş Takibi' | translate }}</a></li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="mc-xs-12 pa">
+                <div class="copy">
+                    <div class="social">
+                        <ul>
+                            <li><a href="https://www.facebook.com/sportinstreet" target="_blank"> <i class="fa fa-facebook"></i> </a></li>
+                            <li><a href="https://twitter.com/instreet" target="_blank"> <i class="fa fa-twitter"></i> </a></li>
+                            <li><a href="https://www.linkedin.com/company/instreet" target="_blank"> <i class="fa fa-linkedin"></i> </a></li>
+                            <li><a href="https://www.instagram.com/instreet" target="_blank"> <i class="fa fa-instagram"></i> </a></li>
+                            <li><a href="https://www.youtube.com/user/sportinstreet" target="_blank"> <i class="fa fa-youtube"></i> </a></li>
+                        </ul>
+                    </div>
+                    <div class="text">® {{ '2018 Instreet. Tüm Hakları Saklıdır.' | translate }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="backto">
+        <img src="/pub/assets/instreet/mobile/images/backto.jpg" alt="">
+    </div>
+</footer>

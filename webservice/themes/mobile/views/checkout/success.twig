@@ -1,0 +1,21 @@
+{{ widget('datalayer', 'checkout_success', {layerData: {order: order}}) }}
+<div class="page short-header">
+    <div class="container-fluid">
+        <div class="page-content">
+            <div class="my-basket">
+                <div class="basket-list last-screen">
+                    <div class="title">{{ 'SİPARİŞ BİLGİLERİ' | translate }}</div>
+                    <div class="last-detail">
+                        {{ widget('checkout', 'success') }}
+                    </div>
+                </div>
+
+            </div>
+            <div class="basket-button">
+                <div class="linkto">
+                    <a href="/">{{ 'ALIŞVERİŞE DEVAM ET' | translate }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    {{ widget('general', 'head', {meta: meta,meta_robots:meta_robots}, false) }}
+    {{ widget('general', 'head_scripts', [], false) }}
+</head>
+<body class="">
+    {{ widget('general', 'body_scripts') }}
+    {{ widget('general', 'header_simple') }}
+
+    {% include page_tpl %}
+
+    {{ widget('general', 'footer_scripts') }}
+    {{ widget('datalayer', 'all_pages', {layerData: {customer: customer_info, cart: cart}}) }}
+</body>
+</html>
